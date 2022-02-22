@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html th:fragment="layout (css, script, content)"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>도산서원</title>
+
+    <style>
+        .navbar {
+            position: absolute;
+            width: 200px;
+            border-right: 1px solid black;
+            height: 100%;
+        }
+
+        .contant {
+            margin-left: 210px;
+        }
+    </style>
+
+    <!-- Page Css -->
+    <th:block th:replace="${css}"></th:block>
+
+
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}" src="../../static/js/common.js"></script>
+
+    <!-- Page Script -->
+    <th:block th:replace="${script}"></th:block>
+</head>
+<body>
+    <div>
+        <nav th:insert="layout/sidebar :: navigation" class="navbar"></nav>
+
+        <div th:insert="${content}" class="contant"></div>
+    </div>
+</body>
+</html>
