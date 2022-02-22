@@ -48,8 +48,12 @@
                 </ul>
             </li>
             <li>통계자료</li>
-            <li>공지사항</li>
-            <li>자유게시판</li>
+            <li>
+                <a th:href="@{/notice}">공지사항</a>
+            </li>
+            <li>
+                <a th:href="@{/board}">자유게시판</a>
+            </li>
         </ul>
 
         <!-- 관리자 -->
@@ -72,8 +76,12 @@
                     </li>
                 </ul>
             </li>
-            <li>공지사항 관리</li>
-            <li>자유게시판 관리</li>
+            <li>
+                <a th:href="@{/notice}">공지사항 관리</a>
+            </li>
+            <li>
+                <a th:href="@{/board}">자유게시판 관리</a>
+            </li>
             <li>사용이력 관리
                 <ul>
                     <li>사용자 접속이력</li>
@@ -111,15 +119,29 @@
             </li>
             <li>수련자료
                 <ul>
-                    <li>수련 협의자료</li>
-                    <li>수련 운영자료</li>
-                    <li>지부 자료실</li>
-                    <li>수업지도 자료실</li>
+                    <li>
+                        <a th:href="@{/user/training/data/consultation}">수련 협의자료</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/user/training/data/operation}">수련 운영자료</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/user/training/data/branch}">지부 자료실</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/user/training/data/lecture}">수업지도 자료실</a>
+                    </li>
                 </ul>
             </li>
-            <li>회계업무</li>
-            <li>공지사항</li>
-            <li>자유게시판</li>
+            <li>
+                <a th:href="@{/user/notice}">출장보고서</a>
+            </li>
+            <li>
+                <a th:href="@{/user/notice}">공지사항</a>
+            </li>
+            <li>
+                <a th:href="@{/user/board}">자유게시판</a>
+            </li>
         </ul>
     </div>
 </body>

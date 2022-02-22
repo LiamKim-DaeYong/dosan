@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script"></th:block>
+</head>
+<body>
+    <section>
+        <div>자유 게시판</div>
+
+        <form th:action method="post">
+            <table>
+                <tr>
+                    <th>제목</th>
+                    <td th:text="${board.title}"></td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td th:text="${board.content}"></td>
+                </tr>
+                <tr>
+                    <th>첨부파일</th>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+
+        <button type="button" onclick="location.href='/board'">목록</button>
+        <button type="submit">등록</button>
+    </section>
+</body>
+</html>

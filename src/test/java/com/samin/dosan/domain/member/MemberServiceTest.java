@@ -1,8 +1,8 @@
 package com.samin.dosan.domain.member;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.samin.dosan.web.member.dto.user.UserDto;
-import com.samin.dosan.web.member.dto.user.UserSaveForm;
+import com.samin.dosan.web.back.member.dto.user.UserDto;
+import com.samin.dosan.web.back.member.dto.user.UserSaveForm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
