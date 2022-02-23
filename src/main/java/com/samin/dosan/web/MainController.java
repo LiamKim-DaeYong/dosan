@@ -21,10 +21,6 @@ public class MainController {
                 .stream().findFirst()
                 .get().toString();
 
-        if (authority.equals("ROLE_SYSTEM")) {
-            authority = "ROLE_MANAGER";
-        }
-
         return authority.replaceAll("ROLE_", "").toLowerCase();
     }
 }

@@ -1,38 +1,35 @@
 <!DOCTYPE html>
-<html th:fragment="layout (css, script, content)"
-      xmlns:th="http://www.thymeleaf.org">
+<html th:fragment="layout (pageCss, pageScript, content)"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <title>도산서원</title>
+    <title>도산서원 업무관리시스템</title>
 
-    <style>
-        .navbar {
-            position: absolute;
-            width: 200px;
-            border-right: 1px solid black;
-            height: 100%;
-        }
-
-        .contant {
-            margin-left: 210px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" th:href="@{https://fonts.googleapis.com/earlyaccess/notosanskr.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
 
     <!-- Page Css -->
-    <th:block th:replace="${css}"></th:block>
-
+    <th:block th:replace="${pageCss}"></th:block>
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}" src="../../static/js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" th:src="@{/js/common.js}" src="../../static/js/common.js"></script>
+    <script type="text/javascript" th:src="@{/js/nav.js}" src="../../static/js/nav.js"></script>
 
     <!-- Page Script -->
-    <th:block th:replace="${script}"></th:block>
+    <th:block th:replace="${pageScript}"></th:block>
 </head>
 <body>
-    <div>
-        <nav th:insert="layout/sidebar :: navigation" class="navbar"></nav>
+    <div class="wrap">
+        <nav th:insert="layout/sidebar :: navigation"
+             th:classappend="${#authorization.expression('hasRole(''ADMIN'')')?'nav_admin'
+                :#authorization.expression('hasRole(''MANAGER'')')?'nav_manager':'nav_user'}"></nav>
 
-        <div th:insert="${content}" class="contant"></div>
+        <div th:insert="${content}" class="container"></div>
+
+        <th:block th:replace="modal/_modal :: modal"></th:block>
     </div>
 </body>
 </html>

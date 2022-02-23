@@ -5,144 +5,144 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <div th:fragment="navigation">
-        <!-- 임직원 -->
-        <ul sec:authorize="hasAnyRole('MANAGER', 'SYSTEM')">
-            <li>대시보드</li>
-            <li>수련업무
-                <ul>
-                    <li>수련문의일지 관리</li>
-                    <li>수련명부 관리</li>
-                    <li>입교수련프로그램 관리</li>
-                    <li>학교수련프로그램 관리</li>
-                    <li>출력물 관리</li>
-                </ul>
-            </li>
-            <li>수련 자료
-                <ul>
-                    <li>수련 협의자료</li>
-                    <li>수련 운영자료</li>
-                </ul>
-            </li>
-            <li>일정 관리
-                <ul>
-                    <li>이사장 일정</li>
-                    <li>원장 일정</li>
-                    <li>지도위원 일정</li>
-                    <li>수련 일정</li>
-                    <li>기타 일정</li>
-                </ul>
-            </li>
-            <li>정산업무
-                <ul>
-                    <li>출장비 관리</li>
-                    <li>강사료 관리</li>
-                    <li>청구서 관리</li>
-                </ul>
-            </li>
-            <li>고객등록</li>
-            <li>설문조사
-                <ul>
-                    <li>입교수련 설문조사</li>
-                    <li>학교수련 설문조사</li>
-                </ul>
-            </li>
-            <li>통계자료</li>
-            <li>
-                <a th:href="@{/notice}">공지사항</a>
-            </li>
-            <li>
-                <a th:href="@{/board}">자유게시판</a>
-            </li>
-        </ul>
+<div th:fragment="navigation">
+    <!-- 임직원 -->
+    <ul sec:authorize="hasRole('MANAGER')">
+        <li class="logo"><img th:src="@{/images/common/logo.png}"></li>
+        <li>
+            <a th:href="@{/}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a>
+        </li>
+        <li class="nav_on"><span class="nav_list_title"><img th:src="@{/images/common/training.svg}">수련업무</span>
+            <ul>
+                <li class="nav_on_sub"><a th:href="@{/}">수련문의일지 관리</a></li>
+                <li><a th:href="@{/}">수련명부 관리</a></li>
+                <li><a th:href="@{/}">입교수련프로그램 관리</a></li>
+                <li><a th:href="@{/}">학교수련프로그램 관리</a></li>
+                <li><a th:href="@{/}">출력물 관리</a></li>
+            </ul>
+        </li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/day.svg}">수련 자료</span>
+            <ul>
+                <li><a th:href="@{/}">수련 협의자료</a></li>
+                <li><a th:href="@{/}">수련 운영자료</a></li>
+            </ul>
+        </li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/calendar.svg}">일정 관리</span>
+            <ul>
+                <li><a th:href="@{/}">이사장 일정</a></li>
+                <li><a th:href="@{/}">원장 일정</a></li>
+                <li><a th:href="@{/}">지도위원 일정</a></li>
+                <li><a th:href="@{/}">수련 일정</a></li>
+                <li><a th:href="@{/}">기타 일정</a></li>
+            </ul>
+        </li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/calc.svg}">정산업무</span>
+            <ul>
+                <li><a th:href="@{/}">출장비 관리</a></li>
+                <li><a th:href="@{/}">강사료 관리</a></li>
+                <li><a th:href="@{/}">청구서 관리</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/}"><img th:src="@{/images/common/customer.svg}">고객등록</a></li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/survey.svg}">설문조사</span>
+            <ul>
+                <li><a th:href="@{/}">입교수련 설문조사</a></li>
+                <li><a th:href="@{/}">학교수련 설문조사</a></li>
+            </ul>
+        </li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/statistics.svg}">통계자료</span>
 
-        <!-- 관리자 -->
-        <ul sec:authorize="hasAnyRole('ADMIN', 'SYSTEM')">
-            <li>대시보드</li>
-            <li>일정관리
-                <ul>
-                    <li>이사장 일정</li>
-                    <li>원장 일정</li>
-                    <li>기타 일정</li>
-                </ul>
-            </li>
-            <li>사용자 관리
-                <ul>
-                    <li>
-                        <a th:href="@{/members/manager}">임직원 관리</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/members/user}">지도위원 관리</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a th:href="@{/notice}">공지사항 관리</a>
-            </li>
-            <li>
-                <a th:href="@{/board}">자유게시판 관리</a>
-            </li>
-            <li>사용이력 관리
-                <ul>
-                    <li>사용자 접속이력</li>
-                    <li>데이터 저장이력</li>
-                </ul>
-            </li>
-            <li>홈페이지 관리
-                <ul>
-                </ul>
-            </li>
-            <li>설정
-                <ul>
-                    <li>
-                        <a th:href="@{/setting/seal}">직인관리</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/setting/crclm}">교육과정 관리</a>
-                    </li>
-                    <li>수련장소 관리</li>
-                    <li>지부데이터 관리</li>
-                    <li>지역데이터 관리</li>
-                </ul>
-            </li>
-        </ul>
+        </li>
+        <li>
+            <a th:href="@{/notice}"><img th:src="@{/images/common/notice.svg}">공지사항</a>
+        </li>
+        <li>
+            <a th:href="@{/board}"><img th:src="@{/images/common/free-notice.svg}">자유게시판</a>
+        </li>
+    </ul>
 
+    <!-- 관리자 -->
+    <ul sec:authorize="hasRole('ADMIN')">
+        <li class="logo"><img th:src="@{/images/common/logo.png}"></li>
+        <li><a th:href="@{/}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a></li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/calendar.svg}">일정관리</span>
+            <ul>
+                <li><a th:href="@{/}">이사장 일정</a></li>
+                <li><a th:href="@{/}">원장 일정</a></li>
+                <li><a th:href="@{/}">기타 일정</a></li>
+            </ul>
+        </li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/member.svg}">사용자 관리</span>
+            <ul>
+                <li>
+                    <a th:href="@{/members/manager}">임직원 관리</a>
+                </li>
+                <li>
+                    <a th:href="@{/members/user}">지도위원 관리</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a th:href="@{/notice}"><img th:src="@{/images/common/notice.svg}">공지사항 관리</a>
+        </li>
+        <li>
+            <a th:href="@{/board}"><img th:src="@{/images/common/free-notice.svg}">자유게시판 관리</a>
+        </li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/history.svg}">사용이력 관리</span>
+            <ul>
+                <li><a th:href="@{/}">사용자 접속이력</a></li>
+                <li><a th:href="@{/}">데이터 저장이력</a></li>
+            </ul>
+        </li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/homepage.svg}">홈페이지 관리</span>
+            <ul>
+            </ul>
+        </li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/set.svg}">설정</span>
+            <ul>
+                <li><a th:href="@{/setting/seal}">직인관리</a></li>
+                <li><a th:href="@{/setting/curriculum/entry}">교육과정 관리</a></li>
+                <li><a th:href="@{/}">수련장소 관리</a></li>
+                <li><a th:href="@{/}">지부데이터 관리</a></li>
+                <li><a th:href="@{/}">지역데이터 관리</a></li>
+            </ul>
+        </li>
+    </ul>
 
-        <!-- 지도위원 -->
-        <ul sec:authorize="hasAnyRole('USER', 'SYSTEM')">
-            <li>대시보드</li>
-            <li>일정관리
-                <ul>
-                    <li>개인 일정</li>
-                    <li>수련 일정</li>
-                </ul>
-            </li>
-            <li>수련자료
-                <ul>
-                    <li>
-                        <a th:href="@{/user/training/data/consultation}">수련 협의자료</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/user/training/data/operation}">수련 운영자료</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/user/training/data/branch}">지부 자료실</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/user/training/data/lecture}">수업지도 자료실</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a th:href="@{/user/notice}">출장보고서</a>
-            </li>
-            <li>
-                <a th:href="@{/user/notice}">공지사항</a>
-            </li>
-            <li>
-                <a th:href="@{/user/board}">자유게시판</a>
-            </li>
-        </ul>
+    <!-- 지도위원 -->
+    <ul sec:authorize="hasRole('USER')">
+        <li class="logo"><img th:src="@{/images/common/logo.png}"></li>
+        <li><a th:href="@{/}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a></li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/calendar.svg}">일정관리</span>
+            <ul>
+                <li><a th:href="@{/}">개인 일정</a></li>
+                <li><a th:href="@{/}">수련 일정</a></li>
+            </ul>
+        </li>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/day.svg}">수련자료</span>
+            <ul>
+                <li>
+                    <a th:href="@{/user/training/data/consultation}">수련 협의자료</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/training/data/operation}">수련 운영자료</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/training/data/branch}">지부 자료실</a>
+                </li>
+                <li>
+                    <a th:href="@{/user/training/data/lecture}">수업지도 자료실</a>
+                </li>
+            </ul>
+        </li>
+        <li><a th:href="@{/user/notice}"><img th:src="@{/images/common/calc.svg}">출장보고서</a></li>
+        <li><a th:href="@{/user/notice}"><img th:src="@{/images/common/notice.svg}">공지사항</a></li>
+        <li><a th:href="@{/user/board}"><img th:src="@{/images/common/free-notice.svg}">자유게시판</a></li>
+    </ul>
+
+    <div class="nav_off">
+        <img th:src="@{/images/common/arrow.svg}">
     </div>
+</div>
 </body>
 </html>
