@@ -3,7 +3,7 @@ package com.samin.dosan.domain.setting.curriculum;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.domain.type.CurriculumType;
-import com.samin.dosan.web.dto.SearchParam;
+import com.samin.dosan.web.param.SearchParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

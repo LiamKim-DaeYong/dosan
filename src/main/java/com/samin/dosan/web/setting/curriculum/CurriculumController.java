@@ -3,65 +3,81 @@ package com.samin.dosan.web.setting.curriculum;
 import com.samin.dosan.domain.setting.curriculum.Curriculum;
 import com.samin.dosan.domain.setting.curriculum.CurriculumService;
 import com.samin.dosan.domain.type.CurriculumType;
-import com.samin.dosan.web.dto.SearchParam;
-import com.samin.dosan.web.setting.curriculum.dto.CurriculumDto;
+import com.samin.dosan.web.param.SearchParam;
+import com.samin.dosan.web.setting.curriculum.dto.CurriculumData;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.validation.Valid;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/setting/curriculum")
-//@PreAuthorize("hasRole('ROLE_ADMIN')")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CurriculumController {
 
     private final CurriculumService curriculumService;
-    private final ModelMapper modelMapper;
 
-    @GetMapping("/{type}")
-    public String list(@PathVariable String type, SearchParam searchParam, Model model) {
-        List<CurriculumDto> curriculums = curriculumService.findAll(type, searchParam)
-                .stream().map(curriculum -> new CurriculumDto(curriculum))
-                .collect(Collectors.toList());
+    @ModelAttribute("curriculumTypes")
+    public CurriculumType[] curriculumTypes() {
+        return CurriculumType.values();
+    }
 
-        model.addAttribute("curriculums", curriculums);
-        model.addAttribute("type", type);
+    @GetMapping
+    public String list(SearchParam searchParam, Model model) {
+//        List<Curriculum> curriculumList = curriculumService.findAll(searchParam);
+//
+//        CurriculumDto curriculum = new CurriculumDto(curriculumList, curriculumType);
+//        model.addAttribute("curriculum", curriculum);
 
         return "setting/curriculum/curriculumList";
     }
 
-    @PostMapping("/test")
-    public String test(Model model) {
-        model.addAttribute("type", "entry");
-        model.addAttribute("test", "test");
-        return "setting/curriculum/curriculumList :: modal";
+    @GetMapping("/{curriculumType}/add")
+    public String addForm(@PathVariable String curriculumType, CurriculumData curriculumData) {
+        curriculumData.setCurriculumType(curriculumType);
+        return "setting/curriculum/curriculumAddForm";
     }
 
-    @PostConstruct
-    public void init() {
-        Curriculum curriculum = Curriculum.builder()
-                .subject("강의")
-                .content("선비정신과 퇴계선생")
-                .curriculumType(CurriculumType.ENTRY)
-                .build();
+    @PostMapping("/add")
+    public String save(@Valid CurriculumData curriculumData, BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes) {
 
-        curriculumService.save(curriculum);
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addAttribute("modal-error", true);
+            redirectAttributes.addAttribute("curriculumType", true);
+            return "setting/curriculum/curriculumList";
+        }
 
-        Curriculum curriculum2 = Curriculum.builder()
-                .subject("탁본체험")
-                .content("퇴계선생의 좌우명 배우기")
-                .curriculumType(CurriculumType.SCHOOL)
-                .build();
-
-        curriculumService.save(curriculum2);
+        curriculumService.save(curriculumData.toEntity());
+        redirectAttributes.addAttribute("type", curriculumData.getCurriculumType());
+        return "redirect:/setting/curriculum/{type}";
     }
+
+//    @PostConstruct
+//    public void init() {
+//        Curriculum curriculum = Curriculum.builder()
+//                .subject("강의")
+//                .content("선비정신과 퇴계선생")
+//                .curriculumType(CurriculumType.ENTRY)
+//                .build();
+//
+//        curriculumService.save(curriculum);
+//
+//        Curriculum curriculum2 = Curriculum.builder()
+//                .subject("탁본체험")
+//                .content("퇴계선생의 좌우명 배우기")
+//                .curriculumType(CurriculumType.SCHOOL)
+//                .build();
+//
+//        curriculumService.save(curriculum2);
+//    }
 }

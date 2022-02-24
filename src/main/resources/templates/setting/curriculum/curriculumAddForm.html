@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <form th:action="@{/setting/curriculum/add}" th:object="${curriculumData}" method="post">
+        <input type="hidden" th:value="${curriculumType}" />
+        <div>
+            <label>과목</label>
+            <input type="text" th:field="*{subject}" />
+        </div>
+
+        <div>
+            <label>내용</label>
+            <textarea th:field="*{content}"></textarea>
+        </div>
+
+        <button type="submit">테스트트</butto>
+    </form>
+</body>
+</html>

@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{https://fonts.googleapis.com/earlyaccess/notosanskr.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
 
     <!-- Page Css -->
     <th:block th:replace="${pageCss}"></th:block>
@@ -28,8 +29,6 @@
                 :#authorization.expression('hasRole(''MANAGER'')')?'nav_manager':'nav_user'}"></nav>
 
         <div th:insert="${content}" class="container"></div>
-
-        <th:block th:replace="modal/_modal :: modal"></th:block>
     </div>
 </body>
 </html>

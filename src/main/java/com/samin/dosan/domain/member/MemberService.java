@@ -1,4 +1,4 @@
-//package com.samin.dosan.domain.member;
+package com.samin.dosan.domain.member;//package com.samin.dosan.domain.member;
 //
 //import com.querydsl.jpa.impl.JPAQueryFactory;
 //import com.samin.dosan.web.back.member.dto.user.QUserDto;

@@ -2,6 +2,7 @@ package com.samin.dosan.domain.setting.curriculum;
 
 import com.samin.dosan.domain.BaseEntity;
 import com.samin.dosan.domain.type.CurriculumType;
+import com.samin.dosan.web.setting.curriculum.dto.CurriculumData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class Curriculum extends BaseEntity {
     @Column(length = 30, nullable = false)
     private String subject;
 
-    @Column(length = 100,nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Enumerated(EnumType.STRING)

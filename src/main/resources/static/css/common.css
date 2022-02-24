@@ -109,7 +109,7 @@ nav ul li ul li:last-of-type a {
     -moz-transition:all ease .3s;
 }
 
-.menu_close {
+.common.cssmenu_close {
     left:1em;
     transition:all ease .3s;
     -webkit-transition:all ease .3s;

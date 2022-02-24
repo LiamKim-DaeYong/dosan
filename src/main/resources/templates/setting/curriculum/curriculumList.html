@@ -4,48 +4,52 @@
 <head>
     <th:block id="css"></th:block>
 
-    <th:block id="script"></th:block>
+    <th:block id="script">
+        <script th:src="@{/js/setting/curriculum.js}"></script>
+    </th:block>
 </head>
 <body>
 <section>
     <div th:replace="layout/pageTitle :: pageTitle ('설정')"></div>
 
-    <h2 th:text="|${T(com.samin.dosan.domain.type.CurriculumType).valueOf(#strings.toUpperCase(type)).description} 교육과목|"></h2>
+    <h2>교육과목 관리</h>
 
     <ul>
-        <li th:each="curriculum : ${T(com.samin.dosan.domain.type.CurriculumType).values()}">
-            <a th:href="@{|/setting/curriculum/${#strings.toLowerCase(curriculum.name())}|}"
-                th:text="${curriculum.description}"></a>
+        <li th:each="type : ${curriculumTypes}">
+            <a th:href="@{|/setting/curriculum/${#strings.toLowerCase(type.name())}|}"
+               th:text="${type.description}"></a>
         </li>
     </ul>
 
     <form th:action method="get">
         <div>
-            <input type="text" name="searchWorld" />
+            <input type="text" name="searchWorld"/>
             <button type="submit">검색</button>
         </div>
-
-        <table>
-            <tr>
-                <th>No</th>
-                <th>과목</th>
-                <th>내용</th>
-                <th>작성자</th>
-                <th>작성일</th>
-            </tr>
-
-            <tr th:each="curriculum : ${curriculums}">
-                <td th:text="${curriculumStat.size - curriculumStat.index}"></td>
-                <td th:text="${curriculum.subject}"></td>
-                <td th:text="${curriculum.content}"></td>
-                <td th:text="${curriculum.createdBy}"></td>
-                <td th:text="${curriculum.createdAt}"></td>
-            </tr>
-        </table>
-
-        <button type="button">선택삭제</button>
-        <button type="button" onclick="openModal({url: '/dashboard/manager'})">등록</button>
     </form>
+
+    <table>
+        <tr>
+            <th>No</th>
+            <th>과목</th>
+            <th>내용</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+
+<!--        <tr th:each="curriculum : ${curriculum.list}">-->
+<!--            <td th:text="${curriculumStat.size - curriculumStat.index}"></td>-->
+<!--            <td th:text="${curriculum.subject}"></td>-->
+<!--            <td th:text="${curriculum.content}"></td>-->
+<!--            <td th:text="${curriculum.createdBy}"></td>-->
+<!--            <td th:text="${curriculum.createdAt}"></td>-->
+<!--        </tr>-->
+    </table>
+
+    <button type="button">선택삭제</button>
+    <button type="button" onclick="page.saveForm()">등록</button>
+
+    <div th:replace="layout/modal :: modal('modal')"></div>
 </section>
 </body>
 </html>

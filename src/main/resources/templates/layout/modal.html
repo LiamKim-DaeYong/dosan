@@ -1,0 +1,19 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <div th:fragment="modal(id)" th:id="${id}" class="modal fade">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+                <button type="button">닫기</button>
+                <button type="button">등록</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

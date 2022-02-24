@@ -2,31 +2,23 @@ package com.samin.dosan.web.setting.curriculum.dto;
 
 import com.samin.dosan.domain.setting.curriculum.Curriculum;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter @Setter
+@NoArgsConstructor
 public class CurriculumDto {
 
-    private Long id;
-
-    private String subject;
-
-    private String content;
+    private List<CurriculumData> list;
 
     private String curriculumType;
 
-    private String createdBy;
-
-    private LocalDate createdAt;
-
-    public CurriculumDto(Curriculum curriculum) {
-        this.id = curriculum.getId();
-        this.subject = curriculum.getSubject();
-        this.content = curriculum.getContent();
-        this.curriculumType = curriculum.getCurriculumType().getDescription();
-        this.createdBy = curriculum.getCreatedBy();
-        this.createdAt = curriculum.getCreatedAt().toLocalDate();
+    public CurriculumDto(List<Curriculum> curriculumList, String curriculumType) {
+        this.list = curriculumList.stream()
+                .map(curriculum -> new CurriculumData(curriculum)).collect(Collectors.toList());
+        this.curriculumType = curriculumType;
     }
 }
