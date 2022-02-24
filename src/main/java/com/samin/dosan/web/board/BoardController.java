@@ -6,6 +6,7 @@ import com.samin.dosan.web.board.dto.BoardDto;
 import com.samin.dosan.web.board.dto.BoardSaveForm;
 import com.samin.dosan.web.param.SearchParam;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,12 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
@@ -82,5 +82,12 @@ public class BoardController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String edit(Board board) {
         return "board/boardEditForm";
+    }
+
+    @PostMapping("/delete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String delete(@RequestParam(name = "check", required = false) Long[] ids) {
+        log.info("ids={}", ids);
+        return "redirect:/board";
     }
 }

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block id="css"></th:block>
 
-    <th:block id="script"></th:block>
+    <th:block id="script">
+        <script th:src="@{/js/board/board.js}"></script>
+    </th:block>
 </head>
 <body>
 
@@ -31,7 +32,7 @@
             </tr>
             <tr th:each="board : ${boardList}">
                 <td>
-                    <input type="checkbox"/>
+                    <input type="checkbox" name="check" th:value="${board.id}"/>
                 </td>
                 <td th:text="${boardStat.count}"></td>
                 <td>
@@ -42,10 +43,9 @@
                 <td th:text="${board.registDt}"></td>
             </tr>
         </table>
-        <div>
 
-            <button type="button" onclick="location.href='/board/add'">글쓰기</button>
-        </div>
+        <button type="button" onclick="page.delete()">선택 삭제</button>
+        <button type="button" onclick="location.href='/board/add'">글쓰기</button>
     </div>
 </section>
 </body>

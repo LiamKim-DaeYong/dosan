@@ -4,7 +4,7 @@ import com.samin.dosan.domain.setting.curriculum.Curriculum;
 import com.samin.dosan.domain.setting.curriculum.CurriculumRepository;
 import com.samin.dosan.domain.setting.curriculum.CurriculumService;
 import com.samin.dosan.domain.type.CurriculumType;
-import com.samin.dosan.web.dto.SearchParam;
+import com.samin.dosan.web.param.SearchParam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
