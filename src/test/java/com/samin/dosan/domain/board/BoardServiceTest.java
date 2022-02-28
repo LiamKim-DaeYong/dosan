@@ -1,23 +1,28 @@
 package com.samin.dosan.domain.board;
 
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samin.dosan.domain.board.repository.BoardRepository;
 import com.samin.dosan.web.param.SearchParam;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Answers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.query.FluentQuery;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.transaction.NotSupportedException;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.samin.dosan.domain.board.QBoard.board;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -27,12 +32,6 @@ class BoardServiceTest {
 
     @Mock
     private BoardRepository boardRepository;
-
-    @Mock
-    private JPAQueryFactory queryFactory;
-
-    @Mock(answer = Answers.RETURNS_SELF)
-    private JPAQuery query;
 
     @InjectMocks
     private BoardService boardService;
@@ -51,11 +50,10 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("게시판 조회 테스트")
+    @DisplayName("게시판 조회")
     void findAll() {
         //given
-        when(queryFactory.selectFrom(board)).thenReturn(query);
-        when(query.fetch()).thenReturn(Arrays.asList(board1, board2, board3));
+        when(boardRepository.findAll(searchParam)).thenReturn(Arrays.asList(board1, board2, board3));
 
         //when
         List<Board> findBoardList = boardService.findAll(searchParam);
@@ -68,18 +66,13 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("게시판 검색 테스트")
+    @DisplayName("게시판 검색")
     void search() {
         //given
         searchParam.setSearchWorld("1");
-
-        BooleanBuilder builder = new BooleanBuilder();
-        builder.and(board.title.contains(searchParam.getSearchWorld()));
-
-        when(queryFactory.selectFrom(board)).thenReturn(query);
-        when(query.where(builder)).thenReturn(query);
-        when(query.fetch()).thenReturn(Arrays.asList(board1, board2, board3).stream().filter(board
-                -> board.getTitle().contains(searchParam.getSearchWorld())).collect(Collectors.toList()));
+        when(boardRepository.findAll(searchParam)).thenReturn(Arrays.asList(board1, board2, board3)
+            .stream().filter(board -> board.getTitle().contains(searchParam.getSearchWorld()))
+                .collect(Collectors.toList()));
 
         //when
         List<Board> findBoardList = boardService.findAll(searchParam);
@@ -91,7 +84,7 @@ class BoardServiceTest {
     }
 
     @Test
-    @DisplayName("게시판 저장 테스트")
+    @DisplayName("게시판 저장")
     void saveTest() {
         when(boardRepository.save(any(Board.class))).thenReturn(board1);
         Long saveId = boardService.save(board1);

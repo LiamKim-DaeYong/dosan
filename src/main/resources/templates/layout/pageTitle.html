@@ -9,7 +9,13 @@
         <h1 th:text="${pageTitle}"></h1>
 
         <ul>
-            <li><em>지도위원</em><span>홍길동</span>님</li>
+            <li>
+                <em sec:authorize="hasRole('ROLE_ADMIN')">관리자</em>
+                <em sec:authorize="hasRole('ROLE_MANAGER')">임직원</em>
+                <em sec:authorize="hasRole('ROLE_USER')">지도위원</em>
+
+                <span sec:authentication="principal.userNm"></span>님
+            </li>
             <li><a th:href="@{/}"><img th:src="@{/images/common/member01.svg}" title="마이페이지"></a></li>
             <li><a th:href="@{/}"><img th:src="@{/images/common/alarm.svg}" title="알림"></a></li>
             <li><a th:href="@{/logout}"><img th:src="@{/images/common/logout.svg}" title="로그아웃"></a></li>

@@ -78,3 +78,7 @@ body {
     -webkit-overflow-scrolling: touch;
     background:#f0f1f5;
 }
+
+button {
+    cursor: pointer;
+}

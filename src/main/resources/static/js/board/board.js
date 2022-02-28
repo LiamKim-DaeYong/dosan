@@ -1,4 +1,7 @@
 var page = {
+    init: function () {
+        editor.init("content");
+    },
     delete: function () {
         var form = document.createElement("form");
         form.setAttribute("method", "post");
@@ -6,4 +9,8 @@ var page = {
         document.body.appendChild(form);
         form.submit();
     }
+}
+
+page.pageStart = function () {
+    page.init();
 }

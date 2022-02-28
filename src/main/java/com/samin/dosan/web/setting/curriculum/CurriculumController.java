@@ -1,6 +1,5 @@
 package com.samin.dosan.web.setting.curriculum;
 
-import com.samin.dosan.domain.setting.curriculum.Curriculum;
 import com.samin.dosan.domain.setting.curriculum.CurriculumService;
 import com.samin.dosan.domain.type.CurriculumType;
 import com.samin.dosan.web.param.SearchParam;
@@ -14,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 
 @Slf4j

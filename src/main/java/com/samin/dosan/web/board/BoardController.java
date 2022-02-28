@@ -6,8 +6,6 @@ import com.samin.dosan.web.board.dto.BoardDto;
 import com.samin.dosan.web.board.dto.BoardSaveForm;
 import com.samin.dosan.web.param.SearchParam;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +17,12 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/board")
 public class BoardController {
 
     private final BoardService boardService;
-    private final ModelMapper modelMapper;
 
     @GetMapping
     public String list(SearchParam searchParam, Model model) {
@@ -49,7 +45,7 @@ public class BoardController {
 
     @GetMapping("/add")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String addForm(@ModelAttribute("board") BoardSaveForm board) {
+    public String addForm(@ModelAttribute("board") BoardSaveForm boardSaveForm) {
         return "board/boardAddForm";
     }
 
@@ -62,12 +58,16 @@ public class BoardController {
             return "board/boardAddForm";
         }
 
-        Board board = modelMapper.map(boardSaveForm, Board.class);
+        Board board = Board.builder()
+                .title(boardSaveForm.getTitle())
+                .content(boardSaveForm.getContent())
+                .build();
+
         redirectAttributes.addAttribute("id", boardService.save(board));
+        redirectAttributes.addAttribute("test", 1);
 
         return "redirect:/board/{id}";
     }
-
 
     @GetMapping("/{id}/edit")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -82,12 +82,5 @@ public class BoardController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String edit(Board board) {
         return "board/boardEditForm";
-    }
-
-    @PostMapping("/delete")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public String delete(@RequestParam(name = "check", required = false) Long[] ids) {
-        log.info("ids={}", ids);
-        return "redirect:/board";
     }
 }

@@ -1,7 +1,6 @@
 package com.samin.dosan.domain.board.comment;
 
 import com.samin.dosan.domain.board.Board;
-import com.samin.dosan.domain.member.Member;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

@@ -34,6 +34,7 @@ modal = {
     closeModal: function () {
         $('#modal').addClass('fade');
     },
+
     submit: function () {
         var form = $($('#modal').find('form')[0]);
 
@@ -43,3 +44,21 @@ modal = {
         });
     }
 };
+
+editor = {
+    init: function (targetId) {
+        var oEditors = [];
+        nhn.husky.EZCreator.createInIFrame({
+            oAppRef: oEditors,
+            elPlaceHolder: targetId,
+            sSkinURI: "../lib/smarteditor/js/SmartEditor2Skin.html",
+            fCreator: "createSEditor2"
+        });
+    }
+}
+
+$(document).ready(function () {
+    if (window["page"] && window["page"].pageStart) {
+        window["page"].pageStart();
+    }
+});

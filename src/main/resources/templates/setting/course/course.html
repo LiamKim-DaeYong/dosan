@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script th:inline="javascript">
+            var type = [[${type}]];
+            var description = [[${typeEnum.description}]];
+        </script>
+        <script type="text/javascript" th:src="@{/js/setting/course.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle ('설정')"></div>
+
+    <ul>
+        <li th:each="type : ${courseTypes}">
+            <a th:href="@{|/setting/course/${#strings.toLowerCase(type.name())}|}"
+               th:text="${type.description}"></a>
+        </li>
+    </ul>
+
+    <form th:action method="get">
+        <h3 th:text="|${typeEnum.description} 교육과목|"></h3>
+        <div>
+            <input type="text" name="searchWorld"/>
+            <button type="submit">검색</button>
+        </div>
+    </form>
+
+    <table>
+        <tr>
+            <th>No</th>
+            <th>과목</th>
+            <th>내용</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+
+        <tr th:each="course : ${courseList}">
+            <td th:text="${courseStat.size - courseStat.index}"></td>
+            <td th:text="${course.subject}" th:onclick="edit([[${course}]])"></td>
+            <td th:text="${course.content}"></td>
+            <td th:text="관리자"></td>
+            <td th:text="${course.createdAt}"></td>
+        </tr>
+    </table>
+
+    <button type="button">선택삭제</button>
+    <button type="button" onclick="page.modalOpen('modal')">등록</button>
+
+    <div th:replace="layout/modal :: modal('modal')"></div>
+</section>
+</body>
+</html>

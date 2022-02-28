@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <th:block id="script">
+        <script type="text/javascript">
+        </script>
+    </th:block>
+</head>
+<body>
+<section>
+    <form th:action th:object="${form}" method="post">
+        <table>
+            <tr>
+                <td>
+                    <input type="text" th:field="*{subject}" />
+                    <span th:errors="*{subject}"></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="text" th:field="*{content}" />
+                    <span th:errors="*{content}"></span>
+                </td>
+            </tr>
+        </table>
+    </form>
+</section>
+</body>
+</html>
