@@ -11,10 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.persistence.EntityManager;
-
 import java.util.Optional;
 
-import static org.modelmapper.config.Configuration.*;
+import static org.modelmapper.config.Configuration.AccessLevel;
 
 @Configuration
 @EnableJpaAuditing

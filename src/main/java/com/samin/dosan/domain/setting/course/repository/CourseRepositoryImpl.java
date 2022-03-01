@@ -3,7 +3,7 @@ package com.samin.dosan.domain.setting.course.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.domain.setting.course.Course;
-import com.samin.dosan.domain.type.CourseType;
+import com.samin.dosan.domain.type.setting.CourseType;
 import com.samin.dosan.web.param.SearchParam;
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +29,14 @@ public class CourseRepositoryImpl implements CourseRepositoryQueryDsl {
 
         return queryFactory.selectFrom(course)
                 .where(builder)
+                .orderBy(course.id.desc())
                 .fetch();
+    }
+
+    @Override
+    public boolean existsBySubject(String subject, CourseType courseType) {
+        return queryFactory.selectFrom(course)
+                .where(course.subject.eq(subject).and(course.courseType.eq(courseType)))
+                .fetchFirst() != null;
     }
 }

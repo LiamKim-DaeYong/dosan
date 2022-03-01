@@ -1,4 +1,4 @@
-package com.samin.dosan.web;
+package com.samin.dosan.web.controller;
 
 import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;

@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
     <div id="form" th:object="${course}">
+        <input type="hidden" th:field="*{id}" />
         <div>
             <input type="text" th:field="*{subject}" />
             <span errors="subject"></span>
@@ -12,7 +13,7 @@
             <span errors="content"></span>
         </div>
 
-        <button type="button" onclick="page.save()">등록</button>
+        <button type="button" onclick="page.edit()">수정</button>
     </div>
 </section>
 </body>

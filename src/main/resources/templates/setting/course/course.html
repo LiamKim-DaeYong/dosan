@@ -5,10 +5,6 @@
     <th:block id="css"></th:block>
 
     <th:block id="script">
-        <script th:inline="javascript">
-            var type = [[${type}]];
-            var description = [[${typeEnum.description}]];
-        </script>
         <script type="text/javascript" th:src="@{/js/setting/course.js}"></script>
     </th:block>
 </head>
@@ -24,7 +20,6 @@
     </ul>
 
     <form th:action method="get">
-        <h3 th:text="|${typeEnum.description} 교육과목|"></h3>
         <div>
             <input type="text" name="searchWorld"/>
             <button type="submit">검색</button>
@@ -33,6 +28,9 @@
 
     <table>
         <tr>
+            <th>
+                <input type="checkbox" />
+            </th>
             <th>No</th>
             <th>과목</th>
             <th>내용</th>
@@ -41,18 +39,28 @@
         </tr>
 
         <tr th:each="course : ${courseList}">
+            <td>
+                <input type="checkbox" />
+            </td>
             <td th:text="${courseStat.size - courseStat.index}"></td>
-            <td th:text="${course.subject}" th:onclick="edit([[${course}]])"></td>
-            <td th:text="${course.content}"></td>
+            <td>
+                <a href="#" th:text="${course.subject}" th:onclick="|page.editForm(${course.id})|"</a>
+            </td>
+            <td>
+                <div th:utext="${#strings.replace(course.content,'&#10;','&lt;br&gt;')}"></div>
+            </td>
             <td th:text="관리자"></td>
-            <td th:text="${course.createdAt}"></td>
+            <td th:text="${course.createdAt.toLocalDate()}"></td>
         </tr>
     </table>
 
     <button type="button">선택삭제</button>
-    <button type="button" onclick="page.modalOpen('modal')">등록</button>
+    <button type="button" onclick="page.saveForm()">등록</button>
 
-    <div th:replace="layout/modal :: modal('modal')"></div>
+    <!-- Modal -->
+    <div th:replace="layout/modal :: modal('modal')">
+        <div id="modal-form"></div>
+    </div>
 </section>
 </body>
 </html>

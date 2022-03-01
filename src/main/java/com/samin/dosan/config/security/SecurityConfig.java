@@ -1,7 +1,9 @@
 package com.samin.dosan.config.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,40 +18,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private UserDetailsServiceImpl userDetailsServiceImpl;
+
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/js/**");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/lib/**");
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("system")
-                .password(passwordEncoder().encode("1111"))
-                .roles("SYSTEM")
-                .and()
-
-                .withUser("admin")
-                .password(passwordEncoder().encode("1111"))
-                .roles("ADMIN")
-                .and()
-
-                .withUser("manager")
-                .password(passwordEncoder().encode("1111"))
-                .roles("MANAGER")
-                .and()
-
-                .withUser("user")
-                .password(passwordEncoder().encode("1111"))
-                .roles("USER");
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/admin/init").permitAll()
                 .anyRequest().authenticated()
-//                .anyRequest().permitAll()
                 .and()
 
                 .formLogin()
@@ -69,5 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new AuthenticationProviderImpl(userDetailsServiceImpl, passwordEncoder());
     }
 }

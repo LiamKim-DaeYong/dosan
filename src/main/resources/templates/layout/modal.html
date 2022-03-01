@@ -6,12 +6,13 @@
     <div th:fragment="modal(id)" th:id="${id}" class="modal fade">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
+                <h5></h5>
+                <button type="button" onclick="modal.close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-                <button type="button" onclick="modal.closeModal()">닫기</button>
-                <button type="button">등록</button>
+            <div class="modal-body">
+                <div></div>
             </div>
         </div>
     </div>
