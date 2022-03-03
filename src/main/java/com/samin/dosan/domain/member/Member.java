@@ -1,6 +1,6 @@
 package com.samin.dosan.domain.member;
 
-import com.samin.dosan.domain.type.Address;
+import com.samin.dosan.core.code.Address;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

@@ -1,4 +1,4 @@
-package com.samin.dosan.domain;
+package com.samin.dosan.core.domain;
 
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;

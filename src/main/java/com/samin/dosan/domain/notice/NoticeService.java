@@ -1,7 +1,7 @@
 package com.samin.dosan.domain.notice;
 
+import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.notice.repository.NoticeRepository;
-import com.samin.dosan.web.param.SearchParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +26,11 @@ public class NoticeService {
     }
 
     @Transactional
-    public void updateNotice(Notice notice) {
-        Notice findNotice = findById(notice.getId());
-
+    public Long updateNotice(Notice notice, Long id) {
+        Notice findNotice = findById(id);
         findNotice.updateNotice(notice);
+
+        return save(findNotice);
     }
 
     @Transactional

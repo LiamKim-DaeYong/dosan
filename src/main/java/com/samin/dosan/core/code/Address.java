@@ -1,4 +1,4 @@
-package com.samin.dosan.domain.type;
+package com.samin.dosan.core.code;
 
 import lombok.Getter;
 

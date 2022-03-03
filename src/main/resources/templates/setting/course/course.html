@@ -10,57 +10,72 @@
 </head>
 <body>
 <section>
-    <div th:replace="layout/pageTitle :: pageTitle ('설정')"></div>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
 
-    <ul>
-        <li th:each="type : ${courseTypes}">
-            <a th:href="@{|/setting/course/${#strings.toLowerCase(type.name())}|}"
-               th:text="${type.description}"></a>
-        </li>
-    </ul>
+    <div class="content">
+        <h3 th:text="#{course}"></h3>
+        <ul>
+            <li th:each="type : ${courseTypes}">
+                <a th:href="@{|/setting/course/${#strings.toLowerCase(type.name())}|}"
+                   th:text="${type.description}"></a>
+            </li>
+        </ul>
 
-    <form th:action method="get">
+        <form th:action>
+            <div class="only_search_box">
+                <input type="text" name="searchWorld" th:value="${searchParam.searchWorld}" class="search" />
+                <button class="search_btn" th:text="#{button.search}">검색</button>
+            </div>
+        </form>
+
+        <table>
+            <tr>
+                <th>
+                    <input type="checkbox" check="all" />
+                </th>
+                <th>No</th>
+                <th th:text="#{course.subject}">과목</th>
+                <th th:text="#{course.content}">내용</th>
+            </tr>
+
+            <tr th:each="course : ${result.content}">
+                <td>
+                    <input type="checkbox" th:value="${course.id}" />
+                </td>
+                <td th:text="${result.totalElements - (result.pageable.offset + courseStat.index)}"></td>
+                <td>
+                    <a href="#" th:text="${course.subject}" th:onclick="|page.editForm(${course.id})|"</a>
+                </td>
+                <td>
+                    <div th:utext="${#strings.replace(course.content,'&#10;','&lt;br&gt;')}"></div>
+                </td>
+            </tr>
+        </table>
+
+        <nav th:replace="utils/pagination :: pagination(${result})"></nav>
+<!--        <nav th:with="start=${(result.number/result.totalPages) * result.totalPages + 1}">-->
+
+<!--            <button th:text="${start + (result.number)}">test</button>-->
+<!--            <span>________________</span>-->
+<!--            <button th:text="${result.number}">test</button>-->
+<!--            <button th:text="${result.first}">test</button>-->
+<!--            <button th:text="${result.totalElements}">test</button>-->
+<!--            <button th:text="${result.totalPages}">test</button>-->
+<!--            <button th:text="${result.last}">test</button>-->
+<!--            <button th:text="${result.previousOrFirstPageable()}">test</button>-->
+<!--            <button th:text="${result.nextOrLastPageable()}">test</button>-->
+<!--            <button th:text="${result.numberOfElements}">test</button>-->
+<!--            <button th:text="${result.size}">test</button>-->
+<!--        </nav>-->
+
         <div>
-            <input type="text" name="searchWorld"/>
-            <button type="submit">검색</button>
+            <button type="button" onclick="page.delete()" th:text="#{button.select.delete}">선택삭제</button>
+            <button type="button" onclick="page.saveForm()" th:text="#{button.new}">신규등록</button>
         </div>
-    </form>
-
-    <table>
-        <tr>
-            <th>
-                <input type="checkbox" />
-            </th>
-            <th>No</th>
-            <th>과목</th>
-            <th>내용</th>
-            <th>작성자</th>
-            <th>작성일</th>
-        </tr>
-
-        <tr th:each="course : ${courseList}">
-            <td>
-                <input type="checkbox" />
-            </td>
-            <td th:text="${courseStat.size - courseStat.index}"></td>
-            <td>
-                <a href="#" th:text="${course.subject}" th:onclick="|page.editForm(${course.id})|"</a>
-            </td>
-            <td>
-                <div th:utext="${#strings.replace(course.content,'&#10;','&lt;br&gt;')}"></div>
-            </td>
-            <td th:text="관리자"></td>
-            <td th:text="${course.createdAt.toLocalDate()}"></td>
-        </tr>
-    </table>
-
-    <button type="button">선택삭제</button>
-    <button type="button" onclick="page.saveForm()">등록</button>
+    </div>
 
     <!-- Modal -->
-    <div th:replace="layout/modal :: modal('modal')">
-        <div id="modal-form"></div>
-    </div>
+    <div th:replace="utils/modal :: modal('modal')"></div>
 </section>
 </body>
 </html>

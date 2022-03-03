@@ -3,12 +3,14 @@
 <body>
     <div id="form" th:object="${course}">
         <div>
+            <label>과목</label>
             <input type="text" th:field="*{subject}" />
             <span errors="subject"></span>
         </div>
 
         <div>
-            <textarea th:field="*{content}" />
+            <label>내용</label>
+            <textarea th:field="*{content}" errorclass="test"/>
             <span errors="content"></span>
         </div>
 

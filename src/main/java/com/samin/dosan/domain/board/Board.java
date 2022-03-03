@@ -1,6 +1,6 @@
 package com.samin.dosan.domain.board;
 
-import com.samin.dosan.domain.BaseEntity;
+import com.samin.dosan.core.domain.BaseEntity;
 import com.samin.dosan.domain.board.comment.Comments;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

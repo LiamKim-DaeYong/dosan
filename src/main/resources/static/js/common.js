@@ -9,19 +9,23 @@ jsObj.api = {
                 document.getElementById(detailId).focus();
             }
         }).open();
-    },
+    }
 }
 
-jsObj.valid = {
-    errors: function (errors) {
-        if (errors["fieldErrors"]) {
+jsObj.errors = {
+    valid: function (errors) {
+        if (errors && errors.length) {
             $("[errors]").text("");
-            errors["fieldErrors"].forEach(error => {
+            $("[errorclass]").each(function () {
+                $(this).removeClass($(this).attr("errorclass"));
+            });
+
+            errors.forEach(error => {
                 var errorField = $("#" + error.field);
                 errorField.addClass(errorField.attr("errorclass"));
 
                 var errorMsgField = $('[errors="' + error.field + '"]')
-                errorMsgField.text(error.defaultMessage);
+                errorMsgField.text(error.message);
             })
         }
     }
@@ -43,6 +47,7 @@ jsObj.modal = function () {
         this.$title = this.target.find('.modal-header h5');
         this.$body = this.target.find('.modal-body');
         this.$content.css({'height': this.defaultOption.height, 'width': this.defaultOption.width});
+
         this.setTitle(this.defaultOption.title);
         this.setContent(this.defaultOption.content);
     };
@@ -74,6 +79,7 @@ jsObj.modal = function () {
     var setContent = function (content) {
         this.defaultOption.content = content;
         $(this.$body).html(content);
+        jsObj.event.init();
     };
 
     var setTitle = function (title) {
@@ -110,7 +116,37 @@ jsObj.editor = {
     }
 }
 
+jsObj.event = {
+    init: function () {
+        this.inputAutocompleteOff();
+        this.initCheckboxEvent();
+    },
+
+    inputAutocompleteOff: function () {
+        $('input').prop("autocomplete", "off");
+    },
+
+    initCheckboxEvent: function () {
+        $('input:checkbox[check="all"]').on('click', function () {
+            $('input:checkbox').prop("checked", $(this).is(":checked"));
+        });
+    }
+}
+
+jsObj.data = {
+    getAllChecked: function () {
+        var result = [];
+        $('input:checkbox[check!="all"]:checked').each(function () {
+            result.push($(this).val());
+        });
+
+        return result;
+    },
+}
+
 $(document).ready(function () {
+    jsObj.event.init();
+
     if (window["page"] && window["page"].pageStart) {
         window["page"].pageStart();
     }

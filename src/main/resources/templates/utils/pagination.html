@@ -1,0 +1,117 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+    <nav th:fragment="pagination(pageResult)" style="width: 80%">
+        <form th:action th:object="${pageResult}">
+        <button th:text="*{previousOrFirstPageable}"></button>
+        <button th:text="*{nextOrLastPageable}"></button>
+
+            <ul th:with="start=*{number/10 * 10 + 1},
+                end=(${start} + 9 < *{totalPages})? ${start} + 9 : *{totalPages}">
+
+                <li style="display: inline-block">
+                    <button>&laquo</button>
+                </li>
+
+                <li style="display: inline-block">
+                    <button>&lsaquo;</button>
+                </li>
+
+                <li style="display: inline-block" th:each="page : ${#numbers.sequence(start, end)}">
+                    <button th:text="${page}"></button>
+                </li>
+
+                <li style="display: inline-block">
+                    <button>&rsaquo;</button>
+                </li>
+
+                <li style="display: inline-block">
+                    <button>&raquo;</button>
+                </li>
+            </ul>
+        </form>
+    </nav>
+<!--        <ul>-->
+<!--            <li style="display: inline-block">-->
+<!--                <a href="#">&laquo;</a>-->
+<!--            </li>-->
+<!--            <li style="display: inline-block">-->
+<!--                <a href="#">&lsaquo;</a>-->
+<!--            </li>-->
+
+<!--            <li style="display: inline-block">-->
+<!--                <a href="#">&rsaquo;</a>-->
+<!--            </li>-->
+<!--            <li style="display: inline-block">-->
+<!--                <a href="#">&raquo;</a>-->
+<!--            </li>-->
+
+<!--        </ul>-->
+<!--    </nav>-->
+
+
+<!--    <nav th:fragment="pagination" th:if="${params != null and params.paginationInfo.totalRecordCount > 0}" th:object="${params.paginationInfo}" th:with="info=${params.paginationInfo}" aria-label="Page navigation" class="text-center">-->
+<!--        <ul class="pagination">-->
+<!--            <li th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(1)} ]])">-->
+<!--                <a href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>-->
+<!--            </li>-->
+<!--            <li th:if="*{hasPreviousPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.firstPage - 1)} ]])">-->
+<!--                <a href="javascript:void(0)" aria-label="Previous"><span aria-hidden="true">&lsaquo;</span></a>-->
+<!--            </li>-->
+<!--            <li th:each="pageNo : *{#numbers.sequence( firstPage, lastPage )}" th:class="${pageNo == params.currentPageNo} ? 'active'">-->
+<!--                <a href="javascript:void(0)" th:text="${pageNo}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(pageNo)} ]])"></a>-->
+<!--            </li>-->
+<!--            <li th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.lastPage + 1)} ]])">-->
+<!--                <a href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&rsaquo;</span></a>-->
+<!--            </li>-->
+<!--            <li th:if="*{hasNextPage == true}" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${params.makeQueryString(info.totalPageCount)} ]])">-->
+<!--                <a href="javascript:void(0)" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </nav>-->
+
+<!--    <ul class="pagination"-->
+<!--        th:with="start=${T(Math).floor(list.number/10)*10 + 1},-->
+<!--                    last=(${start + 9 < list.totalPages ? start + 9 : list.totalPages})">-->
+<!--        <th:block th:with="-->
+<!--                firstAddr=@{/chart(page=1)},-->
+<!--                prevAddr=@{/chart(page=${list.number})},-->
+<!--                nextAddr=@{/chart(page=${list.number + 2})},-->
+<!--                lastAddr=@{/chart(page=${list.totalPages})}">-->
+<!--            <li>-->
+<!--                <a th:href="${firstAddr}" aria-label="First">-->
+<!--                    <span aria-hidden="true">First</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            &lt;!&ndash; 이전 페이지로 가기 버튼 &ndash;&gt;-->
+<!--            <li th:class="${list.first} ? 'disabled'">-->
+<!--                <a th:href="${list.first} ? '#' :${prevAddr}"-->
+<!--                   aria-label="Previous">-->
+<!--                    <span aria-hidden="true">&lt;</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            &lt;!&ndash;1,2,3,4,.. 등 페이지&ndash;&gt;-->
+<!--            <li th:each="page: ${#numbers.sequence(start, last)}"-->
+<!--                th:class="${page == list.number + 1} ? 'active'">-->
+<!--                <a th:text="${page}" th:href="@{/chart(page=${page})}"></a>-->
+<!--            </li>-->
+<!--            &lt;!&ndash;다음 페이지로 &ndash;&gt;-->
+<!--            <li th:class="${list.last} ? 'disabled'">-->
+<!--                <a th:href="${list.last} ? '#' : ${nextAddr}"-->
+<!--                   aria-label="Next">-->
+<!--                    <span aria-hidden="true">&gt;</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--            &lt;!&ndash;맨 마지막 페이지로 이동 &ndash;&gt;-->
+<!--            <li>-->
+<!--                <a th:href="${lastAddr}" aria-label="Last">-->
+<!--                    <span aria-hidden="true">Last</span>-->
+<!--                </a>-->
+<!--            </li>-->
+<!--        </th:block>-->
+<!--    </ul>-->
+
+</body>
+</html>

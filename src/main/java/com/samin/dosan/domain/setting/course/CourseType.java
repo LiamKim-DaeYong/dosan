@@ -1,4 +1,4 @@
-package com.samin.dosan.domain.type.setting;
+package com.samin.dosan.domain.setting.course;
 
 import lombok.Getter;
 

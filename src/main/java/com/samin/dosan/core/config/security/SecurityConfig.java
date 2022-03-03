@@ -1,4 +1,4 @@
-package com.samin.dosan.config.security;
+package com.samin.dosan.core.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

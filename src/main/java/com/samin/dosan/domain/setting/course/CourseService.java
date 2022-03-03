@@ -1,9 +1,10 @@
 package com.samin.dosan.domain.setting.course;
 
+import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.setting.course.repository.CourseRepository;
-import com.samin.dosan.domain.type.setting.CourseType;
-import com.samin.dosan.web.param.SearchParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +18,8 @@ public class CourseService {
 
     private final CourseRepository courseRepository;
 
-    public List<Course> findAll(SearchParam searchParam, CourseType courseType) {
-        return courseRepository.findAll(searchParam, courseType);
+    public Page<Course> findAll(SearchParam searchParam, CourseType courseType, Pageable pageable) {
+        return courseRepository.findAll(searchParam, courseType, pageable);
     }
 
     public Course findById(Long id) {
@@ -27,13 +28,18 @@ public class CourseService {
     }
 
     @Transactional
-    public void save(Course course) {
-        courseRepository.save(course);
+    public Long save(Course course) {
+        return courseRepository.save(course).getId();
     }
 
     @Transactional
-    public void update(Course updateData) {
-        Course findCourse = findById(updateData.getId());
-        findCourse.update(updateData);
+    public Long update(Long id, Course updateData) {
+        findById(id).update(updateData);
+        return id;
+    }
+
+    @Transactional
+    public void delete(List<Long> ids) {
+        ids.forEach(id -> findById(id).delete());
     }
 }

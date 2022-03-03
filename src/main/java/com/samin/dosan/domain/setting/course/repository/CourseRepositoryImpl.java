@@ -1,11 +1,16 @@
 package com.samin.dosan.domain.setting.course.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samin.dosan.core.code.Used;
+import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.setting.course.Course;
-import com.samin.dosan.domain.type.setting.CourseType;
-import com.samin.dosan.web.param.SearchParam;
+import com.samin.dosan.domain.setting.course.CourseType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
@@ -17,26 +22,29 @@ public class CourseRepositoryImpl implements CourseRepositoryQueryDsl {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<Course> findAll(SearchParam searchParam, CourseType courseType) {
+    public Page<Course> findAll(SearchParam searchParam, CourseType courseType, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(course.courseType.eq(courseType));
+        builder.and(course.courseType.eq(courseType).and(course.used.eq(Used.Y)));
 
         String searchWorld = searchParam.getSearchWorld();
         if (searchWorld != null) {
-            builder.and(course.subject.contains(searchWorld))
-                    .or(course.content.contains(searchWorld));
+            builder.and(course.subject.contains(searchWorld)
+                    .or(course.content.contains(searchWorld)));
         }
 
-        return queryFactory.selectFrom(course)
+        List<Course> content = queryFactory
+                .selectFrom(course)
                 .where(builder)
                 .orderBy(course.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
-    }
 
-    @Override
-    public boolean existsBySubject(String subject, CourseType courseType) {
-        return queryFactory.selectFrom(course)
-                .where(course.subject.eq(subject).and(course.courseType.eq(courseType)))
-                .fetchFirst() != null;
+        JPAQuery<Course> countQuery = queryFactory
+                .selectFrom(course)
+                .where(builder)
+                .orderBy(course.id.desc());
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
     }
 }

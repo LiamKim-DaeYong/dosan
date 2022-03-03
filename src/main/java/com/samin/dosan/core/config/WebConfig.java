@@ -1,4 +1,4 @@
-package com.samin.dosan.config;
+package com.samin.dosan.core.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.modelmapper.ModelMapper;
@@ -40,6 +40,11 @@ public class WebConfig implements WebMvcConfigurer {
             @Override
             public Optional<String> getCurrentAuditor() {
                 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+                if (authentication == null) {
+                    return null;
+                }
+
                 String loginUser = authentication.getName();
                 return Optional.ofNullable(loginUser);
             }

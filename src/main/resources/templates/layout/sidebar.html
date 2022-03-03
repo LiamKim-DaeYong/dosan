@@ -98,11 +98,11 @@
             <ul>
             </ul>
         </li>
-        <li><span class="nav_list_title"><img th:src="@{/images/common/set.svg}">설정</span>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/set.svg}" th:text="#{menu.setting}"></span>
             <ul>
                 <li><a th:href="@{/setting/seal}">직인관리</a></li>
-                <li><a th:href="@{/setting/course/entry}">교육과정 관리</a></li>
-                <li><a th:href="@{/}">수련장소 관리</a></li>
+                <li><a th:href="@{/setting/course/entry}" th:text="#{menu.setting.course}"></a></li>
+                <li><a th:href="@{/}" th:text="#{menu.setting.place}"></a></li>
                 <li><a th:href="@{/}">지부데이터 관리</a></li>
                 <li><a th:href="@{/}">지역데이터 관리</a></li>
             </ul>

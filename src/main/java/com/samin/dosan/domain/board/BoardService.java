@@ -1,7 +1,7 @@
 package com.samin.dosan.domain.board;
 
+import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.board.repository.BoardRepository;
-import com.samin.dosan.web.param.SearchParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

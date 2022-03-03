@@ -2,8 +2,8 @@ package com.samin.dosan.domain.notice.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.notice.Notice;
-import com.samin.dosan.web.param.SearchParam;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

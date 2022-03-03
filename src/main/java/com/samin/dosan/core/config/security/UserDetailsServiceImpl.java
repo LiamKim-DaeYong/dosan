@@ -1,4 +1,4 @@
-package com.samin.dosan.config.security.security;
+package com.samin.dosan.core.config.security;
 
 import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;

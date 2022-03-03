@@ -7,25 +7,30 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/setting/course")
+@RequestMapping("/setting/course/{type}")
 public class CourseApiController {
 
     private final CourseService courseService;
 
-    @PostMapping("/{type}/add")
-    public ResponseEntity save(@PathVariable String type, @Valid @RequestBody Course course) {
-        course.setCourseType(type);
-        courseService.save(course);
-
+    @PostMapping
+    public ResponseEntity save(@PathVariable String type, @Valid @RequestBody Course saveData) {
+        courseService.save(saveData.init(type));
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{type}/edit")
+    @PutMapping
     public ResponseEntity edit(@Valid @RequestBody Course updateData) {
-        courseService.update(updateData);
+        courseService.update(updateData.getId(), updateData);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity delete(@RequestBody List<Long> ids) {
+        courseService.delete(ids);
         return ResponseEntity.ok().build();
     }
 }

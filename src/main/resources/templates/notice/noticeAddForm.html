@@ -8,7 +8,33 @@
 </head>
 <body>
     <section>
-        <div>공지사항</div>
+        <div th:replace="layout/pageTitle :: pageTitle ('공지사항')"></div>
+
+        <form th:action method="post" th:object="${notice}">
+            <table>
+                <tr>
+                    <th>제목</th>
+                    <td>
+                        <input type="text" th:field="*{title}">
+                        <span th:errors="*{title}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td>
+                        <textarea th:field="*{content}"></textarea>
+                        <span th:field="*{content}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>첨부파일</th>
+                    <td></td>
+                </tr>
+            </table>
+
+            <button type="button" onclick="location.href='/notice'">목록</button>
+            <button type="submit">등록</button>
+        </form>
     </section>
 </body>
 </html>

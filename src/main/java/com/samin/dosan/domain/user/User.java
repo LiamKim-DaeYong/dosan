@@ -1,6 +1,6 @@
 package com.samin.dosan.domain.user;
 
-import com.samin.dosan.domain.BaseEntity;
+import com.samin.dosan.core.domain.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
