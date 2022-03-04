@@ -12,10 +12,10 @@ import java.util.stream.Collectors;
 
 @Getter @Setter
 public class ValidationResponse {
-    private List<ValidError> errors;
+    private List<ValidError> fieldErrors;
 
     public ValidationResponse(Errors errors, MessageSource messageSource, Locale locale) {
-        this.errors = errors.getFieldErrors().stream().map(error -> new ValidError(error, messageSource, locale))
+        this.fieldErrors = errors.getFieldErrors().stream().map(error -> new ValidError(error, messageSource, locale))
                 .collect(Collectors.toList());
     }
 
