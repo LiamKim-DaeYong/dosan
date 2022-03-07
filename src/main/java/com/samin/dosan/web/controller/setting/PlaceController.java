@@ -2,9 +2,9 @@ package com.samin.dosan.web.controller.setting;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.setting.course.Course;
-import com.samin.dosan.domain.setting.course.CourseService;
-import com.samin.dosan.domain.setting.course.CourseType;
+import com.samin.dosan.domain.setting.place.Place;
+import com.samin.dosan.domain.setting.place.PlaceService;
+import com.samin.dosan.domain.setting.place.PlaceType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,45 +21,44 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/setting/course/{type}")
-public class CourseController {
+@RequestMapping("/setting/place/{type}")
+public class PlaceController {
 
-    private final CourseService courseService;
+    private final PlaceService placeService;
 
     @GetMapping
     public String mainView(@PathVariable String type, @ModelAttribute SearchParam searchParam,
                            Pageable pageable, Model model) {
-        Page<Course> result = courseService.findAll(searchParam, CourseType.valueOf(type.toUpperCase()), pageable);
+        Page<Place> result = placeService.findAll(searchParam, PlaceType.valueOf(type.toUpperCase()), pageable);
         model.addAttribute("result", result);
-        model.addAttribute("courseTypes", CourseType.values());
+        model.addAttribute("placeTypes", PlaceType.values());
 
-        return "setting/course/course";
+        return "setting/place/place";
     }
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute Course saveData) {
-        return "setting/course/addForm::#form";
+    public String addForm(@ModelAttribute Place saveData) {
+        return "setting/place/addForm::#form";
     }
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
-        Course course = courseService.findById(id);
-        model.addAttribute("course", course);
+        Place place = placeService.findById(id);
+        model.addAttribute("place", place);
 
-        return "setting/course/editForm::#form";
+        return "setting/place/editForm::#form";
     }
 
     @PostConstruct
     public void init() {
         for (int i = 1; i <= 1000; i++) {
-            Course course = Course.builder()
-                    .subject(i + " 과목")
-                    .content("수련 소감 및 실천다짐토의 결과 발표")
-                    .courseType(CourseType.ENTRY)
+            Place place = Place.builder()
+                    .location(i+"장소")
+                    .placeType(PlaceType.EXPLR)
                     .used(Used.Y)
                     .build();
 
-            courseService.save(course);
+            placeService.save(place);
         }
     }
 }

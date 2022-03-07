@@ -1,6 +1,6 @@
 package com.samin.dosan.core.config.security;
 
-import com.samin.dosan.domain.user.User;
+import com.samin.dosan.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

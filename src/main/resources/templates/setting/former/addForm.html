@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div id="form" th:object="${former}">
+        <div>
+            <label>전직</label>
+            <input type="text" th:field="*{formerName}" />
+            <span errors="formerName"></span>
+        </div>
+
+        <button type="button" onclick="pageObj.save()">등록</button>
+    </div>
+</section>
+</body>
+</html>

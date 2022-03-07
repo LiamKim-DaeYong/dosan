@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/setting/place.js}"></script>
+    </th:block>
+</head>
+<body>
+    <section>
+        <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+        <div class="content">
+            <h3 th:text="#{place}"></h3>
+            <ul>
+                <li th:each="type : ${placeTypes}">
+                    <a th:href="@{|/setting/place/${#strings.toLowerCase(type.name())}|}"
+                       th:text="${type.description}"></a>
+                </li>
+            </ul>
+
+            <form th:action>
+                <div th:replace="utils/searchBar :: searchBar"></div>
+
+                <table>
+                    <tr>
+                        <th>
+                            <input type="checkbox" check="all"/>
+                        </th>
+                        <th>No</th>
+                        <th th:text="#{place.location}">장소</th>
+                    </tr>
+
+                    <tr th:each="place : ${result.content}">
+                        <td>
+                            <input type="checkbox" th:value="${place.id}"/>
+                        </td>
+                        <td th:text="${result.totalElements - (result.pageable.offset + placeStat.index)}"></td>
+                        <td>
+                            <a href="#" th:text="${place.location}" th:onclick="|pageObj.openEditPage(${place.id})|"</a>
+                        </td>
+                    </tr>
+                </table>
+
+                <nav th:replace="utils/pagination :: pagination(${result})"></nav>
+
+                <div>
+                    <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" >선택삭제</button>
+                    <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" >신규등록</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Modal -->
+        <div th:replace="utils/modal :: modal('modal')"></div>
+    </section>
+</body>
+</html>

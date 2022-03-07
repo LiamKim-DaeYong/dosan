@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div id="form" th:object="${place}">
+        <input type="hidden" th:field="*{id}" />
+        <div>
+            <input type="text" th:field="*{location}" />
+            <span errors="location"></span>
+        </div>
+
+        <button type="button" onclick="pageObj.edit()">수정</button>
+    </div>
+</section>
+</body>
+</html>

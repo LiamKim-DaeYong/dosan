@@ -1,4 +1,4 @@
-package com.samin.dosan.domain.setting.course;
+package com.samin.dosan.domain.setting.place;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
@@ -12,41 +12,37 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Course extends BaseEntity {
+public class Place extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "course_id")
+    @Column(name = "place_id")
     private Long id;
 
     @NotBlank
     @Column(length = 100, nullable = false)
-    private String subject;
-
-    @NotBlank
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
+    private String location;
 
     @Enumerated(EnumType.STRING)
-    private CourseType courseType;
+    private PlaceType placeType;
 
     @Enumerated(EnumType.STRING)
     private Used used;
 
     /*================== Business Logic ==================*/
-    public Course init(String type) {
-        this.courseType = CourseType.valueOf(type.toUpperCase());
+    public Place init(String type) {
+        this.placeType = PlaceType.valueOf(type.toUpperCase());
         this.used = Used.Y;
 
         return this;
     }
 
-    public void update(Course updateData) {
-        this.subject = updateData.getSubject();
-        this.content = updateData.getContent();
+    public void update(Place placeData) {
+        this.location = placeData.getLocation();
     }
 
     public void delete() {
         this.used = Used.N;
     }
 }
+

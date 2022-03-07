@@ -1,7 +1,7 @@
 package com.samin.dosan.core.config.security;
 
-import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;
+import com.samin.dosan.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

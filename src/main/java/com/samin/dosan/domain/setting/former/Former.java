@@ -1,4 +1,4 @@
-package com.samin.dosan.domain.setting.course;
+package com.samin.dosan.domain.setting.former;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
@@ -12,38 +12,29 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Course extends BaseEntity {
+public class Former extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "course_id")
+    @Column(name = "former_id")
     private Long id;
 
     @NotBlank
     @Column(length = 100, nullable = false)
-    private String subject;
-
-    @NotBlank
-    @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
-
-    @Enumerated(EnumType.STRING)
-    private CourseType courseType;
+    private String formerName;
 
     @Enumerated(EnumType.STRING)
     private Used used;
 
     /*================== Business Logic ==================*/
-    public Course init(String type) {
-        this.courseType = CourseType.valueOf(type.toUpperCase());
+    public Former init() {
         this.used = Used.Y;
 
         return this;
     }
 
-    public void update(Course updateData) {
-        this.subject = updateData.getSubject();
-        this.content = updateData.getContent();
+    public void update(Former updateData) {
+        this.formerName = updateData.getFormerName();
     }
 
     public void delete() {

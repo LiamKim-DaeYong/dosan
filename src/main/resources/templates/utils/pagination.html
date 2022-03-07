@@ -4,11 +4,11 @@
 </head>
 <body>
 <nav th:fragment="pagination(pageResult)" style="width: 80%" th:object="${pageResult}">
-    <ul th:with="blockSize=10,
-                start=((*{number} / ${blockSize}) * ${blockSize} +1 ),
-                end=(${start} + 9 < *{totalPages})? ${start} + 9 : *{totalPages},
-                prevBlock=*{(number/10 * 10) - 10 > 0? (number/10 * 10) - 10 : 0},
-                nextBlock=*{(number/10 * 10) + 10 < totalPages? ((number/10 * 10) + 10) : totalPages}">
+    <ul th:with="blockSize=10, number = *{number}, totalPages = *{totalPages + 1},
+                start=${T(Math).floor(number/blockSize)*blockSize + 1},
+                end=(${start + 9 < totalPages ? start + 9 : totalPages}),
+                prevBlock=${(number/blockSize*blockSize)-blockSize > 0 ? (number/blockSize*blockSize)-blockSize : 0},
+                nextBlock=${(number/blockSize*blockSize)+blockSize < totalPages ? (number/blockSize*blockSize)+blockSize : totalPages-1}">
 
         <li style="display: inline-block">
             <button name="page" th:value="0">&laquo;</button>
@@ -17,7 +17,6 @@
         <li style="display: inline-block">
             <button name="page" th:value="${prevBlock}">&lsaquo;</button>
         </li>
-
         <li style="display: inline-block" th:each="page : ${#numbers.sequence(start, end)}">
             <button name="page" th:text="${page}" th:value="${page-1}"></button>
         </li>
