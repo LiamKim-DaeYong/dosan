@@ -4,9 +4,9 @@
 </head>
 <body>
 <nav th:fragment="pagination(pageResult)" style="width: 80%" th:object="${pageResult}">
-    <ul th:with="blockSize=10, number = *{number}, totalPages = *{totalPages + 1},
+    <ul th:with="blockSize=10, number = *{number}, totalPages = *{totalPages},
                 start=${T(Math).floor(number/blockSize)*blockSize + 1},
-                end=(${start + 9 < totalPages ? start + 9 : totalPages}),
+                end=(${totalPages==0? 1 : start + 9 < totalPages ? start + 9 : totalPages}),
                 prevBlock=${(number/blockSize*blockSize)-blockSize > 0 ? (number/blockSize*blockSize)-blockSize : 0},
                 nextBlock=${(number/blockSize*blockSize)+blockSize < totalPages ? (number/blockSize*blockSize)+blockSize : totalPages-1}">
 

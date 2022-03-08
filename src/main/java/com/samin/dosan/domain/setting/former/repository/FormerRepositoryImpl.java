@@ -40,8 +40,7 @@ public class FormerRepositoryImpl implements FormerRepositoryQueryDsl {
 
         JPAQuery<Former> countQuery = queryFactory
                 .selectFrom(former)
-                .where(builder)
-                .orderBy(former.id.desc());
+                .where(builder);
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
     }

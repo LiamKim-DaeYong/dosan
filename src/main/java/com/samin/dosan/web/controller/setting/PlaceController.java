@@ -29,7 +29,9 @@ public class PlaceController {
     @GetMapping
     public String mainView(@PathVariable String type, @ModelAttribute SearchParam searchParam,
                            Pageable pageable, Model model) {
-        Page<Place> result = placeService.findAll(searchParam, PlaceType.valueOf(type.toUpperCase()), pageable);
+        PlaceType placeType = PlaceType.valueOf(type.toUpperCase());
+
+        Page<Place> result = placeService.findAll(searchParam, placeType, pageable);
         model.addAttribute("result", result);
         model.addAttribute("placeTypes", PlaceType.values());
 

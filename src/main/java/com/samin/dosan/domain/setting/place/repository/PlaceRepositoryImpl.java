@@ -41,8 +41,7 @@ public class PlaceRepositoryImpl implements PlaceRepositoryQueryDsl {
 
         JPAQuery<Place> countQuery = queryFactory
                 .selectFrom(place)
-                .where(builder)
-                .orderBy(place.id.desc());
+                .where(builder);
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
     }

@@ -29,7 +29,9 @@ public class CourseController {
     @GetMapping
     public String mainView(@PathVariable String type, @ModelAttribute SearchParam searchParam,
                            Pageable pageable, Model model) {
-        Page<Course> result = courseService.findAll(searchParam, CourseType.valueOf(type.toUpperCase()), pageable);
+        CourseType courseType = CourseType.valueOf(type.toUpperCase());
+
+        Page<Course> result = courseService.findAll(searchParam, courseType, pageable);
         model.addAttribute("result", result);
         model.addAttribute("courseTypes", CourseType.values());
 

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-    <div id="form" th:object="${place}">
+    <div id="form" th:object="${educatorCode}">
         <input type="hidden" th:field="*{id}" />
         <div>
-            <input type="text" th:field="*{location}" />
-            <span errors="location"></span>
+            <input type="text" th:field="*{code}" />
+            <span errors="code"></span>
         </div>
 
         <button type="button" onclick="pageObj.edit()" th:text="#{button.update}">수정</button>

@@ -5,7 +5,7 @@
     <th:block id="css"></th:block>
 
     <th:block id="script">
-        <script type="text/javascript" th:src="@{/js/setting/place.js}"></script>
+        <script type="text/javascript" th:src="@{/js/setting/employees.js}"></script>
     </th:block>
 </head>
 <body>
@@ -13,10 +13,10 @@
         <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
 
         <div class="content">
-            <h3 th:text="#{place}"></h3>
+            <h3 th:text="#{course}"></h3>
             <ul>
-                <li th:each="type : ${placeTypes}">
-                    <a th:href="@{|/setting/place/${#strings.toLowerCase(type.name())}|}"
+                <li th:each="type : ${employeesCodeTypes}">
+                    <a th:href="@{|/setting/employees/${#strings.toLowerCase(type.name())}|}"
                        th:text="${type.description}"></a>
                 </li>
             </ul>
@@ -30,16 +30,16 @@
                             <input type="checkbox" check="all"/>
                         </th>
                         <th th:text="#{label.no}">No</th>
-                        <th th:text="#{place.location}">장소</th>
+                        <th th:text="${employeesCodeType.description}"></th>
                     </tr>
 
-                    <tr th:each="place : ${result.content}">
+                    <tr th:each="employeesCode : ${result.content}">
                         <td>
-                            <input type="checkbox" th:value="${place.id}"/>
+                            <input type="checkbox" th:value="${employeesCode.id}"/>
                         </td>
-                        <td th:text="${result.totalElements - (result.pageable.offset + placeStat.index)}"></td>
+                        <td th:text="${result.totalElements - (result.pageable.offset + employeesCodeStat.index)}"></td>
                         <td>
-                            <a href="#" th:text="${place.location}" th:onclick="|pageObj.openEditPage(${place.id})|"</a>
+                            <a href="#" th:text="${employeesCode.code}" th:onclick="pageObj.openEditPage([[${employeesCode.id}]], [[${employeesCodeType.description}]])"</a>
                         </td>
                     </tr>
                 </table>
@@ -48,7 +48,7 @@
 
                 <div>
                     <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" >선택삭제</button>
-                    <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" >등록</button>
+                    <button type="button" th:text="#{button.new}" th:onclick="pageObj.openAddPage([[${employeesCodeType.description}]])">등록</button>
                 </div>
             </form>
         </div>

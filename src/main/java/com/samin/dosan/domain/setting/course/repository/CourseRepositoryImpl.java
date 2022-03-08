@@ -42,8 +42,7 @@ public class CourseRepositoryImpl implements CourseRepositoryQueryDsl {
 
         JPAQuery<Course> countQuery = queryFactory
                 .selectFrom(course)
-                .where(builder)
-                .orderBy(course.id.desc());
+                .where(builder);
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
     }

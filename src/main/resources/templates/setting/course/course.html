@@ -29,7 +29,7 @@
                         <th>
                             <input type="checkbox" check="all"/>
                         </th>
-                        <th>No</th>
+                        <th th:text="#{label.no}">No</th>
                         <th th:text="#{course.subject}">과목</th>
                         <th th:text="#{course.content}">내용</th>
                     </tr>
@@ -52,7 +52,7 @@
 
                 <div>
                     <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" >선택삭제</button>
-                    <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" >신규등록</button>
+                    <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" >등록</button>
                 </div>
             </form>
         </div>
