@@ -4,6 +4,7 @@ import com.samin.dosan.domain.setting.employees.EmployeesCode;
 import com.samin.dosan.domain.setting.employees.EmployeesCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -12,6 +13,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/setting/employees/{type}")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class EmployeesCodeApiController {
 
     private final EmployeesCodeService employeesCodeService;

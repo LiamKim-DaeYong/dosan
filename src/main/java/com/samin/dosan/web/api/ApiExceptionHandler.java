@@ -21,12 +21,12 @@ public class ApiExceptionHandler {
 
     private final MessageSource messageSource;
 
-    @ExceptionHandler
-    public ResponseEntity duplicateKey(DuplicateKeyException exception) {
-        Map<String, String> errors = new HashMap<>();
-        errors.put("global", exception.getMessage());
-        return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler
+//    public ResponseEntity duplicateKey(DuplicateKeyException exception) {
+//        Map<String, String> errors = new HashMap<>();
+//        errors.put("global", exception.getMessage());
+//        return new ResponseEntity(errors, HttpStatus.BAD_REQUEST);
+//    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
