@@ -2,6 +2,7 @@ package com.samin.dosan.web.api.setting;
 
 import com.samin.dosan.domain.setting.place.Place;
 import com.samin.dosan.domain.setting.place.PlaceService;
+import com.samin.dosan.domain.setting.place.PlaceType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,5 +35,11 @@ public class PlaceApiController {
     public ResponseEntity delete(@RequestBody List<Long> ids) {
         placeService.delete(ids);
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/duplicate")
+    public ResponseEntity<Boolean> valid(@PathVariable String type, @RequestBody Place validData) {
+        PlaceType placeType = PlaceType.valueOf(type.toUpperCase());
+        return ResponseEntity.ok(placeService.valid(placeType, validData));
     }
 }

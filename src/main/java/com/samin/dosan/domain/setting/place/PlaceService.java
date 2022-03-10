@@ -27,6 +27,10 @@ public class PlaceService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    public boolean valid(PlaceType placeType, Place place) {
+        return placeRepository.findByLocation(placeType, place).size() > 0;
+    }
+
     @Transactional
     public Long save(Place place) {
         return placeRepository.save(place).getId();

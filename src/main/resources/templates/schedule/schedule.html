@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css">
+        <link rel="stylesheet" th:href="@{https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css}"/>
+        <link rel="stylesheet" th:href="@{https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css}"/>
+        <link rel="stylesheet" th:href="@{https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css}"/>
+    </th:block>
+
+    <th:block id="script">
+        <script th:src="@{https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js}"></script>
+        <script th:src="@{https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js}"></script>
+        <script th:src="@{https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js}"></script>
+        <script th:src="@{https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js}"></script>
+        <script th:src="@{/js/schedule/schedule.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (|${scheduleTitle} 일정|)"></div>
+
+    <div id="calendar" style="width: 80%; height: 600px"></div>
+</section>
+</body>
+</html>

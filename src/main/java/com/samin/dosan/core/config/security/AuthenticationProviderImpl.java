@@ -1,6 +1,6 @@
 package com.samin.dosan.core.config.security;
 
-import com.samin.dosan.domain.user.entity.User;
+import com.samin.dosan.domain.user.SessionUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,13 +20,13 @@ public class AuthenticationProviderImpl implements AuthenticationProvider {
         String userId = authentication.getName();
         String password = (String) authentication.getCredentials();
 
-        User user = userDetailsService.loadUserByUsername(userId);
+        SessionUser sessionUser = userDetailsService.loadUserByUsername(userId);
 
-        if (!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(password, sessionUser.getPassword())) {
             throw new BadCredentialsException("패스워드가 일치하지 않습니다.");
         }
 
-        return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(sessionUser, null, sessionUser.getAuthorities());
     }
 
     @Override

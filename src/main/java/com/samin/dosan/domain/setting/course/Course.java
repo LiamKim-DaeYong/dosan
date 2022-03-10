@@ -28,9 +28,11 @@ public class Course extends BaseEntity {
     private String content;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 10, nullable = false)
     private CourseType courseType;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 1, nullable = false)
     private Used used;
 
     /*================== Business Logic ==================*/

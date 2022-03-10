@@ -22,6 +22,10 @@ public class EmployeesCodeService {
         return employeesCodeRepository.findAll(searchParam, employeesCodeType, pageable);
     }
 
+    public List<EmployeesCode> findAllTypes() {
+        return employeesCodeRepository.findAllTypes();
+    }
+
     public EmployeesCode findById(Long id) {
         return employeesCodeRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);

@@ -44,4 +44,27 @@ public class FormerRepositoryImpl implements FormerRepositoryQueryDsl {
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
     }
+
+    @Override
+    public List<Former> findByFormerName(Former validFormer) {
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(former.used.eq(Used.Y)
+                .and(former.formerName.eq(validFormer.getFormerName())));
+
+        List<Former> findFormer = queryFactory
+                .selectFrom(former)
+                .where(builder)
+                .fetch();
+
+        return findFormer;
+    }
+
+    @Override
+    public List<Former> findAllList() {
+        return queryFactory
+                .selectFrom(former)
+                .where(former.used.eq(Used.Y))
+                .orderBy(former.formerName.asc())
+                .fetch();
+    }
 }

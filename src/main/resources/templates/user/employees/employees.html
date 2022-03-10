@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/setting/course.js}"></script>
+    </th:block>
+</head>
+<body>
+    <section>
+        <div th:replace="layout/pageTitle :: pageTitle (#{menu.user})"></div>
+
+        <div class="content">
+            <h3 th:text="#{menu.user.employees}"></h3>
+            <ul>
+                <li>
+                    <a href="/user/employees">전체</a>
+                </li>
+                <li th:each="type : ${employeesTypes}">
+                    <a th:href="@{|/user/employees/${type.id}|}"
+                       th:text="${type.code}"></a>
+                </li>
+            </ul>
+
+            <form th:action>
+                <div th:replace="utils/searchBar :: searchBar"></div>
+
+                <table>
+                    <tr>
+                        <th>
+                            <input type="checkbox" check="all"/>
+                        </th>
+                        <th th:text="#{label.no}">No</th>
+                        <th th:text="#{user.name}">이름</th>
+                        <th th:text="#{user.gender}">성별</th>
+                        <th th:text="#{user.employees.appointmentdata}">채용일</th>
+                        <th th:text="#{user.type}">구분</th>
+                        <th th:text="#{user.charge}">직위</th>
+                        <th th:text="#{user.belong}">직급</th>
+                        <th th:text="#{user.branch}">근무부서</th>
+                        <th th:text="#{user.workarea}">근무지역</th>
+                        <th th:text="#{user.contact}">연락처</th>
+                    </tr>
+                </table>
+
+<!--                <nav th:replace="utils/pagination :: pagination(${result})"></nav>-->
+
+                <div>
+                    <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" >등록</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Modal -->
+        <div th:replace="utils/modal :: modal('modal')"></div>
+    </section>
+</body>
+</html>

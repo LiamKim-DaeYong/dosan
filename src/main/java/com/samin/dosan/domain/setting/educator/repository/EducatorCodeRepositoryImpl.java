@@ -45,4 +45,13 @@ public class EducatorCodeRepositoryImpl implements EducatorCodeRepositoryQueryDs
 
         return PageableExecutionUtils.getPage(content, pageable, countQUery.fetch()::size);
     }
+
+    @Override
+    public List<EducatorCode> findAllTypes() {
+        return queryFactory
+                .selectFrom(educatorCode)
+                .where(educatorCode.educatorCodeType.eq(EducatorCodeType.TYPE)
+                        .and(educatorCode.used.eq(Used.Y)))
+                .fetch();
+    }
 }

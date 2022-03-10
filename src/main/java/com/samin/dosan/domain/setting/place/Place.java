@@ -24,9 +24,11 @@ public class Place extends BaseEntity {
     private String location;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 10, nullable = false)
     private PlaceType placeType;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 1, nullable = false)
     private Used used;
 
     /*================== Business Logic ==================*/

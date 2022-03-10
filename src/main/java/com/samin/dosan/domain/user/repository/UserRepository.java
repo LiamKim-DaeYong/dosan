@@ -1,6 +1,6 @@
 package com.samin.dosan.domain.user.repository;
 
-import com.samin.dosan.domain.user.entity.User;
+import com.samin.dosan.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

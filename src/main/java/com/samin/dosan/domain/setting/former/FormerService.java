@@ -22,9 +22,17 @@ public class FormerService {
         return formerRepository.findAll(searchParam, pageable);
     }
 
+    public List<Former> findAllList() {
+        return formerRepository.findAllList();
+    }
+
     public Former findById(Long id) {
         return formerRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
+    }
+
+    public boolean valid(Former former) {
+        return formerRepository.findByFormerName(former).size() > 0;
     }
 
     @Transactional

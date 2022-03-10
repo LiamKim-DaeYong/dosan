@@ -56,16 +56,23 @@ public class EmployeesCodeController {
 
     @PostConstruct
     public void init() {
-        for (int i = 1; i < 100; i++) {
-            EmployeesCode employeesCode = EmployeesCode.builder()
-                    .id(Long.valueOf(i))
-                    .code("구분 " + i)
-                    .employeesCodeType(EmployeesCodeType.TYPE)
-                    .used(Used.Y)
-                    .build();
+        EmployeesCode employeesCode1 = EmployeesCode.builder()
+                .id(1L)
+                .code("임원")
+                .employeesCodeType(EmployeesCodeType.TYPE)
+                .used(Used.Y)
+                .build();
 
-            employeesCodeService.save(employeesCode);
-        }
+        employeesCodeService.save(employeesCode1);
+
+        EmployeesCode employeesCode2 = EmployeesCode.builder()
+                .id(2L)
+                .code("직원")
+                .employeesCodeType(EmployeesCodeType.TYPE)
+                .used(Used.Y)
+                .build();
+
+        employeesCodeService.save(employeesCode2);
 
         for (int i = 1; i < 100; i++) {
             EmployeesCode employeesCode = EmployeesCode.builder()

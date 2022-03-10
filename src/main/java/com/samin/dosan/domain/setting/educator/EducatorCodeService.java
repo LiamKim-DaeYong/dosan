@@ -22,6 +22,10 @@ public class EducatorCodeService {
         return educatorCodeRepository.findAll(searchParam, educatorCodeType, pageable);
     }
 
+    public List<EducatorCode> findAllTypes() {
+        return educatorCodeRepository.findAllTypes();
+    }
+
     public EducatorCode findById(Long id) {
         return educatorCodeRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);

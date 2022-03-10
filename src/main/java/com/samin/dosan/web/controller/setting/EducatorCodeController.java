@@ -56,16 +56,41 @@ public class EducatorCodeController {
 
     @PostConstruct
     public void init() {
-        for (int i = 1; i < 100; i++) {
-            EducatorCode educatorCode = EducatorCode.builder()
-                    .id(Long.valueOf(i))
-                    .code("구분 " + i)
-                    .educatorCodeType(EducatorCodeType.TYPE)
-                    .used(Used.Y)
-                    .build();
+        EducatorCode educatorCode1 = EducatorCode.builder()
+                .id(1L)
+                .code("지도위원")
+                .educatorCodeType(EducatorCodeType.TYPE)
+                .used(Used.Y)
+                .build();
 
-            educatorCodeService.save(educatorCode);
-        }
+        educatorCodeService.save(educatorCode1);
+
+        EducatorCode educatorCode2 = EducatorCode.builder()
+                .id(2L)
+                .code("예절지도위원")
+                .educatorCodeType(EducatorCodeType.TYPE)
+                .used(Used.Y)
+                .build();
+
+        educatorCodeService.save(educatorCode2);
+
+        EducatorCode educatorCode3 = EducatorCode.builder()
+                .id(3L)
+                .code("휴직지도위원")
+                .educatorCodeType(EducatorCodeType.TYPE)
+                .used(Used.Y)
+                .build();
+
+        educatorCodeService.save(educatorCode3);
+
+        EducatorCode educatorCode4 = EducatorCode.builder()
+                .id(4L)
+                .code("퇴직지도위원")
+                .educatorCodeType(EducatorCodeType.TYPE)
+                .used(Used.Y)
+                .build();
+
+        educatorCodeService.save(educatorCode4);
 
         for (int i = 1; i < 100; i++) {
             EducatorCode educatorCode = EducatorCode.builder()

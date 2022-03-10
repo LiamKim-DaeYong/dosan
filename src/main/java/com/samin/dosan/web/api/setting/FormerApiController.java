@@ -35,4 +35,9 @@ public class FormerApiController {
         formerService.delete(ids);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/duplicate")
+    public ResponseEntity<Boolean> valid(@RequestBody Former validData) {
+        return ResponseEntity.ok(formerService.valid(validData));
+    }
 }

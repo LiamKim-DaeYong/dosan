@@ -45,4 +45,13 @@ public class EmployeesCodeRepositoryImpl implements EmployeesCodeRepositoryQuery
 
         return PageableExecutionUtils.getPage(content, pageable, countQUery.fetch()::size);
     }
+
+    @Override
+    public List<EmployeesCode> findAllTypes() {
+        return queryFactory
+                .selectFrom(employeesCode)
+                .where(employeesCode.employeesCodeType.eq(EmployeesCodeType.TYPE)
+                        .and(employeesCode.used.eq(Used.Y)))
+                .fetch();
+    }
 }

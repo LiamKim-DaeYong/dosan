@@ -1,6 +1,7 @@
 package com.samin.dosan.web.controller;
 
-import com.samin.dosan.domain.user.entity.User;
+import com.samin.dosan.core.code.Used;
+import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +33,7 @@ public class LoginController {
                 .password(passwordEncoder.encode("1111"))
                 .userNm("관리자")
                 .role("ROLE_ADMIN")
+                .used(Used.Y)
                 .build());
 
         userService.save(user);

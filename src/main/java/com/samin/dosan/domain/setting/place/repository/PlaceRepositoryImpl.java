@@ -45,4 +45,19 @@ public class PlaceRepositoryImpl implements PlaceRepositoryQueryDsl {
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
     }
+
+    @Override
+    public List<Place> findByLocation(PlaceType placeType, Place validPlace) {
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(place.placeType.eq(placeType)
+                .and(place.used.eq(Used.Y))
+                .and(place.location.eq(validPlace.getLocation())));
+
+        List<Place> findPlace = queryFactory
+                .selectFrom(place)
+                .where(builder)
+                .fetch();
+
+        return findPlace;
+    }
 }

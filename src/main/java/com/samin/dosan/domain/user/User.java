@@ -1,25 +1,23 @@
 package com.samin.dosan.domain.user;
 
+import com.samin.dosan.core.code.Address;
+import com.samin.dosan.core.code.Gender;
+import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
+import com.samin.dosan.domain.setting.educator.EducatorCode;
+import com.samin.dosan.domain.setting.employees.EmployeesCode;
+import com.samin.dosan.domain.setting.former.Former;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Arrays;
-import java.util.Collection;
+import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
-@Setter
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity implements UserDetails {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User extends BaseEntity {
 
     @Id
     @Column(length = 100, nullable = false)
@@ -34,41 +32,72 @@ public class User extends BaseEntity implements UserDetails {
     @Column(length = 10, nullable = false)
     private String role;
 
-    @ColumnDefault("true")
-    private boolean enabled;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 1, nullable = false)
+    private Used used;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.<GrantedAuthority>asList(new SimpleGrantedAuthority(this.role));
-    }
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "former_id")
+    private Former former;
 
-    @Override
-    public String getUsername() {
-        return this.getUserId();
-    }
+    @Column(length = 14)
+    private String phoneNum;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+    @Column(length = 14)
+    private String officeNum;
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+    @Column(length = 14)
+    private String homeNum;
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+    @Column(length = 8)
+    private LocalDate dateOfBirth;
 
-    @Override
-    public boolean isEnabled() {
-        return this.enabled;
-    }
+    @Column(length = 200)
+    private String email;
+
+    @Column(length = 100)
+    private String bank;
+
+    @Column(length = 100)
+    private String accountNum;
+
+    @Embedded
+    private Address address;
+
+    /* 지도위원 */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "educator_type")
+    private EducatorCode educatorType;
+
+    private LocalDate appointmentDate;
+
+    private LocalDate retirementDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "educator_branch")
+    private EducatorCode educatorBranch;
+
+    /* 임직원 */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employees_type")
+    private EmployeesCode employeesType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employees_position")
+    private EmployeesCode employeesPosition;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employees_rank")
+    private EmployeesCode employeesRank;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employees_step")
+    private EmployeesCode employeesStep;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employees_department")
+    private EmployeesCode employeesDepartment;
 }

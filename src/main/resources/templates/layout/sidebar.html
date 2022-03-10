@@ -67,18 +67,18 @@
         <li><a th:href="@{/}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a></li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/calendar.svg}">일정관리</span>
             <ul>
-                <li class="nav_on_sub"><a th:href="@{/}">이사장 일정</a></li>
-                <li><a th:href="@{/}">원장 일정</a></li>
-                <li><a th:href="@{/}">기타 일정</a></li>
+                <li class="nav_on_sub"><a th:href="@{/schedule/chairman}">이사장 일정</a></li>
+                <li><a th:href="@{/schedule/director}">원장 일정</a></li>
+                <li><a th:href="@{/schedule/etc}">기타 일정</a></li>
             </ul>
         </li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/member.svg}">사용자 관리</span>
             <ul>
                 <li>
-                    <a th:href="@{/members/manager}">임직원 관리</a>
+                    <a th:href="@{/user/employees}" th:text="#{menu.user.employees}">임직원 관리</a>
                 </li>
                 <li>
-                    <a th:href="@{/members/user}">지도위원 관리</a>
+                    <a th:href="@{/user/educator}" th:text="#{menu.user.educator}">지도위원 관리</a>
                 </li>
             </ul>
         </li>

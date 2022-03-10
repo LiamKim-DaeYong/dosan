@@ -14,7 +14,25 @@ var pageObj = {
     },
 
     save: function () {
-        $api.post({data: modal.getData()})
+        var option = {
+            data: modal.getData(),
+            url: $url.getPath('duplicate')
+        };
+
+        if (!$valid.duplicate(option)) {
+            $api.post({data: modal.getData()})
+        } else {
+            $("[errors]").text("");
+            $("[errorclass]").each(function () {
+                $(this).removeClass($(this).attr("errorclass"));
+            });
+
+            var errorField = $("#formerName");
+            errorField.addClass(errorField.attr("errorclass"));
+
+            var errorMsgField = $(`[errors='formerName']`);
+            errorMsgField.text("이미 존재하는 전직입니다.");
+        }
     },
 
     edit: function () {

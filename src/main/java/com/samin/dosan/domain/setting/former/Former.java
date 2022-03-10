@@ -24,6 +24,7 @@ public class Former extends BaseEntity {
     private String formerName;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 1, nullable = false)
     private Used used;
 
     /*================== Business Logic ==================*/

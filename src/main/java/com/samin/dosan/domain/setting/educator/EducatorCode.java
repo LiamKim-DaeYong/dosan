@@ -24,9 +24,11 @@ public class EducatorCode extends BaseEntity {
     private String code;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 10, nullable = false)
     private EducatorCodeType educatorCodeType;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 1, nullable = false)
     private Used used;
 
     /*================== Business Logic ==================*/
