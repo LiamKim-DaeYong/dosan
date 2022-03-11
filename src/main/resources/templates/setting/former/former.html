@@ -13,36 +13,36 @@
         <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
 
         <div class="content">
-            <h3 th:text="#{former}"></h3>
+            <h2 th:text="#{former}"></h2>
 
             <form th:action>
                 <div th:replace="utils/searchBar :: searchBar"></div>
 
                 <table>
                     <tr>
-                        <th>
+                        <th class="table_chk">
                             <input type="checkbox" check="all"/>
                         </th>
-                        <th th:text="#{label.no}">No</th>
+                        <th class="table_num" th:text="#{label.no}">No</th>
                         <th th:text="#{former.formerName}">전직</th>
                     </tr>
 
                     <tr th:each="former : ${result.content}">
-                        <td>
+                        <td class="table_chk">
                             <input type="checkbox" th:value="${former.id}"/>
                         </td>
-                        <td th:text="${result.totalElements - (result.pageable.offset + formerStat.index)}"></td>
+                        <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + formerStat.index)}"></td>
                         <td>
                             <a href="#" th:text="${former.formerName}" th:onclick="|pageObj.openEditPage(${former.id})|"</a>
                         </td>
                     </tr>
                 </table>
 
-                <nav th:replace="utils/pagination :: pagination(${result})"></nav>
+                <div th:replace="utils/pagination :: pagination(${result})"></div>
 
-                <div>
-                    <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" >선택삭제</button>
-                    <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" >등록</button>
+                <div class="btn_box">
+                    <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
+                    <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" class="btn_new">등록</button>
                 </div>
             </form>
         </div>

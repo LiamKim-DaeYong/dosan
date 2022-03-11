@@ -43,7 +43,7 @@ $modal = function () {
 
         this.target = $(element);
         this.$content = this.target.find('.modal-content');
-        this.$title = this.target.find('.modal-header h5');
+        this.$title = this.target.find('.modal-header h3');
         this.$body = this.target.find('.modal-body');
         this.$content.css({'height': this.defaultOption.height, 'width': this.defaultOption.width});
 

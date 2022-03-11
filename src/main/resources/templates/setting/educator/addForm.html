@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-    <div id="form" th:object="${educatorCode}">
-        <div>
-            <input type="text" th:field="*{code}" />
-            <span errors="code"></span>
-        </div>
-
-        <button type="button" onclick="pageObj.save()" th:text="#{button.new}">등록</button>
+<div id="form" th:object="${educatorCode}">
+    <div>
+        <input type="text" th:field="*{code}" class="modal_long_input"/>
+        <span errors="code" class="modal_error"></span>
     </div>
+    <div class="modal_btn_box">
+        <button type="button" onclick="pageObj.save()" th:text="#{button.new}" class="btn_new">등록</button>
+    </div>
+</div>
 </section>
 </body>
 </html>

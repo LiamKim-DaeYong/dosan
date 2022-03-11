@@ -3,33 +3,33 @@
 <head>
 </head>
 <body>
-<nav th:fragment="pagination(pageResult)" style="width: 80%" th:object="${pageResult}">
+<div th:fragment="pagination(pageResult)" class="pagination" th:object="${pageResult}">
     <ul th:with="blockSize=10, number = *{number}, totalPages = *{totalPages},
                 start=${T(Math).floor(number/blockSize)*blockSize + 1},
                 end=(${totalPages==0? 1 : start + 9 < totalPages ? start + 9 : totalPages}),
                 prevBlock=${(number/blockSize*blockSize)-blockSize > 0 ? (number/blockSize*blockSize)-blockSize : 0},
                 nextBlock=${(number/blockSize*blockSize)+blockSize < totalPages ? (number/blockSize*blockSize)+blockSize : totalPages-1}">
 
-        <li style="display: inline-block">
-            <button name="page" th:value="0">&laquo;</button>
+        <li>
+            <button name="page" th:value="0" class="pagination_arrow"><img th:src="@{/images/common/pagination-prev-all.svg}"></button>
         </li>
 
-        <li style="display: inline-block">
-            <button name="page" th:value="${prevBlock}">&lsaquo;</button>
+        <li>
+            <button name="page" th:value="${prevBlock}" class="pagination_arrow"><img th:src="@{/images/common/pagination-prev.svg}"></button>
         </li>
 
-        <li style="display: inline-block" th:each="page : ${#numbers.sequence(start, end)}">
+        <li th:each="page : ${#numbers.sequence(start, end)}">
             <button name="page" th:text="${page}" th:value="${page-1}"></button>
         </li>
 
-        <li style="display: inline-block">
-            <button name="page" th:value="${nextBlock}">&rsaquo;</button>
+        <li>
+            <button name="page" th:value="${nextBlock}" class="pagination_arrow"><img th:src="@{/images/common/pagination-next.svg}"></button>
         </li>
 
-        <li style="display: inline-block">
-            <button name="page" th:value="*{totalPages-1}">&raquo;</button>
+        <li>
+            <button name="page" th:value="*{totalPages-1}" class="pagination_arrow"><img th:src="@{/images/common/pagination-next-all.svg}"></button>
         </li>
     </ul>
-</nav>
+</div>
 </body>
 </html>

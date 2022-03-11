@@ -9,52 +9,54 @@
     </th:block>
 </head>
 <body>
-    <section>
-        <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
 
-        <div class="content">
-            <h3 th:text="#{place}"></h3>
-            <ul>
-                <li th:each="type : ${placeTypes}">
-                    <a th:href="@{|/setting/place/${#strings.toLowerCase(type.name())}|}"
-                       th:text="${type.description}"></a>
-                </li>
-            </ul>
+    <div class="content">
+        <h2 th:text="#{place}"></h2>
 
-            <form th:action>
+        <form th:action>
+            <div class="all_search_box">
+                <ul class="toggle_list">
+                    <li th:each="type : ${placeTypes}">
+                        <a th:href="@{|/setting/place/${#strings.toLowerCase(type.name())}|}"
+                           th:text="${type.description}"></a>
+                    </li>
+                </ul>
                 <div th:replace="utils/searchBar :: searchBar"></div>
+            </div>
 
-                <table>
-                    <tr>
-                        <th>
-                            <input type="checkbox" check="all"/>
-                        </th>
-                        <th th:text="#{label.no}">No</th>
-                        <th th:text="#{place.location}">장소</th>
-                    </tr>
+            <table>
+                <tr>
+                    <th class="table_chk">
+                        <input type="checkbox" check="all"/>
+                    </th>
+                    <th class="table_num" th:text="#{label.no}">No</th>
+                    <th th:text="#{place.location}">장소</th>
+                </tr>
 
-                    <tr th:each="place : ${result.content}">
-                        <td>
-                            <input type="checkbox" th:value="${place.id}"/>
-                        </td>
-                        <td th:text="${result.totalElements - (result.pageable.offset + placeStat.index)}"></td>
-                        <td>
-                            <a href="#" th:text="${place.location}" th:onclick="|pageObj.openEditPage(${place.id})|"</a>
-                        </td>
-                    </tr>
-                </table>
+                <tr th:each="place : ${result.content}">
+                    <td class="table_chk">
+                        <input type="checkbox" th:value="${place.id}"/>
+                    </td>
+                    <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + placeStat.index)}"></td>
+                    <td>
+                        <a href="#" th:text="${place.location}" th:onclick="|pageObj.openEditPage(${place.id})|"</a>
+                    </td>
+                </tr>
+            </table>
 
-                <nav th:replace="utils/pagination :: pagination(${result})"></nav>
+            <div th:replace="utils/pagination :: pagination(${result})"></div>
 
-                <div>
-                    <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" >선택삭제</button>
-                    <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" >등록</button>
-                </div>
-            </form>
-        </div>
+            <div class="btn_box">
+                <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
+                <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" class="btn_new">등록</button>
+            </div>
+        </form>
+    </div>
 
-        <!-- Modal -->
-        <div th:replace="utils/modal :: modal('modal')"></div>
-    </section>
+    <!-- Modal -->
+    <div th:replace="utils/modal :: modal('modal')"></div>
+</section>
 </body>
 </html>

@@ -3,11 +3,9 @@
 <head>
 </head>
 <body>
-<div th:fragment="searchBar" th:object="${searchParam}">
-    <div class="only_search_box">
-        <input type="text" th:field="*{searchWorld}" class="search"/>
-        <button class="search_btn" th:text="#{button.search}">검색</button>
-    </div>
+<div th:fragment="searchBar" th:object="${searchParam}" class="only_search_box">
+    <input type="text" th:field="*{searchWorld}" class="search"/>
+    <button class="search_btn" th:text="#{button.search}">검색</button>
 </div>
 </body>
 </html>

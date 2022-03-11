@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-    <div id="form" th:object="${employeesCode}">
-        <input type="hidden" th:field="*{id}" />
-        <div>
-            <input type="text" th:field="*{code}" />
-            <span errors="code"></span>
-        </div>
-
-        <button type="button" onclick="pageObj.edit()" th:text="#{button.update}">수정</button>
+<div id="form" th:object="${employeesCode}">
+    <input type="hidden" th:field="*{id}"/>
+    <div>
+        <input type="text" th:field="*{code}" class="modal_long_input"/>
+        <span errors="code" class="modal_error"></span>
     </div>
+    <div class="modal_btn_box">
+        <button type="button" onclick="pageObj.edit()" th:text="#{button.update}" class="btn_new">수정</button>
+    </div>
+</div>
 </section>
 </body>
 </html>

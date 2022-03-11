@@ -13,9 +13,74 @@
     top:50%;
     left:50%;
     transform: translate(-50%, -50%);
-    width: 400px;
-    height: 400px;
+    min-width: 400px;
     background-color: white;
+    padding:1.5em;
+    border-radius: 5px;
+}
+
+.modal-header h3 {
+    font-size:140%;
+    padding-bottom:1em;
+}
+
+.modal-header button {
+    border:0;
+    position:absolute;
+    right: 1.8em;
+    top: 2em;
+    padding:0;
+}
+
+.modal-header button span img {
+    width:100%;
+    max-width:16px;
+}
+
+.modal_long_input {
+    width:100%;
+}
+
+.modal_error {
+    display:block;
+    font-size:85%;
+    color:#de284a;
+    margin:0.5em 0;
+}
+
+.modal_long_textarea {
+    min-height: 80px;
+}
+
+.modal_btn_box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin:1em 0 0 0;
+}
+
+.modal_btn_box button {
+    min-width: 78px;
+}
+
+label {
+    position:relative;
+    display:block;
+    padding:0 0 5px 10px;
+    font-size:95%;
+    font-weight:400;
+}
+
+label:before {
+    content:'';
+    position:absolute;
+    top:50%;
+    left:0;
+    transform: translate(0, -50%);
+    width:3px;
+    height:3px;
+    border-radius: 50%;
+    background:#223351;
 }
 
 .fade {

@@ -6,9 +6,9 @@
     <div th:fragment="modal(id)" th:id="${id}" class="modal fade">
         <div class="modal-content">
             <div class="modal-header">
-                <h5></h5>
+                <h3></h3>
                 <button type="button" onclick="modal.close()">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true"><img th:src="@{/images/common/close.svg}"></span>
                 </button>
             </div>
             <div class="modal-body">
