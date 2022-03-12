@@ -24,4 +24,7 @@ logging.level:
   org.hibernate.SQL: debug
 
 
-file.dir: C:/work/source/spring-boot/dosan/imgUpload/
+file:
+  dir: C:/work/source/spring-boot/dosan/upload/file/
+  temp: C:/work/source/spring-boot/dosan/upload/temp/
+  signature: D:/작업/daeyong/upload/signature/

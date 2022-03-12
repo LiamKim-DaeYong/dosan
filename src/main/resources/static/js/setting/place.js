@@ -57,7 +57,6 @@ var pageObj = {
 
 var modal = $modal();
 pageObj.pageStart = function () {
-    pageObj.path = location.pathname;
     modal.init($("#modal"), {
         width: 400
     })

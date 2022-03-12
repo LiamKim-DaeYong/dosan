@@ -8,13 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class StoredFile {
 
-    private Long id;
-
     private String originFilename;
 
     private String storeFileName;
-
-    private String contentType;
-
-
 }

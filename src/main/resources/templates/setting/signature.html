@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script"></th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.setting.signature}"></h2>
+
+        <form th:action method="post" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <th th:text="#{signature.img}">이미지</th>
+                    <td>
+                        <img th:if="${signature != null}" th:src="|/setting/signature/${signature.getStoreFileName()}|" />
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{signature.file}">파일업로드</th>
+                    <td>
+                        <input name="file" type="file" />
+                    </td>
+                </tr>
+            </table>
+
+            <div class="btn_box">
+                <button th:text="#{button.new}" class="btn_new">등록</button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
