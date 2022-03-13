@@ -39,11 +39,11 @@ public class EducatorCodeRepositoryImpl implements EducatorCodeRepositoryQueryDs
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        JPAQuery<EducatorCode> countQUery = queryFactory
+        JPAQuery<EducatorCode> countQuery = queryFactory
                 .selectFrom(educatorCode)
                 .where(builder);
 
-        return PageableExecutionUtils.getPage(content, pageable, countQUery.fetch()::size);
+        return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
     }
 
     @Override

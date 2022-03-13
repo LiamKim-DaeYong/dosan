@@ -1,6 +1,6 @@
-var page = {
+var pageObj = {
     init: function () {
-        editor.init("content");
+        $editor.init("content");
     },
     delete: function () {
         var form = document.createElement("form");
@@ -11,6 +11,6 @@ var page = {
     }
 }
 
-page.pageStart = function () {
-    page.init();
+pageObj.pageStart = function () {
+    pageObj.init();
 }

@@ -3,10 +3,11 @@ package com.samin.dosan.domain.board;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -16,8 +17,8 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public List<Board> findAll(SearchParam searchParam) {
-        return boardRepository.findAll(searchParam);
+    public Page<Board> findAll(SearchParam searchParam, Pageable pageable) {
+        return boardRepository.findAll(searchParam, pageable);
     }
 
     public Board findById(Long id) {
