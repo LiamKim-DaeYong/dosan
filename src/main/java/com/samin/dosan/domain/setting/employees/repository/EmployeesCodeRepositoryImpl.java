@@ -54,4 +54,40 @@ public class EmployeesCodeRepositoryImpl implements EmployeesCodeRepositoryQuery
                         .and(employeesCode.used.eq(Used.Y)))
                 .fetch();
     }
+
+    @Override
+    public List<EmployeesCode> findAllPosition() {
+        return queryFactory
+                .selectFrom(employeesCode)
+                .where(employeesCode.employeesCodeType.eq(EmployeesCodeType.POSITION)
+                        .and(employeesCode.used.eq(Used.Y)))
+                .fetch();
+    }
+
+    @Override
+    public List<EmployeesCode> findAllRank() {
+        return queryFactory
+                .selectFrom(employeesCode)
+                .where(employeesCode.employeesCodeType.eq(EmployeesCodeType.RANK)
+                        .and(employeesCode.used.eq(Used.Y)))
+                .fetch();
+    }
+
+    @Override
+    public List<EmployeesCode> findAllStep() {
+        return queryFactory
+                .selectFrom(employeesCode)
+                .where(employeesCode.employeesCodeType.eq(EmployeesCodeType.STEP)
+                        .and(employeesCode.used.eq(Used.Y)))
+                .fetch();
+    }
+
+    @Override
+    public List<EmployeesCode> findAllDepartment() {
+        return queryFactory
+                .selectFrom(employeesCode)
+                .where(employeesCode.employeesCodeType.eq(EmployeesCodeType.DEPARTMENT)
+                        .and(employeesCode.used.eq(Used.Y)))
+                .fetch();
+    }
 }

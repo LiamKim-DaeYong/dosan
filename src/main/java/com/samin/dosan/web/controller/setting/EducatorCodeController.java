@@ -92,37 +92,37 @@ public class EducatorCodeController {
 
         educatorCodeService.save(educatorCode4);
 
-        for (int i = 1; i < 100; i++) {
-            EducatorCode educatorCode = EducatorCode.builder()
-                    .id(Long.valueOf(i))
-                    .code("담당 " + i)
-                    .educatorCodeType(EducatorCodeType.CHARGE)
-                    .used(Used.Y)
-                    .build();
-
-            educatorCodeService.save(educatorCode);
-        }
-
-        for (int i = 1; i < 100; i++) {
-            EducatorCode educatorCode = EducatorCode.builder()
-                    .id(Long.valueOf(i))
-                    .code("소속 " + i)
-                    .educatorCodeType(EducatorCodeType.BELONG)
-                    .used(Used.Y)
-                    .build();
-
-            educatorCodeService.save(educatorCode);
-        }
-
-        for (int i = 1; i < 100; i++) {
-            EducatorCode educatorCode = EducatorCode.builder()
-                    .id(Long.valueOf(i))
-                    .code("지부 " + i)
-                    .educatorCodeType(EducatorCodeType.BRANCH)
-                    .used(Used.Y)
-                    .build();
-
-            educatorCodeService.save(educatorCode);
-        }
+//        for (int i = 1; i < 100; i++) {
+//            EducatorCode educatorCode = EducatorCode.builder()
+//                    .id(Long.valueOf(i))
+//                    .code("담당 " + i)
+//                    .educatorCodeType(EducatorCodeType.CHARGE)
+//                    .used(Used.Y)
+//                    .build();
+//
+//            educatorCodeService.save(educatorCode);
+//        }
+//
+//        for (int i = 1; i < 100; i++) {
+//            EducatorCode educatorCode = EducatorCode.builder()
+//                    .id(Long.valueOf(i))
+//                    .code("소속 " + i)
+//                    .educatorCodeType(EducatorCodeType.BELONG)
+//                    .used(Used.Y)
+//                    .build();
+//
+//            educatorCodeService.save(educatorCode);
+//        }
+//
+//        for (int i = 1; i < 100; i++) {
+//            EducatorCode educatorCode = EducatorCode.builder()
+//                    .id(Long.valueOf(i))
+//                    .code("지부 " + i)
+//                    .educatorCodeType(EducatorCodeType.BRANCH)
+//                    .used(Used.Y)
+//                    .build();
+//
+//            educatorCodeService.save(educatorCode);
+//        }
     }
 }

@@ -26,6 +26,22 @@ public class EmployeesCodeService {
         return employeesCodeRepository.findAllTypes();
     }
 
+    public List<EmployeesCode> findAllPosition() {
+        return employeesCodeRepository.findAllPosition();
+    }
+
+    public List<EmployeesCode> findAllRank() {
+        return employeesCodeRepository.findAllRank();
+    }
+
+    public List<EmployeesCode> findAllStep() {
+        return employeesCodeRepository.findAllStep();
+    }
+
+    public List<EmployeesCode> findAllDepartment() {
+        return employeesCodeRepository.findAllDepartment();
+    }
+
     public EmployeesCode findById(Long id) {
         return employeesCodeRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);

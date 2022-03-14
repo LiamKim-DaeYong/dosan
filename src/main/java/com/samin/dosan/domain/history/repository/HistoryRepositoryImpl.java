@@ -1,10 +1,10 @@
-package com.samin.dosan.domain.board.repository;
+package com.samin.dosan.domain.history.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.board.Board;
+import com.samin.dosan.domain.history.History;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,32 +12,33 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
-import static com.samin.dosan.domain.board.QBoard.board;
+import static com.samin.dosan.domain.history.QHistory.history;
 
 @RequiredArgsConstructor
-public class BoardRepositoryImpl implements BoardRepositoryQueryDsl {
+public class HistoryRepositoryImpl implements HistoryRepositoryQueryDsl {
 
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<Board> findAll(SearchParam searchParam, Pageable pageable) {
+    public Page<History> findAll(SearchParam searchParam, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
-        String searchWorld = searchParam.getSearchWorld();
 
+        String searchWorld = searchParam.getSearchWorld();
         if (searchWorld != null) {
-            builder.and(board.title.contains(searchWorld));
+            builder.and(history.systemNm.contains(searchWorld)
+                    .or(history.method.contains(searchWorld)));
         }
 
-        List<Board> content = queryFactory
-                .selectFrom(board)
+        List<History> content = queryFactory
+                .selectFrom(history)
                 .where(builder)
-                .orderBy(board.id.desc())
+                .orderBy(history.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        JPAQuery<Board> countQuery = queryFactory
-                .selectFrom(board)
+        JPAQuery<History> countQuery = queryFactory
+                .selectFrom(history)
                 .where(builder);
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);

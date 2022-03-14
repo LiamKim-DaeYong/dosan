@@ -14,7 +14,7 @@
         <h2 th:text="#{menu.setting.signature}"></h2>
 
         <form th:action method="post" enctype="multipart/form-data">
-            <table>
+            <table class="table_row">
                 <tr>
                     <th th:text="#{signature.img}">이미지</th>
                     <td>
@@ -29,7 +29,7 @@
                 </tr>
             </table>
 
-            <div class="btn_box">
+            <div class="btn_box_only">
                 <button th:text="#{button.new}" class="btn_new">등록</button>
             </div>
         </form>

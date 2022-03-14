@@ -12,4 +12,12 @@ public interface EmployeesCodeRepositoryQueryDsl {
     Page<EmployeesCode> findAll(SearchParam searchParam, EmployeesCodeType employeesCodeType, Pageable pageable);
 
     List<EmployeesCode> findAllTypes();
+
+    List<EmployeesCode> findAllPosition();
+
+    List<EmployeesCode> findAllRank();
+
+    List<EmployeesCode> findAllStep();
+
+    List<EmployeesCode> findAllDepartment();
 }

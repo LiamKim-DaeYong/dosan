@@ -57,7 +57,6 @@ public class EmployeesCodeController {
     @PostConstruct
     public void init() {
         EmployeesCode employeesCode1 = EmployeesCode.builder()
-                .id(1L)
                 .code("임원")
                 .employeesCodeType(EmployeesCodeType.TYPE)
                 .used(Used.Y)
@@ -66,7 +65,6 @@ public class EmployeesCodeController {
         employeesCodeService.save(employeesCode1);
 
         EmployeesCode employeesCode2 = EmployeesCode.builder()
-                .id(2L)
                 .code("직원")
                 .employeesCodeType(EmployeesCodeType.TYPE)
                 .used(Used.Y)
@@ -74,48 +72,36 @@ public class EmployeesCodeController {
 
         employeesCodeService.save(employeesCode2);
 
-        for (int i = 1; i < 100; i++) {
-            EmployeesCode employeesCode = EmployeesCode.builder()
-                    .id(Long.valueOf(i))
-                    .code("직위 " + i)
-                    .employeesCodeType(EmployeesCodeType.POSITION)
-                    .used(Used.Y)
-                    .build();
+        EmployeesCode employeesCode3 = EmployeesCode.builder()
+                .code("원장")
+                .employeesCodeType(EmployeesCodeType.POSITION)
+                .used(Used.Y)
+                .build();
 
-            employeesCodeService.save(employeesCode);
-        }
+        employeesCodeService.save(employeesCode3);
 
-        for (int i = 1; i < 100; i++) {
-            EmployeesCode employeesCode = EmployeesCode.builder()
-                    .id(Long.valueOf(i))
-                    .code("직급 " + i)
-                    .employeesCodeType(EmployeesCodeType.RANK)
-                    .used(Used.Y)
-                    .build();
+        EmployeesCode employeesCode4 = EmployeesCode.builder()
+                .code("4급")
+                .employeesCodeType(EmployeesCodeType.RANK)
+                .used(Used.Y)
+                .build();
 
-            employeesCodeService.save(employeesCode);
-        }
+        employeesCodeService.save(employeesCode4);
 
-        for (int i = 1; i < 100; i++) {
-            EmployeesCode employeesCode = EmployeesCode.builder()
-                    .id(Long.valueOf(i))
-                    .code("호봉 " + i)
-                    .employeesCodeType(EmployeesCodeType.STEP)
-                    .used(Used.Y)
-                    .build();
+        EmployeesCode employeesCode5 = EmployeesCode.builder()
+                .code("4호봉")
+                .employeesCodeType(EmployeesCodeType.STEP)
+                .used(Used.Y)
+                .build();
 
-            employeesCodeService.save(employeesCode);
-        }
+        employeesCodeService.save(employeesCode5);
 
-        for (int i = 1; i < 100; i++) {
-            EmployeesCode employeesCode = EmployeesCode.builder()
-                    .id(Long.valueOf(i))
-                    .code("근무부서 " + i)
-                    .employeesCodeType(EmployeesCodeType.DEPARTMENT)
-                    .used(Used.Y)
-                    .build();
+        EmployeesCode employeesCode6 = EmployeesCode.builder()
+                .code("수련기획실")
+                .employeesCodeType(EmployeesCodeType.DEPARTMENT)
+                .used(Used.Y)
+                .build();
 
-            employeesCodeService.save(employeesCode);
-        }
+        employeesCodeService.save(employeesCode6);
     }
 }

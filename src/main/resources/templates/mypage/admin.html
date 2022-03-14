@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/mypage/admin.js}"></script>
+    </th:block>
+</head>
+<body>
+    <section>
+        <div th:replace="layout/pageTitle :: pageTitle (#{menu.mypage.admin})"></div>
+
+        <div class="content">
+
+            <form th:action>
+                <span>새 비밀번호</span>
+                <input type="password" name="password" />
+
+                <span>비밀번호 확인</span>
+                <input type="password" name="confirm" />
+
+                <button type="button" onclick="pageObj.save()" th:text="#{button.save}"></button>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,6 +1,5 @@
 package com.samin.dosan.web.controller.setting;
 
-import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.setting.place.Place;
 import com.samin.dosan.domain.setting.place.PlaceService;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import javax.annotation.PostConstruct;
 
 @Slf4j
 @Controller
@@ -53,16 +50,16 @@ public class PlaceController {
         return "setting/place/editForm::#form";
     }
 
-    @PostConstruct
-    public void init() {
-        for (int i = 1; i <= 1000; i++) {
-            Place place = Place.builder()
-                    .location(i+"장소")
-                    .placeType(PlaceType.EXPLR)
-                    .used(Used.Y)
-                    .build();
-
-            placeService.save(place);
-        }
-    }
+//    @PostConstruct
+//    public void init() {
+//        for (int i = 1; i <= 1000; i++) {
+//            Place place = Place.builder()
+//                    .location(i+"장소")
+//                    .placeType(PlaceType.EXPLR)
+//                    .used(Used.Y)
+//                    .build();
+//
+//            placeService.save(place);
+//        }
+//    }
 }
