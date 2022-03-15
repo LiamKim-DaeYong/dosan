@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeesCodeRepository extends JpaRepository<EmployeesCode, Long>, EmployeesCodeRepositoryQueryDsl {
+    EmployeesCode findByCode(String code);
 }

@@ -13,13 +13,14 @@
     <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
 
     <div class="content">
-        <h2 th:text="#{menu.setting.course}"></h2>
+        <h2 th:text="#{menu.course}"></h2>
 
         <form th:action>
             <div class="all_search_box">
                 <ul class="toggle_list">
-                    <li th:each="type : ${courseTypes}">
-                        <a th:href="@{|/setting/course/${#strings.toLowerCase(type.name())}|}"
+                    <li th:each="type : ${courseTypes}"
+                        th:classappend="${courseType eq type}?'toggle_on'">
+                        <a th:href="@{|/course/${#strings.toLowerCase(type.name())}|}"
                            th:text="${type.description}"></a>
                     </li>
                 </ul>
@@ -46,6 +47,10 @@
                     <td>
                         <div th:utext="${#strings.replace(course.content,'&#10;','&lt;br&gt;')}"></div>
                     </td>
+                </tr>
+
+                <tr th:if="${result.content.size eq 0}">
+                    <td colspan="4" th:text="#{data.empty}" class="empty-td"></td>
                 </tr>
             </table>
 

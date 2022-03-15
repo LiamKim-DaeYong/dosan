@@ -10,7 +10,7 @@
     <ul sec:authorize="hasRole('MANAGER')">
         <li class="logo"><img th:src="@{/images/common/logo.png}"></li>
         <li>
-            <a th:href="@{/}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a>
+            <a th:href="@{/dashboard/manager}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a>
         </li>
         <li class="nav_on"><span class="nav_list_title"><img th:src="@{/images/common/training.svg}">수련업무</span>
             <ul>
@@ -57,39 +57,45 @@
             <a th:href="@{/notice}"><img th:src="@{/images/common/notice.svg}">공지사항</a>
         </li>
         <li>
-            <a th:href="@{/board}"><img th:src="@{/images/common/free-notice.svg}">자유게시판</a>
+            <a th:href="@{/board}"><img th:src="@{/images/common/free-notice.svg}" th:text="#{menu.board.list}"></a>
         </li>
     </ul>
 
     <!-- 관리자 -->
     <ul sec:authorize="hasRole('ADMIN')">
         <li class="logo"><img th:src="@{/images/common/logo.png}"></li>
-        <li><a th:href="@{/}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a></li>
+        <li><a id="menu_dashboard" th:href="@{/dashboard/admin}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a></li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/calendar.svg}">일정관리</span>
             <ul>
-                <li class="nav_on_sub"><a th:href="@{/schedule/chairman}">이사장 일정</a></li>
-                <li><a th:href="@{/schedule/director}">원장 일정</a></li>
-                <li><a th:href="@{/schedule/etc}">기타 일정</a></li>
+                <li><a id="menu_schedule_chairman" th:href="@{/schedule/chairman}">이사장 일정</a></li>
+                <li><a id="menu_schedule_director" th:href="@{/schedule/director}">원장 일정</a></li>
+                <li><a id="menu_schedule_etc" th:href="@{/schedule/etc}">기타 일정</a></li>
             </ul>
         </li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/member.svg}">사용자 관리</span>
             <ul>
                 <li>
-                    <a th:href="@{/user/employees}" th:text="#{menu.user.employees}">임직원 관리</a>
+                    <a id="menu_user_employees" th:href="@{/user/employees}" th:text="#{menu.user.employees}">임직원 관리</a>
                 </li>
                 <li>
-                    <a th:href="@{/user/educator}" th:text="#{menu.user.educator}">지도위원 관리</a>
+                    <a id="menu_user_educator" th:href="@{/user/educator}" th:text="#{menu.user.educator}">지도위원 관리</a>
+                </li>
+                <li>
+                    <a id="menu_user_educator" th:href="@{/user/educator}" th:text="#{menu.user.leave}">휴직자 관리</a>
+                </li>
+                <li>
+                    <a id="menu_user_educator" th:href="@{/user/educator}" th:text="#{menu.user.retired}">퇴직자 관리</a>
                 </li>
             </ul>
         </li>
         <li>
-            <a th:href="@{/notice}"><img th:src="@{/images/common/notice.svg}">공지사항 관리</a>
+            <a id="menu_notice" th:href="@{/notice}"><img th:src="@{/images/common/notice.svg}">공지사항 관리</a>
         </li>
         <li>
-            <a th:href="@{/board}"><img th:src="@{/images/common/free-notice.svg}">자유게시판 관리</a>
+            <a id="menu_board" th:href="@{/board}"><img th:src="@{/images/common/free-notice.svg}" th:text="#{menu.board}"></a>
         </li>
         <li>
-            <a th:href="@{/}"><img th:src="@{/images/common/history.svg}">사용이력 관리</a>
+            <a id="menu_history" th:href="@{/history}"><img th:src="@{/images/common/history.svg}">사용이력 관리</a>
         </li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/homepage.svg}">홈페이지 관리</span>
             <ul>
@@ -97,12 +103,12 @@
         </li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/set.svg}" th:text="#{menu.setting}"></span>
             <ul>
-                <li><a th:href="@{/setting/signature}" th:text="#{menu.setting.signature}">직인 관리</a></li>
-                <li><a th:href="@{/setting/course/entry}" th:text="#{menu.setting.course}">교육과목 관리</a></li>
-                <li><a th:href="@{/setting/place/training}" th:text="#{menu.setting.place}">수련장소 관리</a></li>
-                <li><a th:href="@{/setting/former}" th:text="#{menu.setting.former}">전직 구분</a></li>
-                <li><a th:href="@{/setting/employees/type}" th:text="#{menu.setting.employees}">임직원 설정</a></li>
-                <li><a th:href="@{/setting/educator/type}" th:text="#{menu.setting.educator}">지도위원 설정</a></li>
+                <li><a id="menu_signature" th:href="@{/signature}" th:text="#{menu.signature}">직인 관리</a></li>
+                <li><a id="menu_course" th:href="@{/course/entry}" th:text="#{menu.course}">교육과목 관리</a></li>
+                <li><a id="menu_place" th:href="@{/place/training}" th:text="#{menu.place}">수련장소 관리</a></li>
+                <li><a id="menu_former" th:href="@{/former}" th:text="#{menu.former}">전직 구분</a></li>
+                <li><a id="menu_employees" th:href="@{/employees/type}" th:text="#{menu.employees}">임직원 설정</a></li>
+                <li><a id="menu_educator" th:href="@{/educator/type}" th:text="#{menu.educator}">지도위원 설정</a></li>
             </ul>
         </li>
     </ul>
@@ -135,7 +141,9 @@
         </li>
         <li><a th:href="@{/user/notice}"><img th:src="@{/images/common/calc.svg}">출장보고서</a></li>
         <li><a th:href="@{/user/notice}"><img th:src="@{/images/common/notice.svg}">공지사항</a></li>
-        <li><a th:href="@{/user/board}"><img th:src="@{/images/common/free-notice.svg}">자유게시판</a></li>
+        <li>
+            <a th:href="@{/board}"><img th:src="@{/images/common/free-notice.svg}" th:text="#{menu.board.list}"></a>
+        </li>
     </ul>
 
     <div class="nav_off">

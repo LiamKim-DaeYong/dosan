@@ -15,7 +15,7 @@ import java.util.List;
 import static com.samin.dosan.domain.board.QBoard.board;
 
 @RequiredArgsConstructor
-public class BoardRepositoryImpl implements BoardRepositoryQueryDSL {
+public class BoardRepositoryImpl implements BoardRepositoryQueryDsl {
 
     private final JPAQueryFactory queryFactory;
 

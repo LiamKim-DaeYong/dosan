@@ -115,7 +115,7 @@ $editor = {
         nhn.husky.EZCreator.createInIFrame({
             oAppRef: oEditors,
             elPlaceHolder: targetId,
-            sSkinURI: "../se2/SmartEditor2Skin.html",
+            sSkinURI: "../lib/smarteditor/SmartEditor2Skin.html",
             fCreator: "createSEditor2"
         });
     }

@@ -13,13 +13,14 @@
     <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
 
     <div class="content">
-        <h2 th:text="#{menu.setting.place}"></h2>
+        <h2 th:text="#{menu.place}"></h2>
 
         <form th:action>
             <div class="all_search_box">
                 <ul class="toggle_list">
-                    <li th:each="type : ${placeTypes}">
-                        <a th:href="@{|/setting/place/${#strings.toLowerCase(type.name())}|}"
+                    <li th:each="type : ${placeTypes}"
+                        th:classappend="${placeType eq type}?'toggle_on'">
+                        <a th:href="@{|/place/${#strings.toLowerCase(type.name())}|}"
                            th:text="${type.description}"></a>
                     </li>
                 </ul>
@@ -43,6 +44,10 @@
                     <td>
                         <a href="#" th:text="${place.location}" th:onclick="|pageObj.openEditPage(${place.id})|"</a>
                     </td>
+                </tr>
+
+                <tr th:if="${result.content.size eq 0}">
+                    <td colspan="3" th:text="#{data.empty}" class="empty-td"></td>
                 </tr>
             </table>
 

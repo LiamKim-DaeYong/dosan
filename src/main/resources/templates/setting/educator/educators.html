@@ -13,13 +13,14 @@
     <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
 
     <div class="content">
-        <h2 th:text="#{menu.setting.educator}"></h2>
+        <h2 th:text="#{menu.educator}"></h2>
 
         <form th:action>
             <div class="all_search_box">
                 <ul class="toggle_list">
-                    <li th:each="type : ${educatorCodeTypes}">
-                        <a th:href="@{|/setting/educator/${#strings.toLowerCase(type.name())}|}"
+                    <li th:each="type : ${educatorCodeTypes}"
+                        th:classappend="${educatorCodeType eq type}?'toggle_on'">
+                        <a th:href="@{|/educator/${#strings.toLowerCase(type.name())}|}"
                            th:text="${type.description}"></a>
                     </li>
                 </ul>
@@ -45,6 +46,10 @@
                         <a href="#" th:text="${educatorCode.code}"
                            th:onclick="pageObj.openEditPage([[${educatorCode.id}]], [[${educatorCodeType.description}]])"</a>
                     </td>
+                </tr>
+
+                <tr th:if="${result.content.size eq 0}">
+                    <td colspan="3" th:text="#{data.empty}" class="empty-td"></td>
                 </tr>
             </table>
 

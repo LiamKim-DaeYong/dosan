@@ -6,6 +6,8 @@
         <link rel="stylesheet" th:href="@{https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css}"/>
         <link rel="stylesheet" th:href="@{https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css}"/>
         <link rel="stylesheet" th:href="@{https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/toastCalendar/default.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/toastCalendar/icons.css}">
     </th:block>
 
     <th:block id="script">
@@ -13,14 +15,52 @@
         <script th:src="@{https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js}"></script>
         <script th:src="@{https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js}"></script>
         <script th:src="@{https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
         <script th:src="@{/js/schedule/schedule.js}"></script>
     </th:block>
 </head>
 <body>
 <section>
     <div th:replace="layout/pageTitle :: pageTitle (|${scheduleTitle} 일정|)"></div>
-
-    <div id="calendar" style="width: 80%; height: 600px"></div>
+    <div id="menu" style="position: relative;">
+        <span id="menu-navi">
+                            <button type="button" class="btn btn-default btn-sm move-today" data-action="move-today">Today</button>
+                            <button type="button" class="btn btn-default btn-sm move-day" data-action="move-prev">
+                            <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"><!--<img th:src="@{/images/common/pagination-next-all.svg}">--></i>
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm move-day" data-action="move-next">
+                            <i class="calendar-icon ic-arrow-line-right" data-action="move-next"><!--<img th:src="@{/images/common/pagination-next-all.svg}">--></i>
+                            </button>
+        </span>
+                        <span class="dropdown">
+                        <button id="dropdownMenu-calendarType" class="btn btn-default btn-sm dropdown-toggle" type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">
+                            <i id="calendarTypeIcon" class="calendar-icon ic_view_month" style="margin-right: 4px;"></i>
+                            <span id="calendarTypeName">Dropdown</span>&nbsp;
+                            <i class="calendar-icon tui-full-calendar-dropdown-arrow"></i>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu-calendarType">
+                            <li role="presentation">
+                                <a class="dropdown-menu-title" role="menuitem" data-action="toggle-monthly">
+                                    <i class="calendar-icon ic_view_month"></i>Month
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a class="dropdown-menu-title" role="menuitem" data-action="toggle-weeks2">
+                                    <i class="calendar-icon ic_view_week"></i>2 weeks
+                                </a>
+                            </li>
+                            <li role="presentation">
+                                <a class="dropdown-menu-title" id="toggle-week3" role="menuitem" data-action="toggle-weeks3">
+                                    <i class="calendar-icon ic_view_week"></i>3 weeks
+                                </a>
+                            </li>
+                        </ul>
+                    </span>
+        <span id="renderRange" class="render-range"></span>
+        <div id="calendar" style="width: 80%; height: 600px"></div>
+    </div>
 </section>
 </body>
 </html>

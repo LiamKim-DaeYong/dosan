@@ -3,10 +3,11 @@ package com.samin.dosan.domain.notice;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.notice.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -16,8 +17,8 @@ public class NoticeService {
 
     private final NoticeRepository noticeRepository;
 
-    public List<Notice> findAll(SearchParam searchParam) {
-        return noticeRepository.findAll(searchParam);
+    public Page<Notice> findAll(SearchParam searchParam, Pageable pageable) {
+        return noticeRepository.findAll(searchParam, pageable);
     }
 
     public Notice findById(Long id) {

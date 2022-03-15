@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/setting/former")
+@RequestMapping("/former")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class FormerApiController {
 

@@ -2,7 +2,7 @@ package com.samin.dosan.core.config.security;
 
 import com.samin.dosan.domain.user.SessionUser;
 import com.samin.dosan.domain.user.User;
-import com.samin.dosan.domain.user.UserService;
+import com.samin.dosan.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Override
     public SessionUser loadUserByUsername(String userId) throws UsernameNotFoundException {
-        User user = userService.findById(userId);
+        User user = userRepository.findById(userId).get();
 
         if (user == null) {
             throw new UsernameNotFoundException("아이디가 존재하지 않습니다.");

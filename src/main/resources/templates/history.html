@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script"></th:block>
+</head>
+<body>
+
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.history})"></div>
+
+    <div class="content">
+        <form th:action>
+            <div class="only_search_box">
+                <div th:replace="utils/searchBar :: searchBar"></div>
+            </div>
+
+            <table>
+                <colgroup>
+                    <col width="2%" />
+                    <col width="6%" />
+                    <col width="62%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                </colgroup>
+                <tr>
+                    <th class="table_num" th:text="#{label.no}">No</th>
+                    <th th:text="#{history.name}">이름</th>
+                    <th>구분</th>
+                    <th>직위(담당)</th>
+                    <th>근무부서(소속)</th>
+                    <th th:text="#{history.logAt}">일시</th>
+                    <th th:text="#{history.systemNm}">시스템명</th>
+                    <th th:text="#{history.method}">이력구분</th>
+
+                </tr>
+                <tr th:each="history : ${result.content}">
+                    <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + historyStat.index)}"></td>
+                    <td th:text="${history.user.userNm}"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td th:text="${{history.logAt}}"></td>
+                    <td th:text="${history.systemNm}"></td>
+                    <td th:text="${history.method}"></td>
+                    <td th:text="${history.number}"></td>
+                </tr>
+            </table>
+
+            <div th:replace="utils/pagination :: pagination(${result})"></div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

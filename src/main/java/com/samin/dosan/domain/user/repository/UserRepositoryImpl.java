@@ -3,8 +3,10 @@ package com.samin.dosan.domain.user.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.user.User;
+import com.samin.dosan.domain.user.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,11 +24,12 @@ public class UserRepositoryImpl implements UserRepositoryQueryDSL {
     @Override
     public Page<User> findAllEmployees(SearchParam searchParam, Long employeesType, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
-        String searchWorld = searchParam.getSearchWorld();
-        builder.and(user.role.eq("ROLE_MANAGER"));
+        builder.and(user.used.eq(Used.Y).and(user.userType.eq(UserType.EMPLOYEES)));
 
-        if (searchWorld != null) {
-            builder.and(user.userNm.contains(searchWorld));
+        String searchWord = searchParam.getSearchWorld();
+        if (searchWord != null) {
+            builder.and(user.userId.contains(searchWord))
+                    .or(user.userNm.contains(searchWord));
         }
 
         if (employeesType != null) {
@@ -36,6 +39,7 @@ public class UserRepositoryImpl implements UserRepositoryQueryDSL {
         List<User> content = queryFactory
                 .selectFrom(user)
                 .where(builder)
+                .orderBy(user.userId.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -48,30 +52,15 @@ public class UserRepositoryImpl implements UserRepositoryQueryDSL {
     }
 
     @Override
-    public Page<User> findAllEducators(SearchParam searchParam, Long educatorType, Pageable pageable) {
+    public boolean existById(String userId) {
         BooleanBuilder builder = new BooleanBuilder();
-        String searchWorld = searchParam.getSearchWorld();
-        builder.and(user.role.eq("ROLE_USER"));
+        builder.and(user.userId.eq(userId));
 
-        if (searchWorld != null) {
-            builder.and(user.userNm.contains(searchWorld));
-        }
-
-        if (educatorType != null) {
-            builder.and(user.educatorType.id.eq(educatorType));
-        }
-
-        List<User> content = queryFactory
+        User findUser = queryFactory
                 .selectFrom(user)
                 .where(builder)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+                .fetchOne();
 
-        JPAQuery<User> countQuery = queryFactory
-                .selectFrom(user)
-                .where(builder);
-
-        return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
+        return findUser != null;
     }
 }

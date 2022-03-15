@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/setting/course/{type}")
+@RequestMapping("/course/{type}")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class CourseApiController {
 

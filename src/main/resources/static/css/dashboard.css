@@ -1,0 +1,152 @@
+.checking_box {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 1.5em 0 0 0;
+}
+
+.checking_list, .checking_list01, .checking_list02 {
+    background: #fff;
+    width: calc(100% / 4 - 20px);
+    padding: 1.5em;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(11, 11, 11, .1);
+}
+
+.checking_list span {
+    display: block;
+    font-size: 80%;
+    color: #00cb96;
+    margin-bottom: 0.7em;
+}
+
+.checking_list ul {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.checking_list ul li {
+    font-size: 120%;
+    font-weight: 700;
+}
+
+.checking_list ul li:nth-of-type(2) {
+    font-size: 100%;
+    font-weight: 400;
+}
+
+.checking_list ul li em {
+    font-size: 160%;
+    color: #16509e;
+    font-weight: 700;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.checking_list01 {
+    width: calc(100% / 3 * 2 - 10px);
+    padding: 1.5em 1.5em 0.5em 1.5em;
+}
+
+.checking_list02 {
+    width: calc(100% / 3 - 20px);
+}
+
+.checking_box h2 {
+    position: relative;
+    padding-bottom: 1em;
+}
+
+.checking_box h2 a {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    color: #929bac;
+    font-size: 50%;
+    font-weight: 400;
+}
+
+.checking_box h2 a img {
+    width: 100%;
+    max-width: 20px;
+    margin: 0 0 2px 5px;
+}
+
+.checking_box dl {
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #edf0f9;
+    margin-bottom: 1em;
+}
+
+.checking_box dl dt {
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+    width: 100%;
+    overflow: hidden;
+}
+
+.checking_box h2 a:hover, .checking_box dl dt:hover {
+    color: #f15958;
+}
+
+.checking_box dl dd {
+    padding: 1em 0;
+    font-size: 80%;
+    color: #a9a9a9;
+}
+
+.checking_box dl:last-of-type {
+    margin-bottom: 0;
+    border-bottom: 0;
+}
+
+.checking_box dl:last-of-type dd {
+    padding: 0.7em 0 0 0;
+}
+
+#myChart {
+    width: 100% !important;
+    max-height: 268px;
+}
+
+@media screen and (max-width: 1290px) {
+    .checking_box {
+        flex-wrap: wrap;
+        margin-bottom: 1.5em;
+    }
+
+    .checking_list {
+        width: calc(100% / 2 - 13px);
+        margin-bottom: 1.5em;
+    }
+
+    .checking_list:nth-of-type(3), .checking_list:nth-of-type(4) {
+        margin-bottom: 0;
+    }
+
+    .checking_list01 {
+        width: 100%;
+        margin-bottom: 1.5em;
+    }
+
+    .media {
+        width: 100%;
+        display: contents;
+    }
+
+    .media .checking_list02 {
+        width: calc(100% / 2 - 15px);
+        display: inline-block;
+        margin-right: 25px;
+        margin-bottom: 1.5em;
+    }
+
+    .media_margin {
+        margin-right: 0 !important;
+    }
+}

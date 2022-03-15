@@ -8,7 +8,7 @@
 </head>
 <body>
 <section>
-    <div th:replace="layout/pageTitle :: pageTitle ('공지사항')"></div>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.notice})"></div>
 
     <div class="content">
         <form th:action>
@@ -21,8 +21,8 @@
                 <th><input type="checkbox"></th>
                 <th>No</th>
                 <th>제목</th>
+                <th>첨부파일</th>
                 <th>작성자</th>
-                <th>댓글</th>
                 <th>작성일자</th>
             </tr>
             <tr th:each="notice : ${noticeList}">

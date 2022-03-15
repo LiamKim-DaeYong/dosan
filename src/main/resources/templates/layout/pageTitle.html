@@ -16,7 +16,9 @@
 
                 <span sec:authentication="principal.userNm"></span>님
             </li>
-            <li><a th:href="@{/}"><img th:src="@{/images/common/member01.svg}" title="마이페이지"></a></li>
+            <li><a th:href="@{/mypage/{userId}(userId=${#authentication.getName()})}">
+                <img th:src="@{/images/common/member01.svg}" title="마이페이지">
+            </a></li>
             <li><a th:href="@{/}"><img th:src="@{/images/common/alarm.svg}" title="알림"></a></li>
             <li><a th:href="@{/logout}"><img th:src="@{/images/common/logout.svg}" title="로그아웃"></a></li>
         </ul>

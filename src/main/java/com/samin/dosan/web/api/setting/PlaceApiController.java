@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/setting/place/{type}")
+@RequestMapping("/place/{type}")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class PlaceApiController {
 

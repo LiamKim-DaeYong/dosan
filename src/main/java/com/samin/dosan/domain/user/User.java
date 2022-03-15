@@ -1,16 +1,12 @@
 package com.samin.dosan.domain.user;
 
-import com.samin.dosan.core.code.Address;
 import com.samin.dosan.core.code.Gender;
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
-import com.samin.dosan.domain.setting.educator.EducatorCode;
 import com.samin.dosan.domain.setting.employees.EmployeesCode;
-import com.samin.dosan.domain.setting.former.Former;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Entity
@@ -21,83 +17,95 @@ public class User extends BaseEntity {
 
     @Id
     @Column(length = 100, nullable = false)
-    private String userId;
+    private String userId; //아이디
 
     @Column(nullable = false)
-    private String password;
+    private String password; //비밀번호
 
     @Column(length = 100, nullable = false)
-    private String userNm;
+    private String userNm; //이름
 
-    @Column(length = 10, nullable = false)
-    private String role;
+    @Column(length = 10)
+    private Gender gender; //성별
+
+    @Column
+    private Long formerId;
+
+    @Column(length = 15)
+    private String phoneNum; //h.p
+
+    @Column(length = 15)
+    private String officeNum; //사무실
+
+    @Column(length = 15)
+    private String homeNum; //집
+
+    @Column(length = 15)
+    private String birth; //생년월일
+
+    @Column(length = 100)
+    private String email; //이메일
+
+    @Column(length = 20)
+    private String bank; //은행
+
+    @Column(length = 50)
+    private String accountNum; //계좌번호
+
+    @Column(length = 10)
+    private String area; //지역
+
+    @Column(length = 20)
+    private String role; //권한정보
+
+    @Enumerated(EnumType.STRING)
+    private UserType userType; //관리자, 임직원, 지도위원 type
 
     @Enumerated(EnumType.STRING)
     @Column(length = 1, nullable = false)
-    private Used used;
-
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private Used used; //사용여부
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "former_id")
-    private Former former;
-
-    @Column(length = 14)
-    private String phoneNum;
-
-    @Column(length = 14)
-    private String officeNum;
-
-    @Column(length = 14)
-    private String homeNum;
-
-    @Column(length = 8)
-    private LocalDate dateOfBirth;
-
-    @Column(length = 200)
-    private String email;
-
-    @Column(length = 100)
-    private String bank;
-
-    @Column(length = 100)
-    private String accountNum;
-
-    @Embedded
-    private Address address;
-
-    /* 지도위원 */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "educator_type")
-    private EducatorCode educatorType;
-
-    private LocalDate appointmentDate;
-
-    private LocalDate retirementDate;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "educator_branch")
-    private EducatorCode educatorBranch;
-
-    /* 임직원 */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employees_type")
+    @JoinColumn(name = "employee_type")
     private EmployeesCode employeesType;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employees_position")
-    private EmployeesCode employeesPosition;
+    /*================== Business Logic ==================*/
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employees_rank")
-    private EmployeesCode employeesRank;
+    public User newAdmin(UserType userType) {
+        this.role = "ROLE_ADMIN";
+        this.userType = userType;
+        this.used = Used.Y;
+        return this;
+    }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employees_step")
-    private EmployeesCode employeesStep;
+    public User newEmployee(UserType userType, String password) {
+        this.password = password;
+        this.role = "ROLE_MANAGER";
+        this.userType = userType;
+        this.used = Used.Y;
+        return this;
+    }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employees_department")
-    private EmployeesCode employeesDepartment;
+    public User newEducator(UserType userType) {
+        this.role = "ROLE_USER";
+        this.userType = userType;
+        this.used = Used.Y;
+        return this;
+    }
+
+    public User edit(User user) {
+        this.userId = user.getUserId();
+        this.password = user.getPassword();
+        this.userNm = user.getUserNm();
+        this.gender = user.getGender();
+        this.role = user.getRole();
+        this.userType = user.getUserType();
+        this.used = user.getUsed();
+
+        return this;
+    }
+
+    public void updatePassword(String password) {
+        this.password = password;
+    }
 }

@@ -1,8 +1,9 @@
 @charset "UTF-8";
 /* NHN Web Standardization Team (http://html.nhndesign.com/) HHJ 090226 */
 /* COMMON */
+#smart_editor2 {width:100% !important;}
 body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_editor2 h3,#smart_editor2 h4,#smart_editor2 h5,#smart_editor2 h6,#smart_editor2 ul,#smart_editor2 ol,#smart_editor2 li,#smart_editor2 dl,#smart_editor2 dt,#smart_editor2 dd,#smart_editor2 table,#smart_editor2 th,#smart_editor2 td,#smart_editor2 form,#smart_editor2 fieldset,#smart_editor2 legend,#smart_editor2 input,#smart_editor2 textarea,#smart_editor2 button,#smart_editor2 select{margin:0;padding:0}
-#smart_editor2,#smart_editor2 h1,#smart_editor2 h2,#smart_editor2 h3,#smart_editor2 h4,#smart_editor2 h5,#smart_editor2 h6,#smart_editor2 input,#smart_editor2 textarea,#smart_editor2 select,#smart_editor2 table,#smart_editor2 button{font-family:'돋움',Dotum,Helvetica,sans-serif;font-size:12px;color:#666}
+#smart_editor2,#smart_editor2 h1,#smart_editor2 h2,#smart_editor2 h3,#smart_editor2 h4,#smart_editor2 h5,#smart_editor2 h6,#smart_editor2 input,#smart_editor2 textarea,#smart_editor2 select,#smart_editor2 table,#smart_editor2 button{font-family:"Noto sans kr",Dotum,Helvetica,sans-serif;font-size:12px;color:#666}
 #smart_editor2 span,#smart_editor2 em{font-size:12px}
 #smart_editor2 em,#smart_editor2 address{font-style:normal}
 #smart_editor2 img,#smart_editor2 fieldset{border:0}
@@ -18,7 +19,7 @@ body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_
 #smart_editor2 .se2_header{margin:10px 0 29px 0}
 #smart_editor2 .se2_bi{float:left;width:93px;height:20px;margin:0;padding:0;background:url("../img/ko_KR/btn_set.png?130306") -343px -358px no-repeat;font-size:0;line-height:0;text-indent:-10000px;vertical-align:middle}
 #smart_editor2 .se2_allhelp{display:inline-block;width:18px;height:18px;padding:0;background:url("../img/ko_KR/btn_set.png?130306") -437px -358px no-repeat;font-size:0;line-height:0;text-indent:-10000px;vertical-align:middle}
-#smart_editor2 #smart_editor2_content{border:1px solid #b5b5b5}
+#smart_editor2 #smart_editor2_content{}
 #smart_editor2 .se2_tool{overflow:visible;position:relative;z-index:25}
 /* EDITINGAREA */
 #smart_editor2 .se2_input_area{position:relative;z-index:22;height:400px;margin:0;padding:0;*zoom:1}

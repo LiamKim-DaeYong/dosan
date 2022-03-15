@@ -22,7 +22,7 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/setting/former")
+@RequestMapping("/former")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class FormerController {
 
@@ -52,13 +52,11 @@ public class FormerController {
 
     @PostConstruct
     public void init() {
-        for (int i = 1; i <= 1000; i++) {
-            Former former = Former.builder()
-                    .formerName(i + " 전직")
-                    .used(Used.Y)
-                    .build();
+        Former former = Former.builder()
+                .formerName("초등교원")
+                .used(Used.Y)
+                .build();
 
-            formerService.save(former);
-        }
+        formerService.save(former);
     }
 }

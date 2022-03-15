@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/setting/signature")
+@RequestMapping("/signature")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class SignatureController {
 

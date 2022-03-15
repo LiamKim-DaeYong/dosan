@@ -5,6 +5,6 @@ import com.samin.dosan.domain.board.Board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface BoardRepositoryQueryDSL {
+public interface BoardRepositoryQueryDsl {
     Page<Board> findAll(SearchParam searchParam, Pageable pageable);
 }

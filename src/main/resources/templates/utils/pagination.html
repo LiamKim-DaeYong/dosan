@@ -18,7 +18,7 @@
             <button name="page" th:value="${prevBlock}" class="pagination_arrow"><img th:src="@{/images/common/pagination-prev.svg}"></button>
         </li>
 
-        <li th:each="page : ${#numbers.sequence(start, end)}">
+        <li th:each="page : ${#numbers.sequence(start, end)}" th:classappend="${page eq pageResult.number + 1}?'pagination_active'">
             <button name="page" th:text="${page}" th:value="${page-1}"></button>
         </li>
 

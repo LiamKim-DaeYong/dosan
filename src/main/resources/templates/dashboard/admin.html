@@ -2,15 +2,181 @@
 <html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block id="css"></th:block>
+    <th:block id="css">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/dashboard.css}">
+    </th:block>
 
-    <th:block id="script"></th:block>
+    <th:block id="script">
+        <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.js}"
+                integrity="sha512-opXrgVcTHsEVdBUZqTPlW9S8+99hNbaHmXtAdXXc61OUU6gOII5ku/PzZFqexHXc3hnK8IrJKHo+T7O4GRIJcw=="
+                crossorigin="anonymous"></script>
+        <script>
+            $(function () {
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['입교과정', '찾아가는 선비체험', '가족', '일반인'],
+                        datasets: [{
+                            data: [65, 85, 55, 75],
+                            backgroundColor: [
+                                'rgba(0, 204, 153, 1)',
+                                'rgba(31, 87, 162, 1)',
+                                'rgba(0,202,204,1)',
+                                'rgba(31,43,163,1)'
+                            ],
+                            borderColor: [
+                                'rgba(0, 204, 153, 1)',
+                                'rgba(31, 87, 162, 1)',
+                                'rgba(0,202,204,1)',
+                                'rgba(31,43,163,1)'
+                            ]
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                display: false,
+                            }
+                        },
+                        scales: {
+                            xAxes: [{
+                                gridLines:{
+                                    color: "rgba(87, 152, 23, 1)",
+                                    lineWidth: 3
+                                }
+                            }],
+                            yAxes: [{
+                                gridLines:{
+                                    color: 'rgba(166, 201, 226, 1)',
+                                    lineWidth:3
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+        </script>
+    </th:block>
 </head>
 <body>
-    <section>
-        <div th:replace="layout/pageTitle :: pageTitle ('대시보드')"></div>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle ('대시보드')"></div>
+    <div class="checking_box">
+        <div class="checking_list">
+            <span>checking</span>
+            <ul>
+                <li>수련상담신청</li>
+                <li><em>100</em>건</li>
+            </ul>
+        </div>
+        <div class="checking_list">
+            <span>checking</span>
+            <ul>
+                <li>홈페이지 문의</li>
+                <li><em>100</em>건</li>
+            </ul>
+        </div>
+        <div class="checking_list">
+            <span>member</span>
+            <ul>
+                <li>임직원</li>
+                <li><em>100</em>명</li>
+            </ul>
+        </div>
+        <div class="checking_list">
+            <span>member</span>
+            <ul>
+                <li>지도위원</li>
+                <li><em>100</em>명</li>
+            </ul>
+        </div>
+    </div>
+    <div class="checking_box media">
+        <div class="checking_list01">
+            <h2><em>2022</em>년 수련상담신청 현황</h2>
+            <canvas id="myChart"></canvas>
+        </div>
+        <div class="checking_list02">
+            <h2>수련상담신청 <a href="">more<img th:src="@{/images/common/arrow01.svg}" title="바로가기"></a></h2>
+            <dl>
+                <dt>홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+        </div>
+    </div>
 
-        <div>관리자 대시보드</div>
-    </section>
+    <div class="checking_box media">
+        <div class="checking_list02 media_margin">
+            <h2>공지사항 <a href="">more<img th:src="@{/images/common/arrow01.svg}" title="바로가기"></a></h2>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+        </div>
+        <div class="checking_list02">
+            <h2>자유게시판 <a href="">more<img th:src="@{/images/common/arrow01.svg}" title="바로가기"></a></h2>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+        </div>
+        <div class="checking_list02 media_margin">
+            <h2>문의사항 <a href="">more<img th:src="@{/images/common/arrow01.svg}" title="바로가기"></a></h2>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+            <dl>
+                <dt>홍길동</dt>
+                <dd>2021.10.14</dd>
+            </dl>
+        </div>
+    </div>
+</section>
 </body>
 </html>

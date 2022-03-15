@@ -25,6 +25,6 @@ logging.level:
 
 
 file:
-  dir: C:/work/source/spring-boot/dosan/upload/file/
-  temp: C:/work/source/spring-boot/dosan/upload/temp/
-  signature: D:/작업/daeyong/upload/signature/
+  dir: C:/work/upload/file/
+  temp: C:/work/upload/temp/
+  signature: C:/work/upload/signature/

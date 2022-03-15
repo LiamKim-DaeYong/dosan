@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/user.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.user})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.user.employees.detail}"></h2>
+
+        <form th:action th:object="${user}">
+
+            <span>기본정보</span>
+            <table>
+                <tr>
+                    <th>아이디</th>
+                    <td th:text="*{userId}" th:field="*{userId}"></td>
+                    <th>패스워드</th>
+                    <td>
+                        <button type="button" th:onclick="pageObj.initPassword([[*{userId}]])">비밀번호 초기화</button>
+                    </td>
+                    <th>이름</th>
+                    <td th:text="*{userNm}" th:field="*{userNm}"></td>
+                    <th>성별</th>
+                    <td th:text="*{gender.description}" th:field="*{gender}"></td>
+                </tr>
+
+                <tr>
+                    <th>전직구분</th>
+                    <td>
+                        <select th:field="*{formerId}">
+                            <option th:each="former : ${formers}"
+                                    th:text="${former.formerName}" th:value="${former.id}"></option>
+                        </select>
+                    </td>
+                    <th>H.P</th>
+                    <td>
+                        <input type="text" th:field="*{phoneNum}" />
+                    </td>
+                    <th>사무실</th>
+                    <td>
+                        <input type="text" th:field="*{officeNum}" />
+                    </td>
+                    <th>집</th>
+                    <td>
+                        <input type="text" th:field="*{homeNum}" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>생년월일</th>
+                    <td>
+                        <input type="date" th:field="*{birth}" />
+                    </td>
+                    <th>E-Mail</th>
+                    <td>
+                        <input type="text" th:field="*{email}" />
+                    </td>
+                    <th>은행</th>
+                    <td>
+                        <input type="text" th:field="*{bank}" />
+                    </td>
+                    <th>계좌번호</th>
+                    <td>
+                        <input type="text" th:field="*{accountNum}" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>지역</th>
+                    <td>
+                        <input type="text" th:field="*{area}">
+                    </td>
+                    <th>주소</th>
+                    <td>
+                        <input type="text" readonly>
+                        <button type="button">주소찾기</button>
+                        <input type="text">
+                    </td>
+                </tr>
+
+<!--                <tr>-->
+<!--                    <th>주소</th>-->
+<!--                    <td></td>-->
+<!--                </tr>-->
+            </table>
+
+<!--            <span>근무정보</span>-->
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>구분</th>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{employeesType}">-->
+<!--                            <option th:each="employeesType : ${employeesTypes}"-->
+<!--                                    th:text="${employeesType.code}" th:value="${employeesType.id}"></option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                    <th>직위</th>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{employeesPosition}">-->
+<!--                            <option th:each="position : ${positions}"-->
+<!--                                    th:text="${position.code}" th:value="${position.id}"></option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                    <th>직급</th>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{employeesRank}">-->
+<!--                            <option th:each="rank : ${ranks}"-->
+<!--                                    th:text="${rank.code}" th:value="${rank.id}"></option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                    <th>호봉</th>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{employeesStep}">-->
+<!--                            <option th:each="step : ${steps}"-->
+<!--                                    th:text="${step.code}" th:value="${step.id}"></option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                </tr>-->
+
+<!--                <tr>-->
+<!--                    <th>근무부서</th>-->
+<!--                    <td>-->
+<!--                        <select th:field="*{employeesDepartment}">-->
+<!--                            <option th:each="department : ${departments}"-->
+<!--                                    th:text="${department.code}" th:value="${department.id}"></option>-->
+<!--                        </select>-->
+<!--                    </td>-->
+<!--                    <th>채용일</th>-->
+<!--                    <td>-->
+<!--                        <input type="date" th:field="*{appointmentDate}" />-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+
+<!--            <span>학력사항</span>-->
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>-->
+<!--                        <input type="checkbox" />-->
+<!--                    </th>-->
+<!--                    <th>출신학교</th>-->
+<!--                    <th>졸업년도</th>-->
+<!--                    <th>전공</th>-->
+<!--                    <th>학위</th>-->
+<!--                </tr>-->
+<!--            </table>-->
+
+<!--            <span>주요근무이력</span>-->
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <th>-->
+<!--                        <input type="checkbox" />-->
+<!--                    </th>-->
+<!--                    <th>근무처</th>-->
+<!--                    <th>기간</th>-->
+<!--                    <th>직위(직급)</th>-->
+<!--                </tr>-->
+<!--            </table>-->
+
+<!--            <span>특기사항</span>-->
+<!--            <textarea></textarea>-->
+            <div>
+                <button type="button" th:text="#{button.list}" onclick="location.href='/user/employees'">목록</button>
+                <button type="button" th:text="#{button.new}" onclick="pageObj.edit()">등록</button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

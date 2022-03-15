@@ -1,27 +1,38 @@
 package com.samin.dosan.core.config;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samin.dosan.core.interceptor.LogInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.AuditorAware;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.persistence.EntityManager;
-import java.util.Optional;
 
 import static org.modelmapper.config.Configuration.AccessLevel;
 
 @Configuration
-@EnableJpaAuditing
+@RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
-    public JPAQueryFactory jpaQueryFactory(EntityManager em) {
-        return new JPAQueryFactory(em);
+    private final LogInterceptor logInterceptor;
+
+    private final static String[] EXCLUDE_PATH = {
+            "/",
+            "/login",
+            "/logout",
+            "/css/**",
+            "/js/**",
+            "/images/**",
+            "/error/**",
+            "/favicon.ico",
+            "/se2/**"
+    };
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(logInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns(EXCLUDE_PATH);
     }
 
     @Bean
@@ -32,22 +43,5 @@ public class WebConfig implements WebMvcConfigurer {
                 .setFieldMatchingEnabled(true);
 
         return modelMapper;
-    }
-
-    @Bean
-    public AuditorAware<String> auditorAware() {
-        return new AuditorAware<String>() {
-            @Override
-            public Optional<String> getCurrentAuditor() {
-                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-                if (authentication == null) {
-                    return null;
-                }
-
-                String loginUser = authentication.getName();
-                return Optional.ofNullable(loginUser);
-            }
-        };
     }
 }
