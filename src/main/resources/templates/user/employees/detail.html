@@ -74,15 +74,12 @@
                 </tr>
 
                 <tr>
-                    <th>지역</th>
-                    <td>
-                        <input type="text" th:field="*{area}">
-                    </td>
                     <th>주소</th>
-                    <td>
-                        <input type="text" readonly>
-                        <button type="button">주소찾기</button>
-                        <input type="text">
+                    <td colspan="7">
+                        <input type="text" id="zipCode" name="address.zipCode" disabled />
+                        <button type="button" onclick="$api.addressApi()">주소찾기</button>
+                        <input type="text" id="roadAddress" name="address.roadAddress" />
+                        <input type="text" id="detailAddress" name="address.detailAddress" />
                     </td>
                 </tr>
 

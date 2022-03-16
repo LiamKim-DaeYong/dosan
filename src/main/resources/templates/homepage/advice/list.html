@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/advice/list.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>수련상담신청 관리</h2>
+            <form th:action method="get" id="filter_form">
+                <div class="searchInput">
+                    <div class="flex justify-start align-center">
+                        <div class="margin-r">
+                            <input type="text"
+                                   class="datepicker context-menu border_sm_r basicInput02 paddingLeft_10"
+                                   name="start" id="start"
+                                   data-type="date"
+                                   th:value="${filter.start} != null ? ${filter.start} : ${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}">
+                        </div>
+                        <div class="margin-r">~</div>
+                        <div class="margin-r">
+                            <input type="text"
+                                   class="datepicker context-menu border_sm_r basicInput02 paddingLeft_10"
+                                   name="end" id="end"
+                                   data-type="date"
+                                   th:value="${filter.end} != null ? ${filter.end} : ${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd')}">
+                        </div>
+                        <button type="button" id="dateButton" class="sm-btn-darkblue border_sm_r marginRight5">조회</button>
+                        <button type="button" id="initButton" class="sm-btn-white2 border_sm_r">초기화</button>
+                    </div>
+                    <div class="flex justify-end width-30">
+                        <select name="select" id="select" class="basicSelect01 width-43 marginRight5" th:value="${filter.select}">
+                            <option value="all" th:selected="${filter.select}=='all'">전체</option>
+                            <option value="sunbi" th:selected="${filter.select}=='sunbi'">찾아가는 선비체험</option>
+                            <option value="admission" th:selected="${filter.select}=='admission'">입교과정</option>
+                            <option value="family" th:selected="${filter.select}=='family'">가족</option>
+                            <option value="ordinary" th:selected="${filter.select}=='ordinary'">일반인</option>
+                            <option value="uncheck" th:selected="${filter.select}=='uncheck'">미확인</option>
+                            <option value="check" th:selected="${filter.select}=='check'">확인완료</option>
+                        </select>
+                        <input type="text" name="filter" id="filter"
+                               class="basicInput02 width-85 borderLeftRadius paddingLeft_10"
+                               th:value="${filter.filter}">
+                        <button type="button" id="filterButton"
+                                class="filter_submit borderLeft_0 borderRightRadius width-15 bg-ashgray4 basicBtn02">
+                            검색
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <table id="advice_table" class="t-table">
+                <tr>
+                    <colgroup>
+                        <col width="3%">
+                        <col width="5%">
+                        <col width="36%">
+                        <col width="11%">
+                        <col width="15%">
+                        <col width="11%">
+                        <col width="11%">
+                        <col width="10%">
+                    </colgroup>
+                </tr>
+
+                <tr>
+                    <th><input type="checkbox" id="all_check"></th>
+                    <th>No.</th>
+                    <th>신청자(기관명)</th>
+                    <th>부서</th>
+                    <th>연락처</th>
+                    <th>신청구분</th>
+                    <th>등록일자</th>
+                    <th>확인</th>
+                </tr>
+
+                <tr th:if="${adviceList.getContent().size() == 0}">
+                    <td colspan="8">일치하는 내용이 없습니다</td>
+                </tr>
+
+                <tr th:each="advice : ${adviceList}">
+                    <td>
+                        <input type="checkbox" class="advice_check" th:id="|check_${advice.id}|">
+                    </td>
+                    <td th:text="${adviceList.getTotalElements() - (adviceList.number * adviceList.size + adviceStat.index)}"></td>
+                    <td th:text="${advice.insttNm} ? ${advice.applicant}+'('+${advice.insttNm}+')' : ${advice.applicant}"></td>
+                    <td th:text="${advice.depart} ? ${advice.depart} : '-'"></td>
+                    <td th:text="${advice.phone}"></td>
+                    <td>
+                        <span th:text="${advice.adviceType}"></span>
+                    </td>
+                    <td th:text="${advice.regDt}"></td>
+                    <td th:id="|statusBox_${advice.id}|">
+                        <button type="button" th:if="${advice.status} == 'N'" th:id="|conf_${advice.id}|" style="border:0;background: transparent;color:#f15958; cursor: pointer">미확인</button>
+                        <span th:if="${advice.status} == 'Y'" th:id="|conf_${advice.id}|">확인완료</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="flex justify-between margin-t paddingTop_10 margin-b paddingBottom">
+            <button type="button" class="sm-btn-white border_sm_r width-5" onclick="ACTIONS.DELETE()">선택삭제
+            </button>
+            <button type="button" class="sm-btn-blue border_sm_r width-5 text-center" onclick="ACTIONS.PRINT()">
+                출력
+            </button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

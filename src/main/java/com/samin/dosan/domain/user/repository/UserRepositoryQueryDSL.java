@@ -8,5 +8,7 @@ import org.springframework.data.domain.Pageable;
 public interface UserRepositoryQueryDSL {
     Page<User> findAllEmployees(SearchParam searchParam, Long employeesType, Pageable pageable);
 
+    Page<User> findAllEducators(SearchParam searchParam, Long educatorsType, Pageable pageable);
+
     boolean existById(String userId);
 }

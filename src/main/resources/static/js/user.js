@@ -9,7 +9,7 @@ var pageObj = {
             });
 
             if ($("#checkId").val() == 'Y') {
-                $api.post({data: data, success: function (res) {
+                $ajax.post({data: data, success: function (res) {
                         alert("등록되었습니다.");
                         location.href = `/user/employees/${data["userId"]}/detail`;
                     }
@@ -29,7 +29,7 @@ var pageObj = {
                 data[this.name] = this.value;
             });
 
-            $api.post({data: data, success: function (res) {
+            $ajax.post({data: data, success: function (res) {
                     alert("등록되었습니다.");
                     $url.redirect();
                 }
@@ -44,7 +44,7 @@ var pageObj = {
             $("#userId").focus();
             return false;
         } else {
-            $api.post({data: {userId: userId}, url: `/user/check/id`,
+            $ajax.post({data: {userId: userId}, url: `/user/check/id`,
                 success: function (data) {
                     if (data == true) {
                         $("#checkIdMsg").html("사용할 수 없는 아이디입니다.");
@@ -59,9 +59,10 @@ var pageObj = {
             })
         }
     },
+
     initPassword: function (userId) {
         if (userId != null && userId != '') {
-            $api.post({data: {userId: userId}, url: `/user/${userId}/password/init`})
+            $ajax.post({data: {userId: userId}, url: `/user/${userId}/password/init`})
         }
     }
 }

@@ -1,9 +1,12 @@
 package com.samin.dosan.domain.user;
 
+import com.samin.dosan.core.code.Address;
 import com.samin.dosan.core.code.Gender;
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
 import com.samin.dosan.domain.setting.employees.EmployeesCode;
+import com.samin.dosan.domain.setting.former.Former;
+import com.samin.dosan.web.dto.user.EmployeeSave;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,42 +31,43 @@ public class User extends BaseEntity {
     @Column(length = 10)
     private Gender gender; //성별
 
-    @Column
-    private Long formerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "former_id")
+    private Former former;
 
     @Column(length = 15)
-    private String phoneNum; //h.p
+    private String phoneNum;
 
     @Column(length = 15)
-    private String officeNum; //사무실
+    private String officeNum;
 
     @Column(length = 15)
-    private String homeNum; //집
+    private String homeNum;
 
     @Column(length = 15)
-    private String birth; //생년월일
+    private String birth;
 
     @Column(length = 100)
-    private String email; //이메일
+    private String email;
 
     @Column(length = 20)
-    private String bank; //은행
+    private String bank;
 
     @Column(length = 50)
-    private String accountNum; //계좌번호
-
-    @Column(length = 10)
-    private String area; //지역
+    private String accountNum;
 
     @Column(length = 20)
-    private String role; //권한정보
+    private String role;
+
+    @Embedded
+    private Address address;
 
     @Enumerated(EnumType.STRING)
-    private UserType userType; //관리자, 임직원, 지도위원 type
+    private UserType userType;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 1, nullable = false)
-    private Used used; //사용여부
+    private Used used;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_type")
@@ -71,26 +75,39 @@ public class User extends BaseEntity {
 
     /*================== Business Logic ==================*/
 
-    public User newAdmin(UserType userType) {
+    public User newAdmin() {
         this.role = "ROLE_ADMIN";
-        this.userType = userType;
+        this.userType = UserType.ADMIN;
         this.used = Used.Y;
         return this;
     }
 
-    public User newEmployee(UserType userType, String password) {
-        this.password = password;
-        this.role = "ROLE_MANAGER";
-        this.userType = userType;
-        this.used = Used.Y;
-        return this;
-    }
-
-    public User newEducator(UserType userType) {
+    public User newEducator() {
         this.role = "ROLE_USER";
-        this.userType = userType;
+        this.userType = UserType.EDUCATOR;
         this.used = Used.Y;
         return this;
+    }
+
+    public static User newEmployee(EmployeeSave saveData) {
+        return User.builder()
+                .userId(saveData.getUserId())
+                .password(saveData.getPassword())
+                .userNm(saveData.getUserNm())
+                .gender(saveData.getGender())
+                .former(Former.builder().id(saveData.getFormerId()).build())
+                .phoneNum(saveData.getPhoneNum())
+                .officeNum(saveData.getOfficeNum())
+                .homeNum(saveData.getHomeNum())
+                .birth(saveData.getBirth())
+                .email(saveData.getEmail())
+                .bank(saveData.getBank())
+                .accountNum(saveData.getAccountNum())
+                .address(saveData.getAddress())
+                .role("ROLE_MANAGER")
+                .userType(UserType.EMPLOYEES)
+                .used(Used.Y)
+                .build();
     }
 
     public User edit(User user) {

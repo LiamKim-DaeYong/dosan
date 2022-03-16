@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/board/report/list.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>보도자료 관리</h2>
+            <div class="data_box">
+                <a th:href="@{/homepage_notice}">공지사항</a>
+                <a th:href="@{/report}">보도자료</a>
+                <a th:href="@{/gallery}" class="list_on">포토 갤러리</a>
+            </div>
+            <form th:action method="get" id="filter_form">
+                <div class="searchInput">
+                    <div class="flex justify-start align-center">
+                        <div class="margin-r">
+                            <input type="text" name="start" id="start"
+                                   th:value="${filter.start}"
+                                   class="datepicker context-menu border_sm_r basicInput02 paddingLeft_10"
+                                   data-type="date"
+                                   placeholder="시작날짜선택">
+                        </div>
+                        <div class="margin-r">~</div>
+                        <div class="margin-r">
+                            <input type="text"
+                                   class="datepicker context-menu border_sm_r basicInput02 paddingLeft_10"
+                                   data-type="date"
+                                   name="end" id="end" th:value="${filter.end}" placeholder="종료날짜선택">
+                        </div>
+                        <button type="button" id="dateButton" class="sm-btn-darkblue border_sm_r marginRight5">조회</button>
+                        <button type="button" id="initButton" class="sm-btn-white2 border_sm_r">초기화</button>
+                    </div>
+                    <div class="flex justify-end width-30">
+                        <input type="text" name="filter"
+                               class="basicInput02 width-85 borderLeftRadius paddingLeft_10" id="filter"
+                               th:value="${filter.filter}">
+                        <button type="button" id="filterButton"
+                                class="filter_submit borderLeft_0 borderRightRadius width-15 bg-ashgray4 basicBtn02">
+                            검색
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="reportFrag" th:fragment="reportFrag">
+                <table class="t-table">
+                    <colgroup>
+                        <col width="3%">
+                        <col width="7%">
+                        <col width="60%">
+                        <col width="10%">
+                        <col width="10%">
+                        <col width="10%">
+                    </colgroup>
+                    <tr>
+                        <th><input type="checkbox" id="all_check"></th>
+                        <th>No.</th>
+                        <th>제목</th>
+                        <th>첨부파일</th>
+                        <th>작성자</th>
+                        <th>작성일자</th>
+                    </tr>
+
+                    <tr th:if="${reportList.getContent().size() == 0}">
+                        <td colspan="6">일치하는 내용이 없습니다</td>
+                    </tr>
+
+                    <tr th:each="report : ${reportList}">
+                        <td>
+                            <input type="checkbox" class="report_delete" th:id="|delete_${report.id}|">
+                        </td>
+                        <td th:text="${reportList.getTotalElements() - (reportList.number * reportList.size + reportStat.index)}"></td>
+                        <td>
+                            <a th:href="@{/report/detail/{id}(id=${report.id})}"
+                               th:text="${report.title}"></a>
+                        </td>
+                        <td>
+                            <span th:text="${report.childList.size()} != 0 ? 'O' : ''"></span>
+                        </td>
+                        <td th:text="${report.author}"></td>
+                        <td th:text="${report.regDt}"></td>
+                    </tr>
+                </table>
+
+                <div th:if="${reportList.getTotalPages() > 1}">
+                    <div class="page-num"
+                         th:with="start=${T(Math).floor(reportList.number/5)*5 + 1},
+                                    end=(${(reportList.totalPages == 0) ? 1 : (start + 4 < reportList.totalPages ? start + 4 : reportList.totalPages)})">
+                        <ul class="paging">
+                            <li th:style="${reportList.first} ? 'display: none' : 'display: block'">
+                                <a href="javascript:void(0)" onclick="ACTIONS.PAGE(1)"><<</a>
+                            </li>
+
+                            <li th:style="${reportList.first} ? 'display: none' : 'display: block'">
+                                <a href="javascript:void(0)"
+                                   th:onclick="ACTIONS.PAGE([[${reportList.number}]])"><</a>
+                            </li>
+
+                            <li th:each="page: ${#numbers.sequence(start, end)}"
+                                th:class="${reportList.number + 1 == page} ? 'paging_active' : ''">
+                                <a href="javascript:void(0)" th:text="${page}"
+                                   th:onclick="ACTIONS.PAGE([[${page}]])"></a>
+                            </li>
+
+                            <li th:style="${reportList.last} ? 'display: none' : 'display: block'">
+                                <a href="javascript:void(0)"
+                                   th:onclick="ACTIONS.PAGE([[${reportList.number + 2}]])">></a>
+                            </li>
+
+                            <li th:style="${reportList.last} ? 'display: none' : 'display: block'">
+                                <a href="javascript:void(0)"
+                                   th:onclick="ACTIONS.PAGE([[${reportList.totalPages}]])">>></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex justify-between margin-t paddingTop_10 margin-b paddingBottom">
+            <button type="button" class="sm-btn-white border_sm_r width-5" onclick="ACTIONS.DELETE()">선택삭제
+            </button>
+            <a th:href="@{/report/regist}" class="sm-btn-blue border_sm_r width-5 text-center">신규
+                등록</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -15,7 +15,7 @@
     <div class="content">
         <h2 th:text="#{menu.user.employees.new}"></h2>
 
-        <form th:action th:object="${user}">
+        <form th:action th:object="${employee}">
 
             <span>기본정보</span>
             <table>
@@ -23,7 +23,6 @@
                     <th>아이디</th>
                     <td>
                         <input type="text" th:field="*{userId}" />
-                        <button type="button">중복체크</button>
                         <button type="button" id="checkId" onclick="pageObj.checkId()" value="N">중복체크</button>
                         <div id="checkIdMsg"></div>
                     </td>
@@ -86,99 +85,16 @@
                 </tr>
 
                 <tr>
-                    <th>지역</th>
-                    <td>
-                        <input type="text" th:field="*{area}">
-                    </td>
                     <th>주소</th>
-                    <td>
-                        <input type="text" readonly>
-                        <button type="button">주소찾기</button>
-                        <input type="text">
+                    <td colspan="7">
+                        <input type="text" id="zipCode" name="address.zipCode" disabled />
+                        <button type="button" onclick="$api.addressApi()">주소찾기</button>
+                        <input type="text" id="roadAddress" name="address.roadAddress" />
+                        <input type="text" id="detailAddress" name="address.detailAddress" />
                     </td>
                 </tr>
-
-<!--                <tr>-->
-<!--                    <th>주소</th>-->
-<!--                    <td></td>-->
-<!--                </tr>-->
             </table>
 
-<!--            <span>근무정보</span>-->
-<!--            <table>-->
-<!--                <tr>-->
-<!--                    <th>구분</th>-->
-<!--                    <td>-->
-<!--                        <select th:field="*{employeesType}">-->
-<!--                            <option th:each="employeesType : ${employeesTypes}"-->
-<!--                                    th:text="${employeesType.code}" th:value="${employeesType.id}"></option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                    <th>직위</th>-->
-<!--                    <td>-->
-<!--                        <select th:field="*{employeesPosition}">-->
-<!--                            <option th:each="position : ${positions}"-->
-<!--                                    th:text="${position.code}" th:value="${position.id}"></option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                    <th>직급</th>-->
-<!--                    <td>-->
-<!--                        <select th:field="*{employeesRank}">-->
-<!--                            <option th:each="rank : ${ranks}"-->
-<!--                                    th:text="${rank.code}" th:value="${rank.id}"></option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                    <th>호봉</th>-->
-<!--                    <td>-->
-<!--                        <select th:field="*{employeesStep}">-->
-<!--                            <option th:each="step : ${steps}"-->
-<!--                                    th:text="${step.code}" th:value="${step.id}"></option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                </tr>-->
-
-<!--                <tr>-->
-<!--                    <th>근무부서</th>-->
-<!--                    <td>-->
-<!--                        <select th:field="*{employeesDepartment}">-->
-<!--                            <option th:each="department : ${departments}"-->
-<!--                                    th:text="${department.code}" th:value="${department.id}"></option>-->
-<!--                        </select>-->
-<!--                    </td>-->
-<!--                    <th>채용일</th>-->
-<!--                    <td>-->
-<!--                        <input type="date" th:field="*{appointmentDate}" />-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
-
-<!--            <span>학력사항</span>-->
-<!--            <table>-->
-<!--                <tr>-->
-<!--                    <th>-->
-<!--                        <input type="checkbox" />-->
-<!--                    </th>-->
-<!--                    <th>출신학교</th>-->
-<!--                    <th>졸업년도</th>-->
-<!--                    <th>전공</th>-->
-<!--                    <th>학위</th>-->
-<!--                </tr>-->
-<!--            </table>-->
-
-<!--            <span>주요근무이력</span>-->
-<!--            <table>-->
-<!--                <tr>-->
-<!--                    <th>-->
-<!--                        <input type="checkbox" />-->
-<!--                    </th>-->
-<!--                    <th>근무처</th>-->
-<!--                    <th>기간</th>-->
-<!--                    <th>직위(직급)</th>-->
-<!--                </tr>-->
-<!--            </table>-->
-
-<!--            <span>특기사항</span>-->
-<!--            <textarea></textarea>-->
             <div>
                 <button type="button" th:text="#{button.list}" onclick="location.href='/user/employees'">목록</button>
                 <button type="button" th:text="#{button.new}" onclick="pageObj.save()">등록</button>

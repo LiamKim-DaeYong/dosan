@@ -23,9 +23,9 @@ public class UserService {
         return userRepository.findAllEmployees(searchParam, employeesType, pageable);
     }
 
-//    public Page<User> findAllEducator(SearchParam searchParam, Long educatorType, Pageable pageable) {
-//        return userRepository.findAllEducator(searchParam, educatorType, pageable);
-//    }
+    public Page<User> findAllEducators(SearchParam searchParam, Long educatorsType, Pageable pageable) {
+        return userRepository.findAllEducators(searchParam, educatorsType, pageable);
+    }
 
     public User findById(String userId) {
         return userRepository.findById(userId).get();
@@ -37,6 +37,7 @@ public class UserService {
 
     @Transactional
     public User save(User user) {
+        user.updatePassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 

@@ -10,6 +10,7 @@ import com.samin.dosan.domain.setting.former.Former;
 import com.samin.dosan.domain.setting.former.FormerService;
 import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;
+import com.samin.dosan.web.dto.user.EmployeeSave;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -67,7 +68,7 @@ public class UserController {
     }
 
     @GetMapping("/employees/add")
-    public String addEmployees(@ModelAttribute User user, Model model) {
+    public String addEmployees(@ModelAttribute("employee") EmployeeSave employee, Model model) {
 
 //        model.addAttribute("positions", employeesCodeService.findAllPosition());
 //        model.addAttribute("ranks", employeesCodeService.findAllRank());
@@ -85,11 +86,11 @@ public class UserController {
     }
 
     /*==================  지도위원 ==================*/
-    @GetMapping({"/educator", "/educator/{educatorType}"})
-    public String educator(@PathVariable(required = false) Long educatorType, @ModelAttribute SearchParam searchParam,
+    @GetMapping({"/educator", "/educator/{educatorsType}"})
+    public String educator(@PathVariable(required = false) Long educatorsType, @ModelAttribute SearchParam searchParam,
                            Pageable pageable, Model model) {
-//        Page<User> educators = userService.findAllEducators(searchParam, educatorType, pageable);
-//        model.addAttribute("educators", educators);
+        Page<User> educators = userService.findAllEducators(searchParam, educatorsType, pageable);
+        model.addAttribute("educators", educators);
 
         return "user/educator/educators";
     }

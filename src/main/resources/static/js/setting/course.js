@@ -14,18 +14,18 @@ var pageObj = {
     },
 
     save: function () {
-        $api.post({data: modal.getData()})
+        $ajax.post({data: modal.getData()})
     },
 
     edit: function () {
-        $api.put({data: modal.getData()})
+        $ajax.put({data: modal.getData()})
     },
 
     delete: function () {
         var allChecked = $checkBox.getAllChecked();
 
         if ($valid.deletes(!allChecked.length)){
-            $api.delete({data: allChecked})
+            $ajax.delete({data: allChecked})
         }
     }
 }

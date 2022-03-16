@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/data/promotion/detail.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>홍보동영상 상세</h2>
+            <table class="t-table margin-t">
+                <colgroup>
+                    <col width="13%"/>
+                    <col width="*"/>
+                </colgroup>
+                <tr>
+                    <th>제목</th>
+                    <td th:text="${promotion.title}"></td>
+                </tr>
+                <tr>
+                    <th>작성자</th>
+                    <td th:text="${promotion.author}"></td>
+                </tr>
+                <tr>
+                    <th>작성일자</th>
+                    <td th:text="${promotion.regDt}"></td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td>
+                        <iframe width="560" height="315"
+                                th:src="@{https://www.youtube.com/embed/{code}(code=${promotion.code})}"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                        </iframe>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="flex justify-between margin-t margin-b text-center">
+            <div class="f_left">
+                <a th:href="@{/promotion/list}" class="sm-btn-white border_sm_r width-5">목록</a>
+            </div>
+            <div class="flex justify-end gap_lr">
+                <a th:href="@{/promotion/modify/{id}(id=${promotion.id})}" class="sm-btn-border-gray border_sm_r width-5">수정</a>
+                <a href="javascript:void(0)" th:onclick="ACTIONS.DELETE([[${promotion.id}]])" class="sm-btn-border-red border_sm_r width-5">삭제</a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/data/promotion/regist.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>홍보동영상 등록</h2>
+
+            <form th:action="@{/promotion/save}" method="post" id="promotion_form">
+                <table class="t-table margin-t">
+                    <colgroup>
+                        <col width="13%"/>
+                        <col width="*"/>
+                    </colgroup>
+                    <tr>
+                        <th>제목</th>
+                        <td class="text-left">
+                            <input type="text" name="title" id="title" class="width-100 border-0 borderBox">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>소스코드</th>
+                        <td class="text-left">
+                            <textarea type="text" id="code" class="width-100 border-0 borderBox"></textarea>
+                            <input type="hidden" id="realCode" name="code">
+                        </td>
+                    </tr>
+                    <tr style="height: 500px">
+                        <th>미리보기</th>
+                        <td id="youtube_box" class="text-left">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="flex justify-between margin-t paddingTop_10 margin-b paddingBottom">
+            <a th:href="@{/promotion}"
+               class="sm-btn-white border_sm_r width-5 text-center">목록</a>
+            <button type="button" onclick="ACTIONS.SAVE()" class="sm-btn-blue border_sm_r width-5">등록
+            </button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -52,6 +52,36 @@ public class UserRepositoryImpl implements UserRepositoryQueryDSL {
     }
 
     @Override
+    public Page<User> findAllEducators(SearchParam searchParam, Long educatorsType, Pageable pageable) {
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(user.used.eq(Used.Y).and(user.userType.eq(UserType.EMPLOYEES)));
+
+        String searchWord = searchParam.getSearchWorld();
+        if (searchWord != null) {
+            builder.and(user.userId.contains(searchWord))
+                    .or(user.userNm.contains(searchWord));
+        }
+
+        if (educatorsType != null) {
+            builder.and(user.employeesType.id.eq(educatorsType));
+        }
+
+        List<User> content = queryFactory
+                .selectFrom(user)
+                .where(builder)
+                .orderBy(user.userId.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        JPAQuery<User> countQuery = queryFactory
+                .selectFrom(user)
+                .where(builder);
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
+    }
+
+    @Override
     public boolean existById(String userId) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(user.userId.eq(userId));

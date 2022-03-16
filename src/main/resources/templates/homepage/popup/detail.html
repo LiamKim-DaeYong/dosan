@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/setting/course.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>팝업 관리</h2>
+            <table class="t-table margin-t">
+                <colgroup>
+                    <col width="13%"/>
+                    <col width="*"/>
+                </colgroup>
+                <tr>
+                    <th>제목</th>
+                    <td th:text="${popup.title}"></td>
+                </tr>
+                <tr>
+                    <th>링크</th>
+                    <td th:text="${popup.link} != 'javascript:void(0)' ? ${popup.link} : '링크없음'"></td>
+                </tr>
+                <tr>
+                    <th>게시여부</th>
+                    <td th:text="${popup.postYn} == 'Y' ? '게시중' : '미게시'"></td>
+                </tr>
+                <tr>
+                    <th>게시기간</th>
+                    <td>
+                        <p th:text="${popup.dateSet} == 'Y' ? ${popup.postStart} + ' ~ ' + ${popup.postEnd} : '기간 미설정'"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th>이미지</th>
+                    <td>
+                        <img th:src="@{/admin/homepage/file/preview/{id}(id=${popup.fileId})}" alt="">
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="flex justify-between margin-t paddingTop_10 margin-b paddingBottom">
+            <a th:href="@{/popup}"
+               class="sm-btn-white border_sm_r width-5 text-center">목록</a>
+            <a th:href="@{/popup/modify/{id}(id=${popup.id})}"
+               class="sm-btn-blue border_sm_r width-5 text-center">수정</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>

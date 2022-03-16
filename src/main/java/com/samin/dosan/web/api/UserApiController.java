@@ -2,15 +2,16 @@ package com.samin.dosan.web.api;
 
 import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;
-import com.samin.dosan.domain.user.UserType;
+import com.samin.dosan.web.dto.user.EmployeeSave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
+
+import static com.samin.dosan.domain.user.User.newEmployee;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +20,6 @@ import java.util.Map;
 public class UserApiController {
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/check/id")
     public ResponseEntity checkId(@RequestBody Map<String, String> userIdMap) {
@@ -34,9 +34,8 @@ public class UserApiController {
 
     /* ========== 임직원 ========== */
     @PostMapping("/employees/add")
-    public ResponseEntity save(@Valid @RequestBody User user) {
-        User initUser = user.newEmployee(UserType.EMPLOYEES, passwordEncoder.encode(user.getPassword()));
-        userService.save(initUser);
+    public ResponseEntity save(@Valid @RequestBody EmployeeSave saveData) {
+        userService.save(newEmployee(saveData));
         return ResponseEntity.ok().build();
     }
 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/mainImage/regist.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>메인이미지 등록</h2>
+            <form th:action="@{/mainImage/save}" method="post" id="main_form">
+                <table class="t-table margin-t">
+                    <colgroup>
+                        <col width="13%"/>
+                        <col width="*"/>
+                    </colgroup>
+                    <tr>
+                        <th>제목</th>
+                        <td>
+                            <input type="text" name="title" id="title" class="width-100 border-0 borderBox">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>게시여부</th>
+                        <td>
+                            <select name="postYn" id="postYn" onchange="ACTIONS.POST_YN_CHANGE(this)"
+                                    class="basicSelect width-10 margin-l margin-r">
+                                <option value="Y" selected>게시</option>
+                                <option value="N">미게시</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>게시순서</th>
+                        <td>
+                            <select name="postSeq" id="postSeq" class="basicSelect width-10 margin-l margin-r">
+                                <option value="0" hidden>0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이미지</th>
+                        <td>
+                            <button id="btn_upload" type="button">파일 업로드</button>
+                            <input type="file" id="input_file" accept="image/*" style="display: none;"/>
+                            <span style="font-size:80%; color:#777;">※ 최소 1920 x 930, 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>파일명</th>
+                        <td id="image_name_box">
+                            <span id="none_name">이미지가 없습니다.</span>
+                        </td>
+                    </tr>
+                    <tr style="height: 500px">
+                        <th>미리보기</th>
+                        <td id="preview_box">
+                            <span id="none_preview">이미지가 없습니다.</span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="flex justify-between margin-t paddingTop_10 margin-b paddingBottom">
+            <button type="button" class="sm-btn-white border_sm_r width-5"
+                    onclick="location.href='/mainImage'">목록
+            </button>
+            <button type="button" onclick="ACTIONS.SAVE()" class="sm-btn-blue border_sm_r width-5">등록</button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

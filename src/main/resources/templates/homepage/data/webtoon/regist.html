@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/data/webtoon/regist.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>만화퇴계 등록</h2>
+
+            <form th:action="@{/webtoon/save}" method="post" id="webtoon_form">
+                <table class="t-table margin-t">
+                    <colgroup>
+                        <col width="13%"/>
+                        <col width="*"/>
+                    </colgroup>
+                    <tr>
+                        <th>제목</th>
+                        <td class="text-left">
+                            <input type="text" name="title" id="title" class="width-100 border-0 borderBox">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>PDF 업로드</th>
+                        <td class="text-left">
+                            <button id="pdf_upload" type="button">업로드</button>
+                            <input type="file" id="pdf_input" accept=".pdf" style="display: none;">
+                            <div id="pdf_name_box"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>썸네일 업로드</th>
+                        <td class="text-left">
+                            <button id="img_upload" type="button">업로드</button>
+                            <input type="file" id="img_input" accept="image/*" style="display: none;">
+                            <span style="font-size:80%; color:#777;">※이미지 업로드를 하지 않으면 PDF 첫페이지가 썸네일 이미지로 등록됩니다.*</span>
+                            <div id="image_name_box"></div>
+                        </td>
+                    </tr>
+                    <tr style="height: 500px">
+                        <th>미리보기</th>
+                        <td id="preview_box" class="text-left">
+                            <span id="none_preview">이미지가 없습니다.</span>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="flex justify-between margin-t paddingTop_10 margin-b paddingBottom">
+            <a th:href="@{/webtoon}" class="sm-btn-white border_sm_r width-5 text-center">목록</a>
+            <button type="button" onclick="ACTIONS.SAVE()" class="sm-btn-blue border_sm_r width-5">등록</button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

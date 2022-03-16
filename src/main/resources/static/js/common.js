@@ -1,15 +1,3 @@
-$api = {
-    addressApi: function (zipCodeId, addressId, detailId) {
-        new daum.Postcode({
-            oncomplete: function (data) { //선택시 입력값 세팅
-                document.getElementById(zipCodeId).value = data.zonecode; // 주소 넣기
-                document.getElementById(addressId).value = data.address; // 주소 넣기
-                document.getElementById(detailId).focus();
-            }
-        }).open();
-    }
-}
-
 $errors = {
     valid: function (errors) {
         var fieldErrors = errors["fieldErrors"];
@@ -125,6 +113,7 @@ $event = {
     init: function () {
         this.inputAutocompleteOff();
         this.initCheckboxEvent();
+        this.fileInputInit();
     },
 
     inputAutocompleteOff: function () {
@@ -135,7 +124,15 @@ $event = {
         $('input:checkbox[check="all"]').on('click', function () {
             $('input:checkbox').prop("checked", $(this).is(":checked"));
         });
-    }
+    },
+
+    fileInputInit: function () {
+        $(".file-input").on("change", function(){
+            var filename = $(this).val();
+            var fileText = filename.split("\\");
+            $(".filename").text(fileText[2]);
+        })
+    },
 }
 
 $checkBox = {
@@ -189,7 +186,7 @@ $url = {
     },
 }
 
-$api = {
+$ajax = {
     defaultOption: {
         url: $url.getPath(),
         contentType: 'application/json',
@@ -263,7 +260,19 @@ $api = {
                 $errors.valid(error.responseJSON);
             }
         });
-    },
+    }
+}
+
+$api = {
+    addressApi: function (zipCodeId='zipCode', addressId='roadAddress', detailId='detailAddress') {
+        new daum.Postcode({
+            oncomplete: function (data) { //선택시 입력값 세팅
+                document.getElementById(zipCodeId).value = data.zonecode; // 주소 넣기
+                document.getElementById(addressId).value = data.address; // 주소 넣기
+                document.getElementById(detailId).focus();
+            }
+        }).open();
+    }
 }
 
 $(document).ready(function () {

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/board/report/modify.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>보도자료 수정</h2>
+
+
+            <form th:action="@{/report/save}" method="post" id="report_form">
+                <input type="hidden" id="id" name="id" th:value="${report.id}">
+                <table class="t-table margin-t">
+                    <colgroup>
+                        <col width="13%"/>
+                        <col width="*"/>
+                    </colgroup>
+                    <tr>
+                        <th>제목</th>
+                        <td>
+                            <input type="text" name="title" id="title" th:value="${report.title}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                        <td class="padding_0 image_size">
+                            <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                            <textarea name="contentVal" id="contentVal" th:value="${report.contentVal}" cols="30"
+                                      rows="10" hidden="hidden"></textarea>
+                            <div id="hidden_img_box" style="display: none"></div>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="flex justify-between margin-t paddingTop_10 margin-b paddingBottom">
+            <a th:href="@{/report/detail/{id}(id=${report.id})}"
+               class="sm-btn-white border_sm_r width-5 text-center">뒤로</a>
+            <button type="button" onclick="ACTIONS.SAVE()" class="sm-btn-blue border_sm_r width-5">수정완료</button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

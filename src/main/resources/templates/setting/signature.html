@@ -24,7 +24,10 @@
                 <tr>
                     <th th:text="#{signature.file}">파일업로드</th>
                     <td>
-                        <input name="file" type="file" />
+                        <label for="file_input" class="file_btn">
+                            <input name="file" type="file" id="file_input" class="file-input"/>
+                        </label>
+                        <span class="filename"></span>
                     </td>
                 </tr>
             </table>

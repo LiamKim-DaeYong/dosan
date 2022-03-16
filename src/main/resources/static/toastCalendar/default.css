@@ -181,14 +181,15 @@ body {
 }
 
 .move-day {
+    text-align: center;
     padding: 8px;
     font-size: 0;
 }
 
 #renderRange {
-    padding-left: 12px;
     font-size: 19px;
-    vertical-align: middle;
+    vertical-align: center;
+    text-align: center;
 }
 
 .dropdown-menu-title .calendar-icon {
@@ -241,4 +242,19 @@ body {
     font-size: 12px;
     text-align: center;
     color: #000;
+}
+
+.calendar-left {
+    float: left;
+    width: 640px;
+    text-align: left;
+}
+
+.calendar-center {
+    float: left;
+    text-align: left;
+}
+
+.calendar-right {
+    float: right;
 }

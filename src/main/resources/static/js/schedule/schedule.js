@@ -4,8 +4,69 @@ var pageObj = {
 
 $(document).ready(function () {
 
+    var CalendarList = [];
+
+    function CalendarInfo() {
+        this.id = null;
+        this.name = null;
+        this.checked = true;
+        this.color = null;
+        this.bgColor = null;
+        this.borderColor = null;
+        this.dragBgColor = null;
+    }
+
+    function addCalendar(calendar) {
+        CalendarList.push(calendar);
+    }
+
+    var calendar;
+    var id = 0;
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = '찾아가는 학교 수련';
+    calendar.color = '#ffffff';
+    calendar.bgColor = '#00a9ff';
+    calendar.dragBgColor = '#00a9ff';
+    calendar.borderColor = '#00a9ff';
+    addCalendar(calendar);
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = '수련원 입교수련';
+    calendar.color = '#ffffff';
+    calendar.bgColor = '#03bd9e';
+    calendar.dragBgColor = '#03bd9e';
+    calendar.borderColor = '#03bd9e';
+    addCalendar(calendar);
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = '개인일정';
+    calendar.color = '#ffffff';
+    calendar.bgColor = '#9e5fff';
+    calendar.dragBgColor = '#9e5fff';
+    calendar.borderColor = '#9e5fff';
+    addCalendar(calendar);
+
+    calendar = new CalendarInfo();
+    id += 1;
+    calendar.id = String(id);
+    calendar.name = '기타일정';
+    calendar.color = '#ffffff';
+    calendar.bgColor = '#000000';
+    calendar.dragBgColor = '#000000';
+    calendar.borderColor = '#000000';
+    addCalendar(calendar);
+
     var calendar = new tui.Calendar('#calendar', {
         defaultView: 'month',
+        useCreationPopup: true,
+        useDetailPopup: true,
         month: {
             daynames: ['일', '월', '화', '수', '목', '금', '토'], // Translate the required language.
         },
@@ -23,15 +84,6 @@ $(document).ready(function () {
         }));
     }
 
-    function MenuClick(actionListener, queryString = "data-action") {
-        let menuEls = document.querySelectorAll(`a[${queryString}]`);
-        menuEls.forEach(el => el.addEventListener("click", evt => {
-            const target = evt.target;
-            const action = target.getAttribute("data-action");
-            actionListener(evt, target, action)
-        }));
-    }
-
     BtnClick((evt, target, action) => {
         if (action == "move-today") {
             calendar.today();
@@ -39,64 +91,26 @@ $(document).ready(function () {
             calendar.prev();
         } else if (action == "move-next") {
             calendar.next();
-        }
-
-        setRenderRangeText();
-        calendar.clear();
-        setDashboardData();
-    });
-
-    MenuClick((evt, target, action) => {
-        var options = calendar.getOptions();
-        var viewName = '';
-
-        if (action == "toggle-monthly") {
-            options.month.visibleWeeksCount = 0;
-            viewName = 'month';
-        } else if (action == "toggle-weeks2") {
-            options.month.visibleWeeksCount = 2;
-            viewName = 'month';
-        } else if (action == "toggle-weeks3") {
-            options.month.visibleWeeksCount = 3;
-            viewName = 'month';
-        }
-
-        calendar.setOptions(options, true);
-        calendar.changeView(viewName, true);
-
-        setDropdownCalendarType();
-        setRenderRangeText();
-        calendar.clear();
-        setDashboardData();
-    });
-
-    function setDropdownCalendarType() {
-        var calendarTypeName = document.getElementById('calendarTypeName');
-        var calendarTypeIcon = document.getElementById('calendarTypeIcon');
-        var options = calendar.getOptions();
-        var type = calendar.getViewName();
-        var iconClassName;
-
-        if (type === 'day') {
-            type = 'Daily';
-            iconClassName = 'calendar-icon ic_view_day';
-        } else if (type === 'week') {
-            type = 'Weekly';
-            iconClassName = 'calendar-icon ic_view_week';
-        } else if (options.month.visibleWeeksCount === 2) {
-            type = '2 weeks';
-            iconClassName = 'calendar-icon ic_view_week';
-        } else if (options.month.visibleWeeksCount === 3) {
-            type = '3 weeks';
-            iconClassName = 'calendar-icon ic_view_week';
         } else {
-            type = 'Monthly';
-            iconClassName = 'calendar-icon ic_view_month';
+            var options = calendar.getOptions();
+            var viewName = '';
+
+            if (action == "toggle-monthly") {
+                options.month.visibleWeeksCount = 0;
+                viewName = 'month';
+            } else if (action == "toggle-weeks2") {
+                viewName = 'week';
+            } else if (action == "toggle-weeks3") {
+                viewName = 'day';
+            }
+
+            calendar.setOptions(options, true);
+            calendar.changeView(viewName, true);
         }
 
-        calendarTypeName.innerHTML = type;
-        calendarTypeIcon.className = iconClassName;
-    }
+        setRenderRangeText();
+        setDashboardData();
+    });
 
     function setRenderRangeText() {
         var renderRange = document.getElementById('renderRange');
@@ -128,39 +142,52 @@ $(document).ready(function () {
         var options = calendar.getOptions();
     }
 
-    let openModifyModal = function(clickDate) {
-
-    }
-
     calendar.on('beforeCreateSchedule', (e) => {
-        var clickDate = moment(e.start._date).format("YYYY-MM-DD");
-        e.guide.clearGuideElement();
+        console.log("beforeCreateSchedule",e);
         /*ACTIONS.dispatch(ACTIONS.CALENDAR_LIST, clickDate);*/
-        calendar.clear();
-        openModifyModal(clickDate);
+        const schedule = {
+            calendarId: e.calendarId,
+            id: String(Math.random() * 100000000000000000),
+            title: e.title,
+            isAllDay: e.isAllDay,
+            start: e.start,
+            end: e.end,
+            category: e.isAllDay ? 'allday' : 'time',
+            location: e.location             // 장소 정보도 입력할 수 있네요!
+        };
+        calendar.createSchedules([schedule]);
     });
+
+    calendar.on('beforeUpdateSchedule', event => {
+        const {schedule, changes} = event;
+
+        calendar.updateSchedule(schedule.id, schedule.calendarId, changes);
+    });
+
+    calendar.on('beforeDeleteSchedule', scheduleData => {
+        const {schedule} = scheduleData;
+
+        calendar.deleteSchedule(schedule.id, schedule.calendarId);
+    });
+
     calendar.on('clickSchedule', (e) => {
         var clickDate = moment(e.schedule.start._date).format("YYYY-MM-DD");
         /*ACTIONS.dispatch(ACTIONS.CALENDAR_LIST, clickDate);*/
-        calendar.clear();
-        openModifyModal(clickDate);
-    });
-    calendar.on('clickMore', (e) => {
-        calendar.hideMoreView();
-        var clickDate = moment(e.date._date).format("YYYY-MM-DD");
-        /*ACTIONS.dispatch(ACTIONS.CALENDAR_LIST, clickDate);*/
-        calendar.clear();
-        openModifyModal(clickDate);
     });
 
-    //페이지 첫로딩시 3주보기
+    calendar.on('clickMore', (e) => {
+        var clickDate = moment(e.date._date).format("YYYY-MM-DD");
+        /*ACTIONS.dispatch(ACTIONS.CALENDAR_LIST, clickDate);*/
+    });
+
+    //페이지 첫로딩시 월간보기
     var options = calendar.getOptions();
-    options.month.visibleWeeksCount = 3;
+    options.month.visibleWeeksCount = 0;
     var viewName = 'month';
     calendar.setOptions(options, true);
     calendar.changeView(viewName, true);
+    calendar.setCalendars(CalendarList);
 
-    setDropdownCalendarType();
     setRenderRangeText();
     setDashboardData();
 

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/inquiry/detail/course.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>문의하기 관리</h2>
+            <table class="t-table margin-t">
+                <colgroup>
+                    <col width="13%"/>
+                    <col width="*"/>
+                </colgroup>
+                <tr>
+                    <th>제목</th>
+                    <td th:text="${inquiry.title}" class="image_size"></td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td th:utext="${inquiry.contentSystem}"></td>
+                </tr>
+                <tr>
+                    <th>첨부파일</th>
+                    <td>
+                        <div th:each="file : ${fileList}">
+                            <a th:href="@{/admin/homepage/file/download/{id}(id=${file.id})}"
+                               th:text="${file.orgFilename}"></a>
+                        </div>
+                        <span th:if="${fileList.size()} < 1">목록이 없습니다.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>답변</th>
+                    <td class="image_size">
+                        <div th:if="${inquiry.inquiryComment} != null">
+                            <div id="show_comment">
+                                    <span style="display: block"><b
+                                            th:text="${inquiry.inquiryComment.author}"></b></span>
+                                <span th:utext="${inquiry.inquiryComment.comment}"></span>
+                                <div class="flex justify-start gap_lr text-center">
+                                    <a href="javascript:void(0)"
+                                       th:onclick="ACTIONS.COMMENT_MODIFY([[${inquiry.inquiryComment}]])"
+                                       style="color:#aaa; display:inline-block;padding:0.5em 0.5em 0.5em 0;">수정</a>
+                                    <a th:href="@{/inquiry/comment/delete/{id}(id=${inquiry.inquiryComment.id})}"
+                                       style="color:#f15958; display:inline-block;padding:0.5em 0.5em 0.5em 0;">삭제</a>
+                                </div>
+                            </div>
+
+                            <div id="hide_comment" style="display: none">
+                                <form id="modify_comment_form">
+                                    <input type="hidden" id="inquiryId" th:value="${inquiry.id}">
+                                    <textarea name="comment" id="modify_comment" cols="80" rows="10"
+                                              class="width-100 borderBox"
+                                              style="border:1px solid #ececec;"></textarea>
+
+                                    <div class="flex justify-start gap_lr text-center">
+                                        <button type="button" onclick="ACTIONS.MODIFY_CANCEL()"
+                                                style="background:transparent;border:0;color:#f15958; display:inline-block;padding:0.5em 0.5em 0.5em 0;">
+                                            취소
+                                        </button>
+                                        <button type="button"
+                                                th:onclick="ACTIONS.MODIFY_SAVE([[${inquiry.inquiryComment.id}]])"
+                                                style="background:transparent;border:0;color:#212121; display:inline-block;padding:0.5em 0.5em 0.5em 0;">
+                                            등록
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div th:if="${inquiry.inquiryComment} == null">
+                            <form id="comment_form">
+                                <input type="hidden" name="inquiryId" th:value="${inquiry.id}">
+                                <textarea name="comment" id="comment" cols="80" class="width-100 border-0 borderBox"
+                                          rows="30"></textarea>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="flex justify-between margin-t margin-b text-center">
+            <div class="f_left">
+                <a th:href="@{/inquiry/list}" class="sm-btn-white border_sm_r width-5">목록</a>
+            </div>
+            <div class="flex justify-end gap_lr">
+                <a href="javascript:void(0)" th:onclick="ACTIONS.DELETE([[${inquiry.id}]])"
+                   class="sm-btn-border-gray border_sm_r width-5">삭제</a>
+                <button th:if="${inquiry.inquiryComment} == null" type="button"
+                        th:onclick="ACTIONS.COMMENT_SAVE([[${inquiry.id}]])"
+                        class="sm-btn-border-red border_sm_r width-5">답변등록
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

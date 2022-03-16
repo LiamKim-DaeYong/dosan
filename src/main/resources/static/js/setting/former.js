@@ -20,7 +20,7 @@ var pageObj = {
         };
 
         if (!$valid.duplicate(option)) {
-            $api.post({data: modal.getData()})
+            $ajax.post({data: modal.getData()})
         } else {
             $("[errors]").text("");
             $("[errorclass]").each(function () {
@@ -36,14 +36,14 @@ var pageObj = {
     },
 
     edit: function () {
-        $api.put({data: modal.getData()})
+        $ajax.put({data: modal.getData()})
     },
 
     delete: function () {
         var allChecked = $checkBox.getAllChecked();
 
         if ($valid.deletes(!allChecked.length)) {
-            $api.delete({data: allChecked});
+            $ajax.delete({data: allChecked});
         }
     }
 }

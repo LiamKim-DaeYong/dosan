@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/setting/course.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <div class="sm_basic_wrap">
+            <h2>메인이미지 상세</h2>
+            <table class="t-table margin-t">
+                <colgroup>
+                    <col width="13%"/>
+                    <col width="*"/>
+                </colgroup>
+                <tr>
+                    <th>제목</th>
+                    <td th:text="${mainImage.title}"></td>
+                </tr>
+                <tr>
+                    <th>게시여부</th>
+                    <td th:text="${mainImage.postYn} == 'Y' ? '게시중' : '미게시'"></td>
+                </tr>
+                <tr>
+                    <th>게시순서</th>
+                    <td th:text="${mainImage.postSeq}"></td>
+                </tr>
+                <tr>
+                    <th>이미지</th>
+                    <td>
+                        <img th:src="@{/admin/homepage/file/preview/{id}(id=${mainImage.fileId})}" alt="썸네일"
+                             style="width:80%; max-height: 500px;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="flex justify-between margin-t paddingTop_10 margin-b paddingBottom">
+            <a th:href="@{/mainImage}"
+               class="sm-btn-white border_sm_r width-5 text-center">목록</a>
+            <a th:href="@{/mainImage/modify/{id}(id=${mainImage.id})}"
+               class="sm-btn-blue border_sm_r width-5 text-center">수정</a>
+        </div>
+    </div>
+</section>
+</body>
+</html>
