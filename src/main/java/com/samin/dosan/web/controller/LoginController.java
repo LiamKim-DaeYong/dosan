@@ -30,7 +30,7 @@ public class LoginController {
     public void init() {
         userService.save(User.builder()
                 .userId("admin")
-                .password(passwordEncoder.encode("1111"))
+                .password("1111")
                 .userNm("관리자")
                 .gender(Gender.MAN)
                 .role("ROLE_ADMIN")
@@ -40,7 +40,7 @@ public class LoginController {
 
         userService.save(User.builder()
                 .userId("manager")
-                .password(passwordEncoder.encode("1111"))
+                .password("1111")
                 .userNm("임직원")
                 .gender(Gender.MAN)
                 .role("ROLE_MANAGER")
@@ -51,7 +51,7 @@ public class LoginController {
 
         userService.save(User.builder()
                 .userId("educator")
-                .password(passwordEncoder.encode("1111"))
+                .password("1111")
                 .userNm("지도위원")
                 .gender(Gender.MAN)
                 .role("ROLE_USER")

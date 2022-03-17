@@ -1,8 +1,6 @@
 package com.samin.dosan.core.interceptor;
 
-import com.samin.dosan.core.code.MethodType;
-import com.samin.dosan.domain.history.History;
-import com.samin.dosan.domain.history.HistoryService;
+import com.samin.dosan.domain.usagelog.UsageLogService;
 import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class LogInterceptor implements HandlerInterceptor {
 
-    private final HistoryService historyService;
+    private final UsageLogService usageLogService;
     private final UserRepository userRepository;
     private final MessageSource messageSource;
 
@@ -33,14 +30,14 @@ public class LogInterceptor implements HandlerInterceptor {
         String method = request.getMethod();
 
         if (!method.equals(HttpMethod.GET.toString())) {
-            History history = History.builder()
-                    .user(getLoginUser())
-                    .logAt(LocalDateTime.now())
-                    .systemNm(getSystemNm(request))
-                    .method(MethodType.valueOf(method).getDescription())
-                    .build();
+//            History history = History.builder()
+//                    .user(getLoginUser())
+//                    .logAt(LocalDateTime.now())
+//                    .systemNm(getSystemNm(request))
+//                    .method(MethodType.valueOf(method).getDescription())
+//                    .build();
 
-            historyService.save(history);
+//            historyService.save(history);
         }
     }
 

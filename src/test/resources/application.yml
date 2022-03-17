@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    hibernate:
+      #naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+      ddl-auto: create
+
+logging.level:
+  org.hibernate.SQL: debug
+
+file:
+  dir: C:/upload/file/
+  temp: C:/upload/temp/
+  signature: C:/upload/signature/
+

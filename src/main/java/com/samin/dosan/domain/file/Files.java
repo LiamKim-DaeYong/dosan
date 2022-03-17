@@ -1,14 +1,18 @@
 package com.samin.dosan.domain.file;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Getter
-@Builder
-@Entity
+@SuperBuilder
+@MappedSuperclass
 @DynamicInsert
 @DynamicUpdate
 @AllArgsConstructor

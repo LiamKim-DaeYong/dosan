@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/inquiry/list.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2>문의하기 관리</h2>
+
+        <form th:action method="get" id="filter_form">
+            <div class="all_search_box">
+                <div th:replace="utils/searchBar :: searchDateWord"></div>
+            </div>
+
+            <table>
+                <colgroup>
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="45%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="10%">
+                </colgroup>
+                <tr>
+                    <th class="table_chk">
+                        <input type="checkbox" check="all"/>
+                    </th>
+                    <th>No.</th>
+                    <th>제목</th>
+                    <th>첨부파일</th>
+                    <th>작성자</th>
+                    <th>작성일자</th>
+                    <th>답변여부</th>
+                </tr>
+
+                <tr th:each="inquiry : ${result.content}">
+                    <td class="table_chk">
+                        <input type="checkbox" th:value="${inquiry.id}"/>
+                    </td>
+                    <td class="table_num"
+                        th:text="${result.totalElements - (result.pageable.offset + inquiryStat.index)}"></td>
+                    <td>
+                        <a th:href="@{/inquiry/detail/{id}(id=${inquiry.id})}"
+                           th:text="${inquiry.title}"></a>
+                    </td>
+                    <td th:text="${inquiry.inquiryFileList.size()}!=0?:'O'"></td>
+                    <td th:text="${inquiry.author}"></td>
+                    <td th:text="${inquiry.regDt}"></td>
+                    <td th:text="${inquiry.inquiryComment}?:'완료'"></td>
+                </tr>
+
+                <tr th:if="${result.content.size eq 0}">
+                    <td colspan="7" th:text="#{data.empty}" class="empty-td"></td>
+                </tr>
+            </table>
+
+            <div th:replace="utils/pagination :: pagination(${result})"></div>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.select.delete}" onclick="ACTIONS.DELETE()" class="btn_del">
+                    선택삭제
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

@@ -1,11 +1,7 @@
 package com.samin.dosan.domain.homepage.mainImage;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import com.samin.dosan.core.domain.BaseEntity;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,28 +10,28 @@ import java.time.LocalDate;
 @Getter
 @Table(name = "homepage_main_image")
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@DynamicInsert
-@DynamicUpdate
-public class MainImage {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class MainImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(precision = 19, nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private Long fileId;
+    @Column(length = 255, nullable = false)
+    private String title;
 
     @Column(length = 1, nullable = false)
     private String postYn;
 
     @Column(nullable = false)
-    private int postSeq;
+    private Integer sort;
 
-    @Column(length = 255, nullable = false)
-    private String title;
+    @Column(nullable = false)
+    private String originFilename;
+
+    @Column(nullable = false)
+    private String storeFileName;
 
     @Column(nullable = false)
     private LocalDate regDt;

@@ -27,6 +27,7 @@ public class InquiryComment {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "inquiry_id")
     private Inquiry inquiry;
 
     @Column(length = 100, nullable = false)

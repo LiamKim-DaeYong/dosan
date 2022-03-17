@@ -75,6 +75,33 @@ $(document).ready(function () {
         },
     });
 
+    var calendarCategoryData = [
+        {id: 1,name: '찾아가는 학교수련',color: "#ffffff",bgColor: "#00a9ff",dragBgColor: "#00a9ff",borderColor: "#00a9ff"},
+        {id: 2,name: '수려원 입교수련',color: "#ffffff",bgColor: "#03bd9e",dragBgColor: "#03bd9e",borderColor: "#03bd9e"},
+        {id: 3,name: '개인일정',color: "#ffffff",bgColor: "#9e5fff",dragBgColor: "#9e5fff",borderColor: "#9e5fff"},
+        {id: 4,name: '기타일정',color: "#ffffff",bgColor: "#000000",dragBgColor: "#000000",borderColor: "#000000"},
+    ]
+
+    $ajax.put({data: calendarCategoryData, url: `/schedule/{type}`,
+        success: function (data) {
+            if (data) {
+                console.log("calendarCategory",data);
+            } else {
+                alert("!!!!!!");
+            }
+        }
+    })
+
+    /*$ajax.get({data: calendarCategoryData, url: `/schedule/{type}/schduleCategory`,
+        success: function (data) {
+            if (data) {
+                console.log("calendarCategory",data);
+            } else {
+                alert("!!!!!!");
+            }
+        }
+    })*/
+
     function BtnClick(actionListener, queryString = "data-action") {
         let btnEls = document.querySelectorAll(`button[${queryString}]`);
         btnEls.forEach(el => el.addEventListener("click", evt => {
@@ -85,6 +112,7 @@ $(document).ready(function () {
     }
 
     BtnClick((evt, target, action) => {
+
         if (action == "move-today") {
             calendar.today();
         } else if (action == "move-prev") {
@@ -172,6 +200,7 @@ $(document).ready(function () {
 
     calendar.on('clickSchedule', (e) => {
         var clickDate = moment(e.schedule.start._date).format("YYYY-MM-DD");
+        console.log('clickSchedule', e);
         /*ACTIONS.dispatch(ACTIONS.CALENDAR_LIST, clickDate);*/
     });
 

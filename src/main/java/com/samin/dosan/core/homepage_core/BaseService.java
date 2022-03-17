@@ -4,6 +4,8 @@ package com.samin.dosan.core.homepage_core;
 
 import com.samin.dosan.domain.homepage.advice.QAdvice;
 import com.samin.dosan.domain.homepage.commonfile.QCommonFile;
+import com.samin.dosan.domain.homepage.data.promotion.QPromotion;
+import com.samin.dosan.domain.homepage.data.webtoon.QWebtoon;
 import com.samin.dosan.domain.homepage.gallery.QGallery;
 import com.samin.dosan.domain.homepage.gallery.file.QGalleryFile;
 import com.samin.dosan.domain.homepage.impression.QImpression;
@@ -16,10 +18,8 @@ import com.samin.dosan.domain.homepage.newsletter.QNewsletter;
 import com.samin.dosan.domain.homepage.notice.QHomepage_Notice;
 import com.samin.dosan.domain.homepage.notice.file.QNoticeFile;
 import com.samin.dosan.domain.homepage.popup.QPopup;
-import com.samin.dosan.domain.homepage.promotion.QPromotion;
 import com.samin.dosan.domain.homepage.report.QReport;
 import com.samin.dosan.domain.homepage.report.file.QReportFile;
-import com.samin.dosan.domain.homepage.webtoon.QWebtoon;
 
 import java.io.Serializable;
 

@@ -1,12 +1,15 @@
 package com.samin.dosan.domain.homepage.advice.repository;
 
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.advice.Advice;
+import com.samin.dosan.domain.homepage.advice.AdviceType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.support.PageableExecutionUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,34 +32,38 @@ public class AdviceRepositoryImpl implements AdviceRepositoryQueryDsl {
 
         if (startDate == null && endDate == null) {
             builder.and(advice.regDt.eq(LocalDate.now()));
+        } else if (startDate != null) {
+            builder.and(advice.regDt.goe(startDate));
+        } else if (endDate != null) {
+            builder.and(advice.regDt.loe(endDate));
         }
 
         if (selectKey != null) {
             switch (selectKey) {
-                case "all":
+                case "ALL":
                     break;
-                case "sunbi":
-                    builder.and(advice.adviceType.eq("찾아가는 선비체험"));
+                case "SUNBI":
+                    builder.and(advice.adviceType.eq(AdviceType.SUNBI));
                     break;
-                case "admission":
-                    builder.and(advice.adviceType.eq("입교과정"));
+                case "ADMISSION":
+                    builder.and(advice.adviceType.eq(AdviceType.ADMISSION));
                     break;
-                case "family":
-                    builder.and(advice.adviceType.eq("가족"));
+                case "FAMILY":
+                    builder.and(advice.adviceType.eq(AdviceType.FAMILY));
                     break;
-                case "ordinary":
-                    builder.and(advice.adviceType.eq("일반인"));
+                case "ORDINARY":
+                    builder.and(advice.adviceType.eq(AdviceType.ORDINARY));
                     break;
-                case "uncheck":
-                    builder.and(advice.status.eq("N"));
+                case "UNCHECK":
+                    builder.and(advice.status.isNull());
                     break;
-                case "check":
+                case "CHECK":
                     builder.and(advice.status.eq("Y"));
                     break;
             }
         }
 
-        if (searchWord != null) {
+        if (searchWord != null && searchWord.trim().isEmpty()) {
             builder.and(advice.applicant.contains(searchWord))
                     .or(advice.insttNm.contains(searchWord))
                     .or(advice.depart.contains(searchWord));
@@ -69,6 +76,10 @@ public class AdviceRepositoryImpl implements AdviceRepositoryQueryDsl {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        return null;
+        JPAQuery<Advice> countQuery = queryFactory
+                .selectFrom(advice)
+                .where(builder);
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
     }
 }

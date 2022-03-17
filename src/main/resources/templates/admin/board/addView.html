@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/lib/multifile/js/jquery-multifile.js}"></script>
+        <script type="text/javascript" th:src="@{/js/board/board.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.board})"></div>
+
+    <div class="content">
+        <form th:action method="post" th:object="${board}">
+            <table class="table_row">
+                <tr>
+                    <th>제목</th>
+                    <td>
+                        <input type="text" th:field="*{title}" class="table_row_long_input"/>
+                        <span th:errors="*{title}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td class="table_row_textarea">
+                        <textarea th:field="*{content}"></textarea>
+                        <span th:errors="*{content}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>첨부파일</th>
+                    <td>
+                        <input name="file" type="file" id="file_input"/>
+                        <div id="file_list"/>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/board'" class="btn_other">목록
+                </button>
+                <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" class="btn_new">등록
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

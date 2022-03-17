@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/mainImage.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2>메인이미지 등록</h2>
+
+        <form th:action method="post" th:object="${mainImage}">
+            <table>
+                <tr>
+                    <th>제목</th>
+                    <td>
+                        <input type="text" th:field="*{title}"/>
+                        <span errors="title"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>게시여부</th>
+                    <td>
+                        <select th:field="*{postYn}">
+                            <option value="Y">게시</option>
+                            <option value="N">미게시</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>게시순서</th>
+                    <td>
+                        <select th:field="*{sort}">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>이미지</th>
+                    <td>
+                        <label for="file_input" class="file_btn">
+                            <input type="file" id="file_input" name="file" class="file-input"/>
+                        </label>
+                        <span class="filename"></span>
+                        <span errors="file"></span>
+                        <span style="font-size:80%; color:#777;">※ 최소 1920 x 930, 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/mainImage'" class="btn-default"></button>
+            <button type="button" th:text="#{button.new}" onclick="pageObj.save()" class="btn_new">등록</button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

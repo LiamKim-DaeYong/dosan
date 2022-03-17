@@ -1,31 +1,25 @@
 package com.samin.dosan.domain.homepage.inquiry;
 
+import com.samin.dosan.core.domain.BaseEntity;
 import com.samin.dosan.domain.homepage.inquiry.comment.InquiryComment;
 import com.samin.dosan.domain.homepage.inquiry.file.InquiryFile;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
-@Table(name = "homepage_inquiry")
+@Entity
 @Builder
-@NoArgsConstructor
+@Table(name = "homepage_inquiry")
 @AllArgsConstructor
-@DynamicInsert
-@DynamicUpdate
-public class Inquiry {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Inquiry extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(precision = 19, nullable = false)
     private Long id;
 
     @Column(nullable = false)
@@ -56,11 +50,12 @@ public class Inquiry {
     private LocalDate regDt;
 
     @OneToMany(mappedBy = "inquiry", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<InquiryFile> inquiryFileList;
+    private List<InquiryFile> inquiryFileList = new ArrayList<>();
 
     @OneToOne(mappedBy = "inquiry", cascade = CascadeType.ALL, orphanRemoval = true)
-    InquiryComment inquiryComment;
+    private InquiryComment inquiryComment;
 
+    /*================== Business Logic ==================*/
     public void addInquiryFile(InquiryFile inquiryFile) {
         inquiryFileList.add(inquiryFile);
         inquiryFile.setParent(this);

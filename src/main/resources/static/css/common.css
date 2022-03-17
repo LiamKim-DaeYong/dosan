@@ -314,12 +314,12 @@ table a:hover {
 
 /********************************input********************************/
 
-input {
+input, select {
     border: 1px solid #cfd2e0;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"],  input[type="date"], .date_search select {
     padding: 0.4em 0 0.4em 0.5em;
 }
 
@@ -359,14 +359,14 @@ input[type="checkbox"]:checked::before {
 }
 
 input[type="file"] {
-    position: absolute;
-    overflow: hidden;
-    padding: 0;
-    margin: -0.1rem;
-    width: 0.1rem;
-    height: 0.1rem;
-    clip: rect(0,0,0,0);
-    border: 0;
+    /*position: absolute;*/
+    /*overflow: hidden;*/
+    /*padding: 0;*/
+    /*margin: -0.1rem;*/
+    /*width: 0.1rem;*/
+    /*height: 0.1rem;*/
+    /*clip: rect(0,0,0,0);*/
+    /*border: 0;*/
 }
 
 .file_btn {
@@ -406,15 +406,15 @@ textarea {
 
 .search {
     width: 280px;
-    border-radius: 5px 0 0 5px;
+    border-radius: 3px 0 0 3px;
     border-right: 0;
+    margin-left:5px;
 }
 
 .search_btn {
-    padding: 0.55em 1em;
     border: 1px solid #cfd2e0;
     background: #fafbfd;
-    border-radius: 0 5px 5px 0;
+    border-radius: 0 3px 3px 0;
 }
 
 .all_search_box {
@@ -423,6 +423,26 @@ textarea {
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+}
+
+.date_search {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.date_chose {
+    display:flex;
+}
+
+.date_chose span {
+    display:inline-block;
+    margin:8px 5px 0 5px;
+}
+
+.date_chose button {
+    margin:0 0 0 5px;
+    min-width:70px;
 }
 
 .toggle_list {
@@ -446,6 +466,13 @@ textarea {
     background:#223351;
     border: 1px solid #223351 !important;
     color:#fff !important;
+}
+
+.error_text {
+    display:block;
+    font-size:85%;
+    color:#de284a;
+    margin:0.5em 0;
 }
 
 /********************************button********************************/

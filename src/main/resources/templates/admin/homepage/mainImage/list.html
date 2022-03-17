@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/mainImage/list.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.homepage.mainImage}"></h2>
+
+        <form th:action>
+            <div class="all_search_box">
+                <div th:replace="utils/searchBar :: searchDateWord"></div>
+            </div>
+        </form>
+
+        <table>
+            <tr>
+                <th class="table_chk">
+                    <input type="checkbox" check="all"/>
+                </th>
+                <th class="table_num" th:text="#{label.no}">No</th>
+                <th th:text="#{homepage.mainImage.postYn}">게시여부</th>
+                <th th:text="#{homepage.mainImage.postSeq}">게시순서</th>
+                <th th:text="#{homepage.mainImage.title}">제목</th>
+                <th th:text="#{homepage.mainImage.regDt}">등록일시</th>
+            </tr>
+
+            <tr th:each="mainImage : ${result.content}">
+                <td class="table_chk">
+                    <input type="checkbox" th:value="${mainImage.id}"/>
+                </td>
+                <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + mainImageStat.index)}"></td>
+                <td th:text="${mainImage.postYn}"></td>
+                <td th:text="${mainImage.postSeq}"></td>
+                <td th:text="${mainImage.title}"></td>
+                <td th:text="${mainImage.regDt}"></td>
+            </tr>
+
+            <tr th:if="${result.content.size eq 0}">
+                <td colspan="6" th:text="#{data.empty}" class="empty-td"></td>
+            </tr>
+        </table>
+
+        <div th:replace="utils/pagination :: pagination(${result})"></div>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
+            <button type="button" th:text="#{button.new}" onclick="location.href='/mainImage/add'" class="btn_new">등록</button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -97,15 +97,124 @@ $modal = function () {
     }
 }
 
+/**
+ * 에디터 뷰
+ */
 $editor = {
+    /**
+     * 뷰 초기화
+     * @param targetId Html 요소 ID
+     */
     init: function (targetId) {
-        var oEditors = [];
+        this.targetId = targetId;
+        this.target = [];
         nhn.husky.EZCreator.createInIFrame({
-            oAppRef: oEditors,
+            oAppRef: this.target,
             elPlaceHolder: targetId,
             sSkinURI: "../lib/smarteditor/SmartEditor2Skin.html",
             fCreator: "createSEditor2"
         });
+    },
+    /**
+     * 에디터 내용 조회
+     * @returns Html 문자열
+     */
+    getData: function() {
+        pageObj.editor.target.getById[this.targetId].exec("UPDATE_CONTENTS_FIELD");
+        return $('#' + this.targetId).val();
+    }
+}
+
+/**
+ * 첨부 파일
+ */
+$multifile = {
+    init: function(targetId, targetListId) {
+        let _this = this;
+        this.targetId = targetId;
+        this.target = $('#' + targetId);
+        this.targetListId = targetListId;
+        this.targetList = $('#' + targetListId);
+
+        this.serverFiles = [];
+        this.newFiles = [];
+        this.target = $('#' + targetId).MultiFile({
+            list: `#` + targetListId,
+            STRING: {
+                file: '<span class="filename" onclick="$(this).parent().prev().click()">$file</span>',
+                remove: '<img src="/lib/multifile/img/delete.png" height="16" width="16" alt="x"/>',
+                duplicate: '$file은 이미 존재합니다.',
+            },
+            onFileAppend: _this.onFileAppend.bind(_this),
+        })
+    },
+    onFileAppend: function(element, value, master_element) {
+        this.newFiles = master_element.files
+    },
+    getData: function(type) {
+        if(type == "new") {
+            return this.newFiles;
+        } else if (type == "notDeleted") {
+            return this.serverFiles.filter(f => Boolean(f.__delete__));
+        } else if (type == "deleted") {
+            return this.serverFiles.filter(f => !Boolean(f.__delete__));
+        } else if (type == "server") {
+            return this.serverFiles;
+        }
+    },
+    deleteServerFile: function(target, fileObject) {
+        fileObject.__delete__ = true;
+        console.log('서버 파일 삭제 > ', fileObject);
+        target.remove();
+    },
+    downloadFile: function(target, fileObject) {
+        console.log('서버 파일 다운로드 > ', fileObject);
+    },
+    setData: function(dataList) {
+        this.serverFiles = dataList;
+        dataList.forEach(row => {
+            let fileEl = this.createFileRow(row.filename, row);
+            this.targetList.append(fileEl);
+        })
+    },
+    createFileRow: function(filename, fileObject) {
+        // `<div class="MultiFile-label">
+        //     <a class="MultiFile-remove" href="#attachment" onclick="console.log('on delete')"><img src="/lib/multifile/img/delete.png" height="16" width="16" alt="x"></a>
+        //     <span>
+        //         <span class="MultiFile-label" title="File selected: 다운로드.jpg">
+        //             <span class="MultiFile-title">
+        //                 <em title="Click to remove" onclick="console.log('download')">사전 다운로드.jpg</em>
+        //             </span>
+        //         </span>
+        //     </span>
+        // </div>`
+        let rootEL = document.createElement('div');
+        rootEL.classList.add('MultiFile-label');
+        let deleteEl = document.createElement('a');
+        deleteEl.classList.add('MultiFile-remove');
+        deleteEl.href = '#attachment';
+        deleteEl.addEventListener('click', () => this.deleteServerFile(rootEL, fileObject));
+        rootEL.appendChild(deleteEl);
+        let deleteIconEl = document.createElement('img');
+        deleteIconEl.src = '/lib/multifile/img/delete.png';
+        deleteIconEl.height = 16;
+        deleteIconEl.width = 16;
+        deleteIconEl.alt = 'x';
+        deleteEl.appendChild(deleteIconEl);
+        let fileEl = document.createElement('span');
+        rootEL.appendChild(fileEl);
+        let fileLabelEl = document.createElement('span');
+        fileLabelEl.classList.add('MultiFile-label')
+        fileEl.appendChild(fileLabelEl);
+        let fileTitleEl = document.createElement('span')
+        fileTitleEl.classList.add('MultiFile-title')
+        fileLabelEl.appendChild(fileTitleEl);
+        let filenameEl = document.createElement('em');
+        filenameEl.appendChild(document.createTextNode(filename));
+        filenameEl.addEventListener('click', () => this.downloadFile(rootEL, fileObject));
+        fileLabelEl.appendChild(filenameEl);
+        console.log('rootEl', rootEL)
+        return rootEL;
     }
 }
 
@@ -214,7 +323,29 @@ $ajax = {
             }
         });
     },
-
+    postMultiPart: function (options) {
+        options = $.extend({}, this.defaultOption, options);
+        console.log('options', options)
+        $.ajax({
+            url: options.url,
+            type: 'POST',
+            data: options.data,
+            processData: false,
+            contentType: false,
+        }).done(function (data) {
+            if (options.success) {
+                options.success(data);
+            } else {
+                $url.redirect();
+            }
+        }).fail(function (error) {
+            if (options.error) {
+                options.error(error.responseJSON);
+            } else {
+                $errors.valid(error.responseJSON);
+            }
+        });
+    },
     put: function (options) {
         options = $.extend({}, this.defaultOption, options);
 

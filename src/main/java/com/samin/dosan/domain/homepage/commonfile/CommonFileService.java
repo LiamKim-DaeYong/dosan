@@ -353,24 +353,24 @@ public class CommonFileService extends BaseService<CommonFile, Long> {
         }
     }
 
-    public boolean checkWidthAndHeightSize(MultipartFile multipartFile, String width, String height, String pageName) {
-        boolean result = true;
-
-        switch (pageName) {
-            case "mainImage" :
-                result = mainImageService.mainImageInputValidation(multipartFile, width, height);
-                break;
-
-            case "popup" :
-                result = popupService.popupImageInputValidation(multipartFile, width, height);
-                break;
-
-            default :
-        }
-
-
-        return result;
-    }
+//    public boolean checkWidthAndHeightSize(MultipartFile multipartFile, String width, String height, String pageName) {
+//        boolean result = true;
+//
+//        switch (pageName) {
+//            case "mainImage" :
+//                result = mainImageService.mainImageInputValidation(multipartFile, width, height);
+//                break;
+//
+//            case "popup" :
+//                result = popupService.popupImageInputValidation(multipartFile, width, height);
+//                break;
+//
+//            default :
+//        }
+//
+//
+//        return result;
+//    }
 
     @Transactional
     public Long saveFile(CommonFile commonFile) {

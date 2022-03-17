@@ -34,8 +34,22 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comments> comments = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "boardId")
+    private List<BoardFile> files = new ArrayList<>();
+
     public void updateBoard(Board board) {
         this.title = board.title;
         this.content = board.getContent();
+    }
+
+    public void addFiles(List<BoardFile> newFiles) {
+        this.files.addAll(newFiles);
+    }
+
+    public void delFiles(List<BoardFile> willDeleteFiles) {
+        willDeleteFiles.stream().forEach(f -> {
+            this.files.removeIf(file -> file.getId().equals(f.getId()));
+        });
     }
 }

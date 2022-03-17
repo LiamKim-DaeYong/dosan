@@ -12,7 +12,7 @@ public class MainController {
     @GetMapping("/")
     public String redirect(RedirectAttributes redirectAttributes) {
         redirectAttributes.addAttribute("role", getRole());
-        return "redirect:/dashboard/{role}";
+        return "redirect:/{role}/dashboard";
     }
 
     private String getRole() {

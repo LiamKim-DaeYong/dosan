@@ -1,30 +1,26 @@
 package com.samin.dosan.domain.homepage.advice;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import com.samin.dosan.core.code.Used;
+import com.samin.dosan.core.domain.BaseEntity;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
-@Entity
 @Getter
-@Table(name = "homepage_advice")
+@Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@DynamicInsert
-@DynamicUpdate
-public class Advice {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Advice extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(precision = 19, nullable = false)
+    @Column(name = "advice_id")
     private Long id;
 
+    @NotBlank
     @Column(length = 1, nullable = false)
     private String agree;
 
@@ -43,9 +39,24 @@ public class Advice {
     @Column(length = 15, nullable = false)
     private String phone;
 
+    @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private String adviceType;
+    private AdviceType adviceType;
 
     @Column(nullable = false)
     private LocalDate regDt;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 1, nullable = false)
+    private Used used;
+
+    /*================== Business Logic ==================*/
+    public Advice updateStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public void delete() {
+        this.used = Used.N;
+    }
 }

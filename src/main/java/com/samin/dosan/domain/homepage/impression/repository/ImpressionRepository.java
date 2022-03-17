@@ -1,9 +1,9 @@
 package com.samin.dosan.domain.homepage.impression.repository;
 
-import com.samin.dosan.core.homepage_core.BaseJpaQueryDSLRepository;
 import com.samin.dosan.domain.homepage.impression.Impression;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ImpressionRepository extends BaseJpaQueryDSLRepository<Impression, Long> {
+public interface ImpressionRepository extends JpaRepository<Impression, Long>, ImpressionRepositoryQueryDsl {
 }
