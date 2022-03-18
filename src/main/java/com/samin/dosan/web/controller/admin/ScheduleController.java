@@ -1,9 +1,9 @@
 package com.samin.dosan.web.controller.admin;
 
-import com.samin.dosan.domain.schedule.etc.Schedule;
 import com.samin.dosan.domain.schedule.etc.ScheduleCategory;
+import com.samin.dosan.domain.schedule.etc.ScheduleEtc;
+import com.samin.dosan.domain.schedule.etc.ScheduleEtcType;
 import com.samin.dosan.domain.schedule.etc.ScheduleService;
-import com.samin.dosan.domain.schedule.etc.ScheduleType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -25,8 +25,8 @@ public class ScheduleController {
 
     @GetMapping
     public String mainView(@PathVariable String type, Model model) {
-        ScheduleType scheduleType = ScheduleType.valueOf(type.toUpperCase());
-        model.addAttribute("scheduleTitle", scheduleType.getDescription());
+        ScheduleEtcType scheduleEtcType = ScheduleEtcType.valueOf(type.toUpperCase());
+        model.addAttribute("scheduleTitle", scheduleEtcType.getDescription());
         model.addAttribute("scheduleCategoryList",scheduleService.getScheduleCategory());
         return "admin/schedule";
     }
@@ -82,7 +82,7 @@ public class ScheduleController {
                 .borderColor("#00a9ff")
                 .build());
 
-        scheduleService.save(Schedule.builder()
+        scheduleService.save(ScheduleEtc.builder()
                 .id(1L)
                 .calendarId("1")
                 .location("test")

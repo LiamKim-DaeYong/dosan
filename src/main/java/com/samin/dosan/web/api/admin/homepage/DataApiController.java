@@ -5,25 +5,32 @@ import com.samin.dosan.domain.homepage.data.promotion.PromotionService;
 import com.samin.dosan.domain.homepage.data.webtoon.WebtoonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/data")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class DataApiController {
 
     private final PromotionService promotionService;
     private final WebtoonService webtoonService;
 
     @PostMapping("/promotion/add")
-    public ResponseEntity save(@Valid @RequestBody Promotion promotion) {
-        return ResponseEntity.ok(promotionService.save(promotion.init()));
+    public ResponseEntity save(@Valid @RequestBody Promotion saveData) {
+        return ResponseEntity.ok(promotionService.save(saveData.init()));
+    }
+
+    @PutMapping("/promotion/{id}/edit")
+    public ResponseEntity edit(@Valid @RequestBody Promotion updateData) {
+        return ResponseEntity.ok(promotionService.update(updateData.getId(), updateData));
+    }
+
+    @DeleteMapping("/promotion")
+    public ResponseEntity delete(@RequestBody List<Long> ids) {
+        promotionService.delete(ids);
+        return ResponseEntity.ok().build();
     }
 }

@@ -16,7 +16,7 @@ public class AdviceApiController {
 
     private final AdviceService adviceService;
 
-    @PostMapping("/check")
+    @PutMapping("/check")
     public ResponseEntity check(@RequestBody Long id) {
         adviceService.check(id);
         return ResponseEntity.ok().build();

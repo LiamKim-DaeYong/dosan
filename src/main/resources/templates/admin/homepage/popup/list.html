@@ -5,7 +5,6 @@
     <th:block id="css"></th:block>
 
     <th:block id="script">
-        <script type="text/javascript" th:src="@{/js/homepage/popup/list.js}"></script>
     </th:block>
 </head>
 <body>
@@ -25,11 +24,11 @@
                         <input type="checkbox" check="all"/>
                     </th>
                     <th class="table_num" th:text="#{label.no}">No</th>
-                    <th th:text="#{course.subject}">게시여부</th>
-                    <th th:text="#{course.content}">제목</th>
-                    <th th:text="#{course.content}">시작일</th>
-                    <th th:text="#{course.content}">종료일</th>
-                    <th th:text="#{course.content}">등록일시</th>
+                    <th th:text="#{subjectCode.subjectCode}">게시여부</th>
+                    <th th:text="#{subjectCode.content}">제목</th>
+                    <th th:text="#{subjectCode.content}">시작일</th>
+                    <th th:text="#{subjectCode.content}">종료일</th>
+                    <th th:text="#{subjectCode.content}">등록일시</th>
                 </tr>
 
                 <tr th:each="popup : ${result.content}">

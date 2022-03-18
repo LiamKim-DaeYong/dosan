@@ -33,7 +33,7 @@ public class ScheduleService {
         scheduleCategoryRepository.save(scheduleCategory);
     }
 
-    public void save(Schedule schedule) {
-        scheduleRepository.save(schedule);
+    public void save(ScheduleEtc scheduleEtc) {
+        scheduleRepository.save(scheduleEtc);
     }
 }

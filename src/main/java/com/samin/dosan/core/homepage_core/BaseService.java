@@ -13,7 +13,7 @@ import com.samin.dosan.domain.homepage.impression.file.QImpressionFile;
 import com.samin.dosan.domain.homepage.inquiry.QInquiry;
 import com.samin.dosan.domain.homepage.inquiry.comment.QInquiryComment;
 import com.samin.dosan.domain.homepage.inquiry.file.QInquiryFile;
-import com.samin.dosan.domain.homepage.mainImage.QMainImage;
+import com.samin.dosan.domain.homepage.main_image.QMainImage;
 import com.samin.dosan.domain.homepage.newsletter.QNewsletter;
 import com.samin.dosan.domain.homepage.notice.QHomepage_Notice;
 import com.samin.dosan.domain.homepage.notice.file.QNoticeFile;

@@ -34,7 +34,7 @@ public class AdviceService {
 
     @Transactional
     public void check(Long id) {
-        adviceRepository.save(findById(id).updateStatus("Y"));
+        findById(id).updateStatus();
     }
 
     @Transactional

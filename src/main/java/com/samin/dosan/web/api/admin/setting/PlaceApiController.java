@@ -1,8 +1,8 @@
 package com.samin.dosan.web.api.admin.setting;
 
-import com.samin.dosan.domain.setting.place.Place;
-import com.samin.dosan.domain.setting.place.PlaceService;
-import com.samin.dosan.domain.setting.place.PlaceType;
+import com.samin.dosan.domain.setting.place_code.PlaceCode;
+import com.samin.dosan.domain.setting.place_code.PlaceCodeType;
+import com.samin.dosan.domain.setting.place_code.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +18,13 @@ public class PlaceApiController {
     private final PlaceService placeService;
 
     @PostMapping
-    public ResponseEntity save(@PathVariable String type, @Valid @RequestBody Place saveData) {
+    public ResponseEntity save(@PathVariable String type, @Valid @RequestBody PlaceCode saveData) {
         placeService.save(saveData.init(type));
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity edit(@Valid @RequestBody Place updateData) {
+    public ResponseEntity edit(@Valid @RequestBody PlaceCode updateData) {
         placeService.update(updateData.getId(), updateData);
         return ResponseEntity.ok().build();
     }
@@ -36,8 +36,8 @@ public class PlaceApiController {
     }
 
     @PostMapping("/duplicate")
-    public ResponseEntity<Boolean> valid(@PathVariable String type, @RequestBody Place validData) {
-        PlaceType placeType = PlaceType.valueOf(type.toUpperCase());
-        return ResponseEntity.ok(placeService.valid(placeType, validData));
+    public ResponseEntity<Boolean> valid(@PathVariable String type, @RequestBody PlaceCode validData) {
+        PlaceCodeType placeCodeType = PlaceCodeType.valueOf(type.toUpperCase());
+        return ResponseEntity.ok(placeService.valid(placeCodeType, validData));
     }
 }

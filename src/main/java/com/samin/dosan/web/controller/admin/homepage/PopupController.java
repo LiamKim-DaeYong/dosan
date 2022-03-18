@@ -6,7 +6,6 @@ import com.samin.dosan.domain.homepage.popup.PopupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +16,9 @@ import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-/*
- * NOTE : 관리자 - 팝업 관리
- * */
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/popup")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequestMapping("/admin/homepage/popup")
 public class PopupController {
 
     private final PopupService popupService;

@@ -1,7 +1,7 @@
 package com.samin.dosan.web.api.admin.setting;
 
-import com.samin.dosan.domain.setting.former.Former;
-import com.samin.dosan.domain.setting.former.FormerService;
+import com.samin.dosan.domain.setting.former_code.FormerCode;
+import com.samin.dosan.domain.setting.former_code.FormerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +17,13 @@ public class FormerApiController {
     private final FormerService formerService;
 
     @PostMapping
-    public ResponseEntity save(@Valid @RequestBody Former saveData) {
+    public ResponseEntity save(@Valid @RequestBody FormerCode saveData) {
         formerService.save(saveData.init());
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity edit(@Valid @RequestBody Former updateData){
+    public ResponseEntity edit(@Valid @RequestBody FormerCode updateData){
         formerService.update(updateData.getId(), updateData);
         return ResponseEntity.ok().build();
     }
@@ -35,7 +35,7 @@ public class FormerApiController {
     }
 
     @PostMapping("/duplicate")
-    public ResponseEntity<Boolean> valid(@RequestBody Former validData) {
+    public ResponseEntity<Boolean> valid(@RequestBody FormerCode validData) {
         return ResponseEntity.ok(formerService.valid(validData));
     }
 }

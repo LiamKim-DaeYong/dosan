@@ -6,8 +6,8 @@ import com.samin.dosan.domain.setting.educator.EducatorCode;
 import com.samin.dosan.domain.setting.educator.EducatorCodeService;
 import com.samin.dosan.domain.setting.employees.EmployeesCode;
 import com.samin.dosan.domain.setting.employees.EmployeesCodeService;
-import com.samin.dosan.domain.setting.former.Former;
-import com.samin.dosan.domain.setting.former.FormerService;
+import com.samin.dosan.domain.setting.former_code.FormerCode;
+import com.samin.dosan.domain.setting.former_code.FormerService;
 import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;
 import com.samin.dosan.web.dto.user.EmployeeSave;
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @ModelAttribute("formers")
-    public List<Former> formers() {
+    public List<FormerCode> formers() {
         return formerService.findAllList();
     }
 

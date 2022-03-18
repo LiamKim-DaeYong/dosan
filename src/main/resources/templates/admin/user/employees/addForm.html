@@ -47,8 +47,8 @@
                     <th>전직구분</th>
                     <td>
                         <select th:field="*{formerId}">
-                            <option th:each="former : ${formers}"
-                                th:text="${former.formerName}" th:value="${former.id}"></option>
+                            <option th:each="formerCode : ${formers}"
+                                th:text="${formerCode.formerName}" th:value="${formerCode.id}"></option>
                         </select>
                     </td>
                     <th>H.P</th>

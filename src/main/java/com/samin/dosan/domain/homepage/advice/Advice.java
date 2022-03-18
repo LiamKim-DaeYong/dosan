@@ -51,9 +51,8 @@ public class Advice extends BaseEntity {
     private Used used;
 
     /*================== Business Logic ==================*/
-    public Advice updateStatus(String status) {
-        this.status = status;
-        return this;
+    public void updateStatus() {
+        this.status = "Y";
     }
 
     public void delete() {

@@ -5,40 +5,41 @@
 <body>
 
 <!--/* 검색어 */-->
-<div th:fragment="searchWord" th:object="${searchParam}" class="only_search_box">
+<div th:fragment="searchWord" th:object="${searchParam}" class="only_search_box" search="search">
     <input type="text" th:field="*{searchWorld}" class="search"/>
-    <button class="search_btn" th:text="#{button.search}">검색</button>
+    <button type="button" class="search_btn" th:text="#{button.search}" onclick="$search.search($search.ALL)">검색</button>
 </div>
 
 <!--/* 날짜, 검색어 */-->
-<div th:fragment="searchDateWord" th:object="${searchParam}" class="all_search_box">
+<div th:fragment="searchDateWord" th:object="${searchParam}" class="all_search_box" search="search">
     <div class="date_chose">
         <input type="date" th:field="*{startDate}">
         <span> ~ </span>
         <input type="date" th:field="*{endDate}">
-        <button class="btn_save">조회</button>
-        <button class="btn_gray_line">초기화</button>
+        <button type="button" class="btn_save" onclick="$search.search($search.DATE)">조회</button>
+        <button type="button" class="btn_gray_line" onclick="$search.init()">초기화</button>
     </div>
     <div class="date_search">
         <input type="text" th:field="*{searchWorld}" class="search"/>
-        <button class="search_btn" th:text="#{button.search}">검색</button>
+        <button type="button" class="search_btn" th:text="#{button.search}" onclick="$search.search($search.ALL)">검색</button>
     </div>
 </div>
 
 <!--/* 날짜, Select, 검색어 */-->
-<div th:fragment="searchDateSelectWord(condition)" th:object="${searchParam}" class="all_search_box">
+<div th:fragment="searchDateSelectWord(condition)" th:object="${searchParam}" class="all_search_box" search="search">
     <div class="date_chose">
         <input type="date" th:field="*{startDate}">
         <span> ~ </span>
         <input type="date" th:field="*{endDate}">
-        <button class="search_btn">조회</button>
+        <button type="button" class="search_btn" onclick="$search.search($search.DATE)">조회</button>
+        <button type="button" class="btn_gray_line" onclick="$search.init()">초기화</button>
     </div>
     <div class="date_search">
         <select th:field="*{selectKey}">
             <option th:each="type : ${condition}" th:value="${type.name}" th:text="${type.description}"></option>
         </select>
         <input type="text" th:field="*{searchWorld}" class="search"/>
-        <button class="search_btn" th:text="#{button.search}">검색</button>
+        <button type="button" class="search_btn" th:text="#{button.search}" onclick="$search.search($search.ALL)">검색</button>
     </div>
 </div>
 </body>

@@ -1,12 +1,11 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.homepage.mainImage.MainImage;
-import com.samin.dosan.domain.homepage.mainImage.MainImageService;
+import com.samin.dosan.domain.homepage.main_image.MainImage;
+import com.samin.dosan.domain.homepage.main_image.MainImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/mainImage")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequestMapping("/admin/homepage/main-image")
 public class MainImageController {
 
     private final MainImageService mainImageService;
@@ -26,7 +24,7 @@ public class MainImageController {
         Page<MainImage> result = mainImageService.findAll(searchParam, pageable);
         model.addAttribute("result", result);
 
-        return "homepage/mainImage/list";
+        return "admin/homepage/main_image/mainView";
     }
 
     @GetMapping("/add")

@@ -8,6 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -19,9 +22,24 @@ public class PromotionService {
         return promotionRepository.findAll(searchParam, pageable);
     }
 
+    public Promotion findById(Long id) {
+        return promotionRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
     @Transactional
-    public Long save(Promotion promotion) {
-        Long id = promotionRepository.save(promotion).getId();
+    public Long save(Promotion saveData) {
+        return promotionRepository.save(saveData).getId();
+    }
+
+    @Transactional
+    public Long update(Long id, Promotion updateData) {
+        findById(id).update(updateData);
         return id;
+    }
+
+    @Transactional
+    public void delete(List<Long> ids) {
+        ids.forEach(id -> findById(id).delete());
     }
 }

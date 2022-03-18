@@ -3,6 +3,7 @@ package com.samin.dosan.domain.homepage.data.promotion.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.data.promotion.Promotion;
 import lombok.RequiredArgsConstructor;
@@ -22,10 +23,12 @@ public class PromotionRepositoryImpl implements PromotionRepositoryQueryDsl{
     @Override
     public Page<Promotion> findAll(SearchParam searchParam, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
+        builder.and(promotion.used.eq(Used.Y));
 
         List<Promotion> content = queryFactory
                 .selectFrom(promotion)
                 .where(builder)
+                .orderBy(promotion.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

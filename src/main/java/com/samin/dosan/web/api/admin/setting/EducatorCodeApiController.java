@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin/setting/educator/{type}")
+@RequestMapping("/admin/setting/educator-code/{type}")
 public class EducatorCodeApiController {
 
     private final EducatorCodeService educatorCodeService;
@@ -22,9 +22,9 @@ public class EducatorCodeApiController {
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping
-    public ResponseEntity edit(@Valid @RequestBody EducatorCode updateData) {
-        educatorCodeService.update(updateData.getId(), updateData);
+    @PutMapping("/{id}")
+    public ResponseEntity edit(@PathVariable Long id, @Valid @RequestBody EducatorCode updateData) {
+        educatorCodeService.update(id, updateData);
         return ResponseEntity.ok().build();
     }
 

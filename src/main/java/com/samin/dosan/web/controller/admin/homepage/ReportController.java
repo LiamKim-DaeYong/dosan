@@ -7,7 +7,6 @@ import com.samin.dosan.domain.homepage.report.ReportService;
 import com.samin.dosan.domain.homepage.report.dto.ReportResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +20,6 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/report")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class ReportController {
 
     private final ReportService reportService;

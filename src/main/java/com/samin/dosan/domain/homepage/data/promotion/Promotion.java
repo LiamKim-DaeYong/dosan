@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
@@ -26,10 +27,12 @@ public class Promotion {
     @Column(precision = 19, nullable = false)
     private Long id;
 
-    @Column(length = 255, nullable = false)
+    @NotBlank
+    @Column(nullable = false)
     private String title;
 
-    @Column(length = 255, nullable = false)
+    @NotBlank
+    @Column(nullable = false)
     private String code;
 
     @Column(length = 20, nullable = false)
@@ -49,6 +52,11 @@ public class Promotion {
         this.regDt = LocalDate.now();
 
         return this;
+    }
+
+    public void update(Promotion updateData) {
+        this.title = updateData.getTitle();
+        this.code = updateData.getCode();
     }
 
     public void delete() {

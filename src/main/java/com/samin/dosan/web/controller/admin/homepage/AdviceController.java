@@ -32,12 +32,12 @@ public class AdviceController {
         model.addAttribute("result", result);
         model.addAttribute("types", AdviceType.values());
 
-        return "homepage/advice/advice";
+        return "admin/homepage/advice/mainView";
     }
 
     @PostConstruct
     public void init() {
-        for (int i = 1; i <= 15; i++) {
+        for (int i = 1; i <= 501; i++) {
             Advice advice = Advice.builder()
                     .agree("Y")
                     .status(null)
@@ -51,20 +51,6 @@ public class AdviceController {
                     .build();
 
             adviceService.save(advice);
-
-            Advice advice2 = Advice.builder()
-                    .agree("Y")
-                    .status(null)
-                    .insttNm("삼인"+i)
-                    .depart("부서"+i)
-                    .applicant("테스터"+i)
-                    .phone("010-1111-1111")
-                    .adviceType(AdviceType.FAMILY)
-                    .regDt(LocalDate.now())
-                    .used(Used.Y)
-                    .build();
-
-            adviceService.save(advice2);
         }
     }
 }

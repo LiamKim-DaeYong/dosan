@@ -30,6 +30,7 @@ public class DataController {
     private final PromotionService promotionService;
     private final WebtoonService webtoonService;
 
+    // 홍보동영상, 만화퇴계 목록 화면 통합
     @GetMapping("/{type}")
     public String mainView(@PathVariable String type, @ModelAttribute SearchParam searchParam,
                            Pageable pageable, Model model) {
@@ -45,17 +46,37 @@ public class DataController {
         model.addAttribute("dataTypes", DataType.values());
         model.addAttribute("dataType", DataType.valueOf(type.toUpperCase()));
 
-        return "homepage/data/data";
+        return "admin/homepage/data/mainView";
     }
 
     /* 홍보동영상 */
     @GetMapping("/promotion/add")
-    public String promotionDetailForm(@ModelAttribute Promotion promotion, Model model) {
-
-        model.addAttribute("dataTypes", DataType.values());
+    public String promotionAddView(@ModelAttribute Promotion promotion, Model model) {
         model.addAttribute("dataType", DataType.PROMOTION);
-        return "homepage/data/promotion/addForm";
+        return "admin/homepage/data/promotion/addView";
     }
+
+    @GetMapping("/promotion/{id}/detail")
+    public String promotionDetailView(@PathVariable Long id, @ModelAttribute Promotion promotion,
+                                       Model model) {
+        model.addAttribute("promotion", promotionService.findById(id));
+        model.addAttribute("dataType", DataType.PROMOTION);
+        return "admin/homepage/data/promotion/detailView";
+    }
+
+    @GetMapping("/promotion/{id}/edit")
+    public String promotionEditView(@PathVariable Long id, Model model) {
+        model.addAttribute("promotion", promotionService.findById(id));
+        model.addAttribute("dataType", DataType.PROMOTION);
+
+        return "admin/homepage/data/promotion/editView";
+    }
+
+
+
+
+
+
 
     @PostConstruct
     public void init() {

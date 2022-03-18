@@ -67,9 +67,9 @@
         <li><a id="menu_dashboard" th:href="@{/admin/dashboard}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a></li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/calendar.svg}">일정관리</span>
             <ul>
-                <li><a id="menu_schedule_chairman" th:href="@{/templates/admin/schedule/chairman}">이사장 일정</a></li>
-                <li><a id="menu_schedule_director" th:href="@{/templates/admin/schedule/director}">원장 일정</a></li>
-                <li><a id="menu_schedule_etc" th:href="@{/templates/admin/schedule/etc}">기타 일정</a></li>
+                <li><a id="menu_schedule_chairman" th:href="@{/templates/admin/scheduleEtc/chairman}">이사장 일정</a></li>
+                <li><a id="menu_schedule_director" th:href="@{/templates/admin/scheduleEtc/director}">원장 일정</a></li>
+                <li><a id="menu_schedule_etc" th:href="@{/templates/admin/scheduleEtc/etc}">기타 일정</a></li>
             </ul>
         </li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/member.svg}">사용자 관리</span>
@@ -95,27 +95,27 @@
             <a id="menu_board" th:href="@{/admin/board}"><img th:src="@{/images/common/free-notice.svg}" th:text="#{menu.board}"></a>
         </li>
         <li>
-            <a id="menu_history" th:href="@{/admin/usage-log}"><img th:src="@{/images/common/usageLog.svg}">사용이력 관리</a>
+            <a id="menu_history" th:href="@{/admin/usage-log}"><img th:src="@{/images/common/history.svg}">사용이력 관리</a>
         </li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/homepage.svg}" th:text="#{menu.homepage}"></span>
             <ul>
-                <li><a id="menu_homepage_mainImage" th:href="@{/mainImage}" th:text="#{menu.homepage.mainImage}">메인이미지 관리</a></li>
-                <li><a id="menu_homepage_popup" th:href="@{/popup}" th:text="#{menu.homepage.popup}">팝업 관리</a></li>
-                <li><a id="menu_homepage_board" th:href="@{/homepage_notice}" th:text="#{menu.homepage.board}">게시판 관리</a></li>
-                <li><a id="menu_homepage_data" th:href="@{/data/promotion}" th:text="#{menu.homepage.data}">자료실 관리</a></li>
-                <li><a id="menu_homepage_advice" th:href="@{/data/advice}" th:text="#{menu.homepage.advice}">수련상담신청</a></li>
-                <li><a id="menu_homepage_impression" th:href="@{/impression}" th:text="#{menu.homepage.impression}">수련휴기 게시판</a></li>
-                <li><a id="menu_homepage_inquiry" th:href="@{/inquiry}" th:text="#{menu.homepage.inquiry}">문의 게시판</a></li>
+                <li><a id="menu_homepage_mainImage" th:href="@{/admin/homepage/main-image}" th:text="#{menu.homepage.mainImage}">메인이미지 관리</a></li>
+                <li><a id="menu_homepage_popup" th:href="@{/admin/homepage/popup}" th:text="#{menu.homepage.popup}">팝업 관리</a></li>
+                <li><a id="menu_homepage_board" th:href="@{/admin/homepage/board/notice}" th:text="#{menu.homepage.board}">게시판 관리</a></li>
+                <li><a id="menu_homepage_data" th:href="@{/admin/homepage/media-archive/promotional-video}" th:text="#{menu.homepage.data}">자료실 관리</a></li>
+                <li><a id="menu_homepage_advice" th:href="@{/admin/homepage/training-inquiry}" th:text="#{menu.homepage.advice}">수련상담신청</a></li>
+                <li><a id="menu_homepage_impression" th:href="@{/admin/homepage/training-review}" th:text="#{menu.homepage.impression}">수련휴기 게시판</a></li>
+                <li><a id="menu_homepage_inquiry" th:href="@{/admin/homepage/qna}" th:text="#{menu.homepage.inquiry}">문의 게시판</a></li>
             </ul>
         </li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/set.svg}" th:text="#{menu.setting}"></span>
             <ul>
-                <li><a id="menu_signature" th:href="@{/admin/setting/signature}" th:text="#{menu.signature}">직인 관리</a></li>
-                <li><a id="menu_course" th:href="@{/admin/setting/course/entry}" th:text="#{menu.course}">교육과목 관리</a></li>
-                <li><a id="menu_place" th:href="@{/admin/setting/place/training}" th:text="#{menu.place}">수련장소 관리</a></li>
-                <li><a id="menu_former" th:href="@{/admin/setting/former}" th:text="#{menu.former}">전직 구분</a></li>
-                <li><a id="menu_employees" th:href="@{/admin/setting/employees/type}" th:text="#{menu.employees}">임직원 설정</a></li>
-                <li><a id="menu_educator" th:href="@{/admin/setting/educator/type}" th:text="#{menu.educator}">지도위원 설정</a></li>
+                <li><a id="menu_signature" th:href="@{/templates/admin/setting/official_seal}" th:text="#{menu.officialSeal}">직인 관리</a></li>
+                <li><a id="menu_course" th:href="@{/admin/setting/subject-code/entry}" th:text="#{menu.subjectCode}">교육과목 관리</a></li>
+                <li><a id="menu_place" th:href="@{/admin/setting/placeCode-code/training}" th:text="#{menu.placeCode}">수련장소 관리</a></li>
+                <li><a id="menu_former" th:href="@{/templates/admin/setting/former_job_code}" th:text="#{menu.formerCode}">전직 구분</a></li>
+                <li><a id="menu_employees" th:href="@{/templates/admin/setting/employee_code/type}" th:text="#{menu.employees}">임직원 설정</a></li>
+                <li><a id="menu_educator" th:href="@{/templates/admin/setting/educator_code/type}" th:text="#{menu.educator}">지도위원 설정</a></li>
             </ul>
         </li>
     </ul>

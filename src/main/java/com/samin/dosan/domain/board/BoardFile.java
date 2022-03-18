@@ -2,13 +2,13 @@ package com.samin.dosan.domain.board;
 
 import com.samin.dosan.domain.file.Files;
 import com.samin.dosan.web.api.admin.board.FileDto;
-import lombok.experimental.SuperBuilder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import java.util.function.Function;
 
 @Entity
-@SuperBuilder
+@NoArgsConstructor
 public class BoardFile extends Files {
 
     public static BoardFile toEntity(FileDto fileDto) {
@@ -19,14 +19,15 @@ public class BoardFile extends Files {
             return (findDot != -1) ? originalName.substring(findDot) : "";
         };
 
-        BoardFile files = BoardFile.builder()
-                .id(fileDto.getId())
-                .originFilename(fileDto.getOriginalName())
-                .storeFileName(fileDto.getStorageName())
-                .contentType(fileDto.getContentType())
-                .extension(getExtension.apply(fileDto.getOriginalName()))
-                .fileSize(fileDto.getByteSize())
-                .build();
-        return files;
+//        BoardFile files = BoardFile.builder()
+//                .id(fileDto.getId())
+//                .originFilename(fileDto.getOriginalName())
+//                .storeFileName(fileDto.getStorageName())
+//                .contentType(fileDto.getContentType())
+//                .extension(getExtension.apply(fileDto.getOriginalName()))
+//                .fileSize(fileDto.getByteSize())
+//                .build();
+//        return files;
+        return null;
     }
 }

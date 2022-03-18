@@ -1,23 +1,22 @@
 package com.samin.dosan.domain.file;
 
+import com.samin.dosan.core.domain.BaseEntity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Getter
-@SuperBuilder
 @MappedSuperclass
 @DynamicInsert
 @DynamicUpdate
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Files {
+public class Files extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

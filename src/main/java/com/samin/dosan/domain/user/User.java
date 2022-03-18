@@ -5,7 +5,7 @@ import com.samin.dosan.core.code.Gender;
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
 import com.samin.dosan.domain.setting.employees.EmployeesCode;
-import com.samin.dosan.domain.setting.former.Former;
+import com.samin.dosan.domain.setting.former_code.FormerCode;
 import com.samin.dosan.web.dto.user.EmployeeSave;
 import lombok.*;
 
@@ -33,7 +33,7 @@ public class User extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "former_id")
-    private Former former;
+    private FormerCode formerCode;
 
     @Column(length = 15)
     private String phoneNum;
@@ -95,7 +95,7 @@ public class User extends BaseEntity {
                 .password(saveData.getPassword())
                 .userNm(saveData.getUserNm())
                 .gender(saveData.getGender())
-                .former(Former.builder().id(saveData.getFormerId()).build())
+                .formerCode(FormerCode.builder().id(saveData.getFormerId()).build())
                 .phoneNum(saveData.getPhoneNum())
                 .officeNum(saveData.getOfficeNum())
                 .homeNum(saveData.getHomeNum())

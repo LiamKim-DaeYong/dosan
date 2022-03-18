@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/homepage/promotion.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <h2 th:text="|${dataType.description} 관리|"></h2>
+
+        <table th:object="${promotion}">
+            <tr>
+                <th th:text="#{homepage.promotion.title}"></th>
+                <td th:text="*{title}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{homepage.promotion.author}"></th>
+                <td th:text="*{author}"></td>
+
+                <th th:text="#{homepage.advice.regDt}"></th>
+                <td th:text="*{regDt}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{homepage.promotion.content}"></th>
+                <td>
+                    <iframe id="player" type="text/html" width="640" height="360"frameBorder="0" allowfullscreen
+                            th:src="@{'http://www.youtube.com/embed/'+*{code}}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                </td>
+            </tr>
+        </table>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" class="btn-default" onclick="location.href='/data/promotion'">목록</button>
+            <button type="button" th:text="#{button.update}" class="btn_new" th:onclick="'location.href=\'/data/promotion/'+ @{${promotion.id}} + '/edit\''">등록</button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

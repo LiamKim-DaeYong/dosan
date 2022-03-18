@@ -4,7 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.samin.dosan.core.homepage_core.BaseService;
 import com.samin.dosan.domain.homepage.commonfile.dto.CommonFileResponse;
 import com.samin.dosan.domain.homepage.commonfile.repository.CommonFileRepository;
-import com.samin.dosan.domain.homepage.mainImage.MainImageService;
+import com.samin.dosan.domain.homepage.main_image.MainImageService;
 import com.samin.dosan.domain.homepage.popup.PopupService;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;

@@ -12,7 +12,7 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
-import static com.samin.dosan.domain.usagelog.QHistory.history;
+import static com.samin.dosan.domain.usagelog.QUsageLog.usageLog;
 
 @RequiredArgsConstructor
 public class UsageLogRepositoryImpl implements UsageLogRepositoryQueryDsl {
@@ -25,20 +25,20 @@ public class UsageLogRepositoryImpl implements UsageLogRepositoryQueryDsl {
 
         String searchWorld = searchParam.getSearchWorld();
         if (searchWorld != null) {
-            builder.and(history.systemNm.contains(searchWorld)
-                    .or(history.method.contains(searchWorld)));
+            builder.and(usageLog.systemNm.contains(searchWorld)
+                    .or(usageLog.method.contains(searchWorld)));
         }
 
         List<UsageLog> content = queryFactory
-                .selectFrom(history)
+                .selectFrom(usageLog)
                 .where(builder)
-                .orderBy(history.id.desc())
+                .orderBy(usageLog.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<UsageLog> countQuery = queryFactory
-                .selectFrom(history)
+                .selectFrom(usageLog)
                 .where(builder);
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);

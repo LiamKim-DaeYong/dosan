@@ -3,6 +3,7 @@ package com.samin.dosan.domain.homepage.advice.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.advice.Advice;
 import com.samin.dosan.domain.homepage.advice.AdviceType;
@@ -24,6 +25,7 @@ public class AdviceRepositoryImpl implements AdviceRepositoryQueryDsl {
     @Override
     public Page<Advice> findAll(SearchParam searchParam, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
+        builder.and(advice.used.eq(Used.Y));
 
         String searchWord = searchParam.getSearchWorld();
         String selectKey = searchParam.getSelectKey();
@@ -32,9 +34,13 @@ public class AdviceRepositoryImpl implements AdviceRepositoryQueryDsl {
 
         if (startDate == null && endDate == null) {
             builder.and(advice.regDt.eq(LocalDate.now()));
-        } else if (startDate != null) {
+        }
+
+        if (startDate != null) {
             builder.and(advice.regDt.goe(startDate));
-        } else if (endDate != null) {
+        }
+
+        if (endDate != null) {
             builder.and(advice.regDt.loe(endDate));
         }
 
@@ -42,17 +48,8 @@ public class AdviceRepositoryImpl implements AdviceRepositoryQueryDsl {
             switch (selectKey) {
                 case "ALL":
                     break;
-                case "SUNBI":
-                    builder.and(advice.adviceType.eq(AdviceType.SUNBI));
-                    break;
-                case "ADMISSION":
-                    builder.and(advice.adviceType.eq(AdviceType.ADMISSION));
-                    break;
-                case "FAMILY":
-                    builder.and(advice.adviceType.eq(AdviceType.FAMILY));
-                    break;
-                case "ORDINARY":
-                    builder.and(advice.adviceType.eq(AdviceType.ORDINARY));
+                case "SUNBI": case "ADMISSION": case "FAMILY": case "ORDINARY":
+                    builder.and(advice.adviceType.eq(AdviceType.valueOf(selectKey)));
                     break;
                 case "UNCHECK":
                     builder.and(advice.status.isNull());
@@ -63,15 +60,18 @@ public class AdviceRepositoryImpl implements AdviceRepositoryQueryDsl {
             }
         }
 
-        if (searchWord != null && searchWord.trim().isEmpty()) {
-            builder.and(advice.applicant.contains(searchWord))
-                    .or(advice.insttNm.contains(searchWord))
-                    .or(advice.depart.contains(searchWord));
+        if (searchWord != null && !searchWord.trim().equals("")) {
+            builder.andAnyOf(
+                    advice.applicant.contains(searchWord),
+                    advice.insttNm.contains(searchWord),
+                    advice.depart.contains(searchWord)
+                    );
         }
 
         List<Advice> content = queryFactory
                 .selectFrom(advice)
                 .where(builder)
+                .orderBy(advice.status.desc(), advice.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

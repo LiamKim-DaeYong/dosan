@@ -406,6 +406,86 @@ $api = {
     }
 }
 
+$search = {
+    DATE: 'DATE', ALL: 'ALL',
+
+    search: function (type) {
+        switch (type) {
+            case this.DATE :
+                this.dateSearch();
+                break;
+
+            case this.ALL :
+                this.allSearch();
+                break;
+        }
+    },
+
+    dateSearch: function () {
+        var searchArr = $("[search='search']").children().children();
+        var dateObj = {};
+
+        $.each(searchArr, function () {
+            switch (this.tagName.toLowerCase()) {
+                case "input" :
+                    if (this.type !== 'date') {
+                        $(this).prop('value', '');
+                    } else {
+                        dateObj[this.id] = this.value;
+                    }
+                    break;
+
+                case "select" :
+                    $(this).children(":eq(0)").prop("selected", true);
+                    break;
+            }
+        });
+
+        if (this.dateValidation(dateObj)) {
+            $("form").submit();
+        }
+    },
+
+    allSearch: function () {
+        var searchArr = $("[search='search']").children().children();
+        var dateObj = {};
+
+        $.each(searchArr, function () {
+            if (this.type == 'date') {
+                dateObj[this.id] = this.value;
+            }
+        })
+
+        if (this.dateValidation(dateObj)) {
+            $("form").submit();
+        }
+    },
+
+    init: function () {
+        var searchArr = $("[search='search']").children().children();
+        $.each(searchArr, function () {
+            switch (this.tagName.toLowerCase()) {
+                case "input" :
+                    $(this).prop('value', '');
+                    break;
+                case "select" :
+                    $(this).children(":eq(0)").prop("selected", true);
+                    break;
+            }
+        });
+    },
+
+    dateValidation: function (dateObj) {
+        var result = true;
+        if ((dateObj["startDate"] != "" && dateObj["endDate"] != "")
+            && (dateObj["startDate"] > dateObj["endDate"])) {
+            alert("날짜를 다시 입력해 주세요.");
+            result = false;
+        }
+        return result;
+    }
+}
+
 $(document).ready(function () {
     $event.init();
 

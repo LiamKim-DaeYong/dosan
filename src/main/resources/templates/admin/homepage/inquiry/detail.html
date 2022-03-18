@@ -5,7 +5,7 @@
     <th:block id="css"></th:block>
 
     <th:block id="script">
-        <script type="text/javascript" th:src="@{/js/homepage/inquiry/detail/course.js}"></script>
+        <script type="text/javascript" th:src="@{/js/homepage/inquiry/detail/subjectCode.js}"></script>
     </th:block>
 </head>
 <body>
@@ -90,7 +90,7 @@
         </div>
         <div class="flex justify-between margin-t margin-b text-center">
             <div class="f_left">
-                <a th:href="@{/inquiry/list}" class="sm-btn-white border_sm_r width-5">목록</a>
+                <a th:href="@{/inquiry}" class="sm-btn-white border_sm_r width-5">목록</a>
             </div>
             <div class="flex justify-end gap_lr">
                 <a href="javascript:void(0)" th:onclick="ACTIONS.DELETE([[${inquiry.id}]])"

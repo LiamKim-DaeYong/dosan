@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+            <script type="text/javascript" th:src="@{/js/homepage/promotion.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2 th:text="|${dataType.description} 관리|"></h2>
+
+        <form th:action th:object="${promotion}" method="post">
+            <table>
+                <tr>
+                    <th th:text="#{homepage.promotion.title}"></th>
+                    <td>
+                        <input type="text" th:field="*{title}">
+                        <span errors="title"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.promotion.code}"></th>
+                    <td>
+                        <textarea cols="30" rows="10"></textarea>
+                        <input type="hidden" th:field="*{code}">
+                        <span errors="code"></span>
+                        <button type="button" onclick="pageObj.preview()">미리보기</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.promotion.preview}"></th>
+                    <td>
+                        <div id="player"></div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.list}" onclick="location.href='/data/promotion'" class="btn-default">목록</button>
+                <button type="button" th:text="#{button.new}" class="btn_new" onclick="pageObj.save()">등록</button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

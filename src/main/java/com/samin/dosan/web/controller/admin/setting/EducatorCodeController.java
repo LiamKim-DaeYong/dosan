@@ -21,7 +21,7 @@ import javax.annotation.PostConstruct;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/setting/educator/{type}")
+@RequestMapping("/admin/setting/educator-code/{type}")
 public class EducatorCodeController {
 
     private final EducatorCodeService educatorCodeService;
@@ -36,12 +36,12 @@ public class EducatorCodeController {
         model.addAttribute("educatorCodeType", educatorCodeType);
         model.addAttribute("educatorCodeTypes", EducatorCodeType.values());
 
-        return "admin/setting/educator/mainView";
+        return "admin/setting/educator_code/mainView";
     }
 
     @GetMapping("/add")
     public String addView(@ModelAttribute EducatorCode saveData) {
-        return "admin/setting/educator/addView::#form";
+        return "admin/setting/educator_code/addView::#form";
     }
 
     @GetMapping("/{id}/edit")
@@ -49,7 +49,7 @@ public class EducatorCodeController {
         EducatorCode educatorCode = educatorCodeService.findById(id);
         model.addAttribute("educatorCode", educatorCode);
 
-        return "admin/setting/educator/editView::#form";
+        return "admin/setting/educator_code/editView::#form";
     }
 
     @PostConstruct

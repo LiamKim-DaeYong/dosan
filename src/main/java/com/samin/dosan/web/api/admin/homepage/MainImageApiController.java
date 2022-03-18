@@ -1,6 +1,6 @@
 package com.samin.dosan.web.api.admin.homepage;
 
-import com.samin.dosan.domain.homepage.mainImage.MainImageService;
+import com.samin.dosan.domain.homepage.main_image.MainImageService;
 import com.samin.dosan.web.dto.homepage.mainImage.MainImageSave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
