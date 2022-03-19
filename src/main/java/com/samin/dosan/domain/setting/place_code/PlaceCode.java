@@ -2,6 +2,7 @@ package com.samin.dosan.domain.setting.place_code;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
+import com.samin.dosan.core.utils.StrUtils;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,11 +33,13 @@ public class PlaceCode extends BaseEntity {
     private Used used;
 
     /*================== Business Logic ==================*/
-    public PlaceCode init(String type) {
-        this.placeCodeType = PlaceCodeType.valueOf(type.toUpperCase());
-        this.used = Used.Y;
+    public static PlaceCode of(PlaceCode saveData, String type) {
+        PlaceCode placeCode = new PlaceCode();
+        placeCode.placeNm = saveData.getPlaceNm();
+        placeCode.placeCodeType = PlaceCodeType.valueOf(StrUtils.urlToEnumName(type));
+        placeCode.used = Used.Y;
 
-        return this;
+        return placeCode;
     }
 
     public void update(PlaceCode placeCodeData) {

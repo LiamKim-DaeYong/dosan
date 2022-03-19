@@ -1,9 +1,10 @@
 package com.samin.dosan.web.controller.admin.setting;
 
 import com.samin.dosan.core.parameter.SearchParam;
+import com.samin.dosan.core.utils.StrUtils;
 import com.samin.dosan.domain.setting.place_code.PlaceCode;
+import com.samin.dosan.domain.setting.place_code.PlaceCodeService;
 import com.samin.dosan.domain.setting.place_code.PlaceCodeType;
-import com.samin.dosan.domain.setting.place_code.PlaceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,17 +22,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin/setting/place-code/{type}")
 public class PlaceCodeController {
 
-    private final PlaceService placeService;
+    private final PlaceCodeService placeCodeService;
+
+    @ModelAttribute("placeCodeTypes")
+    public PlaceCodeType[] placeCodeTypes() {
+        return PlaceCodeType.values();
+    }
 
     @GetMapping
     public String mainView(@PathVariable String type, @ModelAttribute SearchParam searchParam,
                            Pageable pageable, Model model) {
-        PlaceCodeType placeCodeType = PlaceCodeType.valueOf(type.toUpperCase());
+        PlaceCodeType placeCodeType = PlaceCodeType.valueOf(StrUtils.urlToEnumName(type));
 
-        Page<PlaceCode> result = placeService.findAll(searchParam, placeCodeType, pageable);
+        Page<PlaceCode> result = placeCodeService.findAll(searchParam, placeCodeType, pageable);
         model.addAttribute("result", result);
-        model.addAttribute("placeTypes", PlaceCodeType.values());
-        model.addAttribute("placeType", PlaceCodeType.valueOf(type.toUpperCase()));
+        model.addAttribute("placeCodeType", placeCodeType);
 
         return "admin/setting/place_code/mainView";
     }
@@ -43,8 +48,8 @@ public class PlaceCodeController {
 
     @GetMapping("/{id}/edit")
     public String editView(@PathVariable Long id, Model model) {
-        PlaceCode placeCode = placeService.findById(id);
-        model.addAttribute("place", placeCode);
+        PlaceCode placeCode = placeCodeService.findById(id);
+        model.addAttribute("placeCode", placeCode);
 
         return "admin/setting/place_code/editView::#form";
     }

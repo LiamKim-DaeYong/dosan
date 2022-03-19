@@ -17,7 +17,7 @@ public class SubjectCode extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "subject_id")
+    @Column(name = "subject_code_id")
     private Long id;
 
     @NotBlank

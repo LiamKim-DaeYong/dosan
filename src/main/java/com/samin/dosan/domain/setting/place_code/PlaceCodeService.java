@@ -1,7 +1,7 @@
 package com.samin.dosan.domain.setting.place_code;
 
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.setting.place_code.repository.PlaceRepository;
+import com.samin.dosan.domain.setting.place_code.repository.PlaceCodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,26 +14,26 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class PlaceService {
+public class PlaceCodeService {
 
-    private final PlaceRepository placeRepository;
+    private final PlaceCodeRepository placeCodeRepository;
 
     public Page<PlaceCode> findAll(SearchParam searchParam, PlaceCodeType placeCodeType, Pageable pageable) {
-        return placeRepository.findAll(searchParam, placeCodeType, pageable);
+        return placeCodeRepository.findAll(searchParam, placeCodeType, pageable);
     }
 
     public PlaceCode findById(Long id) {
-        return placeRepository.findById(id)
+        return placeCodeRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     public boolean valid(PlaceCodeType placeCodeType, PlaceCode placeCode) {
-        return placeRepository.findByLocation(placeCodeType, placeCode).size() > 0;
+        return placeCodeRepository.findByLocation(placeCodeType, placeCode).size() > 0;
     }
 
     @Transactional
     public Long save(PlaceCode placeCode) {
-        return placeRepository.save(placeCode).getId();
+        return placeCodeRepository.save(placeCode).getId();
     }
 
     @Transactional

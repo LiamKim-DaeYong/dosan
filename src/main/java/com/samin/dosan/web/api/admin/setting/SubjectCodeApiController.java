@@ -23,8 +23,8 @@ public class SubjectCodeApiController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity edit(@Valid @RequestBody SubjectCode updateData) {
-        subjectCodeService.update(updateData.getId(), updateData);
+    public ResponseEntity edit(@PathVariable Long id, @Valid @RequestBody SubjectCode updateData) {
+        subjectCodeService.update(id, updateData);
         return ResponseEntity.ok().build();
     }
 

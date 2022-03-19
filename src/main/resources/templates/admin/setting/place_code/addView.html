@@ -4,9 +4,10 @@
 <div id="form" th:object="${placeCode}">
     <div>
         <label>장소</label>
-        <input type="text" th:field="*{location}" class="modal_long_input"/>
-        <span errors="location" class="modal_error"></span>
+        <input type="text" th:field="*{placeNm}" class="modal_long_input"/>
+        <span errors="placeNm" class="modal_error"></span>
     </div>
+
     <div class="modal_btn_box">
         <button type="button" onclick="pageObj.save()" th:text="#{button.new}" class="btn_new">등록</button>
     </div>

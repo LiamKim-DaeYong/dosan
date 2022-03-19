@@ -2,7 +2,7 @@ package com.samin.dosan.web.controller;
 
 import com.samin.dosan.core.code.Gender;
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.domain.setting.employees.EmployeesCodeService;
+import com.samin.dosan.domain.setting.employee.EmployeeCodeService;
 import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;
 import com.samin.dosan.domain.user.UserType;
@@ -18,7 +18,7 @@ import javax.annotation.PostConstruct;
 public class LoginController {
 
     private final UserService userService;
-    private final EmployeesCodeService employeesCodeService;
+    private final EmployeeCodeService employeeCodeService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/login")
@@ -45,7 +45,7 @@ public class LoginController {
                 .gender(Gender.MAN)
                 .role("ROLE_MANAGER")
                 .userType(UserType.EMPLOYEES)
-                .employeesType(employeesCodeService.findByCode("임원"))
+                .employeesType(employeeCodeService.findByCode("임원"))
                 .used(Used.Y)
                 .build());
 

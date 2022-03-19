@@ -5,7 +5,7 @@
     <th:block id="css"></th:block>
 
     <th:block id="script">
-        <script type="text/javascript" th:src="@{/js/setting/employees.js}"></script>
+        <script type="text/javascript" th:src="@{/js/admin/setting/employeeCode.js}"></script>
     </th:block>
 </head>
 <body>
@@ -18,9 +18,10 @@
         <form th:action>
             <div class="all_search_box">
                 <ul class="toggle_list">
-                    <li th:each="type : ${employeesCodeTypes}"
-                        th:classappend="${employeesCodeType eq type}?'toggle_on'">
-                        <a th:href="@{/templates/admin/setting/employee_code/{type}(type=${#strings.toLowerCase(type.name())})}"
+                    <li th:each="type : ${employeeCodeTypes}"
+                        th:classappend="${employeeCodeTypes eq type}?'toggle_on'">
+
+                        <a th:href="@{/admin/setting/employee_code/{type}(type=${type.nameToUrl()})}"
                            th:text="${type.description}"></a>
                     </li>
                 </ul>
@@ -33,17 +34,17 @@
                         <input type="checkbox" check="all"/>
                     </th>
                     <th class="table_num" th:text="#{label.no}">No</th>
-                    <th th:text="${employeesCodeType.description}"></th>
+                    <th th:text="${employeeCodeType.description}"></th>
                 </tr>
 
-                <tr th:each="employeesCode : ${result.content}">
+                <tr th:each="employeeCode : ${result.content}">
                     <td class="table_chk">
-                        <input type="checkbox" th:value="${employeesCode.id}"/>
+                        <input type="checkbox" th:value="${employeeCode.id}"/>
                     </td>
-                    <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + employeesCodeStat.index)}"></td>
+                    <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + employeeCodeStat.index)}"></td>
                     <td>
-                        <a href="#" th:text="${employeesCode.code}"
-                           th:onclick="pageObj.openEditPage([[${employeesCode.id}]], [[${employeesCodeType.description}]])"</a>
+                        <a href="#" th:text="${employeeCode.code}"
+                           th:onclick="pageObj.openEditPage([[${employeeCode.id}]], [[${employeeCodeType.description}]])"</a>
                     </td>
                 </tr>
 
@@ -57,7 +58,7 @@
             <div class="btn_box">
                 <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
                 <button type="button" th:text="#{button.new}"
-                        th:onclick="pageObj.openAddPage([[${employeesCodeType.description}]])" class="btn_new">등록
+                        th:onclick="pageObj.openAddPage([[${employeeCodeType.description}]])" class="btn_new">등록
                 </button>
             </div>
         </form>

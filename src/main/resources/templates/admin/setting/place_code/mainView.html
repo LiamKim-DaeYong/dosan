@@ -5,7 +5,7 @@
     <th:block id="css"></th:block>
 
     <th:block id="script">
-        <script type="text/javascript" th:src="@{/js/setting/placeCode.js}"></script>
+        <script type="text/javascript" th:src="@{/js/admin/setting/placeCode.js}"></script>
     </th:block>
 </head>
 <body>
@@ -18,9 +18,10 @@
         <form th:action>
             <div class="all_search_box">
                 <ul class="toggle_list">
-                    <li th:each="type : ${placeTypes}"
+                    <li th:each="type : ${placeCodeTypes}"
                         th:classappend="${placeCodeType eq type}?'toggle_on'">
-                        <a th:href="@{/templates/admin/setting/place_code/{type}(type=${#strings.toLowerCase(type.name())})}"
+
+                        <a th:href="@{/admin/setting/place-code/{type}(type=${type.nameToUrl()})}"
                            th:text="${type.description}"></a>
                     </li>
                 </ul>

@@ -4,10 +4,10 @@ import com.samin.dosan.core.code.Gender;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.setting.educator.EducatorCode;
 import com.samin.dosan.domain.setting.educator.EducatorCodeService;
-import com.samin.dosan.domain.setting.employees.EmployeesCode;
-import com.samin.dosan.domain.setting.employees.EmployeesCodeService;
-import com.samin.dosan.domain.setting.former_code.FormerCode;
-import com.samin.dosan.domain.setting.former_code.FormerService;
+import com.samin.dosan.domain.setting.employee.EmployeeCode;
+import com.samin.dosan.domain.setting.employee.EmployeeCodeService;
+import com.samin.dosan.domain.setting.former_job_code.FormerJobCode;
+import com.samin.dosan.domain.setting.former_job_code.FormerJobCodeService;
 import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;
 import com.samin.dosan.web.dto.user.EmployeeSave;
@@ -33,13 +33,13 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final EmployeesCodeService employeesCodeService;
+    private final EmployeeCodeService employeeCodeService;
     private final EducatorCodeService educatorCodeService;
-    private final FormerService formerService;
+    private final FormerJobCodeService formerJobCodeService;
 
     @ModelAttribute("employeesTypes")
-    public List<EmployeesCode> employeesTypes() {
-        return employeesCodeService.findAllTypes();
+    public List<EmployeeCode> employeesTypes() {
+        return employeeCodeService.findAllTypes();
     }
 
     @ModelAttribute("educatorTypes")
@@ -48,8 +48,8 @@ public class UserController {
     }
 
     @ModelAttribute("formers")
-    public List<FormerCode> formers() {
-        return formerService.findAllList();
+    public List<FormerJobCode> formers() {
+        return formerJobCodeService.findAllList();
     }
 
     @ModelAttribute("genders")

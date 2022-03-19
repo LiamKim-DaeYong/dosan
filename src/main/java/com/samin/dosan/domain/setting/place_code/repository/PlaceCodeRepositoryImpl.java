@@ -17,7 +17,7 @@ import java.util.List;
 import static com.samin.dosan.domain.setting.place_code.QPlaceCode.placeCode;
 
 @RequiredArgsConstructor
-public class PlaceRepositoryImpl implements PlaceRepositoryQueryDsl {
+public class PlaceCodeRepositoryImpl implements PlaceCodeRepositoryQueryDsl {
 
     private final JPAQueryFactory queryFactory;
 

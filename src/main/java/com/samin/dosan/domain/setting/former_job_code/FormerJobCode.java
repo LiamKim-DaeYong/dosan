@@ -1,4 +1,4 @@
-package com.samin.dosan.domain.setting.employees;
+package com.samin.dosan.domain.setting.former_job_code;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
@@ -12,35 +12,32 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class EmployeesCode extends BaseEntity {
+public class FormerJobCode extends BaseEntity {
 
     @Id
-    @GeneratedValue
-    @Column(name = "emplyees_code_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "former_job_code_id")
     private Long id;
 
     @NotBlank
     @Column(length = 100, nullable = false)
-    private String code;
-
-    @Enumerated(EnumType.STRING)
-    @Column(length = 10, nullable = false)
-    private EmployeesCodeType employeesCodeType;
+    private String formerNm;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 1, nullable = false)
     private Used used;
 
     /*================== Business Logic ==================*/
-    public EmployeesCode init(String type) {
-        this.employeesCodeType = EmployeesCodeType.valueOf(type.toUpperCase());
-        this.used = Used.Y;
+    public static FormerJobCode of(FormerJobCode saveData) {
+        FormerJobCode formerJobCode = new FormerJobCode();
+        formerJobCode.formerNm = saveData.getFormerNm();
+        formerJobCode.used = Used.Y;
 
-        return this;
+        return formerJobCode;
     }
 
-    public void update(EmployeesCode updateData) {
-        this.code = updateData.getCode();
+    public void update(FormerJobCode updateData) {
+        this.formerNm = updateData.getFormerNm();
     }
 
     public void delete() {

@@ -1,11 +1,11 @@
-package com.samin.dosan.domain.setting.former_code.repository;
+package com.samin.dosan.domain.setting.former_job_code.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.setting.former_code.FormerCode;
+import com.samin.dosan.domain.setting.former_job_code.FormerJobCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,15 +13,15 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
-import static com.samin.dosan.domain.setting.former_code.QFormerCode.formerCode;
+import static com.samin.dosan.domain.setting.former_job_code.QFormerCode.formerCode;
 
 @RequiredArgsConstructor
-public class FormerRepositoryImpl implements FormerRepositoryQueryDsl {
+public class FormerJobCodeRepositoryImpl implements FormerJobCodeRepositoryQueryDsl {
 
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<FormerCode> findAll(SearchParam searchParam, Pageable pageable) {
+    public Page<FormerJobCode> findAll(SearchParam searchParam, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(formerCode.used.eq(Used.Y));
 
@@ -30,7 +30,7 @@ public class FormerRepositoryImpl implements FormerRepositoryQueryDsl {
             builder.and(formerCode.formerNm.contains(searchWord));
         }
 
-        List<FormerCode> content = queryFactory
+        List<FormerJobCode> content = queryFactory
                 .selectFrom(formerCode)
                 .where(builder)
                 .orderBy(formerCode.id.desc())
@@ -38,7 +38,7 @@ public class FormerRepositoryImpl implements FormerRepositoryQueryDsl {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        JPAQuery<FormerCode> countQuery = queryFactory
+        JPAQuery<FormerJobCode> countQuery = queryFactory
                 .selectFrom(formerCode)
                 .where(builder);
 
@@ -46,12 +46,12 @@ public class FormerRepositoryImpl implements FormerRepositoryQueryDsl {
     }
 
     @Override
-    public List<FormerCode> findByFormerName(FormerCode validFormerCode) {
+    public List<FormerJobCode> findByFormerName(FormerJobCode validFormerCode) {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(formerCode.used.eq(Used.Y)
                 .and(formerCode.formerNm.eq(validFormerCode.getFormerNm())));
 
-        List<FormerCode> findFormerCode = queryFactory
+        List<FormerJobCode> findFormerCode = queryFactory
                 .selectFrom(formerCode)
                 .where(builder)
                 .fetch();
@@ -60,7 +60,7 @@ public class FormerRepositoryImpl implements FormerRepositoryQueryDsl {
     }
 
     @Override
-    public List<FormerCode> findAllList() {
+    public List<FormerJobCode> findAllList() {
         return queryFactory
                 .selectFrom(formerCode)
                 .where(formerCode.used.eq(Used.Y))

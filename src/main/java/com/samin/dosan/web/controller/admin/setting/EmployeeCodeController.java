@@ -2,9 +2,10 @@ package com.samin.dosan.web.controller.admin.setting;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.setting.employees.EmployeesCode;
-import com.samin.dosan.domain.setting.employees.EmployeesCodeService;
-import com.samin.dosan.domain.setting.employees.EmployeesCodeType;
+import com.samin.dosan.core.utils.StrUtils;
+import com.samin.dosan.domain.setting.employee.EmployeeCode;
+import com.samin.dosan.domain.setting.employee.EmployeeCodeService;
+import com.samin.dosan.domain.setting.employee.EmployeeCodeType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,82 +25,86 @@ import javax.annotation.PostConstruct;
 @RequestMapping("/admin/setting/employee-code/{type}")
 public class EmployeeCodeController {
 
-    private final EmployeesCodeService employeesCodeService;
+    private final EmployeeCodeService employeeCodeService;
+
+    @ModelAttribute("employeeCodeTypes")
+    public EmployeeCodeType[] employeeCodeTypes() {
+        return EmployeeCodeType.values();
+    }
 
     @GetMapping
     public String mainView(@PathVariable String type, @ModelAttribute SearchParam searchParam,
                            Pageable pageable, Model model) {
-        EmployeesCodeType employeesCodeType = EmployeesCodeType.valueOf(type.toUpperCase());
+        EmployeeCodeType employeeCodeType = EmployeeCodeType.valueOf(StrUtils.urlToEnumName(type));
 
-        Page<EmployeesCode> result = employeesCodeService.findAll(searchParam, employeesCodeType, pageable);
+        Page<EmployeeCode> result = employeeCodeService.findAll(searchParam, employeeCodeType, pageable);
         model.addAttribute("result", result);
-        model.addAttribute("employeesCodeType", employeesCodeType);
-        model.addAttribute("employeesCodeTypes", EmployeesCodeType.values());
+        model.addAttribute("employeeCodeType", employeeCodeType);
 
         return "admin/setting/employee_code/mainView";
     }
 
     @GetMapping("/add")
-    public String addView(@ModelAttribute EmployeesCode saveData) {
-        return "admin/setting/employees/addView::#form";
+    public String addView(@ModelAttribute EmployeeCode saveData) {
+        return "admin/setting/employee_code/addView::#form";
     }
 
     @GetMapping("/{id}/edit")
     public String editView(@PathVariable Long id, Model model) {
-        EmployeesCode employeesCode = employeesCodeService.findById(id);
-        model.addAttribute("employeesCode", employeesCode);
+        EmployeeCode employeeCode = employeeCodeService.findById(id);
+        model.addAttribute("employeeCode", employeeCode);
 
-        return "admin/setting/employees/editView::#form";
+        return "admin/setting/employee_code/editView::#form";
     }
 
     @PostConstruct
     public void init() {
-        EmployeesCode employeesCode1 = EmployeesCode.builder()
+        EmployeeCode employeeCode1 = EmployeeCode.builder()
                 .code("임원")
-                .employeesCodeType(EmployeesCodeType.TYPE)
+                .employeeCodeType(EmployeeCodeType.TYPE)
                 .used(Used.Y)
                 .build();
 
-        employeesCodeService.save(employeesCode1);
+        employeeCodeService.save(employeeCode1);
 
-        EmployeesCode employeesCode2 = EmployeesCode.builder()
+        EmployeeCode employeeCode2 = EmployeeCode.builder()
                 .code("직원")
-                .employeesCodeType(EmployeesCodeType.TYPE)
+                .employeeCodeType(EmployeeCodeType.TYPE)
                 .used(Used.Y)
                 .build();
 
-        employeesCodeService.save(employeesCode2);
+        employeeCodeService.save(employeeCode2);
 
-        EmployeesCode employeesCode3 = EmployeesCode.builder()
+        EmployeeCode employeeCode3 = EmployeeCode.builder()
                 .code("원장")
-                .employeesCodeType(EmployeesCodeType.POSITION)
+                .employeeCodeType(EmployeeCodeType.POSITION)
                 .used(Used.Y)
                 .build();
 
-        employeesCodeService.save(employeesCode3);
+        employeeCodeService.save(employeeCode3);
 
-        EmployeesCode employeesCode4 = EmployeesCode.builder()
+        EmployeeCode employeeCode4 = EmployeeCode.builder()
                 .code("4급")
-                .employeesCodeType(EmployeesCodeType.RANK)
+                .employeeCodeType(EmployeeCodeType.RANK)
                 .used(Used.Y)
                 .build();
 
-        employeesCodeService.save(employeesCode4);
+        employeeCodeService.save(employeeCode4);
 
-        EmployeesCode employeesCode5 = EmployeesCode.builder()
+        EmployeeCode employeeCode5 = EmployeeCode.builder()
                 .code("4호봉")
-                .employeesCodeType(EmployeesCodeType.STEP)
+                .employeeCodeType(EmployeeCodeType.STEP)
                 .used(Used.Y)
                 .build();
 
-        employeesCodeService.save(employeesCode5);
+        employeeCodeService.save(employeeCode5);
 
-        EmployeesCode employeesCode6 = EmployeesCode.builder()
+        EmployeeCode employeeCode6 = EmployeeCode.builder()
                 .code("수련기획실")
-                .employeesCodeType(EmployeesCodeType.DEPARTMENT)
+                .employeeCodeType(EmployeeCodeType.DEPARTMENT)
                 .used(Used.Y)
                 .build();
 
-        employeesCodeService.save(employeesCode6);
+        employeeCodeService.save(employeeCode6);
     }
 }

@@ -14,29 +14,14 @@ var pageObj = {
     },
 
     save: function () {
-        var option = {
-            data: modal.getData(),
-            url: $url.getPath('duplicate')
-        };
-
-        if (!$valid.duplicate(option)) {
-            $ajax.post({data: modal.getData()})
-        } else {
-            $("[errors]").text("");
-            $("[errorclass]").each(function () {
-                $(this).removeClass($(this).attr("errorclass"));
-            });
-
-            var errorField = $("#formerName");
-            errorField.addClass(errorField.attr("errorclass"));
-
-            var errorMsgField = $(`[errors='formerName']`);
-            errorMsgField.text("이미 존재하는 전직입니다.");
-        }
+        $ajax.post({data: modal.getData()})
     },
 
     edit: function () {
-        $ajax.put({data: modal.getData()})
+        $ajax.put({
+            url: $url.getPath($("#id").val()),
+            data: modal.getData()
+        })
     },
 
     delete: function () {
