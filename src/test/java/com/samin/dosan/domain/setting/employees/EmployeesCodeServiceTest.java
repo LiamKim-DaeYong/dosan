@@ -1,7 +1,10 @@
 package com.samin.dosan.domain.setting.employees;
 
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.domain.setting.employees.repository.EmployeesCodeRepository;
+import com.samin.dosan.domain.setting.employee.EmployeeCode;
+import com.samin.dosan.domain.setting.employee.EmployeeCodeService;
+import com.samin.dosan.domain.setting.employee.EmployeeCodeType;
+import com.samin.dosan.domain.setting.employee.repository.EmployeeCodeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,52 +20,52 @@ import static org.mockito.Mockito.*;
 
 class EmployeesCodeServiceTest {
 
-    EmployeesCodeRepository employeesCodeRepository;
-    EmployeesCodeService employeesCodeService;
+    EmployeeCodeRepository employeesCodeRepository;
+    EmployeeCodeService employeesCodeService;
 
-    EmployeesCode typeEmployeesCode;
-    EmployeesCode positionEmployeesCode;
-    EmployeesCode rankEmployeesCode;
-    EmployeesCode stepEmployeesCode;
-    EmployeesCode departmentEmployeesCode;
+    EmployeeCode typeEmployeesCode;
+    EmployeeCode positionEmployeesCode;
+    EmployeeCode rankEmployeesCode;
+    EmployeeCode stepEmployeesCode;
+    EmployeeCode departmentEmployeesCode;
 
     @BeforeEach
     void init() {
-        employeesCodeRepository = mock(EmployeesCodeRepository.class);
-        employeesCodeService = new EmployeesCodeService(employeesCodeRepository);
+        employeesCodeRepository = mock(EmployeeCodeRepository.class);
+        employeesCodeService = new EmployeeCodeService(employeesCodeRepository);
 
-        typeEmployeesCode = EmployeesCode.builder()
+        typeEmployeesCode = EmployeeCode.builder()
                 .id(1L)
                 .code("구분")
-                .employeesCodeType(EmployeesCodeType.TYPE)
+                .employeeCodeType(EmployeeCodeType.TYPE)
                 .used(Used.Y)
                 .build();
 
-        positionEmployeesCode = EmployeesCode.builder()
+        positionEmployeesCode = EmployeeCode.builder()
                 .id(2L)
                 .code("직위")
-                .employeesCodeType(EmployeesCodeType.POSITION)
+                .employeeCodeType(EmployeeCodeType.POSITION)
                 .used(Used.Y)
                 .build();
 
-        rankEmployeesCode = EmployeesCode.builder()
+        rankEmployeesCode = EmployeeCode.builder()
                 .id(3L)
                 .code("직급")
-                .employeesCodeType(EmployeesCodeType.RANK)
+                .employeeCodeType(EmployeeCodeType.RANK)
                 .used(Used.Y)
                 .build();
 
-        stepEmployeesCode = EmployeesCode.builder()
+        stepEmployeesCode = EmployeeCode.builder()
                 .id(4L)
                 .code("호봉")
-                .employeesCodeType(EmployeesCodeType.STEP)
+                .employeeCodeType(EmployeeCodeType.STEP)
                 .used(Used.Y)
                 .build();
 
-        departmentEmployeesCode = EmployeesCode.builder()
+        departmentEmployeesCode = EmployeeCode.builder()
                 .id(5L)
                 .code("근무부서")
-                .employeesCodeType(EmployeesCodeType.DEPARTMENT)
+                .employeeCodeType(EmployeeCodeType.DEPARTMENT)
                 .used(Used.Y)
                 .build();
 
@@ -77,19 +80,19 @@ class EmployeesCodeServiceTest {
     @Test
     @DisplayName("단일 조회 테스트")
     void findById() {
-        EmployeesCode findType = employeesCodeService.findById(1L);
+        EmployeeCode findType = employeesCodeService.findById(1L);
         isEqualToEmployeesCode(typeEmployeesCode, findType);
 
-        EmployeesCode findPosition = employeesCodeService.findById(2L);
+        EmployeeCode findPosition = employeesCodeService.findById(2L);
         isEqualToEmployeesCode(positionEmployeesCode, findPosition);
 
-        EmployeesCode findRank = employeesCodeService.findById(3L);
+        EmployeeCode findRank = employeesCodeService.findById(3L);
         isEqualToEmployeesCode(rankEmployeesCode, findRank);
 
-        EmployeesCode findStep = employeesCodeService.findById(4L);
+        EmployeeCode findStep = employeesCodeService.findById(4L);
         isEqualToEmployeesCode(stepEmployeesCode, findStep);
 
-        EmployeesCode findDepartment = employeesCodeService.findById(5L);
+        EmployeeCode findDepartment = employeesCodeService.findById(5L);
         isEqualToEmployeesCode(departmentEmployeesCode, findDepartment);
 
         assertThrows(EntityNotFoundException.class, () -> employeesCodeService.findById(6L));
@@ -99,16 +102,16 @@ class EmployeesCodeServiceTest {
     @Test
     @DisplayName("수정 테스트")
     void update() {
-        EmployeesCode updateData = EmployeesCode.builder()
+        EmployeeCode updateData = EmployeeCode.builder()
                 .code("구분 수정")
-                .employeesCodeType(EmployeesCodeType.TYPE)
+                .employeeCodeType(EmployeeCodeType.TYPE)
                 .used(Used.Y)
                 .build();
 
         Long updateId = employeesCodeService.update(1L, updateData);
         verify(employeesCodeRepository, times(1)).findById(anyLong());
 
-        EmployeesCode update = employeesCodeService.findById(updateId);
+        EmployeeCode update = employeesCodeService.findById(updateId);
         isEqualToEmployeesCode(update, updateData);
     }
 
@@ -119,11 +122,11 @@ class EmployeesCodeServiceTest {
         employeesCodeService.delete(ids);
         verify(employeesCodeRepository, times(5)).findById(anyLong());
 
-        EmployeesCode delete1 = employeesCodeService.findById(1L);
-        EmployeesCode delete2 = employeesCodeService.findById(2L);
-        EmployeesCode delete3 = employeesCodeService.findById(3L);
-        EmployeesCode delete4 = employeesCodeService.findById(4L);
-        EmployeesCode delete5 = employeesCodeService.findById(5L);
+        EmployeeCode delete1 = employeesCodeService.findById(1L);
+        EmployeeCode delete2 = employeesCodeService.findById(2L);
+        EmployeeCode delete3 = employeesCodeService.findById(3L);
+        EmployeeCode delete4 = employeesCodeService.findById(4L);
+        EmployeeCode delete5 = employeesCodeService.findById(5L);
 
         assertThat(delete1.getUsed()).isEqualTo(Used.N);
         assertThat(delete2.getUsed()).isEqualTo(Used.N);
@@ -132,9 +135,9 @@ class EmployeesCodeServiceTest {
         assertThat(delete5.getUsed()).isEqualTo(Used.N);
     }
 
-    private void isEqualToEmployeesCode(EmployeesCode employeesCode, EmployeesCode findEmployeesCode) {
+    private void isEqualToEmployeesCode(EmployeeCode employeesCode, EmployeeCode findEmployeesCode) {
         assertThat(employeesCode.getCode()).isEqualTo(findEmployeesCode.getCode());
-        assertThat(employeesCode.getEmployeesCodeType()).isEqualTo(findEmployeesCode.getEmployeesCodeType());
+        assertThat(employeesCode.getEmployeeCodeType()).isEqualTo(findEmployeesCode.getEmployeeCodeType());
         assertThat(employeesCode.getUsed()).isEqualTo(findEmployeesCode.getUsed());
     }
 }

@@ -1,7 +1,9 @@
 package com.samin.dosan.domain.setting.former;
 
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.domain.setting.former.repository.FormerRepository;
+import com.samin.dosan.domain.setting.former_job_code.FormerJobCode;
+import com.samin.dosan.domain.setting.former_job_code.FormerJobCodeService;
+import com.samin.dosan.domain.setting.former_job_code.repository.FormerJobCodeRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,48 +19,48 @@ import static org.mockito.Mockito.*;
 
 class FormerServiceTest {
 
-    FormerRepository formerRepository;
-    FormerService formerService;
+    FormerJobCodeRepository formerJobCodeRepository;
+    FormerJobCodeService formerJobCodeService;
 
-    Former former;
+    FormerJobCode former;
 
     @BeforeEach
     void init() {
-        formerRepository = mock(FormerRepository.class);
-        formerService = new FormerService(formerRepository);
+        formerJobCodeRepository = mock(FormerJobCodeRepository.class);
+        formerJobCodeService = new FormerJobCodeService(formerJobCodeRepository);
 
-        former = Former.builder()
+        former = FormerJobCode.builder()
                 .id(1L)
-                .formerName("전직")
+                .formerNm("전직")
                 .used(Used.Y)
                 .build();
 
-        when(formerRepository.findById(1L)).thenReturn(Optional.of(former));
-        when(formerRepository.findById(2L)).thenThrow(EntityNotFoundException.class);
+        when(formerJobCodeRepository.findById(1L)).thenReturn(Optional.of(former));
+        when(formerJobCodeRepository.findById(2L)).thenThrow(EntityNotFoundException.class);
     }
 
     @Test
     @DisplayName("단일 조회 테스트")
     void findById() {
-        Former findFormer = formerService.findById(1L);
+        FormerJobCode findFormer = formerJobCodeService.findById(1L);
         isEqualFormer(former, findFormer);
 
-        assertThrows(EntityNotFoundException.class, () -> formerService.findById(2L));
-        verify(formerRepository, times(2)).findById(anyLong());
+        assertThrows(EntityNotFoundException.class, () -> formerJobCodeService.findById(2L));
+        verify(formerJobCodeRepository, times(2)).findById(anyLong());
     }
 
     @Test
     @DisplayName("수정 테스트")
     void update() {
-        Former updateData = Former.builder()
-                .formerName("전직 수정")
+        FormerJobCode updateData = FormerJobCode.builder()
+                .formerNm("전직 수정")
                 .used(Used.Y)
                 .build();
 
-        Long updateId = formerService.update(1L, updateData);
-        verify(formerRepository, times(1)).findById(anyLong());
+        Long updateId = formerJobCodeService.update(1L, updateData);
+        verify(formerJobCodeRepository, times(1)).findById(anyLong());
 
-        Former update = formerService.findById(updateId);
+        FormerJobCode update = formerJobCodeService.findById(updateId);
         isEqualFormer(update, updateData);
     }
 
@@ -66,17 +68,17 @@ class FormerServiceTest {
     @DisplayName("삭제 테스트")
     void delete() {
         List<Long> ids = Arrays.asList(1L);
-        formerService.delete(ids);
-        verify(formerRepository, times(1)).findById(anyLong());
+        formerJobCodeService.delete(ids);
+        verify(formerJobCodeRepository, times(1)).findById(anyLong());
 
-        Former delete = formerService.findById(1L);
+        FormerJobCode delete = formerJobCodeService.findById(1L);
 
         Assertions.assertThat(delete.getUsed()).isEqualTo(Used.N);
     }
 
 
-    private void isEqualFormer(Former former, Former findFormer) {
-        Assertions.assertThat(former.getFormerName()).isEqualTo(findFormer.getFormerName());
+    private void isEqualFormer(FormerJobCode former, FormerJobCode findFormer) {
+        Assertions.assertThat(former.getFormerNm()).isEqualTo(findFormer.getFormerNm());
         Assertions.assertThat(former.getUsed()).isEqualTo(findFormer.getUsed());
     }
 }

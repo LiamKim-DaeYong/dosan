@@ -1,10 +1,10 @@
-package com.samin.dosan.domain.setting.course.repository;
+package com.samin.dosan.domain.setting.subject_code.repository;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.TestConfig;
-import com.samin.dosan.domain.setting.course.Course;
-import com.samin.dosan.domain.setting.course.CourseType;
+import com.samin.dosan.domain.setting.subject_code.Course;
+import com.samin.dosan.domain.setting.subject_code.CourseType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

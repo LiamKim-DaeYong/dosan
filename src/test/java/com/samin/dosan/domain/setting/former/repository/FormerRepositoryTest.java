@@ -3,7 +3,8 @@ package com.samin.dosan.domain.setting.former.repository;
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.TestConfig;
-import com.samin.dosan.domain.setting.former.Former;
+import com.samin.dosan.domain.setting.former_job_code.FormerJobCode;
+import com.samin.dosan.domain.setting.former_job_code.repository.FormerJobCodeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,12 +21,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @Import(TestConfig.class)
-class FormerRepositoryTest {
+class FormerJobCodeRepositoryTest {
 
     @Autowired
-    FormerRepository formerRepository;
+    FormerJobCodeRepository formerJobCodeRepository;
 
-    List<Former> formerList;
+    List<FormerJobCode> formerList;
 
     SearchParam searchParam;
     Pageable pageable;
@@ -36,25 +37,25 @@ class FormerRepositoryTest {
         pageable = PageRequest.of(0, 20);
 
         formerList = Arrays.asList(
-                Former.builder().formerName("전직1").used(Used.Y).build(),
-                Former.builder().formerName("전직2").used(Used.Y).build(),
-                Former.builder().formerName("전직3").used(Used.Y).build(),
-                Former.builder().formerName("전직4").used(Used.Y).build(),
-                Former.builder().formerName("전직5").used(Used.Y).build(),
-                Former.builder().formerName("전직6").used(Used.Y).build(),
-                Former.builder().formerName("전직7").used(Used.Y).build(),
-                Former.builder().formerName("전직8").used(Used.Y).build(),
-                Former.builder().formerName("전직9").used(Used.Y).build(),
-                Former.builder().formerName("전직10").used(Used.Y).build()
+                FormerJobCode.builder().formerNm("전직1").used(Used.Y).build(),
+                FormerJobCode.builder().formerNm("전직2").used(Used.Y).build(),
+                FormerJobCode.builder().formerNm("전직3").used(Used.Y).build(),
+                FormerJobCode.builder().formerNm("전직4").used(Used.Y).build(),
+                FormerJobCode.builder().formerNm("전직5").used(Used.Y).build(),
+                FormerJobCode.builder().formerNm("전직6").used(Used.Y).build(),
+                FormerJobCode.builder().formerNm("전직7").used(Used.Y).build(),
+                FormerJobCode.builder().formerNm("전직8").used(Used.Y).build(),
+                FormerJobCode.builder().formerNm("전직9").used(Used.Y).build(),
+                FormerJobCode.builder().formerNm("전직10").used(Used.Y).build()
         );
 
-        formerRepository.saveAll(formerList);
+        formerJobCodeRepository.saveAll(formerList);
     }
 
     @Test
     @DisplayName("전직 구분 조회 테스트")
     void findAll() {
-        List<Former> findList = formerRepository.findAll(searchParam, pageable).getContent();
+        List<FormerJobCode> findList = formerJobCodeRepository.findAll(searchParam, pageable).getContent();
         assertThat(findList.size()).isEqualTo(10);
 
         isEqualFormer(formerList.get(0), findList.get(9));
@@ -73,11 +74,11 @@ class FormerRepositoryTest {
     @DisplayName("전직 구분 검색 테스트")
     void findWorld() {
         searchParam.setSearchWorld("초등교원");
-        List<Former> findList = formerRepository.findAll(searchParam, pageable).getContent();
+        List<FormerJobCode> findList = formerJobCodeRepository.findAll(searchParam, pageable).getContent();
         assertThat(findList.size()).isEqualTo(0);
 
         searchParam.setSearchWorld("전직1");
-        List<Former> findList2 = formerRepository.findAll(searchParam, pageable).getContent();
+        List<FormerJobCode> findList2 = formerJobCodeRepository.findAll(searchParam, pageable).getContent();
         assertThat(findList2.size()).isEqualTo(2);
 
         isEqualFormer(formerList.get(0), findList2.get(1));
@@ -88,11 +89,11 @@ class FormerRepositoryTest {
     @DisplayName("전직 구분 페이징 테스트")
     void pagingFormer() {
         pageable = PageRequest.of(1, 10);
-        List<Former> findList = formerRepository.findAll(searchParam, pageable).getContent();
+        List<FormerJobCode> findList = formerJobCodeRepository.findAll(searchParam, pageable).getContent();
         assertThat(findList.size()).isEqualTo(0);
 
         pageable = PageRequest.of(1, 5);
-        List<Former> findList2 = formerRepository.findAll(searchParam, pageable).getContent();
+        List<FormerJobCode> findList2 = formerJobCodeRepository.findAll(searchParam, pageable).getContent();
         assertThat(findList2.size()).isEqualTo(5);
 
         isEqualFormer(formerList.get(0), findList2.get(4));
@@ -102,8 +103,8 @@ class FormerRepositoryTest {
         isEqualFormer(formerList.get(4), findList2.get(0));
     }
 
-    private void isEqualFormer(Former former, Former findFormer) {
-        assertThat(findFormer.getFormerName()).isEqualTo(former.getFormerName());
+    private void isEqualFormer(FormerJobCode former, FormerJobCode findFormer) {
+        assertThat(findFormer.getFormerNm()).isEqualTo(former.getFormerNm());
         assertThat(findFormer.getUsed()).isEqualTo(former.getUsed());
     }
 

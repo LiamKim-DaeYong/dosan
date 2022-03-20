@@ -13,7 +13,7 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
-import static com.samin.dosan.domain.setting.former_job_code.QFormerCode.formerCode;
+import static com.samin.dosan.domain.setting.former_job_code.QFormerJobCode.formerJobCode;
 
 @RequiredArgsConstructor
 public class FormerJobCodeRepositoryImpl implements FormerJobCodeRepositoryQueryDsl {
@@ -23,23 +23,23 @@ public class FormerJobCodeRepositoryImpl implements FormerJobCodeRepositoryQuery
     @Override
     public Page<FormerJobCode> findAll(SearchParam searchParam, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(formerCode.used.eq(Used.Y));
+        builder.and(formerJobCode.used.eq(Used.Y));
 
         String searchWord = searchParam.getSearchWorld();
         if (searchWord != null) {
-            builder.and(formerCode.formerNm.contains(searchWord));
+            builder.and(formerJobCode.formerNm.contains(searchWord));
         }
 
         List<FormerJobCode> content = queryFactory
-                .selectFrom(formerCode)
+                .selectFrom(formerJobCode)
                 .where(builder)
-                .orderBy(formerCode.id.desc())
+                .orderBy(formerJobCode.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<FormerJobCode> countQuery = queryFactory
-                .selectFrom(formerCode)
+                .selectFrom(formerJobCode)
                 .where(builder);
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
@@ -48,11 +48,11 @@ public class FormerJobCodeRepositoryImpl implements FormerJobCodeRepositoryQuery
     @Override
     public List<FormerJobCode> findByFormerName(FormerJobCode validFormerCode) {
         BooleanBuilder builder = new BooleanBuilder();
-        builder.and(formerCode.used.eq(Used.Y)
-                .and(formerCode.formerNm.eq(validFormerCode.getFormerNm())));
+        builder.and(formerJobCode.used.eq(Used.Y)
+                .and(formerJobCode.formerNm.eq(validFormerCode.getFormerNm())));
 
         List<FormerJobCode> findFormerCode = queryFactory
-                .selectFrom(formerCode)
+                .selectFrom(formerJobCode)
                 .where(builder)
                 .fetch();
 
@@ -62,9 +62,9 @@ public class FormerJobCodeRepositoryImpl implements FormerJobCodeRepositoryQuery
     @Override
     public List<FormerJobCode> findAllList() {
         return queryFactory
-                .selectFrom(formerCode)
-                .where(formerCode.used.eq(Used.Y))
-                .orderBy(formerCode.formerNm.asc())
+                .selectFrom(formerJobCode)
+                .where(formerJobCode.used.eq(Used.Y))
+                .orderBy(formerJobCode.formerNm.asc())
                 .fetch();
     }
 }

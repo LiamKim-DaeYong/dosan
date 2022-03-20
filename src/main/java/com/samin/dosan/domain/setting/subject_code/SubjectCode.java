@@ -47,6 +47,16 @@ public class SubjectCode extends BaseEntity {
         return subjectCode;
     }
 
+    public static SubjectCode of(String subject, String conent, SubjectCodeType subjectCodeType) {
+        SubjectCode subjectCode = new SubjectCode();
+        subjectCode.subject = subject;
+        subjectCode.content = conent;
+        subjectCode.subjectCodeType = subjectCodeType;
+        subjectCode.used = Used.Y;
+
+        return subjectCode;
+    }
+
     public void update(SubjectCode updateData) {
         this.subject = updateData.getSubject();
         this.content = updateData.getContent();

@@ -3,8 +3,9 @@ package com.samin.dosan.domain.setting.employees.repository;
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.TestConfig;
-import com.samin.dosan.domain.setting.employees.EmployeesCode;
-import com.samin.dosan.domain.setting.employees.EmployeesCodeType;
+import com.samin.dosan.domain.setting.employee.EmployeeCode;
+import com.samin.dosan.domain.setting.employee.EmployeeCodeType;
+import com.samin.dosan.domain.setting.employee.repository.EmployeeCodeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,19 +25,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 class EmployeesCodeRepositoryTest {
 
     @Autowired
-    EmployeesCodeRepository employeesCodeRepository;
+    EmployeeCodeRepository employeesCodeRepository;
 
-    List<EmployeesCode> typeList;
-    List<EmployeesCode> positionList;
-    List<EmployeesCode> rankList;
-    List<EmployeesCode> stepList;
-    List<EmployeesCode> departmentList;
+    List<EmployeeCode> typeList;
+    List<EmployeeCode> positionList;
+    List<EmployeeCode> rankList;
+    List<EmployeeCode> stepList;
+    List<EmployeeCode> departmentList;
 
-    EmployeesCodeType type = EmployeesCodeType.TYPE;
-    EmployeesCodeType position = EmployeesCodeType.POSITION;
-    EmployeesCodeType rank = EmployeesCodeType.RANK;
-    EmployeesCodeType step = EmployeesCodeType.STEP;
-    EmployeesCodeType department = EmployeesCodeType.DEPARTMENT;
+    EmployeeCodeType type = EmployeeCodeType.TYPE;
+    EmployeeCodeType position = EmployeeCodeType.POSITION;
+    EmployeeCodeType rank = EmployeeCodeType.RANK;
+    EmployeeCodeType step = EmployeeCodeType.STEP;
+    EmployeeCodeType department = EmployeeCodeType.DEPARTMENT;
 
     SearchParam searchParam;
     Pageable pageable;
@@ -47,76 +48,76 @@ class EmployeesCodeRepositoryTest {
         pageable = PageRequest.of(0, 20);
 
         typeList = Arrays.asList(
-                EmployeesCode.builder().code("구분1").employeesCodeType(type).used(Used.Y).build(),
-                EmployeesCode.builder().code("구분2").employeesCodeType(type).used(Used.Y).build(),
-                EmployeesCode.builder().code("구분3").employeesCodeType(type).used(Used.Y).build(),
-                EmployeesCode.builder().code("구분4").employeesCodeType(type).used(Used.Y).build(),
-                EmployeesCode.builder().code("구분5").employeesCodeType(type).used(Used.Y).build(),
-                EmployeesCode.builder().code("구분6").employeesCodeType(type).used(Used.Y).build(),
-                EmployeesCode.builder().code("구분7").employeesCodeType(type).used(Used.Y).build(),
-                EmployeesCode.builder().code("구분8").employeesCodeType(type).used(Used.Y).build(),
-                EmployeesCode.builder().code("구분9").employeesCodeType(type).used(Used.Y).build(),
-                EmployeesCode.builder().code("구분10").employeesCodeType(type).used(Used.Y).build()
+                EmployeeCode.builder().code("구분1").employeeCodeType(type).used(Used.Y).build(),
+                EmployeeCode.builder().code("구분2").employeeCodeType(type).used(Used.Y).build(),
+                EmployeeCode.builder().code("구분3").employeeCodeType(type).used(Used.Y).build(),
+                EmployeeCode.builder().code("구분4").employeeCodeType(type).used(Used.Y).build(),
+                EmployeeCode.builder().code("구분5").employeeCodeType(type).used(Used.Y).build(),
+                EmployeeCode.builder().code("구분6").employeeCodeType(type).used(Used.Y).build(),
+                EmployeeCode.builder().code("구분7").employeeCodeType(type).used(Used.Y).build(),
+                EmployeeCode.builder().code("구분8").employeeCodeType(type).used(Used.Y).build(),
+                EmployeeCode.builder().code("구분9").employeeCodeType(type).used(Used.Y).build(),
+                EmployeeCode.builder().code("구분10").employeeCodeType(type).used(Used.Y).build()
         );
 
         employeesCodeRepository.saveAll(typeList);
 
         positionList = Arrays.asList(
-                EmployeesCode.builder().code("직위1").employeesCodeType(position).used(Used.Y).build(),
-                EmployeesCode.builder().code("직위2").employeesCodeType(position).used(Used.Y).build(),
-                EmployeesCode.builder().code("직위3").employeesCodeType(position).used(Used.Y).build(),
-                EmployeesCode.builder().code("직위4").employeesCodeType(position).used(Used.Y).build(),
-                EmployeesCode.builder().code("직위5").employeesCodeType(position).used(Used.Y).build(),
-                EmployeesCode.builder().code("직위6").employeesCodeType(position).used(Used.Y).build(),
-                EmployeesCode.builder().code("직위7").employeesCodeType(position).used(Used.Y).build(),
-                EmployeesCode.builder().code("직위8").employeesCodeType(position).used(Used.Y).build(),
-                EmployeesCode.builder().code("직위9").employeesCodeType(position).used(Used.Y).build(),
-                EmployeesCode.builder().code("직위10").employeesCodeType(position).used(Used.Y).build()
+                EmployeeCode.builder().code("직위1").employeeCodeType(position).used(Used.Y).build(),
+                EmployeeCode.builder().code("직위2").employeeCodeType(position).used(Used.Y).build(),
+                EmployeeCode.builder().code("직위3").employeeCodeType(position).used(Used.Y).build(),
+                EmployeeCode.builder().code("직위4").employeeCodeType(position).used(Used.Y).build(),
+                EmployeeCode.builder().code("직위5").employeeCodeType(position).used(Used.Y).build(),
+                EmployeeCode.builder().code("직위6").employeeCodeType(position).used(Used.Y).build(),
+                EmployeeCode.builder().code("직위7").employeeCodeType(position).used(Used.Y).build(),
+                EmployeeCode.builder().code("직위8").employeeCodeType(position).used(Used.Y).build(),
+                EmployeeCode.builder().code("직위9").employeeCodeType(position).used(Used.Y).build(),
+                EmployeeCode.builder().code("직위10").employeeCodeType(position).used(Used.Y).build()
         );
 
         employeesCodeRepository.saveAll(positionList);
 
         rankList = Arrays.asList(
-                EmployeesCode.builder().code("직급1").employeesCodeType(rank).used(Used.Y).build(),
-                EmployeesCode.builder().code("직급2").employeesCodeType(rank).used(Used.Y).build(),
-                EmployeesCode.builder().code("직급3").employeesCodeType(rank).used(Used.Y).build(),
-                EmployeesCode.builder().code("직급4").employeesCodeType(rank).used(Used.Y).build(),
-                EmployeesCode.builder().code("직급5").employeesCodeType(rank).used(Used.Y).build(),
-                EmployeesCode.builder().code("직급6").employeesCodeType(rank).used(Used.Y).build(),
-                EmployeesCode.builder().code("직급7").employeesCodeType(rank).used(Used.Y).build(),
-                EmployeesCode.builder().code("직급8").employeesCodeType(rank).used(Used.Y).build(),
-                EmployeesCode.builder().code("직급9").employeesCodeType(rank).used(Used.Y).build(),
-                EmployeesCode.builder().code("직급10").employeesCodeType(rank).used(Used.Y).build()
+                EmployeeCode.builder().code("직급1").employeeCodeType(rank).used(Used.Y).build(),
+                EmployeeCode.builder().code("직급2").employeeCodeType(rank).used(Used.Y).build(),
+                EmployeeCode.builder().code("직급3").employeeCodeType(rank).used(Used.Y).build(),
+                EmployeeCode.builder().code("직급4").employeeCodeType(rank).used(Used.Y).build(),
+                EmployeeCode.builder().code("직급5").employeeCodeType(rank).used(Used.Y).build(),
+                EmployeeCode.builder().code("직급6").employeeCodeType(rank).used(Used.Y).build(),
+                EmployeeCode.builder().code("직급7").employeeCodeType(rank).used(Used.Y).build(),
+                EmployeeCode.builder().code("직급8").employeeCodeType(rank).used(Used.Y).build(),
+                EmployeeCode.builder().code("직급9").employeeCodeType(rank).used(Used.Y).build(),
+                EmployeeCode.builder().code("직급10").employeeCodeType(rank).used(Used.Y).build()
         );
 
         employeesCodeRepository.saveAll(rankList);
 
         stepList = Arrays.asList(
-                EmployeesCode.builder().code("호봉1").employeesCodeType(step).used(Used.Y).build(),
-                EmployeesCode.builder().code("호봉2").employeesCodeType(step).used(Used.Y).build(),
-                EmployeesCode.builder().code("호봉3").employeesCodeType(step).used(Used.Y).build(),
-                EmployeesCode.builder().code("호봉4").employeesCodeType(step).used(Used.Y).build(),
-                EmployeesCode.builder().code("호봉5").employeesCodeType(step).used(Used.Y).build(),
-                EmployeesCode.builder().code("호봉6").employeesCodeType(step).used(Used.Y).build(),
-                EmployeesCode.builder().code("호봉7").employeesCodeType(step).used(Used.Y).build(),
-                EmployeesCode.builder().code("호봉8").employeesCodeType(step).used(Used.Y).build(),
-                EmployeesCode.builder().code("호봉9").employeesCodeType(step).used(Used.Y).build(),
-                EmployeesCode.builder().code("호봉10").employeesCodeType(step).used(Used.Y).build()
+                EmployeeCode.builder().code("호봉1").employeeCodeType(step).used(Used.Y).build(),
+                EmployeeCode.builder().code("호봉2").employeeCodeType(step).used(Used.Y).build(),
+                EmployeeCode.builder().code("호봉3").employeeCodeType(step).used(Used.Y).build(),
+                EmployeeCode.builder().code("호봉4").employeeCodeType(step).used(Used.Y).build(),
+                EmployeeCode.builder().code("호봉5").employeeCodeType(step).used(Used.Y).build(),
+                EmployeeCode.builder().code("호봉6").employeeCodeType(step).used(Used.Y).build(),
+                EmployeeCode.builder().code("호봉7").employeeCodeType(step).used(Used.Y).build(),
+                EmployeeCode.builder().code("호봉8").employeeCodeType(step).used(Used.Y).build(),
+                EmployeeCode.builder().code("호봉9").employeeCodeType(step).used(Used.Y).build(),
+                EmployeeCode.builder().code("호봉10").employeeCodeType(step).used(Used.Y).build()
         );
 
         employeesCodeRepository.saveAll(stepList);
 
         departmentList = Arrays.asList(
-                EmployeesCode.builder().code("근무부서1").employeesCodeType(department).used(Used.Y).build(),
-                EmployeesCode.builder().code("근무부서2").employeesCodeType(department).used(Used.Y).build(),
-                EmployeesCode.builder().code("근무부서3").employeesCodeType(department).used(Used.Y).build(),
-                EmployeesCode.builder().code("근무부서4").employeesCodeType(department).used(Used.Y).build(),
-                EmployeesCode.builder().code("근무부서5").employeesCodeType(department).used(Used.Y).build(),
-                EmployeesCode.builder().code("근무부서6").employeesCodeType(department).used(Used.Y).build(),
-                EmployeesCode.builder().code("근무부서7").employeesCodeType(department).used(Used.Y).build(),
-                EmployeesCode.builder().code("근무부서8").employeesCodeType(department).used(Used.Y).build(),
-                EmployeesCode.builder().code("근무부서9").employeesCodeType(department).used(Used.Y).build(),
-                EmployeesCode.builder().code("근무부서10").employeesCodeType(department).used(Used.Y).build()
+                EmployeeCode.builder().code("근무부서1").employeeCodeType(department).used(Used.Y).build(),
+                EmployeeCode.builder().code("근무부서2").employeeCodeType(department).used(Used.Y).build(),
+                EmployeeCode.builder().code("근무부서3").employeeCodeType(department).used(Used.Y).build(),
+                EmployeeCode.builder().code("근무부서4").employeeCodeType(department).used(Used.Y).build(),
+                EmployeeCode.builder().code("근무부서5").employeeCodeType(department).used(Used.Y).build(),
+                EmployeeCode.builder().code("근무부서6").employeeCodeType(department).used(Used.Y).build(),
+                EmployeeCode.builder().code("근무부서7").employeeCodeType(department).used(Used.Y).build(),
+                EmployeeCode.builder().code("근무부서8").employeeCodeType(department).used(Used.Y).build(),
+                EmployeeCode.builder().code("근무부서9").employeeCodeType(department).used(Used.Y).build(),
+                EmployeeCode.builder().code("근무부서10").employeeCodeType(department).used(Used.Y).build()
         );
 
         employeesCodeRepository.saveAll(departmentList);
@@ -125,7 +126,7 @@ class EmployeesCodeRepositoryTest {
     @Test
     @DisplayName("임직원 설정 구분 조회 테스트")
     void findType() {
-        List<EmployeesCode> findList = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
+        List<EmployeeCode> findList = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
         assertThat(findList.size()).isEqualTo(10);
 
         isEqualToEmployeesCode(typeList.get(0), findList.get(9));
@@ -143,7 +144,7 @@ class EmployeesCodeRepositoryTest {
     @Test
     @DisplayName("임직원 설정 직위 조회 테스트")
     void findPosition() {
-        List<EmployeesCode> findList = employeesCodeRepository.findAll(searchParam, position, pageable).getContent();
+        List<EmployeeCode> findList = employeesCodeRepository.findAll(searchParam, position, pageable).getContent();
         assertThat(findList.size()).isEqualTo(10);
 
         isEqualToEmployeesCode(positionList.get(0), findList.get(9));
@@ -161,7 +162,7 @@ class EmployeesCodeRepositoryTest {
     @Test
     @DisplayName("임직원 설정 직급 조회 테스트")
     void findRank() {
-        List<EmployeesCode> findList = employeesCodeRepository.findAll(searchParam, rank, pageable).getContent();
+        List<EmployeeCode> findList = employeesCodeRepository.findAll(searchParam, rank, pageable).getContent();
         assertThat(findList.size()).isEqualTo(10);
 
         isEqualToEmployeesCode(rankList.get(0), findList.get(9));
@@ -179,7 +180,7 @@ class EmployeesCodeRepositoryTest {
     @Test
     @DisplayName("임직원 설정 호봉 조회 테스트")
     void findStep() {
-        List<EmployeesCode> findList = employeesCodeRepository.findAll(searchParam, step, pageable).getContent();
+        List<EmployeeCode> findList = employeesCodeRepository.findAll(searchParam, step, pageable).getContent();
         assertThat(findList.size()).isEqualTo(10);
 
         isEqualToEmployeesCode(stepList.get(0), findList.get(9));
@@ -197,7 +198,7 @@ class EmployeesCodeRepositoryTest {
     @Test
     @DisplayName("임직원 설정 근무부서 조회 테스트")
     void findDepartment() {
-        List<EmployeesCode> findList = employeesCodeRepository.findAll(searchParam, department, pageable).getContent();
+        List<EmployeeCode> findList = employeesCodeRepository.findAll(searchParam, department, pageable).getContent();
         assertThat(findList.size()).isEqualTo(10);
 
         isEqualToEmployeesCode(departmentList.get(0), findList.get(9));
@@ -216,11 +217,11 @@ class EmployeesCodeRepositoryTest {
     @DisplayName("임직원 설정 검색 테스트")
     void findWorld() {
         searchParam.setSearchWorld("직위");
-        List<EmployeesCode> findList = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
+        List<EmployeeCode> findList = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
         assertThat(findList.size()).isEqualTo(0);
 
         searchParam.setSearchWorld("구분1");
-        List<EmployeesCode> findList2 = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
+        List<EmployeeCode> findList2 = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
         assertThat(findList2.size()).isEqualTo(2);
 
         isEqualToEmployeesCode(typeList.get(0), findList2.get(1));
@@ -231,11 +232,11 @@ class EmployeesCodeRepositoryTest {
     @DisplayName("지도위원 설정 페이징 테스트")
     void pagingEducatorCode() {
         pageable = PageRequest.of(1, 10);
-        List<EmployeesCode> findList = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
+        List<EmployeeCode> findList = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
         assertThat(findList.size()).isEqualTo(0);
 
         pageable = PageRequest.of(1, 5);
-        List<EmployeesCode> findList2 = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
+        List<EmployeeCode> findList2 = employeesCodeRepository.findAll(searchParam, type, pageable).getContent();
         assertThat(findList2.size()).isEqualTo(5);
 
         isEqualToEmployeesCode(typeList.get(0), findList2.get(4));
@@ -245,9 +246,9 @@ class EmployeesCodeRepositoryTest {
         isEqualToEmployeesCode(typeList.get(4), findList2.get(0));
     }
 
-    private void isEqualToEmployeesCode(EmployeesCode employeesCode, EmployeesCode findEmployeesCode) {
+    private void isEqualToEmployeesCode(EmployeeCode employeesCode, EmployeeCode findEmployeesCode) {
         assertThat(findEmployeesCode.getCode()).isEqualTo(employeesCode.getCode());
-        assertThat(findEmployeesCode.getEmployeesCodeType()).isEqualTo(employeesCode.getEmployeesCodeType());
+        assertThat(findEmployeesCode.getEmployeeCodeType()).isEqualTo(employeesCode.getEmployeeCodeType());
         assertThat(findEmployeesCode.getUsed()).isEqualTo(employeesCode.getUsed());
     }
 
