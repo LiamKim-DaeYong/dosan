@@ -1,34 +1,37 @@
 package com.samin.dosan.web.api.admin.homepage;
 
+import com.samin.dosan.domain.homepage.popup.Popup;
 import com.samin.dosan.domain.homepage.popup.PopupService;
+import com.samin.dosan.web.dto.homepage.popup.PopupSave;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/popup")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequestMapping("/admin/homepage/popup")
 public class PopupApiController {
 
     private final PopupService popupService;
 
-//    @PostMapping("/save")
-//    public RedirectView popupSave(@ModelAttribute PopupRequest request) {
-//        Long id = popupService.popupSave_admin(request);
-//
-//        return new RedirectView("/popup/detail/"+id);
-//    }
-//
-//    @PostMapping("/delete")
-//    public boolean popupDelete(@RequestBody List<Long> idList) {
-//        boolean result = false;
-//
-//        if (popupService.popupDelete_admin(idList)) {
-//            result = true;
-//        }
-//
-//        return result;
-//    }
+    @PostMapping("/add")
+    public ResponseEntity save(@Valid PopupSave saveData) {
+        popupService.save(Popup.of(saveData));
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{id}/edit")
+    public ResponseEntity edit(@PathVariable Long id, @Valid PopupSave updateData) {
+        popupService.update(id, updateData);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity delete(@RequestBody List<Long> ids) {
+        popupService.delete(ids);
+        return ResponseEntity.ok().build();
+    }
 }

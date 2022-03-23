@@ -1,5 +1,8 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
+import com.samin.dosan.core.code.Used;
+import com.samin.dosan.core.code.homepage.DateSetType;
+import com.samin.dosan.core.code.homepage.PostType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.popup.Popup;
 import com.samin.dosan.domain.homepage.popup.PopupService;
@@ -10,11 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,63 +27,53 @@ public class PopupController {
     private final PopupService popupService;
 
     @GetMapping
-    public String popup(@ModelAttribute SearchParam searchParam,
+    public String mainView(@ModelAttribute SearchParam searchParam,
                         Pageable pageable, Model model) {
         Page<Popup> result = popupService.findAll(searchParam, pageable);
         model.addAttribute("result", result);
 
-        return "homepage/popup/list";
+        return "admin/homepage/popup/mainView";
+    }
+
+    @GetMapping("/add")
+    public String addView(@ModelAttribute Popup popup, Model model) {
+        model.addAttribute("popupPostYnTypes", PostType.values());
+
+        return "admin/homepage/popup/addView";
+    }
+
+    @GetMapping("/{id}/detail")
+    public String detailView(@PathVariable Long id, Model model) {
+        model.addAttribute("popup", popupService.findById(id));
+
+        return "admin/homepage/popup/detailView";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editView(@PathVariable Long id, Model model) {
+        model.addAttribute("popupPostYnTypes", PostType.values());
+        model.addAttribute("popup", popupService.findById(id));
+
+        return "admin/homepage/popup/editView";
     }
 
     @PostConstruct
     public void init() {
-        for (int i = 1; i < 101; i++) {
+        for (int i = 1; i < 1001; i++) {
             Popup popup = Popup.builder()
-                    .fileId(1L)
-                    .postYn("Y")
-                    .dateSet("Y")
-                    .postStart(String.valueOf(LocalDate.now()))
-                    .postEnd(String.valueOf(LocalDate.now()))
+                    .postYn(PostType.Y)
+                    .dateSet(DateSetType.Y)
+                    .postStart("2022-03-20")
+                    .postEnd("2022-03-22")
                     .title("제목"+i)
-                    .link("www.naver.com")
-                    .regDt(LocalDateTime.now())
+                    .link(null)
+                    .originFilename("12312231.jpg")
+                    .storeFileName("23241142.jpg")
+                    .regDt(LocalDate.now())
+                    .used(Used.Y)
                     .build();
 
             popupService.save(popup);
         }
     }
-//
-//    @PostMapping("/page")
-//    public String popupPage(@RequestParam int page, @RequestBody FilterDto filterDto, Model model) {
-//        Page<PopupResponse> popupList = popupService.getPopupList_admin(page, filterDto);
-//
-//        model.addAttribute("page", page);
-//        model.addAttribute("filter", filterDto);
-//        model.addAttribute("popupList", popupList);
-//
-//        return "homepage/popup/list :: popupFrag";
-//    }
-//
-//    @GetMapping("/regist")
-//    public String popupRegist() {
-//        return "homepage/popup/regist";
-//    }
-//
-//    @GetMapping("/detail/{id}")
-//    public String popupDetail(@PathVariable("id") Long id, Model model) {
-//        PopupResponse response = popupService.getPopup_admin(id);
-//
-//        model.addAttribute("popup", response);
-//
-//        return "homepage/popup/detail";
-//    }
-//
-//    @GetMapping("/modify/{id}")
-//    public String popupModify(@PathVariable("id") Long id, Model model) {
-//        PopupResponse response = popupService.getPopup_admin(id);
-//
-//        model.addAttribute("popup", response);
-//
-//        return "homepage/popup/modify";
-//    }
 }

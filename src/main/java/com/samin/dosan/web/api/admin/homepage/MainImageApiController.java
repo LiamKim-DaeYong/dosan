@@ -1,38 +1,37 @@
 package com.samin.dosan.web.api.admin.homepage;
 
+import com.samin.dosan.domain.homepage.main_image.MainImage;
 import com.samin.dosan.domain.homepage.main_image.MainImageService;
 import com.samin.dosan.web.dto.homepage.mainImage.MainImageSave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/mainImage")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequestMapping("/admin/homepage/main-image")
 public class MainImageApiController {
 
     private final MainImageService mainImageService;
 
     @PostMapping("/add")
-    public ResponseEntity mainImageSave(@Valid @ModelAttribute MainImageSave saveData) {
+    public ResponseEntity save(@Valid MainImageSave mainImageSave) {
+        mainImageService.save(MainImage.of(mainImageSave));
         return ResponseEntity.ok().build();
     }
-//
-//    @PostMapping("/delete")
-//    public boolean mainImageDelete(@RequestBody List<Long> idList) {
-//        boolean result = false;
-//
-//        if (mainImageService.mainImageDelete_admin(idList)) {
-//            result = true;
-//        }
-//
-//        return result;
-//    }
+
+    @PostMapping("{id}/edit")
+    public ResponseEntity edit(@PathVariable Long id, @Valid MainImageSave mainImageSave) {
+        mainImageService.update(id, mainImageSave);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity delete(@RequestBody List<Long> ids) {
+        mainImageService.delete(ids);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -3,15 +3,16 @@ package com.samin.dosan.domain.setting.place_code;
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
 import com.samin.dosan.core.utils.StrUtils;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Entity
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlaceCode extends BaseEntity {
 
@@ -25,7 +26,7 @@ public class PlaceCode extends BaseEntity {
     private String placeNm;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10, nullable = false)
+    @Column(length = 20, nullable = false)
     private PlaceCodeType placeCodeType;
 
     @Enumerated(EnumType.STRING)
@@ -40,6 +41,23 @@ public class PlaceCode extends BaseEntity {
         placeCode.used = Used.Y;
 
         return placeCode;
+    }
+
+    public static PlaceCode of(String placeNm, PlaceCodeType placeCodeType) {
+        PlaceCode placeCode = new PlaceCode();
+        placeCode.placeNm = placeNm;
+        placeCode.placeCodeType = placeCodeType;
+        placeCode.used = Used.Y;
+
+        return placeCode;
+    }
+
+    @Builder(builderMethodName = "test")
+    public PlaceCode(Long id, String placeNm, PlaceCodeType placeCodeType, Used used) {
+        this.id = id;
+        this.placeNm = placeNm;
+        this.placeCodeType = placeCodeType;
+        this.used = used;
     }
 
     public void update(PlaceCode placeCodeData) {

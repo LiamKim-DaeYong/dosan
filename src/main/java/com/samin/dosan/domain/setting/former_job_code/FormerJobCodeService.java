@@ -31,10 +31,6 @@ public class FormerJobCodeService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    public boolean valid(FormerJobCode formerCode) {
-        return formerJobCodeRepository.findByFormerName(formerCode).size() > 0;
-    }
-
     @Transactional
     public Long save(FormerJobCode formerCode) {
         return formerJobCodeRepository.save(formerCode).getId();

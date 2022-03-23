@@ -10,7 +10,5 @@ import java.util.List;
 public interface FormerJobCodeRepositoryQueryDsl {
     Page<FormerJobCode> findAll(SearchParam searchParam, Pageable pageable);
 
-    List<FormerJobCode> findByFormerName(FormerJobCode formerCode);
-
     List<FormerJobCode> findAllList();
 }

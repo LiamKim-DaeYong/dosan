@@ -5,6 +5,5 @@ import com.samin.dosan.domain.schedule.etc.ScheduleCategory;
 import java.util.List;
 
 public interface ScheduleCategoryRepositoryQueryDsl {
-    List<ScheduleCategory> findAll();
-
+    List<ScheduleCategory> findAllScheduleCategory();
 }

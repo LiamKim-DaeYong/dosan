@@ -4,10 +4,12 @@ import com.samin.dosan.domain.file.Files;
 import com.samin.dosan.web.api.admin.board.FileDto;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import java.util.function.Function;
 
 @Entity
+@DiscriminatorValue("BOARD")
 @NoArgsConstructor
 public class BoardFile extends Files {
 
@@ -19,15 +21,13 @@ public class BoardFile extends Files {
             return (findDot != -1) ? originalName.substring(findDot) : "";
         };
 
-//        BoardFile files = BoardFile.builder()
-//                .id(fileDto.getId())
-//                .originFilename(fileDto.getOriginalName())
-//                .storeFileName(fileDto.getStorageName())
-//                .contentType(fileDto.getContentType())
-//                .extension(getExtension.apply(fileDto.getOriginalName()))
-//                .fileSize(fileDto.getByteSize())
-//                .build();
-//        return files;
-        return null;
+        BoardFile files = new BoardFile();
+        files.id = fileDto.getId();
+        files.originFilename = fileDto.getOriginalName();
+        files.storeFileName = fileDto.getStorageName();
+        files.contentType = fileDto.getContentType();
+        files.extension = getExtension.apply(fileDto.getOriginalName());
+        files.fileSize = fileDto.getByteSize();
+        return files;
     }
 }

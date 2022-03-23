@@ -28,8 +28,9 @@ public class SubjectCodeService {
     }
 
     @Transactional
-    public Long save(SubjectCode course) {
-        return subjectCodeRepository.save(course).getId();
+    public Long save(SubjectCode saveData) {
+        subjectCodeRepository.save(saveData);
+        return saveData.getId();
     }
 
     @Transactional

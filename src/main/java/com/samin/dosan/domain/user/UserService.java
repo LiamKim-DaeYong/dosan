@@ -1,11 +1,8 @@
 package com.samin.dosan.domain.user;
 
-import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,20 +16,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public Page<User> findAllEmployees(SearchParam searchParam, Long employeesType, Pageable pageable) {
-        return userRepository.findAllEmployees(searchParam, employeesType, pageable);
-    }
-
-    public Page<User> findAllEducators(SearchParam searchParam, Long educatorsType, Pageable pageable) {
-        return userRepository.findAllEducators(searchParam, educatorsType, pageable);
-    }
-
     public User findById(String userId) {
         return userRepository.findById(userId).get();
-    }
-
-    public boolean existById(String userId) {
-        return userRepository.existById(userId);
     }
 
     @Transactional
@@ -44,8 +29,6 @@ public class UserService {
     @Transactional
     public void edit(String userId, User user) {
         User findUser = findById(userId);
-        User changeUser = user.edit(findUser);
-        userRepository.save(changeUser);
     }
 
     @Transactional

@@ -26,6 +26,6 @@ public class UsageLogController {
         Page<UsageLog> result = usageLogService.findAll(searchParam, pageable);
         model.addAttribute("result", result);
 
-        return "usageLog";
+        return "admin/usageLog";
     }
 }

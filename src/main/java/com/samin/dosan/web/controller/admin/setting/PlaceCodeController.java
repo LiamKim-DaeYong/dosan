@@ -42,7 +42,7 @@ public class PlaceCodeController {
     }
 
     @GetMapping("/add")
-    public String addView(@ModelAttribute PlaceCode saveData) {
+    public String addView(@ModelAttribute PlaceCode placeCode) {
         return "admin/setting/place_code/addView::#form";
     }
 
@@ -53,17 +53,4 @@ public class PlaceCodeController {
 
         return "admin/setting/place_code/editView::#form";
     }
-
-//    @PostConstruct
-//    public void init() {
-//        for (int i = 1; i <= 1000; i++) {
-//            Place place = Place.builder()
-//                    .location(i+"장소")
-//                    .placeType(PlaceType.EXPLR)
-//                    .used(Used.Y)
-//                    .build();
-//
-//            placeService.save(place);
-//        }
-//    }
 }

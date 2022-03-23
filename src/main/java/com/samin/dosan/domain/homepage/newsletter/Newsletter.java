@@ -1,11 +1,10 @@
 package com.samin.dosan.domain.homepage.newsletter;
 
+import com.samin.dosan.core.domain.BaseEntity;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,12 +12,9 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Table(name = "homepage_newsletter")
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@DynamicInsert
-@DynamicUpdate
-public class Newsletter {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Newsletter extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +36,7 @@ public class Newsletter {
     @Column(nullable = false)
     private Long postSeq;
 
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false)
     private String title;
 
     @Column(nullable = false)

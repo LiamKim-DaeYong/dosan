@@ -1,10 +1,10 @@
 package com.samin.dosan.web.controller.admin.setting;
 
-import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.setting.educator.EducatorCode;
-import com.samin.dosan.domain.setting.educator.EducatorCodeService;
-import com.samin.dosan.domain.setting.educator.EducatorCodeType;
+import com.samin.dosan.core.utils.StrUtils;
+import com.samin.dosan.domain.setting.educator_code.EducatorCode;
+import com.samin.dosan.domain.setting.educator_code.EducatorCodeService;
+import com.samin.dosan.domain.setting.educator_code.EducatorCodeType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,21 +26,25 @@ public class EducatorCodeController {
 
     private final EducatorCodeService educatorCodeService;
 
+    @ModelAttribute("educatorCodeTypes")
+    public EducatorCodeType[] educatorCodeTypes() {
+        return EducatorCodeType.values();
+    }
+
     @GetMapping
     public String mainView(@PathVariable String type, @ModelAttribute SearchParam searchParam,
                            Pageable pageable, Model model) {
-        EducatorCodeType educatorCodeType = EducatorCodeType.valueOf(type.toUpperCase());
+        EducatorCodeType educatorCodeType = EducatorCodeType.valueOf(StrUtils.urlToEnumName(type));
 
         Page<EducatorCode> result = educatorCodeService.findAll(searchParam, educatorCodeType, pageable);
         model.addAttribute("result", result);
         model.addAttribute("educatorCodeType", educatorCodeType);
-        model.addAttribute("educatorCodeTypes", EducatorCodeType.values());
 
         return "admin/setting/educator_code/mainView";
     }
 
     @GetMapping("/add")
-    public String addView(@ModelAttribute EducatorCode saveData) {
+    public String addView(@ModelAttribute EducatorCode educatorCode) {
         return "admin/setting/educator_code/addView::#form";
     }
 
@@ -54,51 +58,7 @@ public class EducatorCodeController {
 
     @PostConstruct
     public void init() {
-        educatorCodeService.save(EducatorCode.builder()
-                .id(1L)
-                .code("지도위원")
-                .educatorCodeType(EducatorCodeType.TYPE)
-                .used(Used.Y)
-                .build());
-
-        educatorCodeService.save(EducatorCode.builder()
-                .id(2L)
-                .code("예절지도위원")
-                .educatorCodeType(EducatorCodeType.TYPE)
-                .used(Used.Y)
-                .build());
-
-//        for (int i = 1; i < 100; i++) {
-//            EducatorCode educatorCode = EducatorCode.builder()
-//                    .id(Long.valueOf(i))
-//                    .code("담당 " + i)
-//                    .educatorCodeType(EducatorCodeType.CHARGE)
-//                    .used(Used.Y)
-//                    .build();
-//
-//            educatorCodeService.save(educatorCode);
-//        }
-//
-//        for (int i = 1; i < 100; i++) {
-//            EducatorCode educatorCode = EducatorCode.builder()
-//                    .id(Long.valueOf(i))
-//                    .code("소속 " + i)
-//                    .educatorCodeType(EducatorCodeType.BELONG)
-//                    .used(Used.Y)
-//                    .build();
-//
-//            educatorCodeService.save(educatorCode);
-//        }
-//
-//        for (int i = 1; i < 100; i++) {
-//            EducatorCode educatorCode = EducatorCode.builder()
-//                    .id(Long.valueOf(i))
-//                    .code("지부 " + i)
-//                    .educatorCodeType(EducatorCodeType.BRANCH)
-//                    .used(Used.Y)
-//                    .build();
-//
-//            educatorCodeService.save(educatorCode);
-//        }
+        educatorCodeService.save(EducatorCode.of("지도위원", EducatorCodeType.TYPE));
+        educatorCodeService.save(EducatorCode.of("예절지도위원", EducatorCodeType.TYPE));
     }
 }

@@ -4,6 +4,7 @@ import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
 import com.samin.dosan.core.utils.StrUtils;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +22,7 @@ public class SubjectCode extends BaseEntity {
     private Long id;
 
     @NotBlank
-    @Column(length = 100, nullable = false)
+    @Column(length = 20, nullable = false)
     private String subject;
 
     @NotBlank
@@ -29,7 +30,7 @@ public class SubjectCode extends BaseEntity {
     private String content;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10, nullable = false)
+    @Column(length = 20, nullable = false)
     private SubjectCodeType subjectCodeType;
 
     @Enumerated(EnumType.STRING)
@@ -40,21 +41,31 @@ public class SubjectCode extends BaseEntity {
     public static SubjectCode of(SubjectCode saveData, String type) {
         SubjectCode subjectCode = new SubjectCode();
         subjectCode.subject = saveData.getSubject();
-        subjectCode.content = saveData.getSubject();
+        subjectCode.content = saveData.getContent();
+
         subjectCode.subjectCodeType = SubjectCodeType.valueOf(StrUtils.urlToEnumName(type));
         subjectCode.used = Used.Y;
 
         return subjectCode;
     }
 
-    public static SubjectCode of(String subject, String conent, SubjectCodeType subjectCodeType) {
+    public static SubjectCode of(String subject, String content, SubjectCodeType subjectCodeType) {
         SubjectCode subjectCode = new SubjectCode();
         subjectCode.subject = subject;
-        subjectCode.content = conent;
+        subjectCode.content = content;
         subjectCode.subjectCodeType = subjectCodeType;
         subjectCode.used = Used.Y;
 
         return subjectCode;
+    }
+
+    @Builder(builderMethodName = "test")
+    public SubjectCode(Long id, String subject, String content, SubjectCodeType subjectCodeType, Used used) {
+        this.id = id;
+        this.subject = subject;
+        this.content = content;
+        this.subjectCodeType = subjectCodeType;
+        this.used = used;
     }
 
     public void update(SubjectCode updateData) {

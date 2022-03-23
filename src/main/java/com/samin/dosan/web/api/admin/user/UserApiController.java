@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Map;
 
-import static com.samin.dosan.domain.user.User.newEmployee;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -23,7 +21,7 @@ public class UserApiController {
 
     @PostMapping("/check/id")
     public ResponseEntity checkId(@RequestBody Map<String, String> userIdMap) {
-        return ResponseEntity.ok(userService.existById(userIdMap.get("userId")));
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{userId}/password/init")
@@ -35,7 +33,7 @@ public class UserApiController {
     /* ========== 임직원 ========== */
     @PostMapping("/employees/add")
     public ResponseEntity save(@Valid @RequestBody EmployeeSave saveData) {
-        userService.save(newEmployee(saveData));
+//        userService.save(newEmployee(saveData));
         return ResponseEntity.ok().build();
     }
 

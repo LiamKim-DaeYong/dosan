@@ -1,6 +1,8 @@
 package com.samin.dosan.domain.schedule.etc;
 
+import com.samin.dosan.core.domain.BaseEntity;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,21 +12,24 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ScheduleEtc {
+public class ScheduleEtc extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "schedule_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(length = 100)
     private Long id;
 
-    @Column
-    private String calendarId;
+    @Column(length = 255)
+    private String categoryName;
 
-    @Column
+    @Column(length = 255)
     private String title;
 
-    @Column
+    @Column(length = 255)
     private String location;
+
+    @Column
+    private Boolean isAllDay;
 
     @Column
     private LocalDateTime startDate;

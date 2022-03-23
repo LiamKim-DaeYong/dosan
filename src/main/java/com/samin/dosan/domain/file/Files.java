@@ -11,7 +11,9 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 
 @Getter
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DiscriminatorColumn
 @DynamicInsert
 @DynamicUpdate
 @AllArgsConstructor
@@ -20,17 +22,17 @@ public class Files extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    protected Long id;
 
     @Column(nullable = false)
-    private String originFilename;
+    protected String originFilename;
 
     @Column(nullable = false)
-    private String storeFileName;
+    protected String storeFileName;
 
-    private String contentType;
+    protected String contentType;
 
-    private String extension;
+    protected String extension;
 
-    private Long fileSize;
+    protected Long fileSize;
 }

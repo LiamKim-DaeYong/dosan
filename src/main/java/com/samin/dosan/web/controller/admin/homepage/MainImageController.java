@@ -1,5 +1,7 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
+import com.samin.dosan.core.code.Used;
+import com.samin.dosan.core.code.homepage.PostType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.main_image.MainImage;
 import com.samin.dosan.domain.homepage.main_image.MainImageService;
@@ -10,7 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.annotation.PostConstruct;
+import java.time.LocalDate;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,53 +34,38 @@ public class MainImageController {
     }
 
     @GetMapping("/add")
-    public String addForm(@ModelAttribute MainImage mainImage) {
-        return "homepage/mainImage/addForm";
+    public String addView(@ModelAttribute MainImage mainImage) {
+        return "admin/homepage/main_image/addView";
     }
 
-//    @PostConstruct
-//    public void init() {
-//        for (int i = 1; i < 101; i++) {
-//            MainImage mainImage = MainImage.builder()
-//                    .fileId(1L)
-//                    .postYn("Y")
-//                    .postSeq(1)
-//                    .title("제목"+i)
-//                    .regDt(LocalDate.now())
-//                    .build();
-//
-//            mainImageService.save(mainImage);
-//        }
-//    }
+    @GetMapping("/{id}/detail")
+    public String detailView(@PathVariable Long id, Model model) {
+        model.addAttribute("mainImage", mainImageService.findById(id));
 
-//    @PostMapping("/page")
-//    public String mainImagePage(@RequestParam int page, @RequestBody FilterDto filterDto, Model model) {
-//        Page<MainImageResponse> responseList = mainImageService.getMainImageList_admin(page, filterDto);
-//
-//        model.addAttribute("page", page);
-//        model.addAttribute("filter", filterDto);
-//        model.addAttribute("mainImageList", responseList);
-//
-//        return "homepage/mainImage/list :: mainImageFrag";
-//    }
-//
+        return "admin/homepage/main_image/detailView";
+    }
 
-//
-//    @GetMapping("/detail/{id}")
-//    public String mainImageDetail(@PathVariable("id") Long id, Model model) {
-//        MainImageResponse response = mainImageService.getMainImage_admin(id);
-//
-//        model.addAttribute("mainImage", response);
-//
-//        return "homepage/mainImage/detail";
-//    }
-//
-//    @GetMapping("/modify/{id}")
-//    public String mainImageModify(@PathVariable("id") Long id, Model model) {
-//        MainImageResponse response = mainImageService.getMainImage_admin(id);
-//
-//        model.addAttribute("mainImage", response);
-//
-//        return "homepage/mainImage/modify";
-//    }
+    @GetMapping("/{id}/edit")
+    public String editView(@PathVariable Long id, Model model) {
+        model.addAttribute("mainImage", mainImageService.findById(id));
+
+        return "admin/homepage/main_image/editView";
+    }
+
+    @PostConstruct
+    public void init() {
+        for (int i = 1; i < 1001; i++) {
+            MainImage mainImage = MainImage.builder()
+                    .title("제목"+i)
+                    .postYn(PostType.N)
+                    .sort(1)
+                    .originFilename("파일")
+                    .storeFileName("파일")
+                    .regDt(LocalDate.now())
+                    .used(Used.Y)
+                    .build();
+
+            mainImageService.save(mainImage);
+        }
+    }
 }

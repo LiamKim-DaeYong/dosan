@@ -2,15 +2,16 @@ package com.samin.dosan.domain.setting.former_job_code;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Entity
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FormerJobCode extends BaseEntity {
 
@@ -20,7 +21,7 @@ public class FormerJobCode extends BaseEntity {
     private Long id;
 
     @NotBlank
-    @Column(length = 100, nullable = false)
+    @Column(length = 20, nullable = false)
     private String formerNm;
 
     @Enumerated(EnumType.STRING)
@@ -28,12 +29,35 @@ public class FormerJobCode extends BaseEntity {
     private Used used;
 
     /*================== Business Logic ==================*/
+    public static FormerJobCode of(Long formerJobCodeId) {
+        FormerJobCode formerJobCode = new FormerJobCode();
+        formerJobCode.id = formerJobCodeId;
+
+        return formerJobCode;
+    }
+
     public static FormerJobCode of(FormerJobCode saveData) {
         FormerJobCode formerJobCode = new FormerJobCode();
         formerJobCode.formerNm = saveData.getFormerNm();
         formerJobCode.used = Used.Y;
 
         return formerJobCode;
+    }
+
+    /* @PostConstruct 사용(삭제 예정) */
+    public static FormerJobCode of(String formerNm) {
+        FormerJobCode formerJobCode = new FormerJobCode();
+        formerJobCode.formerNm = formerNm;
+        formerJobCode.used = Used.Y;
+
+        return formerJobCode;
+    }
+
+    @Builder(builderMethodName = "test")
+    public FormerJobCode(Long id, String formerNm, Used used) {
+        this.id = id;
+        this.formerNm = formerNm;
+        this.used = used;
     }
 
     public void update(FormerJobCode updateData) {

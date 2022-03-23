@@ -40,9 +40,9 @@ public class BoardService {
     @Transactional
     public Long save(Board board, List<FileDto> newFiles, List<FileDto> deleteFiles) {
         board = boardRepository.save(board);
-        board.delFiles(deleteFiles.stream()
-                .map(BoardFile::toEntity)
-                .collect(Collectors.toList()));
+//        board.delFiles(deleteFiles.stream()
+//                .map(BoardFile::toEntity)
+//                .collect(Collectors.toList()));
         board.addFiles(newFiles.stream()
                 .map(BoardFile::toEntity)
                 .collect(Collectors.toList()));

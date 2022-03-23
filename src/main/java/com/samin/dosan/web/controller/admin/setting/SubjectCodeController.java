@@ -42,7 +42,7 @@ public class SubjectCodeController {
     }
 
     @GetMapping("/add")
-    public String addView(@ModelAttribute SubjectCode saveData) {
+    public String addView(@ModelAttribute SubjectCode subjectCode) {
         return "admin/setting/subject_code/addView::#form";
     }
 
@@ -53,18 +53,4 @@ public class SubjectCodeController {
 
         return "admin/setting/subject_code/editView::#form";
     }
-
-//    @PostConstruct
-//    public void init() {
-//        for (int i = 1; i <= 1000; i++) {
-//            Course course = Course.builder()
-//                    .subject(i + " 과목")
-//                    .content("수련 소감 및 실천다짐토의 결과 발표")
-//                    .courseType(CourseType.ENTRY)
-//                    .used(Used.Y)
-//                    .build();
-//
-//            courseService.save(course);
-//        }
-//    }
 }

@@ -1,7 +1,7 @@
 package com.samin.dosan.web.api.admin.setting;
 
-import com.samin.dosan.domain.setting.educator.EducatorCode;
-import com.samin.dosan.domain.setting.educator.EducatorCodeService;
+import com.samin.dosan.domain.setting.educator_code.EducatorCode;
+import com.samin.dosan.domain.setting.educator_code.EducatorCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class EducatorCodeApiController {
 
     @PostMapping
     public ResponseEntity save(@PathVariable String type, @Valid @RequestBody EducatorCode saveData) {
-        educatorCodeService.save(saveData.init(type));
+        educatorCodeService.save(EducatorCode.of(saveData, type));
         return ResponseEntity.ok().build();
     }
 

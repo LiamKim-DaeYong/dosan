@@ -28,6 +28,14 @@ public class MainImageRepositoryImpl implements MainImageRepositoryQueryDsl {
         LocalDate endDate = searchParam.getEndDate();
         String searchWorld = searchParam.getSearchWorld();
 
+        if (startDate != null) {
+            builder.and(mainImage.regDt.goe(startDate));
+        }
+
+        if (endDate != null) {
+            builder.and(mainImage.regDt.loe(endDate));
+        }
+
         if (searchWorld != null) {
             builder.and(mainImage.title.contains(searchWorld));
         }

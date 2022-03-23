@@ -1,7 +1,7 @@
 package com.samin.dosan.web.api.admin.setting;
 
-import com.samin.dosan.domain.setting.employee.EmployeeCode;
-import com.samin.dosan.domain.setting.employee.EmployeeCodeService;
+import com.samin.dosan.domain.setting.employee_code.EmployeeCode;
+import com.samin.dosan.domain.setting.employee_code.EmployeeCodeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +18,13 @@ public class EmployeeCodeApiController {
 
     @PostMapping
     public ResponseEntity save(@PathVariable String type, @Valid @RequestBody EmployeeCode saveData) {
-        employeeCodeService.save(saveData.init(type));
+        employeeCodeService.save(EmployeeCode.of(saveData, type));
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping
-    public ResponseEntity edit(@Valid @RequestBody EmployeeCode updateData) {
-        employeeCodeService.update(updateData.getId(), updateData);
+    @PutMapping("/{id}")
+    public ResponseEntity edit(@PathVariable Long id, @Valid @RequestBody EmployeeCode updateData) {
+        employeeCodeService.update(id, updateData);
         return ResponseEntity.ok().build();
     }
 

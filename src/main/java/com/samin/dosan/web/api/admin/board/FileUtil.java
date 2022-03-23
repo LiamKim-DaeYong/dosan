@@ -39,10 +39,11 @@ public class FileUtil {
      */
     public static void makePath(Path dirPath) {
         if (!Files.exists(dirPath, LinkOption.NOFOLLOW_LINKS)) {
-            Set<PosixFilePermission> permissions = PosixFilePermissions.fromString("rwxr--r--");
-            FileAttribute<Set<PosixFilePermission>> fileAttributes = PosixFilePermissions.asFileAttribute(permissions);
+//            Set<PosixFilePermission> permissions = PosixFilePermissions.fromString("rwxr--r--");
+//            FileAttribute<Set<PosixFilePermission>> fileAttributes = PosixFilePermissions.asFileAttribute(permissions);
             try {
-                Files.createDirectories(dirPath, fileAttributes);
+//                Files.createDirectories(dirPath, fileAttributes);
+                Files.createDirectories(dirPath);
             } catch (java.io.IOException ex) {
                 throw new RuntimeException(ex);
             }

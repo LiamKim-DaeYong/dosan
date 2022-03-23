@@ -1,11 +1,10 @@
 package com.samin.dosan.web.controller.admin.setting;
 
-import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.core.utils.StrUtils;
-import com.samin.dosan.domain.setting.employee.EmployeeCode;
-import com.samin.dosan.domain.setting.employee.EmployeeCodeService;
-import com.samin.dosan.domain.setting.employee.EmployeeCodeType;
+import com.samin.dosan.domain.setting.employee_code.EmployeeCode;
+import com.samin.dosan.domain.setting.employee_code.EmployeeCodeService;
+import com.samin.dosan.domain.setting.employee_code.EmployeeCodeType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -45,7 +44,7 @@ public class EmployeeCodeController {
     }
 
     @GetMapping("/add")
-    public String addView(@ModelAttribute EmployeeCode saveData) {
+    public String addView(@ModelAttribute EmployeeCode employeeCode) {
         return "admin/setting/employee_code/addView::#form";
     }
 
@@ -59,52 +58,11 @@ public class EmployeeCodeController {
 
     @PostConstruct
     public void init() {
-        EmployeeCode employeeCode1 = EmployeeCode.builder()
-                .code("임원")
-                .employeeCodeType(EmployeeCodeType.TYPE)
-                .used(Used.Y)
-                .build();
-
-        employeeCodeService.save(employeeCode1);
-
-        EmployeeCode employeeCode2 = EmployeeCode.builder()
-                .code("직원")
-                .employeeCodeType(EmployeeCodeType.TYPE)
-                .used(Used.Y)
-                .build();
-
-        employeeCodeService.save(employeeCode2);
-
-        EmployeeCode employeeCode3 = EmployeeCode.builder()
-                .code("원장")
-                .employeeCodeType(EmployeeCodeType.POSITION)
-                .used(Used.Y)
-                .build();
-
-        employeeCodeService.save(employeeCode3);
-
-        EmployeeCode employeeCode4 = EmployeeCode.builder()
-                .code("4급")
-                .employeeCodeType(EmployeeCodeType.RANK)
-                .used(Used.Y)
-                .build();
-
-        employeeCodeService.save(employeeCode4);
-
-        EmployeeCode employeeCode5 = EmployeeCode.builder()
-                .code("4호봉")
-                .employeeCodeType(EmployeeCodeType.STEP)
-                .used(Used.Y)
-                .build();
-
-        employeeCodeService.save(employeeCode5);
-
-        EmployeeCode employeeCode6 = EmployeeCode.builder()
-                .code("수련기획실")
-                .employeeCodeType(EmployeeCodeType.DEPARTMENT)
-                .used(Used.Y)
-                .build();
-
-        employeeCodeService.save(employeeCode6);
+        employeeCodeService.save(EmployeeCode.of("임원", EmployeeCodeType.TYPE));
+        employeeCodeService.save(EmployeeCode.of("직원", EmployeeCodeType.TYPE));
+        employeeCodeService.save(EmployeeCode.of("원장", EmployeeCodeType.POSITION));
+        employeeCodeService.save(EmployeeCode.of("4급", EmployeeCodeType.RANK));
+        employeeCodeService.save(EmployeeCode.of("4호봉", EmployeeCodeType.STEP));
+        employeeCodeService.save(EmployeeCode.of("수련기획실", EmployeeCodeType.DEPARTMENT));
     }
 }

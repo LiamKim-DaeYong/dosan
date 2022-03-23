@@ -46,20 +46,6 @@ public class FormerJobCodeRepositoryImpl implements FormerJobCodeRepositoryQuery
     }
 
     @Override
-    public List<FormerJobCode> findByFormerName(FormerJobCode validFormerCode) {
-        BooleanBuilder builder = new BooleanBuilder();
-        builder.and(formerJobCode.used.eq(Used.Y)
-                .and(formerJobCode.formerNm.eq(validFormerCode.getFormerNm())));
-
-        List<FormerJobCode> findFormerCode = queryFactory
-                .selectFrom(formerJobCode)
-                .where(builder)
-                .fetch();
-
-        return findFormerCode;
-    }
-
-    @Override
     public List<FormerJobCode> findAllList() {
         return queryFactory
                 .selectFrom(formerJobCode)

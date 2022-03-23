@@ -13,22 +13,23 @@ import javax.persistence.*;
 public class ScheduleCategory extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "schedule_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(length = 100)
     private Long id;
 
-    @Column(name = "name")
+    @Column(length = 255)
     private String name;
 
-    @Column(name = "color")
+    @Column(length = 255)
     private String color;
 
-    @Column(name = "bgColor")
+    @Column(length = 255)
     private String bgColor;
 
-    @Column(name = "dragBgColor")
+    @Column(length = 255)
     private String dragBgColor;
 
-    @Column(name = "borderColor")
+    @Column(length = 255)
     private String borderColor;
+
 }

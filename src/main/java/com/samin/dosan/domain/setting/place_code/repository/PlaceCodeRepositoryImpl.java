@@ -45,19 +45,4 @@ public class PlaceCodeRepositoryImpl implements PlaceCodeRepositoryQueryDsl {
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
     }
-
-    @Override
-    public List<PlaceCode> findByLocation(PlaceCodeType placeCodeType, PlaceCode validPlaceCode) {
-        BooleanBuilder builder = new BooleanBuilder();
-        builder.and(placeCode.placeCodeType.eq(placeCodeType)
-                .and(placeCode.used.eq(Used.Y))
-                .and(placeCode.placeNm.eq(validPlaceCode.getPlaceNm())));
-
-        List<PlaceCode> findPlaceCode = queryFactory
-                .selectFrom(placeCode)
-                .where(builder)
-                .fetch();
-
-        return findPlaceCode;
-    }
 }

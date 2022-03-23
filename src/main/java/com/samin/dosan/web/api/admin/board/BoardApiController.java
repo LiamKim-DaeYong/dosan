@@ -34,6 +34,7 @@ public class BoardApiController {
 
         List<FileDto> newFiles = FileUtil.saveFiles(uploadFiles, "board");
         boardService.save(board, newFiles, deleteFiles);
+        //deleteFiles.stream().forEach(deleteFile -> FileUtil.delete(deleteFile.getSubDir(), deleteFile.getStorageName()));
 
         return ResponseEntity.ok().build();
     }

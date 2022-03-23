@@ -3,6 +3,8 @@ package com.samin.dosan.web.dto.board;
 import com.samin.dosan.domain.board.Board;
 import lombok.Data;
 
+import java.util.ArrayList;
+
 @Data
 public class BoardSave {
 
@@ -20,6 +22,8 @@ public class BoardSave {
                 .title(this.title)
                 .content(this.content)
                 .writer(this.writer)
+                .comments(new ArrayList<>())
+                .files(new ArrayList<>())
                 .build();
     }
 }

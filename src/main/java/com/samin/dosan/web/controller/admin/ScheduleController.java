@@ -1,5 +1,6 @@
 package com.samin.dosan.web.controller.admin;
 
+
 import com.samin.dosan.domain.schedule.etc.ScheduleCategory;
 import com.samin.dosan.domain.schedule.etc.ScheduleEtc;
 import com.samin.dosan.domain.schedule.etc.ScheduleEtcType;
@@ -13,12 +14,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/schedule/{type}")
+@RequestMapping("/admin/scheduleEtc/{type}")
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
@@ -32,22 +35,31 @@ public class ScheduleController {
     }
 
     @ResponseBody
-    @GetMapping("/schduleCategory")
+    @PostMapping("/schduleCategory")
     public List<ScheduleCategory> getSchduleCategory() {
         return scheduleService.getScheduleCategory();
-
     }
 
+    @ResponseBody
+    @PostMapping("/schedule")
+    public List<ScheduleEtc> getSchdule() {
+        return scheduleService.getSchedule();
+    }
 
-    @PutMapping
-    public void saveScheduleCategory(@Valid @RequestBody List<ScheduleCategory> scheduleCategoryList) {
+    @PutMapping("/scheduleCategory")
+    public void saveScheduleCategory(@RequestBody List<ScheduleCategory> scheduleCategoryList) {
         scheduleService.saveScheduleCategory(scheduleCategoryList);
+    }
+
+    @PutMapping("/etcSchedule")
+    public void saveScheduleEtc(@RequestBody List<ScheduleEtc> scheduleEtcList) {
+        scheduleService.saveScheduleEtc(scheduleEtcList);
     }
 
     @PostConstruct
     public void init() {
+
         scheduleService.save(ScheduleCategory.builder()
-                .id(1L)
                 .name("찾아가는 학교수련")
                 .color("#ffffff")
                 .bgColor("#00a9ff")
@@ -55,41 +67,66 @@ public class ScheduleController {
                 .borderColor("#00a9ff")
                 .build());
 
+
         scheduleService.save(ScheduleCategory.builder()
-                .id(2L)
                 .name("수련원 입교수련")
                 .color("#ffffff")
-                .bgColor("#00a9ff")
-                .dragBgColor("#00a9ff")
-                .borderColor("#00a9ff")
+                .bgColor("#03bd9e")
+                .dragBgColor("#03bd9e")
+                .borderColor("#03bd9e")
                 .build());
 
         scheduleService.save(ScheduleCategory.builder()
-                .id(3L)
                 .name("개인일정")
                 .color("#ffffff")
-                .bgColor("#00a9ff")
-                .dragBgColor("#00a9ff")
-                .borderColor("#00a9ff")
+                .bgColor("#9e5fff")
+                .dragBgColor("#9e5fff")
+                .borderColor("#9e5fff")
                 .build());
 
         scheduleService.save(ScheduleCategory.builder()
-                .id(4L)
                 .name("기타일정")
                 .color("#ffffff")
-                .bgColor("#00a9ff")
-                .dragBgColor("#00a9ff")
-                .borderColor("#00a9ff")
+                .bgColor("#000000")
+                .dragBgColor("#000000")
+                .borderColor("#000000")
                 .build());
 
+
         scheduleService.save(ScheduleEtc.builder()
-                .id(1L)
-                .calendarId("1")
-                .location("test")
-                .title("sdsdsdsd")
+                .categoryName("찾아가는 학교수련")
+                .isAllDay(true)
+                .location("경주 성남시")
+                .title("수학여행")
                 .startDate(LocalDateTime.now())
                 .endDate(LocalDateTime.now())
                 .build());
 
+        scheduleService.save(ScheduleEtc.builder()
+                .categoryName("수련원 입교수련")
+                .isAllDay(true)
+                .location("서울 강남")
+                .title("입교식")
+                .startDate(LocalDateTime.now())
+                .endDate(LocalDateTime.now())
+                .build());
+
+        scheduleService.save(ScheduleEtc.builder()
+                .categoryName("개인일정")
+                .isAllDay(false)
+                .location("부산 해운대")
+                .title("휴가")
+                .startDate(LocalDateTime.now())
+                .endDate(LocalDateTime.now())
+                .build());
+
+        scheduleService.save(ScheduleEtc.builder()
+                .categoryName("기타일정")
+                .isAllDay(true)
+                .location("대구 남구")
+                .title("앞산 여행")
+                .startDate(LocalDateTime.now())
+                .endDate(LocalDateTime.now())
+                .build());
     }
 }

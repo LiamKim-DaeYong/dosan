@@ -1,6 +1,5 @@
 package com.samin.dosan.web.controller.admin.setting;
 
-import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.setting.former_job_code.FormerJobCode;
 import com.samin.dosan.domain.setting.former_job_code.FormerJobCodeService;
@@ -36,7 +35,7 @@ public class FormerJobCodeController {
     }
 
     @GetMapping("/add")
-    public String addView(@ModelAttribute FormerJobCode formerCode) {
+    public String addView(@ModelAttribute FormerJobCode formerJobCode) {
         return "admin/setting/former_job_code/addView::#form";
     }
 
@@ -50,11 +49,6 @@ public class FormerJobCodeController {
 
     @PostConstruct
     public void init() {
-        FormerJobCode formerCode = FormerJobCode.builder()
-                .formerNm("초등교원")
-                .used(Used.Y)
-                .build();
-
-        formerJobCodeService.save(formerCode);
+        formerJobCodeService.save(FormerJobCode.of("초등교원"));
     }
 }
