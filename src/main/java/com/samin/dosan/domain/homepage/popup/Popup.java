@@ -1,16 +1,13 @@
 package com.samin.dosan.domain.homepage.popup;
 
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.core.code.homepage.DateSetType;
-import com.samin.dosan.core.code.homepage.PostType;
+import com.samin.dosan.domain.homepage.type.DateSetType;
+import com.samin.dosan.domain.homepage.type.PostType;
 import com.samin.dosan.web.dto.homepage.popup.PopupSave;
 import lombok.*;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity

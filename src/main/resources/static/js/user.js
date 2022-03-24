@@ -20,7 +20,7 @@ var pageObj = {
             }
         }
     },
-    edit: function () {
+    update: function () {
         var dataArr = $("form").serializeArray();
 
         if (dataArr.length > 0) {

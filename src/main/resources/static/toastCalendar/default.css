@@ -2,7 +2,6 @@
 
 body {
     font-family: 'Noto Sans', sans-serif;
-    font-size: 12px;
 }
 
 /**  custom bootstrap - start */
@@ -21,6 +20,8 @@ body {
     border: solid 1px #bbb;
     outline: none;
 }
+
+
 
 .btn:disabled {
     background-color: #f9f9f9;
@@ -57,6 +58,7 @@ body {
     width: 15px;
     height: 15px;
 }
+
 /** custom fontawesome - end */
 
 .calendar-icon {
@@ -160,10 +162,6 @@ body {
     padding-left: 16px;
 }
 
-#menu {
-    padding: 16px;
-}
-
 #dropdownMenu-calendarType {
     padding: 0 8px 0 11px;
 }
@@ -187,9 +185,10 @@ body {
 }
 
 #renderRange {
-    font-size: 19px;
+    font-size: 160%;
     vertical-align: center;
     text-align: center;
+    font-weight: 700;
 }
 
 .dropdown-menu-title .calendar-icon {
@@ -216,11 +215,12 @@ body {
 }
 
 #calendar {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 5px;
-    top: 64px;
+    position: relative;
+    margin-top: 1.5em;
+}
+
+.tui-full-calendar-month {
+    min-height: 730px;
 }
 
 /** custom fontawesome */
@@ -244,17 +244,168 @@ body {
     color: #000;
 }
 
-.calendar-left {
-    float: left;
-    width: 640px;
+.calendar_flex {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.calendar-left, .calendar-center, .calendar-right {
+    width: calc(100% / 3);
     text-align: left;
+}
+
+.calendar-left {
+    font-size:90%;
 }
 
 .calendar-center {
-    float: left;
-    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
 }
 
 .calendar-right {
-    float: right;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+input[type='checkbox'].tui-full-calendar-checkbox-round + span {
+    border-radius: 2px;
+    margin-right: 5px;
+    vertical-align:top;
+}
+
+.calendar-bar-title {
+    margin-right:1em;
+}
+
+.school_training {
+    border-color: #004ebd !important;
+    background-color: #004ebd !important;
+}
+
+.entry_training {
+    border-color: #00cc99 !important;
+    background-color: #00cc99 !important;
+}
+
+.chairman_calendar {
+    border-color: #603cdd !important;
+    background-color: #603cdd !important;
+}
+
+.ledger_calendar {
+    border-color: #9e5fff !important;
+    background-color: #9e5fff !important;
+}
+
+.etc_calender {
+    border-color: #3e4f63 !important;
+    background-color: #3e4f63 !important;
+}
+
+.closed_calender {
+    border-color: #9b9b9b !important;
+    background-color: #9b9b9b !important;
+}
+
+.calendar-center button {
+    border: 0;
+    padding: 8px 1em 0 1em;
+    vertical-align: middle;
+}
+
+.calendar-center .calendar-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.calendar-right button {
+    color:#7f7f7f;
+}
+
+.calendar-right button:first-of-type {
+    margin-right:0.5em;
+}
+
+.calendar-btn-month {
+    border-radius: 3px 0 0 3px;
+    border-right:0;
+}
+
+.calendar-btn-week {
+    border-radius: 0;
+}
+
+.calendar-btn-day {
+    border-radius: 0 3px 3px 0;
+    border-left:0;
+}
+
+.calendar-right .active {
+    color: #fff;
+    background: #154283;
+    border: 1px solid #154283
+}
+
+.tui-full-calendar-weekday-border {
+    border-top:0 !important;
+}
+
+.tui-full-calendar-month-dayname {
+    font-size:90% !important;
+    border:1px solid #cfd2e0 !important;
+}
+
+.tui-full-calendar-month-week-item {
+    border-left:1px solid #cfd2e0;
+    border-right:1px solid #cfd2e0;
+    border-bottom:1px solid #cfd2e0;
+}
+
+.tui-full-calendar-month-dayname-item {
+    text-align: center;
+    background:#fafbfd;
+    border-right: 1px solid #cfd2e0 !important;
+}
+
+.tui-full-calendar-weekday-grid-line {
+    border-top:0;
+}
+
+.tui-full-calendar-month-dayname-item:last-of-type {
+    border-right:0 !important;
+}
+
+.tui-full-calendar-month-week-item .tui-full-calendar-weekday-schedule {
+    height:auto !important;
+    line-height: 1 !important;
+    padding:5px 0;
+    border-radius: 5px !important;
+    margin:0 5px !important;
+}
+
+.tui-full-calendar-weekday-grid-line .tui-full-calendar-weekday-grid-date {
+    width:auto;
+    height: auto;
+    line-height: 1;
+}
+
+.tui-full-calendar-month-week-item .tui-full-calendar-today .tui-full-calendar-weekday-grid-date-decorator {
+    width:auto;
+    height: auto;
+    line-height: 1;
+    background:transparent;
+    color:#006aff
+}
+
+.tui-full-calendar-weekday-grid-line .tui-full-calendar-weekday-grid-more-schedules {
+    width:auto;
+    height: auto;
+    line-height: 1;
 }

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css">
+        <link rel="stylesheet" th:href="@{https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css}"/>
+        <link rel="stylesheet" th:href="@{https://uicdn.toast.com/tui-calendar/latest/tui-calendar.css}"/>
+        <link rel="stylesheet" th:href="@{https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css}"/>
+        <link rel="stylesheet" type="text/css" th:href="@{/toastCalendar/icons.css}">
+        <link rel="stylesheet" type="text/css" th:href="@{/toastCalendar/default.css}">
+    </th:block>
+
+    <th:block id="script">
+        <script th:src="@{https://uicdn.toast.com/tui.code-snippet/v1.5.2/tui-code-snippet.min.js}"></script>
+        <script th:src="@{https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.min.js}"></script>
+        <script th:src="@{https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.min.js}"></script>
+        <script th:src="@{https://uicdn.toast.com/tui-calendar/latest/tui-calendar.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.0/moment.min.js"></script>
+        <script th:src="@{/js/schedule/schedule.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (|${scheduleTitle} 일정|)"></div>
+    <div class="content">
+        <div id="menu">
+            <div class="calendar_flex">
+                <div class="calendar-left">
+                <div th:if="${scheduleTitle == '개인일정'}">
+                    <input type="checkbox" class="tui-full-calendar-checkbox-round" value="4" checked="">
+                    <span class="school_training"></span><span class="calendar-bar-title">찾아가는 학교수련</span>
+
+                    <input type="checkbox" class="tui-full-calendar-checkbox-round" value="3" checked="">
+                    <span class="entry_training"></span><span class="calendar-bar-title">수련원 입교수련</span>
+
+                    <input type="checkbox" class="tui-full-calendar-checkbox-round" value="2" checked="">
+                    <span class="chairman_calendar"></span><span class="calendar-bar-title">개인일정</span> <!--이사장, 개인일정-->
+
+                    <input type="checkbox" class="tui-full-calendar-checkbox-round" value="2" checked="">
+                    <span class="ledger_calendar"></span><span class="calendar-bar-title">개인일정</span> <!--원장-->
+
+                    <input type="checkbox" class="tui-full-calendar-checkbox-round" value="3" checked="">
+                    <span class="etc_calender"></span><span class="calendar-bar-title">기타일정</span>
+
+                    <input type="checkbox" class="tui-full-calendar-checkbox-round" value="3" checked="">
+                    <span class="closed_calender"></span><span class="calendar-bar-title">휴무</span>
+                </div>
+                </div>
+                <div class="calendar-center">
+                    <button type="button" data-action="move-prev">
+                        <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+                    </button>
+                    <span id="renderRange" class="render-range"></span>
+                    <button type="button" data-action="move-next">
+                        <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+                    </button>
+                </div>
+                <div class="calendar-right">
+                    <button type="button"  data-action="move-today">오늘</button>
+                    <button type="button" class="calendar-btn-month active" data-action="toggle-monthly">월</button>
+                    <button type="button" class="calendar-btn-week" data-action="toggle-week">주</button>
+                    <button type="button" class="calendar-btn-day" data-action="toggle-day">일</button>
+                </div>
+            </div>
+            <div id="calendar"></div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -4,9 +4,9 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.core.code.homepage.BoardType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.board.HomepageBoard;
+import com.samin.dosan.domain.homepage.type.BoardType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,6 +47,7 @@ public class HomepageBoardRepositoryImpl implements HomepageBoardRepositoryQuery
         List<HomepageBoard> content = queryFactory
                 .selectFrom(homepageBoard)
                 .where(builder)
+                .orderBy(homepageBoard.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

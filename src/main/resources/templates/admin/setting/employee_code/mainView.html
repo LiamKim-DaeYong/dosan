@@ -13,15 +13,15 @@
     <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
 
     <div class="content">
-        <h2 th:text="#{menu.employees}"></h2>
+        <h2 th:text="#{menu.employee}"></h2>
 
         <form th:action>
             <div class="all_search_box">
                 <ul class="toggle_list">
                     <li th:each="type : ${employeeCodeTypes}"
-                        th:classappend="${employeeCodeTypes eq type}?'toggle_on'">
+                        th:classappend="${employeeCodeType eq type}?'toggle_on'">
 
-                        <a th:href="@{/admin/setting/employee_code/{type}(type=${type.nameToUrl()})}"
+                        <a th:href="@{/admin/setting/employee-code/{type}(type=${type.nameToUrl()})}"
                            th:text="${type.description}"></a>
                     </li>
                 </ul>
@@ -44,7 +44,7 @@
                     <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + employeeCodeStat.index)}"></td>
                     <td>
                         <a href="#" th:text="${employeeCode.code}"
-                           th:onclick="pageObj.openEditPage([[${employeeCode.id}]], [[${employeeCodeType.description}]])"</a>
+                           th:onclick="pageObj.editView([[${employeeCode.id}]], [[${employeeCodeType.description}]])"</a>
                     </td>
                 </tr>
 
@@ -58,7 +58,7 @@
             <div class="btn_box">
                 <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
                 <button type="button" th:text="#{button.new}"
-                        th:onclick="pageObj.openAddPage([[${employeeCodeType.description}]])" class="btn_new">등록
+                        th:onclick="pageObj.addView([[${employeeCodeType.description}]])" class="btn_new">등록
                 </button>
             </div>
         </form>

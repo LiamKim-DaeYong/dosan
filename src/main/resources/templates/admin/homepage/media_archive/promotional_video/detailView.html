@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/promotionalVideo.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <h2>홍보동영상 상세</h2>
+
+        <table th:object="${promotionalVideo}" class="table_row">
+            <tr>
+                <th th:text="#{homepage.promotional-video.title}"></th>
+                <td th:text="*{title}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{homepage.promotional-video.author}"></th>
+                <td th:text="*{author}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{homepage.promotional-video.regDt}"></th>
+                <td th:text="*{regDt}"></td>
+            </tr>
+            <tr>
+                <th th:text="#{homepage.promotional-video.content}"></th>
+                <td>
+                    <iframe id="player" type="text/html" width="640" height="360"frameBorder="0" allowfullscreen
+                            th:src="@{'http://www.youtube.com/embed/'+*{code}}"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                </td>
+            </tr>
+        </table>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/admin/homepage/media-archive/promotional-video'"></button>
+            <button type="button" th:text="#{button.update}" class="btn_edit" th:onclick="'location.href=\'/admin/homepage/media-archive/promotional-video/'+ @{${promotionalVideo.id}} + '/edit\''"></button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

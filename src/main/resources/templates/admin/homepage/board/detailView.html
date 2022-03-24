@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/board.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2 th:text="|${boardType.description} 상세|"></h2>
+
+        <form th:action th:object="${board}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{homepage.board.title}"></th>
+                    <td th:text="*{title}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.board.content}"></th>
+                    <td th:utext="*{content}"></td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" th:onclick="|location.href='@{/admin/homepage/board/{type}(type=${boardType.nameToUrl()})}'|"></button>
+            <button type="button" th:text="#{button.update}" th:onclick="|location.href='@{/admin/homepage/board/{type}/{id}/edit(type=${boardType.nameToUrl()}, id=${board.id})}'|" class="btn_edit"></button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

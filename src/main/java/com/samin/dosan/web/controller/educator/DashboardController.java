@@ -1,0 +1,15 @@
+package com.samin.dosan.web.controller.educator;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller("educatorDashboardController")
+@RequestMapping("/educator/dashboard")
+public class DashboardController {
+
+    @GetMapping
+    public String mainView() {
+        return "educator/dashboard";
+    }
+}

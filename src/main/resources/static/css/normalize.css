@@ -20,8 +20,9 @@ input, input::placeholder  {
     font-family: "Noto sans kr", sans-serif !important;
 }
 
-input:focus {
+input:focus, textarea:focus, select:focus {
     outline:none;
+    border:1px solid #8fb5f3;
 }
 
 table {

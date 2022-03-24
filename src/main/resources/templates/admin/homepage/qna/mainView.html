@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/qna.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.homepage.qna}"></h2>
+
+        <form th:action>
+            <div class="all_search_box">
+                <div th:replace="utils/searchBar :: searchDateWord"></div>
+            </div>
+            <table>
+                <colgroup>
+                    <col width="*" />
+                    <col width="*" />
+                    <col width="50%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                </colgroup>
+                <tr>
+                    <th class="table_chk">
+                        <input type="checkbox" check="all"/>
+                    </th>
+                    <th class="table_num" th:text="#{label.no}">No</th>
+                    <th th:text="#{homepage.qna.title}">제목</th>
+                    <th th:text="#{homepage.qna.file}">첨부파일</th>
+                    <th th:text="#{homepage.qna.author}">작성자</th>
+                    <th th:text="#{homepage.qna.regDt}">등록일시</th>
+                    <th th:text="#{homepage.qna.comment.yn}">답변여부</th>
+                </tr>
+
+                <tr th:each="qna : ${result.content}">
+                    <td class="table_chk">
+                        <input type="checkbox" th:value="${qna.id}"/>
+                    </td>
+                    <td class="table_num"
+                        th:text="${result.totalElements - (result.pageable.offset + qnaStat.index)}"></td>
+                    <td>
+                        <a th:href="@{|/admin/homepage/qna/${qna.id}/detail|}" th:text="${qna.title}"></a>
+                    </td>
+                    <td th:text="O"></td>
+                    <td th:text="${qna.author}"></td>
+                    <td th:text="${#temporals.format(qna.regDt, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${qna.comment != null} ? 'O' : 'X'"></td>
+                </tr>
+
+                <tr th:if="${result.content.size eq 0}">
+                    <td colspan="7" th:text="#{data.empty}" class="empty-td"></td>
+                </tr>
+            </table>
+
+            <div th:replace="utils/pagination :: pagination(${result})"></div>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">
+                    선택삭제
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

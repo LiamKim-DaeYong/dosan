@@ -43,6 +43,7 @@ public class MainImageRepositoryImpl implements MainImageRepositoryQueryDsl {
         List<MainImage> content = queryFactory
                 .selectFrom(mainImage)
                 .where(builder)
+                .orderBy(mainImage.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

@@ -2,7 +2,7 @@ package com.samin.dosan.web.controller;
 
 import com.samin.dosan.domain.user.Role;
 import com.samin.dosan.domain.user.UserService;
-import com.samin.dosan.domain.user.User;
+import com.samin.dosan.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

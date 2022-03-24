@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/webtoon.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <h2>만화퇴계 상세</h2>
+
+        <form th:action th:object="${webtoon}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{homepage.webtoon.title}"></th>
+                    <td th:text="*{title}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.webtoon.author}"></th>
+                    <td th:text="*{author}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.webtoon.regDt}"></th>
+                    <td th:text="*{regDt}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.webtoon.pdf}"></th>
+                    <td th:text="*{pdfOriginFilename}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.webtoon.img}"></th>
+                    <td th:text="*{imgOriginFilename}"></td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/admin/homepage/media-archive/webtoon'"></button>
+            <button type="button" th:text="#{button.update}"
+                    th:onclick="|location.href='@{/admin/homepage/media-archive/webtoon/{id}/edit(id=${webtoon.id})}'|" class="btn_edit">등록
+            </button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

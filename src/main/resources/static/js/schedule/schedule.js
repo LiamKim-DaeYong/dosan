@@ -4,65 +4,6 @@ var pageObj = {
 
 $(document).ready(function () {
 
-    var CalendarList = [];
-
-    function CalendarInfo() {
-        this.id = null;
-        this.name = null;
-        this.checked = true;
-        this.color = null;
-        this.bgColor = null;
-        this.borderColor = null;
-        this.dragBgColor = null;
-    }
-
-    function addCalendar(calendar) {
-        CalendarList.push(calendar);
-    }
-
-    var calendar;
-    var id = 0;
-
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = '찾아가는 학교 수련';
-    calendar.color = '#ffffff';
-    calendar.bgColor = '#00a9ff';
-    calendar.dragBgColor = '#00a9ff';
-    calendar.borderColor = '#00a9ff';
-    addCalendar(calendar);
-
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = '수련원 입교수련';
-    calendar.color = '#ffffff';
-    calendar.bgColor = '#03bd9e';
-    calendar.dragBgColor = '#03bd9e';
-    calendar.borderColor = '#03bd9e';
-    addCalendar(calendar);
-
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = '개인일정';
-    calendar.color = '#ffffff';
-    calendar.bgColor = '#9e5fff';
-    calendar.dragBgColor = '#9e5fff';
-    calendar.borderColor = '#9e5fff';
-    addCalendar(calendar);
-
-    calendar = new CalendarInfo();
-    id += 1;
-    calendar.id = String(id);
-    calendar.name = '기타일정';
-    calendar.color = '#ffffff';
-    calendar.bgColor = '#000000';
-    calendar.dragBgColor = '#000000';
-    calendar.borderColor = '#000000';
-    addCalendar(calendar);
-
     var calendar = new tui.Calendar('#calendar', {
         defaultView: 'month',
         useCreationPopup: true,
@@ -75,32 +16,59 @@ $(document).ready(function () {
         },
     });
 
-    var calendarCategoryData = [
-        {id: 1,name: '찾아가는 학교수련',color: "#ffffff",bgColor: "#00a9ff",dragBgColor: "#00a9ff",borderColor: "#00a9ff"},
-        {id: 2,name: '수려원 입교수련',color: "#ffffff",bgColor: "#03bd9e",dragBgColor: "#03bd9e",borderColor: "#03bd9e"},
-        {id: 3,name: '개인일정',color: "#ffffff",bgColor: "#9e5fff",dragBgColor: "#9e5fff",borderColor: "#9e5fff"},
-        {id: 4,name: '기타일정',color: "#ffffff",bgColor: "#000000",dragBgColor: "#000000",borderColor: "#000000"},
-    ]
-
-    $ajax.put({data: calendarCategoryData, url: `/schedule/{type}`,
-        success: function (data) {
-            if (data) {
-                console.log("calendarCategory",data);
+    $ajax.post({url: `/admin/scheduleEtc/{type}/schduleCategory`,
+        success: function (res) {
+            if (res) {
+                const categoryList = [];
+                res.forEach(res => {
+                    const category = {
+                        id: res.name,
+                        name: res.name,
+                        color: res.color,
+                        bgColor: res.bgColor,
+                        dragBgColor: res.dragBgColor,
+                        borderColor: res.borderColor
+                    }
+                    categoryList.push(category);
+                });
+                /*console.log("calendarCategory",categoryList);*/
+                calendar.setCalendars(categoryList);
             } else {
-                alert("!!!!!!");
+                console.log("해당하는 권한의 카테고리가 존재하지 않습니다.")
             }
+        },
+        error: function () {
+          alert("!!!!!");
         }
-    })
+    });
 
-    /*$ajax.get({data: calendarCategoryData, url: `/schedule/{type}/schduleCategory`,
-        success: function (data) {
-            if (data) {
-                console.log("calendarCategory",data);
+    $ajax.post({url: `/admin/scheduleEtc/{type}/schedule`,
+        success: function (res) {
+        /*console.log("res",res);*/
+            if (res) {
+                const scheduleList = [];
+                res.forEach(res => {
+                    const schedule = {
+                        calendarId: res.categoryName,
+                        id: res.scheduleId,
+                        title: res.title,
+                        start: res.start,
+                        end: res.end,
+                        category: res.isAllDay ? 'allday' : 'time',
+                        location: res.location
+                    }
+                    scheduleList.push(schedule);
+                });
+                /*console.log("scheduleList",scheduleList);*/
+                calendar.createSchedules(scheduleList);
             } else {
-                alert("!!!!!!");
+                alert("해당하는 권한의 스케줄이 존재하지 않습니다");
             }
+        },
+        error: function () {
+            alert("!!!!!");
         }
-    })*/
+    });
 
     function BtnClick(actionListener, queryString = "data-action") {
         let btnEls = document.querySelectorAll(`button[${queryString}]`);
@@ -124,11 +92,36 @@ $(document).ready(function () {
             var viewName = '';
 
             if (action == "toggle-monthly") {
-                options.month.visibleWeeksCount = 0;
+                if ( $(".calendar-btn-month").hasClass("active")) {
+                    $(".calendar-btn-week").removeClass("active");
+                    $(".calendar-btn-day").removeClass("active");
+                } else {
+                    $(".calendar-btn-month").addClass("active");
+                    $(".calendar-btn-week").removeClass("active");
+                    $(".calendar-btn-day").removeClass("active");
+                }
+                options.month.visibleWeeksCount = 4;
+                options.month.isAlways6Week = false;
                 viewName = 'month';
-            } else if (action == "toggle-weeks2") {
+            } else if (action == "toggle-week") {
+                if ( $(".calendar-btn-week").hasClass("active")) {
+                    $(".calendar-btn-month").removeClass("active");
+                    $(".calendar-btn-day").removeClass("active");
+                } else {
+                    $(".calendar-btn-week").addClass("active");
+                    $(".calendar-btn-month").removeClass("active");
+                    $(".calendar-btn-day").removeClass("active");
+                }
                 viewName = 'week';
-            } else if (action == "toggle-weeks3") {
+            } else if (action == "toggle-day") {
+                if ( $(".calendar-btn-day").hasClass("active")) {
+                    $(".calendar-btn-week").removeClass("active");
+                    $(".calendar-btn-month").removeClass("active");
+                } else {
+                    $(".calendar-btn-day").addClass("active");
+                    $(".calendar-btn-month").removeClass("active");
+                    $(".calendar-btn-week").removeClass("active");
+                }
                 viewName = 'day';
             }
 
@@ -172,28 +165,108 @@ $(document).ready(function () {
 
     calendar.on('beforeCreateSchedule', (e) => {
         console.log("beforeCreateSchedule",e);
-        /*ACTIONS.dispatch(ACTIONS.CALENDAR_LIST, clickDate);*/
-        const schedule = {
+        var test;
+
+        console.log("1",calendar);
+        const saveSchedule = {
             calendarId: e.calendarId,
-            id: String(Math.random() * 100000000000000000),
+            categoryName: e.calendarId,
             title: e.title,
             isAllDay: e.isAllDay,
-            start: e.start,
-            end: e.end,
+            start: moment(e.start._date).format("YYYY-MM-DD HH:mm"),
+            end: moment(e.end._date).format("YYYY-MM-DD HH:mm"),
             category: e.isAllDay ? 'allday' : 'time',
-            location: e.location             // 장소 정보도 입력할 수 있네요!
+            location: e.location
         };
-        calendar.createSchedules([schedule]);
+
+       $ajax.put({url: `/admin/scheduleEtc/chairman`,data: [saveSchedule],
+        success: function (data) {
+            const resSchedule = {
+                calendarId: data.categoryName,
+                id: data.scheduleId,
+                title: data.title,
+                start: data.start,
+                end: data.end,
+                category: data.isAllDay ? 'allday' : 'time',
+                location: data.location
+            }
+            calendar.createSchedules([resSchedule]);
+        },
+           error: function (error) {
+               console.log("errorReason",error);
+           }
+       });
     });
 
     calendar.on('beforeUpdateSchedule', event => {
         const {schedule, changes} = event;
+        console.log("updateEvent",event);
+        console.log("beforeUpdateSchedule",schedule);
+        console.log("changes",changes);
+        const tempSchedule = Object.assign(schedule,changes);
+
+        const saveSchedule = {
+            calendarId: tempSchedule.calendarId,
+            categoryName: tempSchedule.calendarId,
+            id: tempSchedule.id,
+            scheduleId: tempSchedule.id,
+            title: tempSchedule.title,
+            isAllDay: tempSchedule.isAllDay,
+            start: moment(tempSchedule.start._date).format("YYYY-MM-DD HH:mm"),
+            end: moment(tempSchedule.end._date).format("YYYY-MM-DD HH:mm"),
+            category: tempSchedule.isAllDay ? 'allday' : 'time',
+            location: tempSchedule.location
+        };
+
+        console.log("saveSchedule",saveSchedule);
+
+        $ajax.put({url: `/admin/scheduleEtc/chairman/updateSchedule`,data: [saveSchedule],
+            success: function (data) {
+                if (data) {
+                    alert("succes");
+                    console.log("calendarSchedule",data);
+                } else {
+                    return;
+                }
+            },
+            error: function (error) {
+                console.log("errorReason",error);
+            }
+        });
 
         calendar.updateSchedule(schedule.id, schedule.calendarId, changes);
     });
 
     calendar.on('beforeDeleteSchedule', scheduleData => {
         const {schedule} = scheduleData;
+        console.log(schedule);
+
+        const deleteSchedule = {
+            calendarId: schedule.calendarId,
+            categoryName: schedule.calendarId,
+            id: schedule.id,
+            scheduleId: schedule.id,
+            title: schedule.title,
+            isAllDay: schedule.isAllDay,
+            start: moment(schedule.start._date).format("YYYY-MM-DD HH:mm"),
+            end: moment(schedule.end._date).format("YYYY-MM-DD HH:mm"),
+            category: schedule.isAllDay ? 'allday' : 'time',
+            location: schedule.location
+        };
+
+        $ajax.delete({url: `/admin/scheduleEtc/chairman`,data: deleteSchedule,
+            success: function (data) {
+                if (data) {
+                    alert("succes");
+                    console.log("calendarSchedule",data);
+                } else {
+                    return;
+                }
+            },
+            error: function (error) {
+                console.log("errorReason",error);
+            }
+        });
 
         calendar.deleteSchedule(schedule.id, schedule.calendarId);
     });
@@ -201,21 +274,20 @@ $(document).ready(function () {
     calendar.on('clickSchedule', (e) => {
         var clickDate = moment(e.schedule.start._date).format("YYYY-MM-DD");
         console.log('clickSchedule', e);
-        /*ACTIONS.dispatch(ACTIONS.CALENDAR_LIST, clickDate);*/
     });
 
     calendar.on('clickMore', (e) => {
         var clickDate = moment(e.date._date).format("YYYY-MM-DD");
-        /*ACTIONS.dispatch(ACTIONS.CALENDAR_LIST, clickDate);*/
     });
 
     //페이지 첫로딩시 월간보기
     var options = calendar.getOptions();
-    options.month.visibleWeeksCount = 0;
+    /*options.month.visibleWeeksCount = 4;*/
+    options.month.visibleWeeksCount = 4;
+    options.month.isAlways6Week = false;
     var viewName = 'month';
     calendar.setOptions(options, true);
     calendar.changeView(viewName, true);
-    calendar.setCalendars(CalendarList);
 
     setRenderRangeText();
     setDashboardData();

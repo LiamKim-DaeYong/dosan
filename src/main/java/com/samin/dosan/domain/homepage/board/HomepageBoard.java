@@ -1,7 +1,7 @@
 package com.samin.dosan.domain.homepage.board;
 
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.core.code.homepage.BoardType;
+import com.samin.dosan.domain.homepage.type.BoardType;
 import lombok.*;
 
 import javax.persistence.*;

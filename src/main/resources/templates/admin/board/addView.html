@@ -6,7 +6,7 @@
 
     <th:block id="script">
         <script type="text/javascript" th:src="@{/lib/multifile/js/jquery-multifile.js}"></script>
-        <script type="text/javascript" th:src="@{/js/board/board.js}"></script>
+        <script type="text/javascript" th:src="@{/js/admin/board/board.js}"></script>
     </th:block>
 </head>
 <body>
@@ -33,16 +33,19 @@
                 <tr>
                     <th>첨부파일</th>
                     <td>
-                        <input name="file" type="file" id="file_input"/>
+                        <label for="file_input" class="file_btn">
+                            <input name="file" type="file" id="file_input"/>
+                        </label>
                         <div id="file_list"/>
                     </td>
                 </tr>
             </table>
 
             <div class="btn_box">
-                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/board'" class="btn_other">목록
+                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/board'" class="btn_other">
+                    목록
                 </button>
-                <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" class="btn_new">등록
+                <button type="button" th:text="#{button.new}" onclick="pageObj.addView()" class="btn_new">등록
                 </button>
             </div>
         </form>

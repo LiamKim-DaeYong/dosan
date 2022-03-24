@@ -47,10 +47,10 @@ public class EmployeeCodeRepositoryImpl implements EmployeeCodeRepositoryQueryDs
     }
 
     @Override
-    public List<EmployeeCode> findAllTypes() {
+    public List<EmployeeCode> findAll(EmployeeCodeType employeeCodeType) {
         return queryFactory
                 .selectFrom(employeeCode)
-                .where(employeeCode.employeeCodeType.eq(EmployeeCodeType.TYPE)
+                .where(employeeCode.employeeCodeType.eq(employeeCodeType)
                         .and(employeeCode.used.eq(Used.Y)))
                 .fetch();
     }

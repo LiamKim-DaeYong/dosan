@@ -1,11 +1,11 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.core.code.homepage.CheckType;
-import com.samin.dosan.core.code.homepage.TrainingType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.training_inquiry.TrainingInquiry;
 import com.samin.dosan.domain.homepage.training_inquiry.TrainingInquiryService;
+import com.samin.dosan.domain.homepage.type.CheckType;
+import com.samin.dosan.domain.homepage.type.TrainingType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -52,7 +52,7 @@ public class TrainingInquiryController {
 
             trainingInquiryService.save(TrainingInquiry.builder()
                     .agree("Y")
-                    .status(CheckType.Y)
+                    .status(CheckType.N)
                     .insttNm("삼인"+i)
                     .depart("부서"+i)
                     .applicant("사람"+i)

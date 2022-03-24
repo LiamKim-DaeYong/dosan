@@ -17,6 +17,10 @@ public class ScheduleCategory extends BaseEntity {
     @Column(length = 100)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private ScheduleEtcType scheduleEtcType;
+
     @Column(length = 255)
     private String name;
 

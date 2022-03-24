@@ -45,6 +45,7 @@ public class TrainingReviewRepositoryImpl implements TrainingReviewRepositoryQue
         List<TrainingReview> content = queryFactory
                 .selectFrom(trainingReview)
                 .where(builder)
+                .orderBy(trainingReview.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

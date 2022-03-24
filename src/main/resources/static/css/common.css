@@ -203,7 +203,7 @@ nav ul li ul li:last-of-type a {
     min-height: calc(100vh - 6.5rem);
     border-radius: 5px;
     background: #fff;
-    margin-top: 1.6em;
+    margin: 1.6em 0;
     padding: 1.5em;
 }
 
@@ -212,10 +212,8 @@ nav ul li ul li:last-of-type a {
 }
 
 .pagination {
-    position: absolute;
-    bottom: 4em;
-    width: 97%;
-    padding: 1em 0;
+    position: relative;
+    padding: 0 0 1em 0;
 }
 
 .pagination ul {
@@ -249,7 +247,7 @@ nav ul li ul li:last-of-type a {
 
 table {
     width: 100%;
-    margin: 1em 0 6em 0;
+    margin: 1em 0;
     text-align: center;
     font-size: 95%;
 }
@@ -281,6 +279,10 @@ table a:hover {
     color: #f15958;
 }
 
+.table_row {
+    margin:0 0 7em 0;
+}
+
 .table_row th {
     width: 10%;
 }
@@ -290,7 +292,7 @@ table a:hover {
 }
 
 .table_row_long_input {
-    width:100%;
+    width:50%;
 }
 
 .table_row_textarea {
@@ -309,7 +311,19 @@ table a:hover {
 }
 
 .empty-td {
-    height:540px;
+    height:580px;
+}
+
+.td_text_gray {
+    font-size:95%;
+    color:#a3a3a3;
+}
+
+.comment {
+    display:block;
+    font-size:80%;
+    color:#777;
+    padding:10px 0 5px 0;
 }
 
 /********************************input********************************/
@@ -319,8 +333,13 @@ input, select {
     border-radius: 3px;
 }
 
-input[type="text"], input[type="password"],  input[type="date"], .date_search select {
+input[type="text"], input[type="password"],  input[type="date"]{
     padding: 0.4em 0 0.4em 0.5em;
+}
+
+select {
+    min-width:114px;
+    padding: 0.4em 0;
 }
 
 input[type="checkbox"] {
@@ -358,15 +377,61 @@ input[type="checkbox"]:checked::before {
     transform: scale(1) translate(-50%, -50%)
 }
 
+input[type="radio"] {
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    margin: -0.1rem;
+    width: 0.1rem;
+    height: 0.1rem;
+    clip: rect(0,0,0,0);
+    border: 0;
+}
+
+input[type="radio"] + label {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    padding:0.3em 1em 0.5em 0;
+    font-size:90%;
+}
+
+input[type="radio"] + label:before {
+    content: "";
+    position: relative;
+    width: 13px;
+    height: 13px;
+    border: 1px solid #cfd2e0;
+    border-radius: 50%;
+    top: 0;
+    transform: translate(0);
+    display: inline-block;
+    background: #fff;
+    margin-right: 4px;
+    vertical-align: top;
+}
+
+input[type="radio"]:checked + label:after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 3px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #f15958;
+    border: 1px solid #f15958;
+}
+
 input[type="file"] {
-    /*position: absolute;*/
-    /*overflow: hidden;*/
-    /*padding: 0;*/
-    /*margin: -0.1rem;*/
-    /*width: 0.1rem;*/
-    /*height: 0.1rem;*/
-    /*clip: rect(0,0,0,0);*/
-    /*border: 0;*/
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    margin: -0.1rem;
+    width: 0.1rem;
+    height: 0.1rem;
+    clip: rect(0,0,0,0);
+    border: 0;
 }
 
 .file_btn {
@@ -393,6 +458,7 @@ textarea {
     border-radius: 5px;
     width: 100%;
     padding: 0.5em;
+    line-height: 1.5;
 }
 
 .only_search_box {
@@ -487,18 +553,16 @@ button {
 }
 
 .btn_box {
-    position: absolute;
-    bottom: 1.5em;
-    width: 97%;
+    position: relative;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .btn_box_only {
-    position: absolute;
-    bottom: 1.5em;
-    width: 97%;
+    position: relative;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -574,6 +638,44 @@ button {
 .btn_gray_line {
     color: #95a1ba;
 }
+
+.text_btn {
+    border-radius: 0;
+    padding: 0 5px;
+    min-width: auto;
+    font-weight: 500;
+    background: transparent;
+    border: 0;
+}
+
+.btn_text_red {
+    color: #f25858;
+}
+
+.btn_text_blue {
+    color: #0068ff;
+}
+
+.btn_text_black {
+    color: #212121;
+}
+
+/********************************mypage*******************************/
+
+.admin_mypage {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width:350px;
+    margin-top:2em;
+}
+
+.admin_mypage input, .admin_mypage button {
+    width:100%;
+    margin:0.5em 0;
+}
+
 
 /********************************dashboard********************************/
 

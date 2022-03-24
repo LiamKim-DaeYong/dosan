@@ -19,14 +19,14 @@ public class PopupApiController {
 
     @PostMapping("/add")
     public ResponseEntity save(@Valid PopupSave saveData) {
-        popupService.save(Popup.of(saveData));
-        return ResponseEntity.ok().build();
+        Long id = popupService.save(Popup.of(saveData));
+        return ResponseEntity.ok(id);
     }
 
     @PostMapping("/{id}/edit")
     public ResponseEntity edit(@PathVariable Long id, @Valid PopupSave updateData) {
         popupService.update(id, updateData);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(id);
     }
 
     @DeleteMapping("/delete")

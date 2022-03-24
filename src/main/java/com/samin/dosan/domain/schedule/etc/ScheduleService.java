@@ -18,26 +18,54 @@ public class ScheduleService {
     private final ScheduleCategoryRepository scheduleCategoryRepository;
 
     @Transactional
-    public List<ScheduleCategory> getScheduleCategory() {
-        return scheduleCategoryRepository.findAllScheduleCategory();
+    public List<ScheduleCategory> getScheduleCategory(ScheduleEtcType scheduleEtcType) {
+        return scheduleCategoryRepository.findAllScheduleCategory(scheduleEtcType);
     }
 
     @Transactional
-    public List<ScheduleEtc> getSchedule() {
-        List<ScheduleEtc> schedules = scheduleEtcRepository.findAllScheduleEtc();
-        return scheduleEtcRepository.findAllScheduleEtc();
+    public List<ScheduleEtc> getSchedule(ScheduleEtcType scheduleEtcType) {
+        return scheduleEtcRepository.findAllScheduleEtc(scheduleEtcType);
     }
 
-    public void saveScheduleCategory(List<ScheduleCategory> scheduleCategoryList) {
-        for(ScheduleCategory scheduleCategory: scheduleCategoryList) {
-            scheduleCategoryRepository.save(scheduleCategory);
-        }
-    }
-
-    public void saveScheduleEtc(List<ScheduleEtc> scheduleEtcList) {
+    @Transactional
+    public ScheduleEtc saveScheduleEtc(List<ScheduleEtc> scheduleEtcList, ScheduleEtcType scheduleEtcType) {
         for(ScheduleEtc scheduleEtc: scheduleEtcList) {
-            scheduleEtcRepository.save(scheduleEtc);
+            scheduleEtcRepository.save(ScheduleEtc.builder()
+                    .categoryName(scheduleEtc.getCategoryName())
+                    .scheduleEtcType(scheduleEtcType)
+                    .isAllDay(scheduleEtc.getIsAllDay())
+                    .location(scheduleEtc.getLocation())
+                    .title(scheduleEtc.getTitle())
+                    .start(scheduleEtc.getStart())
+                    .end(scheduleEtc.getEnd())
+                    .build());
         }
+
+        List<ScheduleEtc> savedScheduleList = scheduleEtcRepository.findAll();
+        return savedScheduleList.get(savedScheduleList.size()-1);
+    }
+
+    @Transactional
+    public void updateScheduleEtc(List<ScheduleEtc> scheduleEtcList, ScheduleEtcType scheduleEtcType) {
+        List<ScheduleEtc> scheduleEtcList1 = scheduleEtcRepository.findAll();
+        for(ScheduleEtc scheduleEtc: scheduleEtcList) {
+            scheduleEtcRepository.save(ScheduleEtc.builder()
+                    .scheduleId(scheduleEtc.getScheduleId())
+                    .categoryName(scheduleEtc.getCategoryName())
+                    .scheduleEtcType(scheduleEtcType)
+                    .isAllDay(scheduleEtc.getIsAllDay())
+                    .location(scheduleEtc.getLocation())
+                    .title(scheduleEtc.getTitle())
+                    .start(scheduleEtc.getStart())
+                    .end(scheduleEtc.getEnd())
+                    .build());
+        }
+    }
+
+    @Transactional
+    public void deleteScheduleEtc(ScheduleEtc scheduleEtc) {
+        List<ScheduleEtc> scheduleEtcList = scheduleEtcRepository.findAll();
+        scheduleEtcRepository.deleteById(scheduleEtc.getScheduleId());
     }
 
     public void save(ScheduleCategory scheduleCategory) {

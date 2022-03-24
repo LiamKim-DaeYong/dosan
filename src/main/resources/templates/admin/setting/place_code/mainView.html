@@ -41,9 +41,9 @@
                     <td class="table_chk">
                         <input type="checkbox" th:value="${placeCode.id}"/>
                     </td>
-                    <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + placeStat.index)}"></td>
+                    <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + placeCodeStat.index)}"></td>
                     <td>
-                        <a href="#" th:text="${placeCode.location}" th:onclick="|pageObj.openEditPage(${placeCode.id})|"</a>
+                        <a href="#" th:text="${placeCode.placeNm}" th:onclick="|pageObj.editView(${placeCode.id})|"</a>
                     </td>
                 </tr>
 
@@ -56,7 +56,7 @@
 
             <div class="btn_box">
                 <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
-                <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" class="btn_new">등록</button>
+                <button type="button" th:text="#{button.new}" onclick="pageObj.addView()" class="btn_new">등록</button>
             </div>
         </form>
     </div>

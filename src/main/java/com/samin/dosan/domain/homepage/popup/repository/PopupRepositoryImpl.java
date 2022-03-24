@@ -49,6 +49,7 @@ public class PopupRepositoryImpl implements PopupRepositoryQueryDsl {
         List<Popup> content = queryFactory
                 .selectFrom(popup)
                 .where(builder)
+                .orderBy(popup.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

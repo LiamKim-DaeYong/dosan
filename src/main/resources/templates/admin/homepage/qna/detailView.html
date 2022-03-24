@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/qna.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.homepage.qna}"></h2>
+
+        <form th:action th:object="${qna}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{homepage.qna.title}"></th>
+                    <td th:text="*{title}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.qna.secret}"></th>
+                    <td th:text="*{secret.description}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.qna.author}"></th>
+                    <td th:text="*{author}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.qna.regDt}"></th>
+                    <td th:text="*{regDt}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.qna.file}"></th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.qna.content}"></th>
+                    <td th:utext="*{content}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.qna.comment}"></th>
+                    <td>
+                        <!--/* 답변 없을 때 */-->
+                        <div id="commentN"
+                             th:style="*{comment == null || comment.equals('')} ? 'display: block;' : 'display: none;'">
+                            <textarea th:field="*{comment}"></textarea>
+                            <div style="margin-top:1em;">
+                                <button type="button" th:text="#{button.cancel}" onclick="$url.redirect()" class="text_btn btn_text_black"></button>
+
+                                <button type="button" th:text="#{button.new}"
+                                        class="text_btn btn_text_blue" th:onclick="pageObj.comment.save([[*{id}]])"></button>
+                            </div>
+                        </div>
+
+                        <!--/* 답변 있을 때 */-->
+                        <div id="commentY"
+                             th:style="*{comment != null && !comment.equals('')} ? 'display: block;' : 'display: none;'">
+                            <div th:utext="*{comment}"></div>
+                            <div style="margin-top:1em;">
+                                <button type="button" th:text="#{button.delete}"
+                                        class="text_btn btn_text_red" th:onclick="pageObj.comment.delete([[*{id}]])"></button>
+
+                                <button type="button" th:text="#{button.update}"
+                                        class="text_btn btn_text_blue" onclick="pageObj.comment.edit()"></button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/admin/homepage/qna'"
+                    class="btn-default"></button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

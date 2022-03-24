@@ -1,7 +1,7 @@
 package com.samin.dosan.core.interceptor;
 
 import com.samin.dosan.domain.usagelog.UsageLogService;
-import com.samin.dosan.domain.user.User;
+import com.samin.dosan.domain.user.entity.User;
 import com.samin.dosan.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

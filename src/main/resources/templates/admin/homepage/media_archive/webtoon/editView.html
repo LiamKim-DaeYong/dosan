@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/webtoon.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.setting})"></div>
+
+    <div class="content">
+        <h2>만화퇴계 수정</h2>
+
+        <form th:action th:object="${webtoon}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <table class="table_row">
+                <tr>
+                    <th>제목</th>
+                    <td>
+                        <input type="text" th:field="*{title}" class="table_row_long_input">
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.webtoon.pdf}"></th>
+                    <td>
+                        <label for="pdf" class="file_btn">
+                            <input type="file" name="pdf" id="pdf" class="file-input"/>
+                        </label>
+                        <span class="filename"></span>
+                        <span errors="pdf"></span>
+                        <span class="comment">※ 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.webtoon.img}"></th>
+                    <td class="text-left">
+                        <label for="img" class="file_btn">
+                            <input type="file" name="img" id="img" class="file-input"/>
+                        </label>
+                        <span class="filename"></span>
+                        <span errors="file"></span>
+                        <span class="comment">※이미지 업로드를 하지 않으면 PDF 첫페이지가 썸네일 이미지로 등록됩니다.*</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.webtoon.preview}"></th>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/admin/homepage/media-archive/webtoon'"></button>
+            <button type="button" th:text="#{button.save}" onclick="pageObj.edit()" class="btn_save"></button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.samin.dosan.domain.user;
 
+import com.samin.dosan.domain.user.entity.User;
 import com.samin.dosan.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

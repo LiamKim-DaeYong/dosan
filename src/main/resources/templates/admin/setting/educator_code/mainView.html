@@ -5,7 +5,7 @@
     <th:block id="css"></th:block>
 
     <th:block id="script">
-        <script type="text/javascript" th:src="@{/js/setting/educator.js}"></script>
+        <script type="text/javascript" th:src="@{/js/admin/setting/educator.js}"></script>
     </th:block>
 </head>
 <body>
@@ -20,7 +20,8 @@
                 <ul class="toggle_list">
                     <li th:each="type : ${educatorCodeTypes}"
                         th:classappend="${educatorCodeType eq type}?'toggle_on'">
-                        <a th:href="@{/templates/admin/setting/educator_code/{type}(type=${#strings.toLowerCase(type.name())})}"
+
+                        <a th:href="@{/admin/setting/educator-code/{type}(type=${type.nameToUrl()})}"
                            th:text="${type.description}"></a>
                     </li>
                 </ul>
@@ -44,7 +45,7 @@
                         th:text="${result.totalElements - (result.pageable.offset + educatorCodeStat.index)}"></td>
                     <td>
                         <a href="#" th:text="${educatorCode.code}"
-                           th:onclick="pageObj.openEditPage([[${educatorCode.id}]], [[${educatorCodeType.description}]])"</a>
+                           th:onclick="pageObj.editView([[${educatorCode.id}]], [[${educatorCodeType.description}]])"</a>
                     </td>
                 </tr>
 
@@ -60,7 +61,7 @@
                     선택삭제
                 </button>
                 <button type="button" th:text="#{button.new}"
-                        th:onclick="pageObj.openAddPage([[${educatorCodeType.description}]])" class="btn_new">등록
+                        th:onclick="pageObj.addView([[${educatorCodeType.description}]])" class="btn_new">등록
                 </button>
             </div>
         </form>

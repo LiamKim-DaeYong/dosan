@@ -43,7 +43,7 @@
                     </td>
                     <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + subjectCodeStat.index)}"></td>
                     <td>
-                        <a href="#" th:text="${subjectCode.subject}" th:onclick="|pageObj.openEditPage(${subjectCode.id})|"</a>
+                        <a href="#" th:text="${subjectCode.subject}" th:onclick="|pageObj.editView(${subjectCode.id})|"</a>
                     </td>
                     <td>
                         <div th:utext="${#strings.replace(subjectCode.content,'&#10;','&lt;br&gt;')}"></div>
@@ -59,7 +59,7 @@
 
             <div class="btn_box">
                 <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
-                <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" class="btn_new">등록</button>
+                <button type="button" th:text="#{button.new}" onclick="pageObj.addView()" class="btn_new">등록</button>
             </div>
         </form>
     </div>

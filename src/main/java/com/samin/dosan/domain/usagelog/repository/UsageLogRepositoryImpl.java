@@ -4,7 +4,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.usagelog.QUsageLog;
 import com.samin.dosan.domain.usagelog.UsageLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

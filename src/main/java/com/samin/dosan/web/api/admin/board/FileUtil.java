@@ -1,5 +1,7 @@
 package com.samin.dosan.web.api.admin.board;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.Resource;
@@ -8,17 +10,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
-import java.nio.file.attribute.FileAttribute;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,7 @@ public class FileUtil {
             try {
 //                Files.createDirectories(dirPath, fileAttributes);
                 Files.createDirectories(dirPath);
-            } catch (java.io.IOException ex) {
+            } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         }
@@ -67,7 +68,7 @@ public class FileUtil {
         Path filePath = Path.of(dirPath.toString(), storageName);
         try {
             multipartFile.transferTo(filePath);
-        } catch (java.io.IOException ex) {
+        } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
         String originalName = multipartFile.getOriginalFilename();
@@ -104,7 +105,7 @@ public class FileUtil {
                 : Path.of(STORAGE_PATH, storageName);
         try {
             Files.deleteIfExists(path);
-        } catch (java.io.IOException ex) {
+        } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -136,6 +137,36 @@ public class FileUtil {
                     .header(HttpHeaders.CONTENT_DISPOSITION, attachmentHeader)
                     .body(resource);
         } catch (java.net.MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void preview(HttpServletResponse response, FileDto fileDto) {
+        MediaType mediaType = null;
+        String originalFileName = fileDto.getOriginalName();
+        int pos = originalFileName.lastIndexOf(".") + 1;
+        String extension = originalFileName.substring(pos).toUpperCase();
+
+        switch (extension) {
+            case "JPEG":
+            case "JPG":
+                mediaType = MediaType.IMAGE_JPEG;
+                break;
+
+            case "PNG":
+                mediaType = MediaType.IMAGE_PNG;
+                break;
+
+            default:
+        }
+
+        byte[] bytes;
+        try {
+            bytes = FileUtils.readFileToByteArray(new File(fileDto.getUrl()));
+            response.setContentType(mediaType.toString());
+            response.setContentLength(bytes.length);
+            IOUtils.copy(FileUtils.openInputStream(new File(fileDto.getUrl())), response.getOutputStream());
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

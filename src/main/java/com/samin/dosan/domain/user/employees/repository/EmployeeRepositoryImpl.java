@@ -13,7 +13,8 @@ import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
-import static com.samin.dosan.domain.user.entity.QEmployee.employee;
+import static com.samin.dosan.domain.setting.employee_code.QEmployeeCode.employeeCode;
+import static com.samin.dosan.domain.user.employees.QEmployee.employee;
 import static com.samin.dosan.domain.user.entity.QUser.user;
 
 @RequiredArgsConstructor
@@ -27,6 +28,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryQueryDsl {
         builder.and(employee.user.used.eq(Used.Y));
 
         String searchWorld = searchParam.getSearchWorld();
+
+        if (employeeCodeId != null) {
+            builder.and(employee.employeeType.id.eq(employeeCodeId));
+        }
+
         if (searchWorld != null) {
             builder.and(employee.user.userNm.contains(searchWorld)
 
@@ -44,6 +50,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryQueryDsl {
         List<Employee> content = queryFactory
                 .selectFrom(employee)
                 .leftJoin(employee.user, user).fetchJoin()
+                .leftJoin(employee.employeeType, employeeCode).fetchJoin()
+                .leftJoin(employee.employeePosition, employeeCode).fetchJoin()
+                .leftJoin(employee.employeeRank, employeeCode).fetchJoin()
+                .leftJoin(employee.employeeStep, employeeCode).fetchJoin()
+                .leftJoin(employee.employeeDepartment, employeeCode).fetchJoin()
                 .where(builder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -61,6 +72,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryQueryDsl {
         return queryFactory
                 .selectFrom(employee)
                 .leftJoin(employee.user, user).fetchJoin()
+                .leftJoin(employee.employeeType, employeeCode).fetchJoin()
+                .leftJoin(employee.employeePosition, employeeCode).fetchJoin()
+                .leftJoin(employee.employeeRank, employeeCode).fetchJoin()
+                .leftJoin(employee.employeeStep, employeeCode).fetchJoin()
+                .leftJoin(employee.employeeDepartment, employeeCode).fetchJoin()
                 .where(employee.user.userId.eq(userId))
                 .fetchOne();
     }

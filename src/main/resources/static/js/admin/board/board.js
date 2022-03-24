@@ -8,7 +8,7 @@ var pageObj = {
         document.body.appendChild(form);
         form.submit();
     },
-    openAddPage: function () {
+    addView: function () {
         const title = $('#title').val();
         const content = this.editor.getData();
         const newFile = this.multifile.getData('new');
@@ -33,7 +33,9 @@ var pageObj = {
         newFile.forEach(file => formData.append('file', file));
 
         console.log(typeof formData);
-        $api.postMultiPart({
+        console.log($api);
+        console.log($api.postMultiPart);
+        $ajax.postMultiPart({
             data: formData,
             success: () => {
             },

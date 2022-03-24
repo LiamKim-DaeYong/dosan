@@ -19,14 +19,14 @@ public class MainImageApiController {
 
     @PostMapping("/add")
     public ResponseEntity save(@Valid MainImageSave mainImageSave) {
-        mainImageService.save(MainImage.of(mainImageSave));
-        return ResponseEntity.ok().build();
+        Long id = mainImageService.save(MainImage.of(mainImageSave));
+        return ResponseEntity.ok(id);
     }
 
     @PostMapping("{id}/edit")
     public ResponseEntity edit(@PathVariable Long id, @Valid MainImageSave mainImageSave) {
         mainImageService.update(id, mainImageSave);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(id);
     }
 
     @DeleteMapping("/delete")

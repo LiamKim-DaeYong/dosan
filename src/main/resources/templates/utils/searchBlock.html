@@ -1,0 +1,31 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+    <!--/* 날짜 블럭 */-->
+    <div th:fragment="dateSearchBar" th:object="${searchParam}" class="date_chose">
+        <input type="date" th:field="*{startDate}" />
+        <span> ~ </span>
+        <input type="date" th:field="*{endDate}">
+        <button type="button" class="btn_save" onclick="$search.search($search.DATE)" th:text="#{button.inquire}">조회</button>
+        <button type="button" class="btn_gray_line" onclick="$search.init()" th:text="#{button.init}">초기화</button>
+    </div>
+
+    <!--/* Select, 검색어 블럭 */-->
+    <div th:fragment="wordSelectSearchBar" th:object="${searchParam}" class="date_search">
+        <select th:field="*{selectKey}">
+            <option th:each="type : ${condition}" th:value="${type.name}" th:text="${type.description}"></option>
+        </select>
+        <div th:replace="utils/searchBlock :: wordSearchBar"></div>
+    </div>
+
+    <!--/* 검색어 블럭 */-->
+    <div th:fragment="wordSearchBar" th:object="${searchParam}" class="date_search">
+        <input type="text" th:field="*{searchWorld}" class="search"/>
+        <button type="button" class="search_btn" th:text="#{button.search}" onclick="$search.search($search.ALL)">검색</button>
+    </div>
+
+</body>
+</html>

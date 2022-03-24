@@ -27,13 +27,13 @@
                         <th th:text="#{formerCode.formerName}">전직</th>
                     </tr>
 
-                    <tr th:each="formerCode : ${result.content}">
+                    <tr th:each="formerJobCode : ${result.content}">
                         <td class="table_chk">
-                            <input type="checkbox" th:value="${formerCode.id}"/>
+                            <input type="checkbox" th:value="${formerJobCode.id}"/>
                         </td>
-                        <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + formerStat.index)}"></td>
+                        <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + formerJobCodeStat.index)}"></td>
                         <td>
-                            <a href="#" th:text="${formerCode.formerName}" th:onclick="|pageObj.openEditPage(${formerCode.id})|"</a>
+                            <a href="#" th:text="${formerJobCode.formerNm}" th:onclick="|pageObj.editView(${formerJobCode.id})|"</a>
                         </td>
                     </tr>
 
@@ -46,7 +46,7 @@
 
                 <div class="btn_box">
                     <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
-                    <button type="button" th:text="#{button.new}" onclick="pageObj.openAddPage()" class="btn_new">등록</button>
+                    <button type="button" th:text="#{button.new}" onclick="pageObj.addView()" class="btn_new">등록</button>
                 </div>
             </form>
         </div>

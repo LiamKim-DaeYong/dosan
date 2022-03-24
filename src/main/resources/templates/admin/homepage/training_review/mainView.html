@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/trainingReview.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.homepage.training-review}"></h2>
+
+        <form th:action method="get" id="filter_form">
+            <div class="all_search_box">
+                <div th:replace="utils/searchBar :: searchDateWord"></div>
+            </div>
+
+            <table>
+                <colgroup>
+                    <col width="*" />
+                    <col width="*" />
+                    <col width="60%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                </colgroup>
+                <tr>
+                    <th class="table_chk">
+                        <input type="checkbox" check="all"/>
+                    </th>
+                    <th class="table_num" th:text="#{label.no}">No</th>
+                    <th th:text="#{homepage.training-review.title}">제목</th>
+                    <th th:text="#{homepage.training-review.file}">첨부파일</th>
+                    <th th:text="#{homepage.training-review.author}">작성자</th>
+                    <th th:text="#{homepage.training-review.regDt}">작성일자</th>
+                </tr>
+
+                <tr th:each="trainingReview : ${result.content}">
+                    <td class="table_chk">
+                        <input type="checkbox" th:value="${trainingReview.id}"/>
+                    </td>
+                    <td class="table_num"
+                        th:text="${result.totalElements - (result.pageable.offset + trainingReviewStat.index)}"></td>
+                    <td>
+                        <a th:href="@{|/admin/homepage/training-review/${trainingReview.id}/detail|}"
+                           th:text="${trainingReview.title}"></a>
+                    </td>
+                    <td th:text="0"></td>
+                    <td th:text="${trainingReview.author}"></td>
+                    <td th:text="${trainingReview.regDt}"></td>
+                </tr>
+
+                <tr th:if="${result.content.size eq 0}">
+                    <td colspan="6" th:text="#{data.empty}" class="empty-td"></td>
+                </tr>
+            </table>
+
+            <div th:replace="utils/pagination :: pagination(${result})"></div>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">
+                    선택삭제
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

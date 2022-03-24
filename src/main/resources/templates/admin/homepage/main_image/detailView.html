@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/mainImage.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2>메인이미지 상세</h2>
+        <form th:action th:object="${mainImage}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th>제목</th>
+                    <td th:text="*{title}"></td>
+                </tr>
+                <tr>
+                    <th>게시여부</th>
+                    <td th:text="*{postYn.description}"></td>
+                </tr>
+                <tr>
+                    <th>게시순서</th>
+                    <td th:text="*{sort}"></td>
+                </tr>
+                <tr>
+                    <th>이미지</th>
+                    <td></td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/admin/homepage/main-image'"></button>
+            <button type="button" th:text="#{button.update}"
+                    th:onclick="|location.href='@{/admin/homepage/main-image/{id}/edit(id=${mainImage.id})}'|" class="btn_edit">
+            </button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

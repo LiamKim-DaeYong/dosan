@@ -1,6 +1,6 @@
 package com.samin.dosan.web.dto.homepage.mainImage;
 
-import com.samin.dosan.core.code.homepage.PostType;
+import com.samin.dosan.domain.homepage.type.PostType;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css">
+        <style>
+            .save_color {
+                color: black;
+            }
+
+            .draft_color {
+                color: blue;
+            }
+
+            .approval_color {
+                color: gray;
+            }
+
+            .return_color {
+                color: red;
+            }
+        </style>
+    </th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/educator/business_trip_report/businessTripReport.js}"></script>
+    </th:block>
+
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.business-trip-report})"></div>
+
+    <div class="content">
+
+        <form th:action>
+            <div class="all_search_box">
+                <div th:replace="utils/searchBar :: searchWord"></div>
+            </div>
+
+            <table>
+                <tr>
+                    <th class="table_chk">
+                        <input type="checkbox" check="all"/>
+                    </th>
+                    <th class="table_num" th:text="#{label.no}">No</th>
+                    <th th:text="#{business.trip.report.title}">제목</th>
+                    <th th:text="#{business.trip.report.file}">첨부파일</th>
+                    <th th:text="#{business.trip.report.regDt}">작성일자</th>
+                    <th th:text="#{business.trip.report.approval}">결재상태</th>
+                </tr>
+                <tr th:each="businessTripReport : ${result.content}">
+                    <td>
+                        <input type="checkbox"/>
+                    </td>
+                    <td class="table_num"
+                        th:text="${result.totalElements - (result.pageable.offset + businessTripReportStat.index)}"></td>
+                    <td>
+                        <a th:href="@{|/educator/business-trip-report/${businessTripReport.id}/detail|}" th:text="${businessTripReport.title}"></a>
+                    </td>
+                    <td th:text="O"></td>
+                    <td th:text="작성일자"></td>
+                    <td th:text="${businessTripReport.approvalType.description}" th:class="|${businessTripReport.approvalType.nameToUrl}_color|"></td>
+                </tr>
+                <tr th:if="${result.content.size eq 0}">
+                    <td colspan="6" th:text="#{data.empty}" class="empty-td"></td>
+                </tr>
+            </table>
+
+            <div th:replace="utils/pagination :: pagination(${result})"></div>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
+                <button type="button" th:text="#{button.new}" onclick="location.href='/educator/business-trip-report/add'" class="btn_new">등록</button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

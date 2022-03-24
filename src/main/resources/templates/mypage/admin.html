@@ -9,21 +9,22 @@
     </th:block>
 </head>
 <body>
-    <section>
-        <div th:replace="layout/pageTitle :: pageTitle (#{menu.mypage.admin})"></div>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.mypage.admin})"></div>
+    <div class="content">
+        <form th:action>
+            <div class="admin_mypage">
+                <dl>
+                    <dt>새 비밀번호
+                    <dd><input type="password" name="password"/></dd>
 
-        <div class="content">
-
-            <form th:action>
-                <span>새 비밀번호</span>
-                <input type="password" name="password" />
-
-                <span>비밀번호 확인</span>
-                <input type="password" name="confirm" />
-
-                <button type="button" onclick="pageObj.save()" th:text="#{button.save}"></button>
-            </form>
-        </div>
-    </section>
+                    <dt>비밀번호 확인</dt>
+                    <dd><input type="password" name="confirm"/></dd>
+                </dl>
+                <button type="button" onclick="pageObj.save()" th:text="#{button.save}" class="btn_edit"></button>
+            </div>
+        </form>
+    </div>
+</section>
 </body>
 </html>

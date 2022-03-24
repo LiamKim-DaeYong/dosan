@@ -3,6 +3,7 @@ package com.samin.dosan.domain.schedule.etc.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.domain.schedule.etc.ScheduleCategory;
+import com.samin.dosan.domain.schedule.etc.ScheduleEtcType;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -14,8 +15,10 @@ public class ScheduleCategoryRepositoryImpl implements ScheduleCategoryRepositor
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<ScheduleCategory> findAllScheduleCategory() {
+    public List<ScheduleCategory> findAllScheduleCategory(ScheduleEtcType scheduleEtcType) {
         BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(scheduleCategory.scheduleEtcType.eq(scheduleEtcType));
 
         List<ScheduleCategory> content = queryFactory
                 .selectFrom(scheduleCategory)

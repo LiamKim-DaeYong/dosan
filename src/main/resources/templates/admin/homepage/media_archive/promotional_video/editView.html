@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/promotionalVideo.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2>홍보동영상 수정</h2>
+
+        <form th:action th:object="${promotionalVideo}" method="post">
+            <input type="hidden" th:field="*{id}"/>
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{homepage.promotional-video.title}"></th>
+                    <td>
+                        <input type="text" th:field="*{title}" class="table_row_long_input">
+                        <span errors="title"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.promotional-video.code}"></th>
+                    <td>
+                        <textarea cols="30" rows="10">https://www.youtube.com/watch?v=[[*{code}]]</textarea>
+                        <input type="hidden" th:field="*{code}">
+                        <span errors="code"></span>
+                        <button type="button" onclick="pageObj.preview()">미리보기</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.promotional-video.preview}"></th>
+                    <td>
+                        <div id="player">
+                            <iframe id="playerVideo" type="text/html" width="640" height="360"frameBorder="0" allowfullscreen
+                                    th:src="@{'http://www.youtube.com/embed/'+*{code}}"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/homepage/media-archive/promotional-video'"></button>
+                <button type="button" th:text="#{button.save}" class="btn_save" onclick="pageObj.edit()"></button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

@@ -11,5 +11,5 @@ import java.util.List;
 public interface EmployeeCodeRepositoryQueryDsl {
     Page<EmployeeCode> findAll(SearchParam searchParam, EmployeeCodeType employeeCodeType, Pageable pageable);
 
-    List<EmployeeCode> findAllTypes();
+    List<EmployeeCode> findAll(EmployeeCodeType employeeCodeType);
 }

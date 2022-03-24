@@ -1,12 +1,12 @@
 var pageObj = {
-    openAddPage: function (title) {
+    addView: function (title) {
         modal.open({
             path: $url.getPath('add'),
             title: `${title} 등록`
         });
     },
 
-    openEditPage: function (id, title) {
+    editView: function (id, title) {
         modal.open({
             path: $url.getPath(`${id}/edit`),
             title: `${title} 수정`
@@ -17,8 +17,11 @@ var pageObj = {
         $ajax.post({data: modal.getData()})
     },
 
-    edit: function () {
-        $ajax.put({data: modal.getData()})
+    update: function () {
+        $ajax.put({
+            url: $url.getPath($("#id").val()),
+            data: modal.getData()
+        })
     },
 
     delete: function () {

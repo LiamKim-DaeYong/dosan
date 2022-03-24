@@ -1,7 +1,7 @@
 package com.samin.dosan.domain.usagelog;
 
 import com.samin.dosan.core.domain.BaseEntity;
-import com.samin.dosan.domain.user.User;
+import com.samin.dosan.domain.user.entity.User;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 

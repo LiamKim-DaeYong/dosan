@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/board.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2 th:text="|${boardType.description} 수정|"></h2>
+
+        <form th:action th:object="${board}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{homepage.board.title}"></th>
+                    <td>
+                        <input type="text" th:field="*{title}" class="table_row_long_input">
+                        <span errors="title"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.board.content}"></th>
+                    <td>
+                        <textarea th:field="*{content}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.board.file}"></th>
+                    <td>
+                        <label for="file_input" class="file_btn">
+                            <input type="file" id="file_input" name="file" class="file-input"/>
+                        </label>
+                        <span class="filename"></span>
+                        <span errors="file"></span>
+                        <span class="comment">※ 최소 500 x 600, 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" th:onclick="|location.href='@{/admin/homepage/board/{type}(type=${boardType.nameToUrl()})}'|"></button>
+            <button type="button" th:text="#{button.save}" th:onclick="pageObj.edit([[${boardType.nameToUrl()}]])" class="btn_save"></button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

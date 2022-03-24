@@ -1,7 +1,7 @@
 package com.samin.dosan.web.api.admin.user;
 
-import com.samin.dosan.domain.user.User;
 import com.samin.dosan.domain.user.UserService;
+import com.samin.dosan.domain.user.entity.User;
 import com.samin.dosan.web.dto.user.EmployeeSave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

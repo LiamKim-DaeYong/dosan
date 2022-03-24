@@ -45,6 +45,7 @@ public class WebtoonRepositoryImpl implements WebtoonRepositoryQueryDsl {
         List<Webtoon> content = queryFactory
                 .selectFrom(webtoon)
                 .where(builder)
+                .orderBy(webtoon.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

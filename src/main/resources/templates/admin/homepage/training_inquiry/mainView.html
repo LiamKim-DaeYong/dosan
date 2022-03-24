@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/trainingInquiry.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.homepage.training-inquiry}"></h2>
+
+        <form th:action>
+            <div class="all_search_box">
+                <div th:replace="utils/searchBar :: searchDateSelectWord(${types})"></div>
+            </div>
+
+            <table>
+                <colgroup>
+                    <col width="*"/>
+                    <col width="*"/>
+                    <col width="27%"/>
+                    <col width="10%"/>
+                    <col width="25%"/>
+                    <col width="10%"/>
+                    <col width="10%"/>
+                    <col width="8%"/>
+                </colgroup>
+                <tr>
+                    <th class="table_chk">
+                        <input type="checkbox" check="all"/>
+                    </th>
+                    <th class="table_num" th:text="#{label.no}">No</th>
+                    <th th:text="#{homepage.training-inquiry.applicant.insttNm}">신청자명(단체명)</th>
+                    <th th:text="#{homepage.training-inquiry.depart}">부서</th>
+                    <th th:text="#{homepage.training-inquiry.phone}">연락처</th>
+                    <th th:text="#{homepage.training-inquiry.trainingInquiryType}">신청구분</th>
+                    <th th:text="#{homepage.training-inquiry.regDt}">등록일자</th>
+                    <th th:text="#{homepage.training-inquiry.check}">확인</th>
+                </tr>
+
+                <tr th:each="advice : ${result.content}">
+                    <td class="table_chk">
+                        <input type="checkbox" th:value="${advice.id}"/>
+                    </td>
+                    <td class="table_num"
+                        th:text="${result.totalElements - (result.pageable.offset + adviceStat.index)}"></td>
+                    <td th:text="|${advice.applicant}(${advice.insttNm})|"></td>
+                    <td th:text="${advice.depart}"></td>
+                    <td th:text="${advice.phone}"></td>
+                    <td th:text="${advice.trainingInquiryType.description}"></td>
+                    <td th:text="${advice.regDt}"></td>
+                    <td>
+                        <span th:if="${advice.status.name == 'Y'}" th:text="${advice.status.description}"
+                              class="td_text_gray"></span>
+                        <button type="button" th:unless="${advice.status.name == 'Y'}"
+                                th:text="${advice.status.description}"
+                                th:onclick="pageObj.check([[${advice.id}]])" class="text_btn btn_text_red"></button>
+                    </td>
+                </tr>
+
+                <tr th:if="${result.content.size eq 0}">
+                    <td colspan="8" th:text="#{data.empty}" class="empty-td"></td>
+                </tr>
+            </table>
+            <div th:replace="utils/pagination :: pagination(${result})"></div>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">
+                    선택삭제
+                </button>
+                <button type="button" th:text="#{button.print}" onclick="pageObj.print()" class="btn_green">출력
+                </button>
+            </div>
+            </table>
+        </form>
+    </div>
+</section>
+</body>
+</html>

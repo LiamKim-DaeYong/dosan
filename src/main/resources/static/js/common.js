@@ -111,7 +111,7 @@ $editor = {
         nhn.husky.EZCreator.createInIFrame({
             oAppRef: this.target,
             elPlaceHolder: targetId,
-            sSkinURI: "../lib/smarteditor/SmartEditor2Skin.html",
+            sSkinURI: "/lib/smarteditor/SmartEditor2Skin.html",
             fCreator: "createSEditor2"
         });
     },
@@ -231,7 +231,8 @@ $event = {
 
     initCheckboxEvent: function () {
         $('input:checkbox[check="all"]').on('click', function () {
-            $('input:checkbox').prop("checked", $(this).is(":checked"));
+            const table = $(this).closest('table');
+            table.find('input:checkbox').prop("checked", $(this).is(":checked"));
         });
     },
 
@@ -242,44 +243,6 @@ $event = {
             $(".filename").text(fileText[2]);
         })
     },
-}
-
-$checkBox = {
-    getAllChecked: function () {
-        var result = [];
-        $('input:checkbox[check!="all"]:checked').each(function () {
-            result.push($(this).val());
-        });
-
-        return result;
-    }
-}
-
-$valid = {
-    delete: function () {
-        return confirm("삭제 하시겠습니까?")
-    },
-    deletes: function (condition) {
-        if (condition) {
-            alert("삭제할 항목을 선택해 주세요.");
-        } else {
-            return confirm("선택된 항목을 삭제 하시겠습니까?")
-        }
-    },
-    duplicate: function (option) {
-        var result = true;
-        $.ajax({
-            url: option.url,
-            type: 'POST',
-            data: JSON.stringify(option.data),
-            contentType: 'application/json',
-            async: false,
-        }).done(function (data) {
-             result = data;
-        });
-
-        return result
-    }
 }
 
 $url = {
@@ -325,7 +288,7 @@ $ajax = {
     },
     postMultiPart: function (options) {
         options = $.extend({}, this.defaultOption, options);
-        console.log('options', options)
+
         $.ajax({
             url: options.url,
             type: 'POST',
@@ -422,24 +385,24 @@ $search = {
     },
 
     dateSearch: function () {
-        var searchArr = $("[search='search']").children().children();
+        var searchArr = this.findChildren($("[search='search']"));
         var dateObj = {};
 
-        $.each(searchArr, function () {
-            switch (this.tagName.toLowerCase()) {
+        searchArr.forEach(search => {
+            switch (search.tagName.toLowerCase()) {
                 case "input" :
-                    if (this.type !== 'date') {
-                        $(this).prop('value', '');
+                    if (search.type !== 'date') {
+                        $(search).prop('value', '');
                     } else {
-                        dateObj[this.id] = this.value;
+                        dateObj[search.id] = search.value;
                     }
                     break;
 
                 case "select" :
-                    $(this).children(":eq(0)").prop("selected", true);
+                    $(search).children(":eq(0)").prop("selected", true);
                     break;
             }
-        });
+        })
 
         if (this.dateValidation(dateObj)) {
             $("form").submit();
@@ -447,12 +410,12 @@ $search = {
     },
 
     allSearch: function () {
-        var searchArr = $("[search='search']").children().children();
+        var searchArr = this.findChildren($("[search='search']"));
         var dateObj = {};
 
-        $.each(searchArr, function () {
-            if (this.type == 'date') {
-                dateObj[this.id] = this.value;
+        searchArr.forEach(search => {
+            if (search.type == 'date') {
+                dateObj[search.id] = search.value;
             }
         })
 
@@ -462,17 +425,7 @@ $search = {
     },
 
     init: function () {
-        var searchArr = $("[search='search']").children().children();
-        $.each(searchArr, function () {
-            switch (this.tagName.toLowerCase()) {
-                case "input" :
-                    $(this).prop('value', '');
-                    break;
-                case "select" :
-                    $(this).children(":eq(0)").prop("selected", true);
-                    break;
-            }
-        });
+        $url.redirect();
     },
 
     dateValidation: function (dateObj) {
@@ -483,7 +436,131 @@ $search = {
             result = false;
         }
         return result;
+    },
+
+    findChildren: function (parent) {
+        var _this = this;
+        var searchList = [];
+
+        $.each(parent, function () {
+            switch (this.tagName.toLowerCase()) {
+                case "div" :
+                    var childList = _this.findChildren($(this).children());
+                    childList.forEach(child => searchList.push(child));
+                    break;
+
+                case "input" : case "select" :
+                    searchList.push(this);
+                    break;
+            }
+        })
+
+        return searchList;
     }
+}
+
+$valid = {
+    delete: function () {
+        return confirm("삭제 하시겠습니까?")
+    },
+    deletes: function (selectCondition) {
+        if (!selectCondition) {
+            alert("삭제할 항목을 선택해 주세요.");
+        } else {
+            return confirm("선택된 항목을 삭제 하시겠습니까?")
+        }
+    },
+    duplicate: function (option) {
+        var result = true;
+        $.ajax({
+            url: option.url,
+            type: 'POST',
+            data: JSON.stringify(option.data),
+            contentType: 'application/json',
+            async: false,
+        }).done(function (data) {
+            result = data;
+        });
+
+        return result
+    }
+}
+
+$checkBox = {
+    getAllChecked: function (target=$("table")) {
+        var result = [];
+        target.find('input:checkbox[check!="all"]:checked').each(function () {
+            result.push($(this).val());
+        });
+
+        return result;
+    }
+}
+
+$form = {
+    getData: function (target = $("form")) {
+        return  Object.fromEntries(new FormData(target[0]));
+    }
+}
+
+$table = {
+    addRow: function (targetId) {
+        const target = $("#" +targetId);
+        const lastRow = target.find('tr').last().clone();
+        const idx = target.find('tr').length;
+
+        $.each(lastRow.find('input, textarea'), function () {
+            if (this.type == 'checkbox') {
+                $(this).prop("checked", false);
+                this.name = idx;
+                this.value = idx;
+            } else {
+                this.value = "";
+            }
+        });
+
+        target.append(lastRow);
+    },
+
+    delRow: function (targetId) {
+        const target = $("#" +targetId);
+        const checkedList = $checkBox.getAllChecked(target);
+
+        if ($valid.deletes(checkedList.length)) {
+            $.each(checkedList, function (idx, value) {
+                const row = target.find("input[name='" + value + "']").closest('tr');
+                row.remove();
+            });
+        }
+    },
+
+    getData: function (targetId) {
+        const HEADER_IDX = 0;
+        const target = $("#" +targetId);
+        const result = [];
+
+        $.each(target.find('tr'), function (idx, row) {
+            if (idx != HEADER_IDX) {
+                const rowData = $(row).find('input[type!="checkbox"], textarea');
+
+                const obj = {};
+                let noValueCnt = 0;
+                $.each(rowData, function () {
+                    if (!this.value) {
+                        noValueCnt++;
+                    }
+
+                    obj[this.name] = this.value;
+                });
+
+                if (rowData.length != noValueCnt) {
+                    result.push(obj);
+                }
+            }
+        });
+
+        return result;
+    },
 }
 
 $(document).ready(function () {

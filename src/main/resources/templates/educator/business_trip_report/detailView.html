@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/educator/business_trip_report/businessTripReport.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.business-trip-report})"></div>
+
+    <div class="content">
+        <form th:action th:object="${businessTripReport}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th colspan="2"  th:text="#{business.trip.report.approval}"></th>
+                    <td colspan="2" th:text="*{approvalType.description}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.title}"></th>
+                    <td th:text="*{title}"></td>
+
+                    <th th:text="#{business.trip.report.businessPlace}"></th>
+                    <td th:text="*{businessPlace}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.from}"></th>
+                    <td th:text="|*{fromCity} / *{fromCounty}|"></td>
+
+                    <th th:text="#{business.trip.report.to}"></th>
+                    <td th:text="|*{toCity} / *{toCounty}|"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.businessPurpose}"></th>
+                    <td th:text="*{businessPurpose}"></td>
+
+                    <th th:text="#{business.trip.report.businessDate}"></th>
+                    <td th:text="|*{businessStartDate} ~ *{businessEndDate}|"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.businessPurposePerformance}"></th>
+                    <td colspan="3" th:text="*{businessPurposePerformance}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.otherReference}"></th>
+                    <td colspan="3" th:text="*{otherReference}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.meal}"></th>
+                    <td th:text="*{mealType.description}"></td>
+
+                    <th th:text="#{business.trip.report.accommodation}"></th>
+                    <td th:text="*{accommodationType.description}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.file}"></th>
+                    <td colspan="3">
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/educator/business-trip-report'"
+                    class="btn-default"></button>
+
+            <span>
+            <button type="button" th:text="#{button.update}"class="btn_new"
+                    th:if="${businessTripReport.approvalType.name == 'SAVE' || businessTripReport.approvalType.name == 'RETURN'}"
+                    th:onclick="|location.href='@{|/educator/business-trip-report/${businessTripReport.id}/edit|}'|">
+            </button>
+            <button type="button" th:text="#{button.draft}" class="btn_new"
+                    th:if="${businessTripReport.approvalType.name == 'SAVE' || businessTripReport.approvalType.name == 'RETURN'}"
+                    th:onclick="pageObj.draft([[${businessTripReport.id}]], pageObj.DRAFT)">
+            </button>
+            </span>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,6 +1,6 @@
 package com.samin.dosan.domain.setting.subject_code;
 
-import com.samin.dosan.core.code.EnumNameParser;
+import com.samin.dosan.core.utils.enums.EnumNameParser;
 import lombok.Getter;
 
 @Getter

@@ -1,8 +1,8 @@
 package com.samin.dosan.domain.schedule.etc;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.samin.dosan.core.domain.BaseEntity;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -17,7 +17,11 @@ public class ScheduleEtc extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(length = 100)
-    private Long id;
+    private Long scheduleId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ScheduleEtcType scheduleEtcType;
 
     @Column(length = 255)
     private String categoryName;
@@ -32,10 +36,12 @@ public class ScheduleEtc extends BaseEntity {
     private Boolean isAllDay;
 
     @Column
-    private LocalDateTime startDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime start;
 
     @Column
-    private LocalDateTime endDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+    private LocalDateTime end;
 
 
 

@@ -38,20 +38,20 @@
                     <th th:text="#{usageLog.method}">이력구분</th>
 
                 </tr>
-                <tr th:each="usageLog : ${result.content}">
-                    <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + historyStat.index)}"></td>
-                    <td th:text="${usageLog.user.userNm}"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td th:text="${{usageLog.logAt}}"></td>
-                    <td th:text="${usageLog.systemNm}"></td>
-                    <td th:text="${usageLog.method}"></td>
-                    <td th:text="${usageLog.number}"></td>
-                </tr>
+<!--                <tr th:each="usageLog : ${result.content}">-->
+<!--                    <td class="table_num" th:text="${result.totalElements - (result.pageable.offset + historyStat.index)}"></td>-->
+<!--                    <td th:text="${usageLog.user.userNm}"></td>-->
+<!--                    <td></td>-->
+<!--                    <td></td>-->
+<!--                    <td></td>-->
+<!--                    <td th:text="${{usageLog.logAt}}"></td>-->
+<!--                    <td th:text="${usageLog.systemNm}"></td>-->
+<!--                    <td th:text="${usageLog.method}"></td>-->
+<!--                    <td th:text="${usageLog.number}"></td>-->
+<!--                </tr>-->
             </table>
 
-            <div th:replace="utils/pagination :: pagination(${result})"></div>
+<!--            <div th:replace="utils/pagination :: pagination(${result})"></div>-->
         </form>
     </div>
 </section>

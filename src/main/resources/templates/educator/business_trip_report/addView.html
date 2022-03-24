@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/educator/business_trip_report/businessTripReport.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.business-trip-report})"></div>
+
+    <div class="content">
+        <form th:action th:object="${businessTripReport}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{business.trip.report.title}"></th>
+                    <td>
+                        <input type="text" th:field="*{title}" class="table_row_long_input">
+                        <span errors="title"></span>
+                    </td>
+
+                    <th th:text="#{business.trip.report.businessPlace}"></th>
+                    <td>
+                        <input type="text" th:field="*{businessPlace}" class="table_row_long_input">
+                        <span errors="businessPlace"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.from}"></th>
+                    <td>
+                        <select th:field="*{fromCity}" class="city_from"></select>
+                        <span errors="fromCity"></span>
+
+                        <select th:field="*{fromCounty}" class="county_from"></select>
+                        <span errors="fromCounty"></span>
+                    </td>
+
+                    <th th:text="#{business.trip.report.to}"></th>
+                    <td>
+                        <select th:field="*{toCity}" class="city_to"></select>
+                        <span errors="toCity"></span>
+
+                        <select th:field="*{toCounty}" class="county_to"></select>
+                        <span errors="toCounty"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.businessPurpose}"></th>
+                    <td>
+                        <input type="text" th:field="*{businessPurpose}">
+                        <span errors="businessPlace"></span>
+                    </td>
+
+                    <th th:text="#{business.trip.report.businessDate}"></th>
+                    <td>
+                        <input type="date" th:field="*{businessStartDate}">
+                        <span>~</span>
+                        <input type="date" th:field="*{businessEndDate}">
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.businessPurposePerformance}"></th>
+                    <td colspan="3">
+                        <textarea th:field="*{businessPurposePerformance}"></textarea>
+                        <span errors="businessPurposePerformance"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.otherReference}"></th>
+                    <td colspan="3">
+                        <textarea th:field="*{otherReference}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.meal}"></th>
+                    <td>
+                        <span th:each="meal : ${mealTypes}">
+                            <input type="radio" th:value="${meal.name}" th:field="*{mealType}" th:id="${meal.name}">
+                            <label th:for="${meal.name}" th:text="${meal.description}"></label>
+                        </span>
+                    </td>
+
+                    <th th:text="#{business.trip.report.accommodation}"></th>
+                    <td>
+                        <span th:each="accommodation : ${accommodationTypes}">
+                            <input type="radio" th:value="${accommodation.name}" th:field="*{accommodationType}" th:id="${accommodation.name}">
+                            <label th:for="${accommodation.name}" th:text="${accommodation.description}"></label>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{business.trip.report.file}"></th>
+                    <td colspan="3">
+                        <label for="file_input" class="file_btn">
+                            <input type="file" id="file_input" name="file" class="file-input"/>
+                        </label>
+                        <span class="filename"></span>
+                        <span errors="file"></span>
+                        <span class="comment">※ 최소 500 x 600, 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/educator/business-trip-report'"
+                    class="btn-default"></button>
+
+            <button type="button" th:text="#{button.save}" onclick="pageObj.save()" class="btn_new">등록</button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

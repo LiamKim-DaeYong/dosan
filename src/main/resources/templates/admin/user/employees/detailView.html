@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/user/employees.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.user})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.user.employee.new}"></h2>
+
+        <form th:action th:object="${employee}">
+
+            <span>기본정보</span>
+            <table class="table_row">
+                <tr>
+                    <th>아이디</th>
+                    <td th:text="*{user.userId}"></td>
+                    <th>패스워드</th>
+                    <td>
+                        <button>패스워드 초기화</button>
+                    </td>
+                    <th>이름</th>
+                    <td th:text="*{user.userNm}"></td>
+                    <th>성별</th>
+                    <td th:text="*{gender.description}"></td>
+                </tr>
+
+                <tr>
+                    <th>전직구분</th>
+                    <td th:text="*{formerJobCode.formerNm}"></td>
+                    <th>H.P</th>
+                    <td th:text="*{phoneNum}"></td>
+                    <th>사무실</th>
+                    <td th:text="*{officeNum}"></td>
+                    <th>집</th>
+                    <td th:text="*{homeNum}"></td>
+                </tr>
+
+                <tr>
+                    <th>생년월일</th>
+                    <td th:text="*{birthDate}"></td>
+                    <th>E-Mail</th>
+                    <td th:text="*{email}"></td>
+                    <th>은행</th>
+                    <td th:text="*{bank}"></td>
+                    <th>계좌번호</th>
+                    <td th:text="*{account}"></td>
+                </tr>
+
+                <tr>
+                    <th>주소</th>
+                    <td colspan="7" th:text="|[*{address.zipCode}] *{address.roadAddress} *{address.detailAddress}|">
+                    </td>
+                </tr>
+            </table>
+
+            <span>근무정보</span>
+            <table class="table_row">
+                <tr>
+                    <th>구분</th>
+                    <td th:text="*{employeeType.code}"></td>
+                    <th>직위</th>
+                    <td th:text="*{employeePosition.code}"></td>
+                    <th>직급</th>
+                    <td th:text="*{employeeRank.code}"></td>
+                    <th>호봉</th>
+                    <td th:text="*{employeeStep.code}"></td>
+                </tr>
+                <tr>
+                    <th>근무부서</th>
+                    <td th:text="*{employeeDepartment.code}"></td>
+                    <th>채용일</th>
+                    <td th:text="*{firstDayOfWork}"></td>
+                    <th>주소</th>
+                    <td colspan="3" th:text="|[*{cmpAddress.zipCode}] *{cmpAddress.roadAddress} *{cmpAddress.detailAddress}|"></td>
+                </tr>
+            </table>
+
+            <span>학력사항</span>
+            <table class="table_row">
+                <tr>
+                    <th>출신학교</th>
+                    <th>졸업년도</th>
+                    <th>전공</th>
+                    <th>학위</th>
+                </tr>
+
+                <tr th:each="educational: *{user.educationalList}">
+                    <td th:text="${educational.schoolNm}"></td>
+                    <td th:text="${educational.graduationYear}"></td>
+                    <td th:text="${educational.major}"></td>
+                    <td th:text="${educational.degree}"></td>
+                </tr>
+            </table>
+
+            <span>근무이력</span>
+            <table class="table_row">
+                <tr>
+                    <th>근무처</th>
+                    <th>입사일</th>
+                    <th>퇴사일</th>
+                    <th>직위(직급)</th>
+                </tr>
+
+                <tr th:each="employment: *{user.employmentList}">
+                    <td th:text="${employment.cmpNm}"></td>
+                    <td th:text="${employment.firstDayOfWork}"></td>
+                    <td th:text="${employment.lastDayOfWork}"></td>
+                    <td th:text="${employment.major}"></td>
+                </tr>
+            </table>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/user/employees'" class="btn_other">목록</button>
+                <button type="button" th:text="#{button.update}" th:onclick="pageObj.editView([[${employee.user.userId}]])" class="btn_new">수정</button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

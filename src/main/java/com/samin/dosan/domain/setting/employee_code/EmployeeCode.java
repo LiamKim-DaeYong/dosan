@@ -34,6 +34,13 @@ public class EmployeeCode extends BaseEntity {
     private Used used;
 
     /*================== Business Logic ==================*/
+    public static EmployeeCode of(Long employeeCodeId) {
+        EmployeeCode employeeCode = new EmployeeCode();
+        employeeCode.id = employeeCodeId;
+
+        return employeeCode;
+    }
+
     public static EmployeeCode of(EmployeeCode saveData, String type) {
         EmployeeCode employeeCode = new EmployeeCode();
         employeeCode.code = saveData.getCode();

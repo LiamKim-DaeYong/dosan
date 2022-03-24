@@ -4,9 +4,10 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.core.code.homepage.TrainingType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.training_inquiry.TrainingInquiry;
+import com.samin.dosan.domain.homepage.type.CheckType;
+import com.samin.dosan.domain.homepage.type.TrainingType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,7 +56,7 @@ public class TrainingInquiryRepositoryImpl implements TrainingInquiryRepositoryQ
                     builder.and(trainingInquiry.status.isNull());
                     break;
                 case "CHECK":
-                    builder.and(trainingInquiry.status.eq("Y"));
+                    builder.and(trainingInquiry.status.eq(CheckType.Y));
                     break;
             }
         }

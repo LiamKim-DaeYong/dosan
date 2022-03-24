@@ -22,22 +22,26 @@ public class MediaArchiveApiController {
 
     @PostMapping("/promotional-video/add")
     public ResponseEntity save(@Valid @RequestBody PromotionalVideo saveData) {
-        return ResponseEntity.ok(promotionalVideoService.save(PromotionalVideo.of(saveData)));
+        Long id = promotionalVideoService.save(PromotionalVideo.of(saveData));
+        return ResponseEntity.ok(id);
     }
 
     @PutMapping("/promotional-video/{id}/edit")
     public ResponseEntity edit(@PathVariable Long id, @Valid @RequestBody PromotionalVideo updateData) {
-        return ResponseEntity.ok(promotionalVideoService.update(id, updateData));
+        promotionalVideoService.update(id, updateData);
+        return ResponseEntity.ok(id);
     }
 
     @PostMapping("/webtoon/add")
     public ResponseEntity save(@Valid WebtoonSave saveData) {
-        return ResponseEntity.ok(webtoonService.save(Webtoon.of(saveData)));
+        Long id = webtoonService.save(Webtoon.of(saveData));
+        return ResponseEntity.ok(id);
     }
 
     @PostMapping("/webtoon/{id}/edit")
     public ResponseEntity edit(@PathVariable Long id, @Valid WebtoonSave updateData) {
-        return ResponseEntity.ok(webtoonService.update(id, updateData));
+        webtoonService.update(id, updateData);
+        return ResponseEntity.ok(id);
     }
 
     @DeleteMapping("/delete")

@@ -1,4 +1,5 @@
 spring:
+  # H2 Database
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:dosan
@@ -9,6 +10,7 @@ spring:
     console:
       enabled: true
 
+  # JPA
   jpa:
     hibernate:
 #      naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
@@ -17,12 +19,19 @@ spring:
       hibernate:
         format_sql: true
 
+  # Messages
   messages:
     basename: messages, errors
 
+# Hibernate Batch Size
+hibernate:
+  default_batch_fetch_size: 100
+
+# Log Level
 logging.level:
   org.hibernate.SQL: info
 
+# File Path
 file:
   dir: C:/upload/file/
   temp: C:/upload/temp/

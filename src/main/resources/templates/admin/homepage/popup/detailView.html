@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/popup.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2>팝업 상세</h2>
+
+        <form th:action th:object="${popup}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{homepage.popup.title}"></th>
+                    <td th:text="*{title}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.popup.link}"></th>
+                    <td th:text="*{link}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.popup.postYn}"></th>
+                    <td th:text="*{postYn.description}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.popup.postDate}"></th>
+                    <td th:text="|*{postStart +'~'+ postEnd}|"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.popup.image}"></th>
+                    <td th:text="*{originFilename}"></td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/admin/homepage/popup'"></button>
+            <button type="button" th:text="#{button.update}"
+                    th:onclick="|location.href='@{/admin/homepage/popup/{id}/edit(id=${popup.id})}'|" class="btn_edit">
+            </button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -22,8 +22,8 @@ public class EmployeeCodeService {
         return employeeCodeRepository.findAll(searchParam, employeeCodeType, pageable);
     }
 
-    public List<EmployeeCode> findAllTypes() {
-        return employeeCodeRepository.findAllTypes();
+    public List<EmployeeCode> findAll(EmployeeCodeType employeeCodeType) {
+        return employeeCodeRepository.findAll(employeeCodeType);
     }
 
     public EmployeeCode findById(Long id) {

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/homepage/trainingReview.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.homepage})"></div>
+
+    <div class="content">
+        <h2>수련후기 상세</h2>
+
+        <form th:action th:object="${trainingReview}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{homepage.training-review.title}"></th>
+                    <td th:text="*{title}"></td>
+
+                    <th th:text="#{homepage.training-review.secret}">비밀글</th>
+                    <td th:text="*{secretType.description}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.training-review.author}">작성자</th>
+                    <td th:text="*{author}"></td>
+
+                    <th th:text="#{homepage.training-review.regDt}">작성일자</th>
+                    <td th:text="*{regDt}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.training-review.content}">내용</th>
+                    <td th:utext="*{content}" colspan="3"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{homepage.training-review.file}">첨부파일</th>
+                    <td colspan="3"></td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/admin/homepage/training-review'"
+                    class="btn-default"></button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -45,6 +45,7 @@ public class QnaRepositoryImpl implements QnaRepositoryQueryDsl {
         List<Qna> content = queryFactory
                 .selectFrom(qna)
                 .where(builder)
+                .orderBy(qna.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
