@@ -1,9 +1,9 @@
 package com.samin.dosan.domain.user.employees;
 
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.user.UserService;
+import com.samin.dosan.domain.user.employees.entity.Employee;
 import com.samin.dosan.domain.user.employees.repository.EmployeeRepository;
-import com.samin.dosan.domain.user.entity.User;
+import com.samin.dosan.web.dto.user.employee.EmployeeUpdate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,21 +16,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-    private final UserService userService;
 
     public Page<Employee> findAll(SearchParam searchParam, Long employeeCodeId, Pageable pageable) {
         return employeeRepository.findAll(searchParam, employeeCodeId, pageable);
     }
 
-    public Employee findById(String userId) {
+    public Employee findByUserId(String userId) {
         return employeeRepository.findByUserId(userId);
     }
 
     @Transactional
-    public String save(Employee employee) {
-        User user = userService.save(employee.getUser());
+    public void save(Employee employee) {
         employeeRepository.save(employee);
+    }
 
-        return user.getUserId();
+    @Transactional
+    public void update(String userId, EmployeeUpdate updateData) {
+        Employee employee = findByUserId(userId);
+        employee.update(updateData);
     }
 }

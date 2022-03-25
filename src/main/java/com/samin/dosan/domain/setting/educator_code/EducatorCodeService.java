@@ -22,8 +22,8 @@ public class EducatorCodeService {
         return educatorCodeRepository.findAll(searchParam, educatorCodeType, pageable);
     }
 
-    public List<EducatorCode> findAllTypes() {
-        return educatorCodeRepository.findAllTypes();
+    public List<EducatorCode> findAll(EducatorCodeType educatorCodeType) {
+        return educatorCodeRepository.findAll(educatorCodeType);
     }
 
     public EducatorCode findById(Long id) {

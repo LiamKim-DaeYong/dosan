@@ -7,10 +7,10 @@ import com.samin.dosan.domain.setting.employee_code.EmployeeCodeService;
 import com.samin.dosan.domain.setting.employee_code.EmployeeCodeType;
 import com.samin.dosan.domain.setting.former_job_code.FormerJobCode;
 import com.samin.dosan.domain.setting.former_job_code.FormerJobCodeService;
-import com.samin.dosan.domain.user.employees.Employee;
+import com.samin.dosan.domain.user.employees.entity.Employee;
 import com.samin.dosan.domain.user.employees.EmployeeService;
-import com.samin.dosan.web.dto.user.EmployeeSave;
-import com.samin.dosan.web.dto.user.EmployeeUpdate;
+import com.samin.dosan.web.dto.user.employee.EmployeeSave;
+import com.samin.dosan.web.dto.user.employee.EmployeeUpdate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +41,7 @@ public class EmployeeController {
 
     @GetMapping("/{userId}/detail")
     public String detailView(@PathVariable String userId, Model model) {
-        Employee employee = employeeService.findById(userId);
+        Employee employee = employeeService.findByUserId(userId);
         model.addAttribute("employee", employee);
 
         return "admin/user/employees/detailView";
@@ -54,7 +54,7 @@ public class EmployeeController {
 
     @GetMapping("/{userId}/edit")
     public String editView(@PathVariable String userId, Model model) {
-        Employee employee = employeeService.findById(userId);
+        Employee employee = employeeService.findByUserId(userId);
         EmployeeUpdate employeeUpdate = EmployeeUpdate.fromEntity(employee);
 
         model.addAttribute("employee", employeeUpdate);

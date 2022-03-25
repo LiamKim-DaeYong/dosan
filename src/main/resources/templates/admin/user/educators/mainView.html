@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script"></th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.user})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.user.educator}"></h2>
+
+        <form th:action>
+            <div class="all_search_box">
+                <ul class="toggle_list">
+                    <li th:classappend="${#strings.isEmpty(param.educatorType)}?'toggle_on'">
+                        <a href="/admin/user/educators">전체</a>
+                    </li>
+                    <li th:each="type : ${educatorTypes}"
+                        th:classappend="${#strings.equals(type.id, param.educatorType)}?'toggle_on'">
+                        <a th:href="@{/admin/user/educators(educatorType=${type.id})}"
+                           th:text="${type.code}"></a>
+                    </li>
+                </ul>
+
+                <input type="hidden" name="educatorType" th:value="${param.educatorType}" />
+                <div th:replace="utils/searchBar :: searchWord"></div>
+            </div>
+
+            <table>
+                <colgroup>
+                    <col width="2%" />
+                    <col width="6%" />
+                    <col width="8%" />
+                    <col width="8%" />
+<!--                    <col width="10%" />-->
+<!--                    <col width="10%" />-->
+<!--                    <col width="10%" />-->
+<!--                    <col width="10%" />-->
+<!--                    <col width="10%" />-->
+<!--                    <col width="10%" />-->
+                    <col width="16%" />
+                </colgroup>
+                <tr>
+                    <th class="table_chk">
+                        <input type="checkbox" check="all"/>
+                    </th>
+                    <th class="table_num" th:text="#{label.no}">No</th>
+                    <th th:text="#{user.name}">이름</th>
+                    <th>성별</th>
+                    <th th:text="#{user.educator.appointmentdata}">최초임용일</th>
+                    <th th:text="#{user.type}">구분</th>
+                    <th th:text="#{user.charge}">담당</th>
+                    <th th:text="#{user.belong}">소속</th>
+                    <th th:text="#{user.branch}">지부</th>
+                    <th th:text="#{user.contact}">연락처</th>
+                    <th>출력</th>
+                </tr>
+
+                <tr th:each="educator : ${result.content}">
+                    <td class="table_chk">
+                        <input type="checkbox" th:value="${educator.id}"/>
+                    </td>
+                    <td class="table_num"
+                        th:text="${result.totalElements - (result.pageable.offset + educatorStat.index)}">
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/user/educators/{userId}/detail(userId=${educator.user.userId})}" th:text="${educator.user.userNm}"></a>
+                    </td>
+                    <td th:text="${educator.gender.description}"></td>
+                    <td th:text="${educator.firstDayOfWork}"></td>
+                    <td th:text="${educator.educatorType.code}"></td>
+                    <td th:text="${educator.educatorAssignedTask.code}"></td>
+                    <td th:text="${educator.educatorTeam.code}"></td>
+                    <td th:text="${educator.educatorBranch.code}"></td>
+                    <td th:text="${educator.phoneNum}"></td>
+                    <td>
+                        <a href="#">재직증명서</a>
+                    </td>
+                </tr>
+            </table>
+
+            <div th:replace="utils/pagination :: pagination(${result})"></div>
+
+            <div class="btn_box_only">
+                <button type="button" th:text="#{button.new}" onclick="$url.redirect($url.getPath('/add'))" class="btn_new">등록</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div th:replace="utils/modal :: modal('modal')"></div>
+</section>
+</body>
+</html>

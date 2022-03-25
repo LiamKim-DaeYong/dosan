@@ -1,7 +1,7 @@
 package com.samin.dosan.web.controller;
 
-import com.samin.dosan.domain.user.UserService;
 import com.samin.dosan.domain.user.entity.User;
+import com.samin.dosan.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

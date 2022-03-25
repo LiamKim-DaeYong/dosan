@@ -60,5 +60,9 @@ public class EducatorCodeController {
     public void init() {
         educatorCodeService.save(EducatorCode.of("지도위원", EducatorCodeType.TYPE));
         educatorCodeService.save(EducatorCode.of("예절지도위원", EducatorCodeType.TYPE));
+
+        educatorCodeService.save(EducatorCode.of("담당 테스트", EducatorCodeType.ASSIGNED_TASK));
+        educatorCodeService.save(EducatorCode.of("소속 테스트", EducatorCodeType.TEAM));
+        educatorCodeService.save(EducatorCode.of("지부 테스트", EducatorCodeType.BRANCH));
     }
 }

@@ -119,6 +119,10 @@ public class BusinessTripReport extends BaseEntity {
         this.accommodationType = updateData.getAccommodationType();
     }
 
+    public void delete() {
+        this.used = Used.N;
+    }
+
     public void draft(ApprovalType approvalType) {
         this.approvalType = approvalType;
     }

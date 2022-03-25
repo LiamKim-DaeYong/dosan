@@ -1,11 +1,11 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
 import com.samin.dosan.core.code.Used;
+import com.samin.dosan.domain.homepage.type.CheckType;
+import com.samin.dosan.domain.homepage.type.TrainingType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.training_inquiry.TrainingInquiry;
 import com.samin.dosan.domain.homepage.training_inquiry.TrainingInquiryService;
-import com.samin.dosan.domain.homepage.type.CheckType;
-import com.samin.dosan.domain.homepage.type.TrainingType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

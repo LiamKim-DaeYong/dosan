@@ -11,5 +11,5 @@ import java.util.List;
 public interface EducatorCodeRepositoryQueryDsl {
     Page<EducatorCode> findAll(SearchParam searchParam, EducatorCodeType educatorCodeType, Pageable pageable);
 
-    List<EducatorCode> findAllTypes();
+    List<EducatorCode> findAll(EducatorCodeType educatorCodeType);
 }

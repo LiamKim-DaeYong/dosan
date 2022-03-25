@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.user.employees.Employee;
+import com.samin.dosan.domain.user.employees.entity.Employee;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ import org.springframework.data.support.PageableExecutionUtils;
 import java.util.List;
 
 import static com.samin.dosan.domain.setting.employee_code.QEmployeeCode.employeeCode;
-import static com.samin.dosan.domain.user.employees.QEmployee.employee;
+import static com.samin.dosan.domain.user.employees.entity.QEmployee.employee;
 import static com.samin.dosan.domain.user.entity.QUser.user;
 
 @RequiredArgsConstructor
@@ -27,12 +27,11 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryQueryDsl {
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(employee.user.used.eq(Used.Y));
 
-        String searchWorld = searchParam.getSearchWorld();
-
         if (employeeCodeId != null) {
             builder.and(employee.employeeType.id.eq(employeeCodeId));
         }
 
+        String searchWorld = searchParam.getSearchWorld();
         if (searchWorld != null) {
             builder.and(employee.user.userNm.contains(searchWorld)
 
@@ -62,6 +61,12 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryQueryDsl {
 
         JPAQuery<Employee> countQuery = queryFactory
                 .selectFrom(employee)
+                .leftJoin(employee.user, user).fetchJoin()
+                .leftJoin(employee.employeeType, employeeCode).fetchJoin()
+                .leftJoin(employee.employeePosition, employeeCode).fetchJoin()
+                .leftJoin(employee.employeeRank, employeeCode).fetchJoin()
+                .leftJoin(employee.employeeStep, employeeCode).fetchJoin()
+                .leftJoin(employee.employeeDepartment, employeeCode).fetchJoin()
                 .where(builder);
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);

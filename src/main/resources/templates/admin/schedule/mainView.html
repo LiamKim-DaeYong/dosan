@@ -47,19 +47,19 @@
                 </div>
                 </div>
                 <div class="calendar-center">
-                    <button type="button" data-action="move-prev">
-                        <i class="calendar-icon ic-arrow-line-left" data-action="move-prev"></i>
+                    <button type="button" th:onclick="pageObj.viewPrev()">
+                        <i class="calendar-icon ic-arrow-line-left"></i>
                     </button>
                     <span id="renderRange" class="render-range"></span>
-                    <button type="button" data-action="move-next">
-                        <i class="calendar-icon ic-arrow-line-right" data-action="move-next"></i>
+                    <button type="button" th:onclick="pageObj.viewNext()">
+                        <i class="calendar-icon ic-arrow-line-right"></i>
                     </button>
                 </div>
                 <div class="calendar-right">
-                    <button type="button"  data-action="move-today">오늘</button>
-                    <button type="button" class="calendar-btn-month active" data-action="toggle-monthly">월</button>
-                    <button type="button" class="calendar-btn-week" data-action="toggle-week">주</button>
-                    <button type="button" class="calendar-btn-day" data-action="toggle-day">일</button>
+                    <button type="button"  th:onclick="pageObj.viewToday()">오늘</button>
+                    <button type="button"  th:onclick="pageObj.viewMonth()" class="calendar-btn-month active">월</button>
+                    <button type="button"  th:onclick="pageObj.viewWeek()" class="calendar-btn-week">주</button>
+                    <button type="button"  th:onclick="pageObj.viewDay()" class="calendar-btn-day">일</button>
                 </div>
             </div>
             <div id="calendar"></div>

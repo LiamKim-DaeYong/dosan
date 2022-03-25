@@ -1,5 +1,6 @@
 var pageObj = {
     init: function () {
+        $editor.init("content");
     },
     delete: function () {
         var form = document.createElement("form");
@@ -47,8 +48,8 @@ var pageObj = {
 
 pageObj.pageStart = function () {
     pageObj.init();
-    pageObj.editor.initView();
-    pageObj.multifile.initView();
+    // pageObj.editor.initView();
+    // pageObj.multifile.initView();
 }
 
 pageObj.editor = $.extend($editor, {

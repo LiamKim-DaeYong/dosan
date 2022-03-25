@@ -1,6 +1,5 @@
 package com.samin.dosan.web.api.admin.board;
 
-import com.samin.dosan.domain.board.Board;
 import com.samin.dosan.domain.board.BoardService;
 import com.samin.dosan.web.dto.board.BoardSave;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +29,10 @@ public class BoardApiController {
                                     @RequestPart(value = "file", required = false) List<MultipartFile> uploadFiles) {
 
         boardSave.setWriter(principal.getName()); // 작성자
-        Board board = boardSave.toEntity();
+//        Board board = boardSave.toEntity();
 
         List<FileDto> newFiles = FileUtil.saveFiles(uploadFiles, "board");
-        boardService.save(board, newFiles, deleteFiles);
+//        boardService.save(board, newFiles, deleteFiles);
         //deleteFiles.stream().forEach(deleteFile -> FileUtil.delete(deleteFile.getSubDir(), deleteFile.getStorageName()));
 
         return ResponseEntity.ok().build();

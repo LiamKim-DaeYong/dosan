@@ -9,15 +9,20 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/normalize.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/modal.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/summernote/summernote-lite.css}">
 
     <!-- Page Css -->
     <th:block th:replace="${pageCss}"></th:block>
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}" src="../../static/js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript" th:src="@{/lib/smarteditor/js/HuskyEZCreator.js}" charset="UTF-8"></script>
-    <script type="text/javascript" th:src="@{/js/nav.js}" src="../../static/js/nav.js"></script>
-    <script type="text/javascript" th:src="@{/js/common.js}" src="../../static/js/common.js"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+
+    <script type="text/javascript" th:src="@{/lib/summernote/summernote-lite.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/summernote/lang/summernote-ko-KR.js}"></script>
+
+    <script type="text/javascript" th:src="@{/js/nav.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+<!--    <script type="text/javascript" th:src="@{/lib/smarteditor/js/HuskyEZCreator.js}" charset="UTF-8"></script>-->
 
     <!-- Page Script -->
     <th:block th:replace="${pageScript}"></th:block>

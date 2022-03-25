@@ -1,10 +1,10 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
 import com.samin.dosan.core.code.Used;
+import com.samin.dosan.domain.homepage.type.BoardType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.board.HomepageBoard;
 import com.samin.dosan.domain.homepage.board.HomepageBoardService;
-import com.samin.dosan.domain.homepage.type.BoardType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 
-@Controller("homepageBoardController")
+@Controller("homepageBoard")
 @RequiredArgsConstructor
 @RequestMapping("/admin/homepage/board/{type}")
 public class BoardController {

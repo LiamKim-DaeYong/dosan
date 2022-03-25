@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +37,11 @@ public class BusinessTripReportService {
     public Long update(Long id, BusinessTripReportSave businessTripReportSave) {
         findById(id).update(businessTripReportSave);
         return id;
+    }
+
+    @Transactional
+    public void delete(List<Long> ids) {
+        ids.forEach(id -> findById(id).delete());
     }
 
     @Transactional

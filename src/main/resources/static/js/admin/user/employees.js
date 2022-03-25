@@ -13,12 +13,16 @@ var pageObj = {
     },
 
     editView: function (userId) {
-        location.href = `/admin/user/employees/${userId}/edit`;
+        $url.redirect(`/admin/user/employees/${userId}/edit`);
     },
 
     update: function () {
+        const updateData = $form.getData();
+        updateData.educationalList = $table.getData('educationalTable');
+        updateData.employmentList = $table.getData('employmentTable');
+
         $ajax.put({
-            data: $form.getData(),
+            data: updateData,
             success: function (userId) {
                 $url.redirect(`/admin/user/employees/${userId}/detail`);
             }

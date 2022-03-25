@@ -28,8 +28,9 @@ public class UserService {
     }
 
     @Transactional
-    public void edit(String userId, User user) {
-        User findUser = findById(userId);
+    public void update(String userId, String userNm) {
+        User user = findById(userId);
+        user.updateUserNm(userNm);
     }
 
     @Transactional

@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -36,6 +37,12 @@ public class BusinessTripReportApiController {
     public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody BusinessTripReportSave businessTripReportSave) {
         businessTripReportService.update(id, businessTripReportSave);
         return ResponseEntity.ok(id);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity delete(@RequestBody List<Long> ids) {
+        businessTripReportService.delete(ids);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}/draft")

@@ -16,14 +16,14 @@ public class BoardDto {
 
         private String writer;
 
-        public Board toEntity() {
-            return Board.builder()
-                    .id(this.id)
-                    .title(this.title)
-                    .content(this.content)
-                    .writer(this.writer)
-                    .build();
-        }
+//        public Board toEntity() {
+//            return Board.builder()
+//                    .id(this.id)
+//                    .title(this.title)
+//                    .content(this.content)
+//                    .writer(this.writer)
+//                    .build();
+//        }
     }
 
     @Data

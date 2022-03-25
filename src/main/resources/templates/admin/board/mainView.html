@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block id="css"></th:block>
 
@@ -43,7 +42,7 @@
                     </td>
                     <td th:text="${boardStat.count}"></td>
                     <td>
-                        <a th:href="@{/templates/admin/board/{id}(id=${board.id})}" th:text="${board.title}"></a>
+                        <a th:href="@{/admin/board/{id}(id=${board.id})}" th:text="${board.title}"></a>
                     </td>
                     <td th:text="${board.writer}"></td>
                     <td th:text="${board.comments.size()}"></td>

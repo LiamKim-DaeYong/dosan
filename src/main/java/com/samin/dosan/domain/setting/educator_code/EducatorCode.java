@@ -34,6 +34,13 @@ public class EducatorCode extends BaseEntity {
     private Used used;
 
     /*================== Business Logic ==================*/
+    public static EducatorCode of(Long educatorCodeId) {
+        EducatorCode educatorCode = new EducatorCode();
+        educatorCode.id = educatorCodeId;
+
+        return educatorCode;
+    }
+
     public static EducatorCode of(EducatorCode saveData, String type) {
         EducatorCode educatorCode = new EducatorCode();
         educatorCode.code = saveData.getCode();

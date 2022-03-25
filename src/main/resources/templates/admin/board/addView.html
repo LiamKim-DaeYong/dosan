@@ -20,14 +20,14 @@
                     <th>제목</th>
                     <td>
                         <input type="text" th:field="*{title}" class="table_row_long_input"/>
-                        <span th:errors="*{title}"></span>
+                        <span errors="*{title}"></span>
                     </td>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td class="table_row_textarea">
-                        <textarea th:field="*{content}"></textarea>
-                        <span th:errors="*{content}"></span>
+                        <textarea th:field="*{content}" style="display: none"></textarea>
+                        <span errors="*{content}"></span>
                     </td>
                 </tr>
                 <tr>

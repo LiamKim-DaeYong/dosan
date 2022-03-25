@@ -1,7 +1,7 @@
 package com.samin.dosan.domain.user.employees.repository;
 
 import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.user.employees.Employee;
+import com.samin.dosan.domain.user.employees.entity.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

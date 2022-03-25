@@ -23,16 +23,17 @@
                     <th>아이디</th>
                     <td>
                         <input type="text" th:field="*{userId}" />
-                        <button type="button" id="checkId" onclick="pageObj.checkId()" value="N">중복체크</button>
-                        <div id="checkIdMsg"></div>
+                        <span errors="userId" class="modal_error"></span>
                     </td>
                     <th>패스워드</th>
                     <td>
                         <input type="password" th:field="*{password}" />
+                        <span errors="password" class="modal_error"></span>
                     </td>
                     <th>이름</th>
                     <td>
                         <input type="text" th:field="*{userNm}" />
+                        <span errors="userNm" class="modal_error"></span>
                     </td>
                     <th>성별</th>
                     <td>
@@ -153,7 +154,6 @@
                 <span>학력사항</span>
                 <button type="button" onclick="$table.addRow('educationalTable')">입력 행 추가</button>
                 <button type="button" onclick="$table.delRow('educationalTable')">선택 행 삭제</button>
-                <button type="button" onclick="$table.getData('educationalTable')">선택 행 삭제</button>
             </div>
 
             <table id="educationalTable" class="table_row">
@@ -174,7 +174,7 @@
                         <input type="text" name="schoolNm" />
                     </td>
                     <td>
-                        <input type="text" name="graduationYear" />
+                        <input type="text" name="graduationYear" maxlength="4" />
                     </td>
                     <td>
                         <input type="text" name="major" />

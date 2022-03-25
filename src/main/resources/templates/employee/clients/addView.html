@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/clients/clients.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.clients})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.clients.new}"></h2>
+
+        <form th:action th:object="${clients}">
+            <table>
+                <tr>
+                    <th>단체명</th>
+                    <td>
+                        <input type="text" th:field="*{clientNm}">
+                        <span errors="clientNm" class="modal_error"></span>
+                    </td>
+                    <th>담당자</th>
+                    <td>
+                        <input type="text" th:field="*{manager}">
+                        <span errors="manager" class="modal_error"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>구분</th>
+                    <td colspan="3">
+                        <li th:each="type : ${clientTypes}">
+                            <input type="radio" th:field="*{clientType}" th:value="${type.name()}">
+                            <label th:for="${#ids.prev('clientType')}" th:text="${type.description}"></label>
+                        </li>
+                    </td>
+                </tr>
+                <tr>
+                    <th>연락처1</th>
+                    <td>
+                        <input type="text" th:field="*{phoneNum}">
+                        <span errors="phoneNum" class="modal_error"></span>
+                    </td>
+                    <th>연락처2</th>
+                    <td><input type="text" th:field="*{officeNum}"></td>
+                </tr>
+                <tr>
+                    <th>팩스</th>
+                    <td><input type="text" th:field="*{faxNum}"></td>
+                    <th>이메일</th>
+                    <td><input type="text" th:field="*{email}"></td>
+                </tr>
+                <tr>
+                    <th>주소</th>
+                    <td>
+                        <input type="text" id="zipCode" name="zipCode">
+                        <button type="button" onclick="$api.addressApi()">주소찾기</button>
+                        <input type="text" id="roadAddress" name="roadAddress">
+                        <input type="text" id="detailAddress" name="detailAddress">
+                    </td>
+                    <th>사업자등록번호</th>
+                    <td><input type="text" th:field="*{bussinessNum}"></td>
+                </tr>
+                <tr>
+                    <th>비고</th>
+                    <td colspan="3"><input type="text" th:field="*{etc}"></td>
+                </tr>
+            </table>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.list}" onclick="location.href='/clients'" class="btn_other"></button>
+                <button type="button" th:text="#{button.new}" onclick="pageObj.save()" class="btn_new"></button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

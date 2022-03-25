@@ -50,6 +50,7 @@ public class BusinessTripReportController {
 
     @GetMapping("/add")
     public String addView(@ModelAttribute BusinessTripReport businessTripReport) {
+
         return "/educator/business_trip_report/addView";
     }
 
@@ -67,9 +68,6 @@ public class BusinessTripReportController {
         return "/educator/business_trip_report/editView";
     }
 
-
-
-
     @PostConstruct
     public void init() {
         for (int i = 1; i < 1001; i++) {
@@ -77,10 +75,10 @@ public class BusinessTripReportController {
                     .title("제목"+i)
                     .user(userService.findById("educator"))
                     .businessPlace("서울")
-                    .fromCity("대구")
-                    .fromCounty("장기동")
-                    .toCity("영천")
-                    .toCounty("중앙동")
+                    .fromCity("대구광역시")
+                    .fromCounty("남구")
+                    .toCity("서울특별시")
+                    .toCounty("강남구")
                     .businessPurpose("목적목적목적목적목적")
                     .businessStartDate(LocalDate.now())
                     .businessEndDate(LocalDate.now())
@@ -88,7 +86,7 @@ public class BusinessTripReportController {
                     .otherReference("")
                     .mealType(MealType.ONE_MEAL)
                     .accommodationType(AccommodationType.INDIVIDUAL)
-                    .approvalType(ApprovalType.SAVE)
+                    .approvalType(ApprovalType.RETURN)
                     .used(Used.Y)
                     .build();
 

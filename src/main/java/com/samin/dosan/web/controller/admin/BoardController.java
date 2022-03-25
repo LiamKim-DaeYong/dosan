@@ -31,6 +31,7 @@ public class BoardController {
 
     @GetMapping("/add")
     public String addView(@ModelAttribute Board board) {
+        board.setContent("<p>test</p>");
         return "admin/board/addView";
     }
 }

@@ -1,8 +1,8 @@
 package com.samin.dosan.domain.homepage.board;
 
+import com.samin.dosan.domain.homepage.type.BoardType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.board.repository.HomepageBoardRepository;
-import com.samin.dosan.domain.homepage.type.BoardType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

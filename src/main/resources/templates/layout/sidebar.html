@@ -81,10 +81,10 @@
                     <a id="menu_user_educator" th:href="@{/admin/user/educators}" th:text="#{menu.user.educator}">지도위원 관리</a>
                 </li>
                 <li>
-                    <a id="menu_user_educator" th:href="@{/admin/user/educator}" th:text="#{menu.user.leave}">휴직자 관리</a>
+                    <a id="menu_user_educator" th:href="@{/templates/admin/user/educators}" th:text="#{menu.user.leave}">휴직자 관리</a>
                 </li>
                 <li>
-                    <a id="menu_user_educator" th:href="@{/admin/user/educator}" th:text="#{menu.user.retired}">퇴직자 관리</a>
+                    <a id="menu_user_educator" th:href="@{/templates/admin/user/educators}" th:text="#{menu.user.retired}">퇴직자 관리</a>
                 </li>
             </ul>
         </li>
@@ -133,16 +133,16 @@
         <li><span class="nav_list_title"><img th:src="@{/images/common/day.svg}">수련자료</span>
             <ul>
                 <li>
-                    <a th:href="@{/templates/admin/user/training/data/consultation}">수련 협의자료</a>
+                    <a th:href="@{/educator/training_archive/consultation}">수련 협의자료</a>
                 </li>
                 <li>
-                    <a th:href="@{/templates/admin/user/training/data/operation}">수련 운영자료</a>
+                    <a th:href="@{/educator/training_archive/operation}">수련 운영자료</a>
                 </li>
                 <li>
-                    <a th:href="@{/templates/admin/user/training/data/branch}">지부 자료실</a>
+                    <a th:href="@{/educator/training_archive/branch}">지부 자료실</a>
                 </li>
                 <li>
-                    <a th:href="@{/templates/admin/user/training/data/lecture}">수업지도 자료실</a>
+                    <a th:href="@{/educator/training_archive/lesson}">수업지도 자료실</a>
                 </li>
             </ul>
         </li>

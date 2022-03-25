@@ -32,31 +32,19 @@
                 <tr>
                     <th th:text="#{business.trip.report.from}"></th>
                     <td>
-                        <select th:field="*{fromCity}">
-                            <option value="">시/도</option>
-                            <option value="대구">대구</option>
-                        </select>
+                        <select th:field="*{fromCity}" class="city_from"></select>
                         <span errors="fromCity"></span>
 
-                        <select th:field="*{fromCounty}">
-                            <option value="">시/군/구</option>
-                            <option value="수성구">수성구</option>
-                        </select>
+                        <select th:field="*{fromCounty}" class="county_from"></select>
                         <span errors="fromCounty"></span>
                     </td>
 
                     <th th:text="#{business.trip.report.to}"></th>
                     <td>
-                        <select th:field="*{toCity}">
-                            <option value="">시/도</option>
-                            <option value="서울">서울</option>
-                        </select>
+                        <select th:field="*{toCity}" class="city_to"></select>
                         <span errors="toCity"></span>
 
-                        <select th:field="*{toCounty}">
-                            <option value="">시/군/구</option>
-                            <option value="강남구">강남구</option>
-                        </select>
+                        <select th:field="*{toCounty}" class="county_to"></select>
                         <span errors="toCounty"></span>
                     </td>
                 </tr>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script"></th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.clients})"></div>
+
+    <div class="content">
+        <form th:action>
+            <input type="text" name="searchWorld" th:value="${searchParam.searchWorld}">
+            <button>검색</button>
+        </form>
+
+        <table>
+            <tr>
+                <th><input type="checkbox"></th>
+                <th th:text="#{label.no}"></th>
+                <th th:text="#{clients.type}"></th>
+                <th th:text="#{clients.clientNm}"></th>
+                <th th:text="#{clients.name}"></th>
+                <th th:text="#{clients.phoneNum}"></th>
+                <th th:text="#{clients.officeNum}"></th>
+                <th th:text="#{clients.address}"></th>
+                <th th:text="#{clients.email}"></th>
+                <th th:text="#{clients.etc}"></th>
+            </tr>
+<!--            <tr th:each="client : ${clientsList}" th:href="@{/clients/{id}(id=${client.id})}">-->
+            <tr th:each="client : ${clientsList}">
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td>
+                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${clientsList.totalElements - (clientsList.pageable.offset + clientStat.index)}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.clientType.description}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.clientNm}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.manager}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.phoneNum}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.officeNum}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.address.roadAddress}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.email}"></a>
+                </td>
+                <td>
+                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.etc}"></a>
+                </td>
+            </tr>
+        </table>
+
+        <div class="btn_box">
+            <button type="button" onclick="location.href='/employee/clients/delete'" class="btn_del">선택삭제</button>
+            <button type="button" onclick="location.href='/employee/clients/add'" class="btn_new">신규등록</button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

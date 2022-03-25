@@ -47,10 +47,10 @@ public class EducatorCodeRepositoryImpl implements EducatorCodeRepositoryQueryDs
     }
 
     @Override
-    public List<EducatorCode> findAllTypes() {
+    public List<EducatorCode> findAll(EducatorCodeType educatorCodeType) {
         return queryFactory
                 .selectFrom(educatorCode)
-                .where(educatorCode.educatorCodeType.eq(EducatorCodeType.TYPE)
+                .where(educatorCode.educatorCodeType.eq(educatorCodeType)
                         .and(educatorCode.used.eq(Used.Y)))
                 .fetch();
     }

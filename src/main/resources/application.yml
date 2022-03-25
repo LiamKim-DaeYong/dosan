@@ -29,7 +29,7 @@ hibernate:
 
 # Log Level
 logging.level:
-  org.hibernate.SQL: info
+  org.hibernate.SQL: debug
 
 # File Path
 file:

@@ -56,7 +56,9 @@
 
                 <tr>
                     <th>주소</th>
-                    <td colspan="7" th:text="|[*{address.zipCode}] *{address.roadAddress} *{address.detailAddress}|">
+                    <td colspan="7">
+                        <span th:if="*{not #strings.isEmpty(address.zipCode)}"
+                              th:text="|[*{address.zipCode}] *{address.roadAddress} *{address.detailAddress}|"></span>
                     </td>
                 </tr>
             </table>
@@ -79,7 +81,10 @@
                     <th>채용일</th>
                     <td th:text="*{firstDayOfWork}"></td>
                     <th>주소</th>
-                    <td colspan="3" th:text="|[*{cmpAddress.zipCode}] *{cmpAddress.roadAddress} *{cmpAddress.detailAddress}|"></td>
+                    <td colspan="3">
+                          <span th:if="*{not #strings.isEmpty(cmpAddress.zipCode)}"
+                                th:text="|[*{cmpAddress.zipCode}] *{cmpAddress.roadAddress} *{cmpAddress.detailAddress}|"></span>
+                    </td>
                 </tr>
             </table>
 
@@ -92,7 +97,7 @@
                     <th>학위</th>
                 </tr>
 
-                <tr th:each="educational: *{user.educationalList}">
+                <tr th:each="educational: *{educationalList}">
                     <td th:text="${educational.schoolNm}"></td>
                     <td th:text="${educational.graduationYear}"></td>
                     <td th:text="${educational.major}"></td>
@@ -109,11 +114,11 @@
                     <th>직위(직급)</th>
                 </tr>
 
-                <tr th:each="employment: *{user.employmentList}">
+                <tr th:each="employment: *{employmentList}">
                     <td th:text="${employment.cmpNm}"></td>
                     <td th:text="${employment.firstDayOfWork}"></td>
                     <td th:text="${employment.lastDayOfWork}"></td>
-                    <td th:text="${employment.major}"></td>
+                    <td th:text="${employment.position}"></td>
                 </tr>
             </table>
 

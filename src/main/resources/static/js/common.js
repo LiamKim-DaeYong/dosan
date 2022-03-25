@@ -100,29 +100,38 @@ $modal = function () {
 /**
  * 에디터 뷰
  */
+// $editor = {
+//     /**
+//      * 뷰 초기화
+//      * @param targetId Html 요소 ID
+//      */
+//     init: function (targetId) {
+//         this.targetId = targetId;
+//         this.target = [];
+//         nhn.husky.EZCreator.createInIFrame({
+//             oAppRef: this.target,
+//             elPlaceHolder: targetId,
+//             sSkinURI: "/lib/smarteditor/SmartEditor2Skin.html",
+//             fCreator: "createSEditor2"
+//         });
+//     },
+//     /**
+//      * 에디터 내용 조회
+//      * @returns Html 문자열
+//      */
+//     getData: function() {
+//         pageObj.editor.target.getById[this.targetId].exec("UPDATE_CONTENTS_FIELD");
+//         return $('#' + this.targetId).val();
+//     }
+// }
+
 $editor = {
-    /**
-     * 뷰 초기화
-     * @param targetId Html 요소 ID
-     */
     init: function (targetId) {
-        this.targetId = targetId;
-        this.target = [];
-        nhn.husky.EZCreator.createInIFrame({
-            oAppRef: this.target,
-            elPlaceHolder: targetId,
-            sSkinURI: "/lib/smarteditor/SmartEditor2Skin.html",
-            fCreator: "createSEditor2"
+        const target = $("#" + targetId);
+        target.summernote({
+            height: 500
         });
     },
-    /**
-     * 에디터 내용 조회
-     * @returns Html 문자열
-     */
-    getData: function() {
-        pageObj.editor.target.getById[this.targetId].exec("UPDATE_CONTENTS_FIELD");
-        return $('#' + this.targetId).val();
-    }
 }
 
 /**

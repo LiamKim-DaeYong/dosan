@@ -16,14 +16,14 @@ public class BoardSave {
 
     private String writer;
 
-    public Board toEntity() {
-        return Board.builder()
-                .id(this.id)
-                .title(this.title)
-                .content(this.content)
-                .writer(this.writer)
-                .comments(new ArrayList<>())
-                .files(new ArrayList<>())
-                .build();
-    }
+//    public Board toEntity() {
+//        return Board.builder()
+//                .id(this.id)
+//                .title(this.title)
+//                .content(this.content)
+//                .writer(this.writer)
+//                .comments(new ArrayList<>())
+//                .files(new ArrayList<>())
+//                .build();
+//    }
 }
