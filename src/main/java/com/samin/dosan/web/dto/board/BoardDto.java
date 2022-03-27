@@ -1,6 +1,5 @@
 package com.samin.dosan.web.dto.board;
 
-import com.samin.dosan.domain.board.Board;
 import lombok.Data;
 
 public class BoardDto {

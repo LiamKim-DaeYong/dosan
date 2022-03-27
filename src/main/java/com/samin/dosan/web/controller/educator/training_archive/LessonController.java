@@ -18,7 +18,7 @@ public class LessonController {
         return "/educator/training_archive/lesson/mainView";
     }
 
-    @GetMapping("/detail")
+    @GetMapping("/{id}il")
     public String detailView() {
         return "/educator/training_archive/lesson/detailView";
     }

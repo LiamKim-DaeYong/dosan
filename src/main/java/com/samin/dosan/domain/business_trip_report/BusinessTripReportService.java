@@ -29,13 +29,13 @@ public class BusinessTripReportService {
     }
 
     @Transactional
-    public Long save(BusinessTripReport businessTripReport) {
-        return businessTripRepository.save(businessTripReport).getId();
+    public Long save(BusinessTripReport saveData) {
+        return businessTripRepository.save(saveData).getId();
     }
 
     @Transactional
-    public Long update(Long id, BusinessTripReportSave businessTripReportSave) {
-        findById(id).update(businessTripReportSave);
+    public Long update(Long id, BusinessTripReportSave updateData) {
+        findById(id).update(updateData);
         return id;
     }
 

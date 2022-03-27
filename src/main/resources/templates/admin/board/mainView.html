@@ -46,7 +46,7 @@
                     </td>
                     <td th:text="${board.writer}"></td>
                     <td th:text="${board.comments.size()}"></td>
-                    <td th:text="${board.createdAt}"></td>
+                    <td th:text="${board.createdAt.toLocalDate()}"></td>
                 </tr>
             </table>
 

@@ -1,8 +1,8 @@
 package com.samin.dosan.domain.homepage.board;
 
-import com.samin.dosan.domain.homepage.type.BoardType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.board.repository.HomepageBoardRepository;
+import com.samin.dosan.domain.homepage.type.BoardType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,13 +29,13 @@ public class HomepageBoardService {
     }
 
     @Transactional
-    public Long save(HomepageBoard homepageBoard) {
-        return homepageBoardRepository.save(homepageBoard).getId();
+    public Long save(HomepageBoard saveData) {
+        return homepageBoardRepository.save(saveData).getId();
     }
 
     @Transactional
-    public Long update(Long id, HomepageBoard homepageBoard) {
-        findById(id).update(homepageBoard);
+    public Long update(Long id, HomepageBoard updateData) {
+        findById(id).update(updateData);
         return id;
     }
 

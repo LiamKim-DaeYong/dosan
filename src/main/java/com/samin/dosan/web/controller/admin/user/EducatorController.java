@@ -39,7 +39,7 @@ public class EducatorController {
         return "admin/user/educators/mainView";
     }
 
-    @GetMapping("/{userId}/detail")
+    @GetMapping("/{userId}")
     public String detailView(@PathVariable String userId, Model model) {
         Educator educator = educatorService.findByUserId(userId);
         model.addAttribute("educator", educator);

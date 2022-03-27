@@ -129,7 +129,26 @@ $editor = {
     init: function (targetId) {
         const target = $("#" + targetId);
         target.summernote({
-            height: 500
+            height: 500,
+            placeholder: '<span errors="content" className="modal_error"></span>',
+            callbacks: {
+                onImageUpload : function(file) {
+                    const img = new FormData();
+                    img.append("file", file[0]);
+                    console.log(file)
+
+                    $.ajax({
+                        data : img,
+                        type : "POST",
+                        url : "/files/edit/upload",
+                        contentType : false,
+                        processData : false,
+                        success : function(imgUrl) {
+                            target.summernote('insertImage', imgUrl);
+                        }
+                    });
+                },
+            }
         });
     },
 }
@@ -230,27 +249,48 @@ $multifile = {
 $event = {
     init: function () {
         this.inputAutocompleteOff();
-        this.initCheckboxEvent();
-        this.fileInputInit();
+        $checkBox.init();
+        $files.init();
     },
 
     inputAutocompleteOff: function () {
         $('input').prop("autocomplete", "off");
-    },
+    }
+}
 
-    initCheckboxEvent: function () {
-        $('input:checkbox[check="all"]').on('click', function () {
-            const table = $(this).closest('table');
-            table.find('input:checkbox').prop("checked", $(this).is(":checked"));
-        });
-    },
+$files = {
+    filesMap: new Map(),
+    init: function () {
+        var _this = this;
 
-    fileInputInit: function () {
-        $(".file-input").on("change", function(){
-            var filename = $(this).val();
-            var fileText = filename.split("\\");
-            $(".filename").text(fileText[2]);
+        $(".file-input").on("change", function() {
+            $.each(this.files, function (idx, file) {
+                _this.addFile(file);
+            });
         })
+    },
+    removeFile: function (file) {
+        const filename = $(file).siblings('span').text();
+
+        delete this.filesMap[filename];
+        $(file).closest('.file_wraper').remove();
+    },
+    addFile: function (file) {
+        let filename = file.name;
+
+        if (this.filesMap[filename]) return;
+
+        this.filesMap.set(filename, file);
+        const template = `
+                    <div class="file_wraper">
+                        <button type="button" onclick="$files.removeFile(this)">제거</button>
+                        <span>${filename}</span>
+                    </div>`;
+
+        $(".filenames").append(template);
+    },
+    getFiles: function () {
+        return Array.from(this.filesMap.values());
     },
 }
 
@@ -496,6 +536,12 @@ $valid = {
 }
 
 $checkBox = {
+    init: function () {
+        $('input:checkbox[check="all"]').on('click', function () {
+            const table = $(this).closest('table');
+            table.find('input:checkbox').prop("checked", $(this).is(":checked"));
+        });
+    },
     getAllChecked: function (target=$("table")) {
         var result = [];
         target.find('input:checkbox[check!="all"]:checked').each(function () {

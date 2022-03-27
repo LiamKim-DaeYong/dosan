@@ -28,8 +28,8 @@ public class TrainingInquiryService {
     }
 
     @Transactional
-    public Long save(TrainingInquiry trainingInquiry) {
-        return trainingInquiryRepository.save(trainingInquiry).getId();
+    public Long save(TrainingInquiry saveData) {
+        return trainingInquiryRepository.save(saveData).getId();
     }
 
     @Transactional

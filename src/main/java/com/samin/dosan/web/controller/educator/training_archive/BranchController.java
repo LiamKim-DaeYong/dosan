@@ -18,7 +18,7 @@ public class BranchController {
         return "/educator/training_archive/branch/mainView";
     }
 
-    @GetMapping("/detail")
+    @GetMapping("/{id}il")
     public String detailView() {
         return "/educator/training_archive/branch/detailView";
     }

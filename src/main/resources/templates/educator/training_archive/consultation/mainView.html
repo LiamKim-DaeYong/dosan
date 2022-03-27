@@ -41,7 +41,7 @@
                     <td class="table_num"
                         th:text="${result.totalElements - (result.pageable.offset + consultationStat.index)}"></td>
                     <td>
-                        <a th:href="@{|/educator/training_archive/${consultation.id}/detail|}"
+                        <a th:href="@{|/educator/training_archive/consultation/${consultation.id}/detail|}"
                            th:text="${consultation.title}"></a>
                     </td>
                     <td th:text="O"></td>

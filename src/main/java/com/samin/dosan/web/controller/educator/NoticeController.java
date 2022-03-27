@@ -18,7 +18,7 @@ public class NoticeController {
         return "/educator/notice/mainView";
     }
 
-    @GetMapping("/detail")
+    @GetMapping("/{id}il")
     public String detailView() {
         return "/educator/notice/detailView";
     }

@@ -27,7 +27,10 @@ public class ConsultationRepositoryImpl implements ConsultationRepositoryQueryDs
 
         String searchWorld = searchParam.getSearchWorld();
         if (searchWorld != null) {
-            builder.and(consultation.title.contains(searchWorld));
+            builder.andAnyOf(
+                    consultation.title.contains(searchWorld),
+                    consultation.content.contains(searchWorld)
+            );
         }
 
         List<Consultation> content = queryFactory

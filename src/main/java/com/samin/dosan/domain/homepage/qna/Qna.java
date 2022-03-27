@@ -1,8 +1,8 @@
 package com.samin.dosan.domain.homepage.qna;
 
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.domain.homepage.type.SecretType;
 import com.samin.dosan.core.domain.BaseEntity;
+import com.samin.dosan.domain.homepage.type.SecretType;
 import lombok.*;
 
 import javax.persistence.*;

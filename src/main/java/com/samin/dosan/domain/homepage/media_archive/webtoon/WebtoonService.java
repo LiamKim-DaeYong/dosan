@@ -29,8 +29,8 @@ public class WebtoonService {
     }
 
     @Transactional
-    public Long save(Webtoon webtoon) {
-        return webtoonRepository.save(webtoon).getId();
+    public Long save(Webtoon saveData) {
+        return webtoonRepository.save(saveData).getId();
     }
 
     @Transactional

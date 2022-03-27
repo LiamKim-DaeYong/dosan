@@ -29,8 +29,8 @@ public class MainImageService {
     }
 
     @Transactional
-    public Long save(MainImage mainImage) {
-        return mainImageRepository.save(mainImage).getId();
+    public Long save(MainImage saveData) {
+        return mainImageRepository.save(saveData).getId();
     }
 
     @Transactional

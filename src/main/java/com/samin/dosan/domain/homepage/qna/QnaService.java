@@ -28,8 +28,8 @@ public class QnaService {
     }
 
     @Transactional
-    public Long save(Qna qna) {
-        return qnaRepository.save(qna).getId();
+    public Long save(Qna saveData) {
+        return qnaRepository.save(saveData).getId();
     }
 
     @Transactional

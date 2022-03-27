@@ -27,7 +27,7 @@ var pageObj = {
             });
 
             $ajax.put({data: data, success: function (id) {
-                    location.href = `/educator/business-trip-report/${id}/detail`;
+                    location.href = `/educator/training_archive/consultation/${id}/detail`;
                 }
             })
         }

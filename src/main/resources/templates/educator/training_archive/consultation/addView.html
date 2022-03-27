@@ -18,14 +18,14 @@
         <form th:action th:object="${consultation}" method="post">
             <table class="table_row">
                 <tr>
-                    <th th:text="#{homepage.board.title}"></th>
+                    <th th:text="#{training.archive.consultation.title}"></th>
                     <td>
                         <input type="text" th:field="*{title}" class="table_row_long_input">
                         <span errors="title"></span>
                     </td>
                 </tr>
                 <tr>
-                    <th th:text="#{homepage.board.content}"></th>
+                    <th th:text="#{training.archive.consultation.content}"></th>
                     <td>
                         <textarea th:field="*{content}"></textarea>
                     </td>

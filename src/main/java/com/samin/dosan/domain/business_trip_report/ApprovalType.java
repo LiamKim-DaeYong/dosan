@@ -1,6 +1,6 @@
 package com.samin.dosan.domain.business_trip_report;
 
-import com.samin.dosan.core.utils.enums.EnumNameParser;
+import com.samin.dosan.core.utils.EnumNameParser;
 import lombok.Getter;
 
 @Getter

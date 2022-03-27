@@ -29,10 +29,10 @@ hibernate:
 
 # Log Level
 logging.level:
-  org.hibernate.SQL: debug
+  org.hibernate.SQL: info
 
 # File Path
 file:
-  dir: C:/upload/file/
+  dir: D:/작업/daeyong/upload/file/
   temp: C:/upload/temp/
   signature: C:/upload/signature/

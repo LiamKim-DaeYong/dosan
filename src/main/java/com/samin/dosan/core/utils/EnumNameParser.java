@@ -1,4 +1,4 @@
-package com.samin.dosan.core.utils.enums;
+package com.samin.dosan.core.utils;
 
 public interface EnumNameParser {
     String getDescription();

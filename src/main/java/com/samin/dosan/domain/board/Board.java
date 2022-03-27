@@ -1,7 +1,9 @@
 package com.samin.dosan.domain.board;
 
 import com.samin.dosan.core.domain.BaseEntity;
+import com.samin.dosan.core.utils.file.UploadFile;
 import com.samin.dosan.domain.board.comment.Comments;
+import com.samin.dosan.web.dto.board.BoardSave;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,13 +40,27 @@ public class Board extends BaseEntity {
     @JoinColumn(name = "boardId")
     private List<BoardFile> files = new ArrayList<>();
 
+
+    /*================== Business Logic ==================*/
+    public static Board of(BoardSave saveData, String userNm) {
+        Board board = new Board();
+        board.title = saveData.getTitle();
+        board.content = saveData.getContent();
+        board.writer = userNm;
+
+        return board;
+    }
+
+    public void addFile(UploadFile file) {
+        BoardFile boardFile = BoardFile.of(file);
+
+        boardFile.setBoard(this);
+        this.files.add(boardFile);
+    }
+
     public void updateBoard(Board board) {
         this.title = board.title;
         this.content = board.getContent();
-    }
-
-    public void addFiles(List<BoardFile> newFiles) {
-        this.files.addAll(newFiles);
     }
 
     public void delFiles(List<BoardFile> willDeleteFiles) {

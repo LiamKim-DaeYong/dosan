@@ -1,7 +1,21 @@
 var pageObj = {
     init: function () {
         $editor.init("content");
+        $("input.multi").MultiFile({
+            accept: 'jpg'
+        });
     },
+
+    save: function () {
+        $ajax.post({
+            data: $form.getData(),
+            success: function (id) {
+                $url.redirect(`/admin/board/${id}`)
+            },
+        })
+    },
+
+
     delete: function () {
         var form = document.createElement("form");
         form.setAttribute("method", "post");

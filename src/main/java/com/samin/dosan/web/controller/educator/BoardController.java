@@ -18,7 +18,7 @@ public class BoardController {
         return "/educator/board/mainView";
     }
 
-    @GetMapping("/detail")
+    @GetMapping("/{id}")
     public String detailView() {
         return "/educator/board/detailView";
     }
