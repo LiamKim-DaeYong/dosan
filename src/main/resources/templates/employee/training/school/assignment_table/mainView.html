@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script"></th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.training.school})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.training.assignment.table}"></h2>
+
+        <form th:action>
+            <div class="all_search_box">
+                <div th:replace="utils/searchBar :: searchWord"></div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

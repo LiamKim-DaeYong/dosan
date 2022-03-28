@@ -28,12 +28,12 @@ public class TrainingReviewService {
     }
 
     @Transactional
-    public void delete(List<Long> ids) {
-        ids.forEach(id -> findById(id).delete());
+    public Long save(TrainingReview saveData) {
+        return trainingReviewRepository.save(saveData).getId();
     }
 
     @Transactional
-    public Long save(TrainingReview trainingReview) {
-        return trainingReviewRepository.save(trainingReview).getId();
+    public void delete(List<Long> ids) {
+        ids.forEach(id -> findById(id).delete());
     }
 }

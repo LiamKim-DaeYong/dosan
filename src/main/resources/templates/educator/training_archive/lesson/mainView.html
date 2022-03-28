@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css">
+    </th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/educator/training_archive/lesson.js}"></script>
+    </th:block>
+
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.training.archive})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.training.archive.lesson}"></h2>
+
+        <form th:action>
+            <div class="all_search_box">
+                <ul class="toggle_list">
+                    <li th:each="type : ${gradeTypes}"
+                        th:classappend="${gradeType eq type}?'toggle_on'">
+                        <a th:href="@{|/educator/training-archive/lesson/${type.nameToUrl()}|}"
+                           th:text="${type.description}"></a>
+                    </li>
+                </ul>
+                <div th:replace="utils/searchBar :: searchWord"></div>
+            </div>
+
+            <table>
+                <tr>
+                    <th class="table_chk">
+                        <input type="checkbox" check="all"/>
+                    </th>
+                    <th class="table_num" th:text="#{label.no}">No</th>
+                    <th th:text="#{training.archive.lesson.title}">제목</th>
+                    <th th:text="#{training.archive.lesson.file}">첨부파일</th>
+                    <th th:text="#{training.archive.lesson.author}">작성자</th>
+                    <th th:text="#{training.archive.lesson.regDt}">작성일자</th>
+                </tr>
+
+                <tr th:each="lesson : ${result.content}">
+                    <td class="table_chk">
+                        <input type="checkbox" th:value="${lesson.id}"/>
+                    </td>
+                    <td class="table_num"
+                        th:text="${result.totalElements - (result.pageable.offset + lessonStat.index)}"></td>
+                    <td>
+                        <a th:href="@{|/educator/training-archive/lesson/${#strings.toLowerCase(gradeType).replace('-', '_')}/${lesson.id}/detail|}"
+                           th:text="${lesson.title}"></a>
+                    </td>
+                    <td th:text="O"></td>
+                    <td th:text="${lesson.user.userNm}"></td>
+                    <td>2022-03-25</td>
+                </tr>
+
+                <tr th:if="${result.content.size eq 0}">
+                    <td colspan="6" th:text="#{data.empty}" class="empty-td"></td>
+                </tr>
+            </table>
+
+            <div th:replace="utils/pagination :: pagination(${result})"></div>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">
+                    선택삭제
+                </button>
+                <button type="button" th:text="#{button.new}"
+                        th:onclick="|location.href='@{/educator/training-archive/lesson/{type}/add(type=${gradeType.nameToUrl()})}'|" class="btn_new">등록
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

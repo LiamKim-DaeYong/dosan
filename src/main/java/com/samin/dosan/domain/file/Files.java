@@ -1,23 +1,12 @@
 package com.samin.dosan.domain.file;
 
 import com.samin.dosan.core.domain.BaseEntity;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
 @Getter
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@DiscriminatorColumn
-@DynamicInsert
-@DynamicUpdate
-@AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@MappedSuperclass
 public class Files extends BaseEntity {
 
     @Id

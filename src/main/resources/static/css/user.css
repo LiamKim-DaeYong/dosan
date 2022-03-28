@@ -1,0 +1,65 @@
+.content h2 {
+    padding-bottom:0;
+}
+
+.user_table {
+    margin:0 0 1em 0;
+}
+
+.user_table_center input[type="text"] {
+    width:100%;
+    text-align:center;
+}
+
+.user_table_center input[type="date"] {
+    text-align:left;
+    max-width:100%;
+}
+
+.user_table td input[type="text"], .user_table td input[type="password"] {
+    width:100%;
+}
+
+.user_table select {
+    max-width:145px;
+}
+
+.user_table button {
+    padding:0.62em 1em;
+}
+
+.user_address input[type="text"] {
+    width:193px !important;
+}
+
+.user_address input:read-only {
+    width:112px !important;
+    background:#f6f6f6;
+}
+
+.user_address input:last-of-type {
+    width:226px !important;
+}
+
+.btn_other:nth-of-type(1) {
+    margin-left:10px;
+}
+
+.detail_title {
+    position:Relative;
+    display:inline-block;
+    margin:1em 0;
+    padding-left:10px;
+}
+
+.detail_title:before {
+    content: '';
+    position:absolute;
+    top:50%;
+    left:0;
+    transform: translate(0, -50%);
+    width:4px;
+    height:4px;
+    border-radius: 50%;
+    background:#223351;
+}

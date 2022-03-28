@@ -5,7 +5,6 @@ import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.training_archive.consultation.Consultation;
 import com.samin.dosan.domain.training_archive.consultation.ConsultationService;
 import com.samin.dosan.domain.user.UserService;
-import com.samin.dosan.web.dto.training_archive.ConsultationSave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +20,7 @@ import java.time.LocalDate;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/educator/training_archive/consultation")
+@RequestMapping("/educator/training-archive/consultation")
 // 수련협의자료
 public class ConsultationController {
 
@@ -40,13 +40,17 @@ public class ConsultationController {
         return "/educator/training_archive/consultation/addView";
     }
 
-    @GetMapping("/detail")
-    public String detailView() {
+    @GetMapping("/{id}/detail")
+    public String detailView(@PathVariable Long id, Model model) {
+        model.addAttribute("consultation", consultationArchiveService.findById(id));
+
         return "/educator/training_archive/consultation/detailView";
     }
 
-    @GetMapping("/edit")
-    public String editView() {
+    @GetMapping("/{id}/edit")
+    public String editView(@PathVariable Long id, Model model) {
+        model.addAttribute("consultation", consultationArchiveService.findById(id));
+
         return "/educator/training_archive/consultation/editView";
     }
 

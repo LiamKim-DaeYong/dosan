@@ -29,8 +29,11 @@
         </form>
 
         <div class="btn_box">
-            <button type="button" th:text="#{button.list}" th:onclick="|location.href='@{/admin/homepage/board/{type}(type=${boardType.nameToUrl()})}'|"></button>
-            <button type="button" th:text="#{button.update}" th:onclick="|location.href='@{/admin/homepage/board/{type}/{id}/edit(type=${boardType.nameToUrl()}, id=${board.id})}'|" class="btn_edit"></button>
+            <button type="button" th:text="#{button.list}"
+                    th:onclick="|location.href='@{/admin/homepage/board/{type}(type=${boardType.nameToUrl()})}'|"></button>
+            <button type="button" th:text="#{button.update}"
+                    th:onclick="|location.href='@{/admin/homepage/board/{type}/{id}/edit(type=${boardType.nameToUrl()}, id=${board.id})}'|"
+                    class="btn_edit"></button>
         </div>
     </div>
 </section>

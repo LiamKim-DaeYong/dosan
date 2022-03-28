@@ -3,6 +3,7 @@ package com.samin.dosan.domain.clients.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.clients.Clients;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class ClientsRepositoryImpl implements ClientsRepositoryQueryDsl {
     @Override
     public Page<Clients> findAll(SearchParam searchParam, Pageable pageable) {
         BooleanBuilder builder = new BooleanBuilder();
+        builder.and(clients.used.eq(Used.Y));
 
         String searchWorld = searchParam.getSearchWorld();
         if (searchWorld != null) {

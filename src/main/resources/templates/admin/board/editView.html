@@ -4,11 +4,13 @@
 <head>
     <th:block id="css"></th:block>
 
-    <th:block id="script"></th:block>
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/board.js}"></script>
+    </th:block>
 </head>
 <body>
     <section>
-        <div th:replace="layout/pageTitle :: pageTitle ('자유게시판')"></div>
+        <div th:replace="layout/pageTitle :: pageTitle (#{menu.board})"></div>
 
         <div class="content">
             <form th:action th:object="${board}" method="post">
@@ -16,23 +18,38 @@
                     <tr>
                         <th>제목</th>
                         <td>
-                            <input type="text" th:field="*{title}" />
+                            <input type="text" th:field="*{title}" class="table_row_long_input" />
+                            <span errors="title" class="modal_error"></span>
                         </td>
                     </tr>
                     <tr>
                         <th>내용</th>
-                        <td>
-                            <textarea th:field="*{content}"></textarea>
+                        <td class="table_row_textarea">
+                            <textarea th:field="*{content}" style="display: none"></textarea>
                         </td>
                     </tr>
                     <tr>
                         <th>첨부파일</th>
-                        <td></td>
+                        <td>
+                            <label for="file_input" class="file_btn">
+                                <input type="file" id="file_input" class="file-input" multiple="multiple" />
+                            </label>
+                            <div class="filenames">
+                                <div class="file_wraper" th:each="file : ${board.files}">
+                                    <input type="hidden" name="savedFileIds" th:value="${file.id}" />
+                                    <button type="button" onclick="$files.removeFile(this)">제거</button>
+                                    <span th:text="${file.originFilename}"></span>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 </table>
+
+                <div class="btn_box">
+                    <button type="button" th:text="#{button.list}" onclick="location.href='/admin/board'">목록</button>
+                    <button type="button" th:text="#{button.update}" onclick="pageObj.update()" class="btn_edit"></button>
+                </div>
             </form>
-            <button type="button" onclick="location.href='/board'">목록</button>
-            <button type="submit">저장</button>
         </div>
     </section>
 </body>

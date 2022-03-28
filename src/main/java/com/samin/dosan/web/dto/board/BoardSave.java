@@ -1,29 +1,21 @@
 package com.samin.dosan.web.dto.board;
 
-import com.samin.dosan.domain.board.Board;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.List;
 
-@Data
+@Getter @Setter
 public class BoardSave {
 
-    private Long id;
-
+    @NotBlank
     private String title;
 
+    @NotBlank
     private String content;
 
-    private String writer;
-
-//    public Board toEntity() {
-//        return Board.builder()
-//                .id(this.id)
-//                .title(this.title)
-//                .content(this.content)
-//                .writer(this.writer)
-//                .comments(new ArrayList<>())
-//                .files(new ArrayList<>())
-//                .build();
-//    }
+    List<MultipartFile> files = new ArrayList<>();
 }

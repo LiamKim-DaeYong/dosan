@@ -29,13 +29,13 @@ public class HomepageBoardService {
     }
 
     @Transactional
-    public Long save(HomepageBoard homepageBoard) {
-        return homepageBoardRepository.save(homepageBoard).getId();
+    public Long save(HomepageBoard saveData) {
+        return homepageBoardRepository.save(saveData).getId();
     }
 
     @Transactional
-    public Long update(Long id, HomepageBoard homepageBoard) {
-        findById(id).update(homepageBoard);
+    public Long update(Long id, HomepageBoard updateData) {
+        findById(id).update(updateData);
         return id;
     }
 

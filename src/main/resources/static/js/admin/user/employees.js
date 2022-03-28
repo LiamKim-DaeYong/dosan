@@ -7,7 +7,7 @@ var pageObj = {
         $ajax.post({
             data: saveData,
             success: function (userId) {
-                $url.redirect(`/admin/user/employees/${userId}/detail`);
+                $url.redirect(`/admin/user/employees/${userId}`);
             }
         });
     },
@@ -24,7 +24,7 @@ var pageObj = {
         $ajax.put({
             data: updateData,
             success: function (userId) {
-                $url.redirect(`/admin/user/employees/${userId}/detail`);
+                $url.redirect(`/admin/user/employees/${userId}`);
             }
         });
     }

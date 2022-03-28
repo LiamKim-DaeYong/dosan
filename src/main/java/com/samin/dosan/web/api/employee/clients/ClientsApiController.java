@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,5 +26,11 @@ public class ClientsApiController {
     public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody Clients updateData) {
         clientsService.update(id, updateData);
         return ResponseEntity.ok(id);
+    }
+
+    @DeleteMapping
+    public ResponseEntity delete(@RequestBody List<Long> ids) {
+        clientsService.delete(ids);
+        return ResponseEntity.ok().build();
     }
 }

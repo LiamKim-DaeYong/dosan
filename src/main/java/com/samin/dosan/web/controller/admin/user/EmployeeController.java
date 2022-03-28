@@ -39,7 +39,7 @@ public class EmployeeController {
         return "admin/user/employees/mainView";
     }
 
-    @GetMapping("/{userId}/detail")
+    @GetMapping("/{userId}")
     public String detailView(@PathVariable String userId, Model model) {
         Employee employee = employeeService.findByUserId(userId);
         model.addAttribute("employee", employee);

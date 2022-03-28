@@ -3,6 +3,7 @@ package com.samin.dosan.core.parameter;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.MessageSource;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
@@ -14,8 +15,8 @@ import java.util.stream.Collectors;
 public class ValidationResponse {
     private List<ValidError> fieldErrors;
 
-    public ValidationResponse(Errors errors, MessageSource messageSource, Locale locale) {
-        this.fieldErrors = errors.getFieldErrors().stream().map(error -> new ValidError(error, messageSource, locale))
+    public ValidationResponse(BindingResult bindingResult, MessageSource messageSource, Locale locale) {
+        this.fieldErrors = bindingResult.getFieldErrors().stream().map(error -> new ValidError(error, messageSource, locale))
                 .collect(Collectors.toList());
     }
 

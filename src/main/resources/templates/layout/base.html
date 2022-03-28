@@ -22,16 +22,15 @@
 
     <script type="text/javascript" th:src="@{/js/nav.js}"></script>
     <script type="text/javascript" th:src="@{/js/common.js}"></script>
-<!--    <script type="text/javascript" th:src="@{/lib/smarteditor/js/HuskyEZCreator.js}" charset="UTF-8"></script>-->
 
     <!-- Page Script -->
     <th:block th:replace="${pageScript}"></th:block>
-</head>
+</head>\
 <body>
     <div class="wrap">
         <nav th:insert="layout/sidebar :: navigation"
              th:classappend="${#authorization.expression('hasRole(''ADMIN'')')?'nav_admin'
-                :#authorization.expression('hasRole(''MANAGER'')')?'nav_manager':'nav_user'}"></nav>
+                :#authorization.expression('hasRole(''EMPLOYEE'')')?'nav_manager':'nav_user'}"></nav>
 
         <div th:insert="${content}" class="container"></div>
     </div>

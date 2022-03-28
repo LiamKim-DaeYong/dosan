@@ -30,6 +30,17 @@ var pageObj = {
                 $url.redirect(`/employee/clients/${id}/detail`);
             }
         })
+    },
+
+    delete: function () {
+        var allChecked = $checkBox.getAllChecked();
+
+        if ($valid.deletes(allChecked.length)) {
+            $ajax.delete({
+                data: allChecked,
+                url: $url.getPath()
+            })
+        }
     }
 }
 

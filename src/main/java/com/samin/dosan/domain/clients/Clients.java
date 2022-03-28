@@ -2,19 +2,19 @@ package com.samin.dosan.domain.clients;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.Address;
-import lombok.AccessLevel;
+import com.samin.dosan.core.domain.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Clients {
+@NoArgsConstructor
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Clients extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -83,7 +83,8 @@ public class Clients {
     }
 
     @Builder(builderMethodName = "test")
-    public Clients(Long id, String clientNm, String manager, ClientType clientType, String phoneNum, String officeNum, String faxNum, String email, Address address, String bussinessNum, String etc, Used used) {
+    public Clients(Long id, String clientNm, String manager, ClientType clientType, String phoneNum,
+                   String officeNum, String faxNum, String email, Address address, String bussinessNum, String etc, Used used) {
         this.id = id;
         this.clientNm = clientNm;
         this.manager = manager;

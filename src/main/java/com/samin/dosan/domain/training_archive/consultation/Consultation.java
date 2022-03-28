@@ -42,6 +42,10 @@ public class Consultation extends BaseEntity {
     /*================== Business Logic ==================*/
     public static Consultation of(ConsultationSave saveData) {
         Consultation consultation = new Consultation();
+        consultation.used = Used.Y;
+        consultation.regDt = LocalDate.now();
+
+        consultation.user = saveData.getUser();
         consultation.title = saveData.getTitle();
         consultation.content = saveData.getContent();
 

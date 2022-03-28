@@ -4,69 +4,69 @@
 <head>
     <th:block id="css"></th:block>
 
-    <th:block id="script"></th:block>
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/clients/clients.js}"></script>
+    </th:block>
 </head>
 <body>
 <section>
     <div th:replace="layout/pageTitle :: pageTitle (#{menu.clients})"></div>
 
     <div class="content">
+        <h2 th:text="#{menu.clients.list}"></h2>
+
         <form th:action>
-            <input type="text" name="searchWorld" th:value="${searchParam.searchWorld}">
-            <button>검색</button>
+            <div th:replace="utils/searchBar :: searchWord"></div>
         </form>
 
         <table>
+            <colgroup>
+                <col width="2%"/>
+                <col width="6%"/>
+                <col width="10%"/>
+                <col width="15%"/>
+                <col width="10%"/>
+                <col width="8%"/>
+                <col width="8%"/>
+                <col width="20%"/>
+                <col width="13%"/>
+                <col width="8%"/>
+            </colgroup>
             <tr>
-                <th><input type="checkbox"></th>
-                <th th:text="#{label.no}"></th>
-                <th th:text="#{clients.type}"></th>
-                <th th:text="#{clients.clientNm}"></th>
-                <th th:text="#{clients.name}"></th>
-                <th th:text="#{clients.phoneNum}"></th>
-                <th th:text="#{clients.officeNum}"></th>
-                <th th:text="#{clients.address}"></th>
-                <th th:text="#{clients.email}"></th>
-                <th th:text="#{clients.etc}"></th>
+                <th class="table_chk">
+                    <input type="checkbox" check="all">
+                </th>
+                <th th:text="#{label.no}">No</th>
+                <th th:text="#{clients.type}">구분</th>
+                <th th:text="#{clients.clientNm}">단체명</th>
+                <th th:text="#{clients.name}">성명</th>
+                <th th:text="#{clients.phoneNum}">연락처1</th>
+                <th th:text="#{clients.officeNum}">연락처2</th>
+                <th th:text="#{clients.address}">주소</th>
+                <th th:text="#{clients.email}">E-mail</th>
+                <th th:text="#{clients.etc}">비고</th>
             </tr>
-<!--            <tr th:each="client : ${clientsList}" th:href="@{/clients/{id}(id=${client.id})}">-->
-            <tr th:each="client : ${clientsList}">
+            <tr th:each="client : ${result.content}">
                 <td>
-                    <input type="checkbox">
+                    <input type="checkbox" th:value="${client.id}">
                 </td>
+                <td th:text="${result.totalElements - (result.pageable.offset + clientStat.index)}"></td>
+                <td th:text="${client.clientType.description}"></td>
                 <td>
-                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${clientsList.totalElements - (clientsList.pageable.offset + clientStat.index)}"></a>
+                    <a th:href="@{/employee/clients/{id}/detail(id=${client.id})}" th:text="${client.clientNm}"></a>
                 </td>
-                <td>
-                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.clientType.description}"></a>
-                </td>
-                <td>
-                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.clientNm}"></a>
-                </td>
-                <td>
-                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.manager}"></a>
-                </td>
-                <td>
-                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.phoneNum}"></a>
-                </td>
-                <td>
-                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.officeNum}"></a>
-                </td>
-                <td>
-                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.address.roadAddress}"></a>
-                </td>
-                <td>
-                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.email}"></a>
-                </td>
-                <td>
-                    <a th:href="@{|/employee/clients/${client.id}/detail|}" th:text="${client.etc}"></a>
-                </td>
+                <td th:text="${client.manager}"></td>
+                <td th:text="${client.phoneNum}"></td>
+                <td th:text="${client.officeNum}"></td>
+                <td th:text="${client.address.roadAddress}"></td>
+                <td th:text="${client.email}"></td>
+                <td th:text="${client.etc}"></td>
             </tr>
         </table>
 
         <div class="btn_box">
-            <button type="button" onclick="location.href='/employee/clients/delete'" class="btn_del">선택삭제</button>
-            <button type="button" onclick="location.href='/employee/clients/add'" class="btn_new">신규등록</button>
+            <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">선택삭제</button>
+            <button type="button" th:text="#{button.new}" onclick="location.href='/employee/clients/add'" class="btn_new">신규등록</button>
         </div>
     </div>
 </section>

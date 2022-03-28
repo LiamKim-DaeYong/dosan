@@ -8,24 +8,38 @@
 </head>
 <body>
 <section>
-    <div th:replace="layout/pageTitle :: pageTitle ('공지사항')"></div>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.notice})"></div>
 
-    <table class="table_row">
-        <tr>
-            <th>제목</th>
-            <td th:text="${notice.title}"></td>
-        </tr>
-        <tr>
-            <th>내용</th>
-            <td th:text="${notice.content}"></td>
-        </tr>
-        <tr>
-            <th>첨부파일</th>
-            <td></td>
-        </tr>
-    </table>
-    <button type="button" onclick="location.href='/notice'">목록</button>
-    <button type="button" th:onclick="|location.href='@{/notice/{id}/edit(id=${notice.id})}'|">수정</button>
+    <div class="content">
+        <table>
+            <tr>
+                <th>제목</th>
+                <td th:text="${notice.title}"></td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td>
+                    <div th:utext="${notice.content}"></div>
+                </td>
+            </tr>
+            <tr>
+                <th>첨부파일</th>
+                <td>
+                    <ul>
+                        <li th:each="file: ${notice.files}">
+                            <a th:href="@{/admin/notice/attach/{noticeId}/{fileId}(noticeId=${notice.id}, fileId=${file.id})}"
+                               th:text="${file.originFilename}"></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/admin/notice'" class="btn_other">목록</button>
+            <button type="button" th:text="#{button.update}" th:onclick="|location.href='@{/admin/notice/{id}/edit(id=${notice.id})}'|" class="btn_new">수정</button>
+        </div>
+    </div>
 </section>
 </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script"></th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.training.entry})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.training.entry.print}"></h2>
+
+        <form th:action>
+            <div class="all_search_box">
+                <ul class="toggle_list">
+                    <li class="toggle_on">
+                        <a th:href="@{/}">탐방 일정표</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/}">수련장소 운용 현황</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/}">지도위원 배정표</a>
+                    </li>
+                </ul>
+
+                <div th:replace="utils/searchBar :: searchWord"></div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

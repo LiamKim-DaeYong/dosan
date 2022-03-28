@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/educator/training_archive/branch.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.training.archive})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.training.archive.branch}"></h2>
+
+        <form th:action th:object="${branch}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{training.archive.branch.title}"></th>
+                    <td th:text="*{title}"></td>
+
+                    <th th:text="#{training.archive.branch.notice.yn}"></th>
+                    <td th:text="*{noticeYnType.description}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{training.archive.branch.author}"></th>
+                    <td th:text="*{user.userNm}"></td>
+
+                    <th th:text="#{training.archive.branch.regDt}"></th>
+                    <td th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd')}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{training.archive.branch.content}"></th>
+                    <td th:utext="*{content}" colspan="3"></td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" th:onclick="|location.href='@{/educator/training-archive/branch/{type}(type=${branch.branchType.nameToUrl()})}'|"></button>
+            <button type="button" th:text="#{button.update}" th:onclick="|location.href='@{/educator/training-archive/branch/{type}/{id}/edit(type=${branch.branchType.nameToUrl()}, id=${branch.id})}'|" class="btn_edit"></button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

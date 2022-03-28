@@ -1,10 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/educator/training_archive/consultation.js}"></script>
+    </th:block>
 </head>
 <body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.training.archive})"></div>
 
+    <div class="content">
+        <h2 th:text="#{menu.training.archive.consultation}"></h2>
+
+        <form th:action th:object="${consultation}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{training.archive.consultation.title}"></th>
+                    <td>
+                        <input type="text" th:field="*{title}" class="table_row_long_input">
+                        <span errors="title"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{training.archive.consultation.content}"></th>
+                    <td>
+                        <textarea th:field="*{content}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{training.archive.consultation.file}"></th>
+                    <td>
+                        <label for="file_input" class="file_btn">
+                            <input type="file" id="file_input" name="file" class="file-input"/>
+                        </label>
+                        <span class="filename"></span>
+                        <span errors="file"></span>
+                        <span class="comment">※ 최소 500 x 600, 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/educator/training-archive/consultation'"
+                    class="btn-default"></button>
+
+            <button type="button" th:text="#{button.update}" onclick="pageObj.edit()" class="btn_new">등록</button>
+        </div>
+    </div>
+</section>
 </body>
 </html>

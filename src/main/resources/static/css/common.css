@@ -338,8 +338,14 @@ input[type="text"], input[type="password"],  input[type="date"]{
 }
 
 select {
-    min-width:114px;
+    width:100%;
+    max-width:114px;
     padding: 0.4em 0;
+}
+
+input[type="date"] {
+    width:100%;
+    max-width:145px;
 }
 
 input[type="checkbox"] {
@@ -603,7 +609,10 @@ button {
 }
 
 .btn_other {
-    color: #475978;
+    color: #738095;
+    font-size: 80%;
+    padding: 0.4em 0.5em;
+    font-weight: 400;
 }
 
 .btn_green {

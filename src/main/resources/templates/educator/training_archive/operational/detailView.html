@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/educator/training_archive/operational.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.training.archive})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.training.archive.operational}"></h2>
+
+        <form th:action th:object="${operational}" method="post">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{training.archive.operational.title}"></th>
+                    <td th:text="*{title}"></td>
+                </tr>
+                <tr>
+                    <th th:text="#{training.archive.consultation.content}"></th>
+                    <td th:text="*{content}"></td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" class="btn-default"
+                    onclick="location.href='/educator/training-archive/operational'"></button>
+
+            <button type="button" th:text="#{button.update}" class="btn_new"
+                    th:onclick="|location.href='@{/educator/training-archive/operational/{id}/edit(id=${operational.id})}'|">
+            </button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

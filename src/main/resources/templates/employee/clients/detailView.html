@@ -53,9 +53,9 @@
             </table>
 
             <div class="btn_box">
-                <button type="button" th:text="#{button.list}" onclick="location.href='/employee/clients'" class="btn_other"></button>
+                <button type="button" th:text="#{button.list}" onclick="location.href='/employee/clients'" class="btn_other">목록</button>
                 <button type="button" th:text="#{button.update}"
-                        th:onclick="|location.href='@{/employee/clients/{id}/edit(id=${id})}'|" class="btn_new"></button>
+                        th:onclick="|location.href='@{/employee/clients/{id}/edit(id=${id})}'|" class="btn_new">수정</button>
             </div>
         </form>
     </div>

@@ -7,24 +7,42 @@
 <body>
 <div th:fragment="navigation">
     <!-- 임직원 -->
-    <ul sec:authorize="hasRole('MANAGER')">
+    <ul sec:authorize="hasRole('EMPLOYEE')">
         <li class="logo"><img th:src="@{/images/common/logo.png}"></li>
         <li>
-            <a th:href="@{/dashboard/manager}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a>
+            <a id="menu_dashboard" th:href="@{/employee/dashboard}"><img th:src="@{/images/common/dashboard.svg}">대시보드</a>
         </li>
-        <li class="nav_on"><span class="nav_list_title"><img th:src="@{/images/common/training.svg}">수련업무</span>
+
+        <li>
+            <a id="menu_inquiry_report" th:href="@{/}"><img th:src="@{/images/common/training.svg}">수련문의일지 관리</a>
+        </li>
+
+        <li><span class="nav_list_title"><img th:src="@{/images/common/training.svg}">입교 수련업무</span>
             <ul>
-                <li class="nav_on_sub"><a th:href="@{/}">수련문의일지 관리</a></li>
-                <li><a th:href="@{/}">수련명부 관리</a></li>
-                <li><a th:href="@{/}">입교수련프로그램 관리</a></li>
-                <li><a th:href="@{/}">학교수련프로그램 관리</a></li>
-                <li><a th:href="@{/}">출력물 관리</a></li>
+                <li><a id="menu_entry_program" th:href="@{/employee/training/entry/program}">수련프로그램 관리</a></li>
+                <li><a id="menu_entry_list" th:href="@{/employee/training/entry/list}">수련명부 관리</a></li>
+                <li><a id="menu_entry_print" th:href="@{/employee/training/entry/print}">출력물 관리</a></li>
             </ul>
         </li>
+
+        <li><span class="nav_list_title"><img th:src="@{/images/common/training.svg}">학교 수련업무</span>
+            <ul>
+                <li><a id="menu_assignment_table" th:href="@{/employee/training/school/assignment-table}">지도위원 배정표</a></li>
+                <li><a id="menu_school_program" th:href="@{/employee/training/school/program}">수련프로그램 등록</a></li>
+            </ul>
+        </li>
+
+        <li><span class="nav_list_title"><img th:src="@{/images/common/training.svg}">수료 업무</span>
+            <ul>
+                <li><a id="menu_training_num_gen" th:href="@{/employee/completion/training-num-gen}">기수생성</a></li>
+                <li><a id="menu_certificate" th:href="@{/employee/completion/certificate}">수료증 출력</a></li>
+            </ul>
+        </li>
+
         <li><span class="nav_list_title"><img th:src="@{/images/common/day.svg}">수련 자료</span>
             <ul>
-                <li><a th:href="@{/}">수련 협의자료</a></li>
-                <li><a th:href="@{/}">수련 운영자료</a></li>
+                <li><a id="menu_archive_consultation" th:href="@{/employee/archive/consultation}">수련 협의자료</a></li>
+                <li><a id="menu_archive_operational" th:href="@{/employee/archive/operational}">수련 운영자료</a></li>
             </ul>
         </li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/calendar.svg}">일정 관리</span>
@@ -43,7 +61,7 @@
                 <li><a th:href="@{/}">청구서 관리</a></li>
             </ul>
         </li>
-        <li><a th:href="@{/}"><img th:src="@{/images/common/customer.svg}">고객등록</a></li>
+        <li><a th:href="@{/employee/clients}"><img th:src="@{/images/common/customer.svg}">고객등록</a></li>
         <li><span class="nav_list_title"><img th:src="@{/images/common/survey.svg}">설문조사</span>
             <ul>
                 <li><a th:href="@{/}">입교수련 설문조사</a></li>
@@ -81,10 +99,10 @@
                     <a id="menu_user_educator" th:href="@{/admin/user/educators}" th:text="#{menu.user.educator}">지도위원 관리</a>
                 </li>
                 <li>
-                    <a id="menu_user_educator" th:href="@{/templates/admin/user/educators}" th:text="#{menu.user.leave}">휴직자 관리</a>
+                    <a id="menu_user_retired" th:href="@{/templates/admin/user/educators}" th:text="#{menu.user.leave}">휴직자 관리</a>
                 </li>
                 <li>
-                    <a id="menu_user_educator" th:href="@{/templates/admin/user/educators}" th:text="#{menu.user.retired}">퇴직자 관리</a>
+                    <a id="menu_user_leave" th:href="@{/templates/admin/user/educators}" th:text="#{menu.user.retired}">퇴직자 관리</a>
                 </li>
             </ul>
         </li>
@@ -133,16 +151,16 @@
         <li><span class="nav_list_title"><img th:src="@{/images/common/day.svg}">수련자료</span>
             <ul>
                 <li>
-                    <a th:href="@{/educator/training_archive/consultation}">수련 협의자료</a>
+                    <a th:href="@{/educator/training-archive/consultation}">수련 협의자료</a>
                 </li>
                 <li>
-                    <a th:href="@{/educator/training_archive/operation}">수련 운영자료</a>
+                    <a th:href="@{/educator/training-archive/operational}">수련 운영자료</a>
                 </li>
                 <li>
-                    <a th:href="@{/educator/training_archive/branch}">지부 자료실</a>
+                    <a th:href="@{/educator/training-archive/branch/daegu}">지부 자료실</a>
                 </li>
                 <li>
-                    <a th:href="@{/educator/training_archive/lesson}">수업지도 자료실</a>
+                    <a th:href="@{/educator/training-archive/lesson/ele-lower}">수업지도 자료실</a>
                 </li>
             </ul>
         </li>

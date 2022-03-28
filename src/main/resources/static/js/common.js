@@ -14,7 +14,7 @@ $errors = {
 
                 var errorMsgField = $('[errors="' + error.field + '"]')
                 errorMsgField.text(error.message);
-            })
+            });
         }
     }
 }
@@ -129,7 +129,23 @@ $editor = {
     init: function (targetId) {
         const target = $("#" + targetId);
         target.summernote({
-            height: 500
+            height: 500,
+            placeholder: '<span errors="content" className="modal_error"></span>',
+            callbacks: {
+                onImageUpload : function(file) {
+                    const img = new FormData();
+                    img.append("file", file[0]);
+                    console.log(file)
+
+                    $ajax.postMultiPart({
+                        url: "/files/edit/upload",
+                        data: img,
+                        success: function (imgUrl) {
+                            target.summernote('insertImage', imgUrl);
+                        }
+                    });
+                },
+            }
         });
     },
 }
@@ -230,27 +246,48 @@ $multifile = {
 $event = {
     init: function () {
         this.inputAutocompleteOff();
-        this.initCheckboxEvent();
-        this.fileInputInit();
+        $checkBox.init();
+        $files.init();
     },
 
     inputAutocompleteOff: function () {
         $('input').prop("autocomplete", "off");
-    },
+    }
+}
 
-    initCheckboxEvent: function () {
-        $('input:checkbox[check="all"]').on('click', function () {
-            const table = $(this).closest('table');
-            table.find('input:checkbox').prop("checked", $(this).is(":checked"));
-        });
-    },
+$files = {
+    filesMap: new Map(),
+    init: function () {
+        var _this = this;
 
-    fileInputInit: function () {
-        $(".file-input").on("change", function(){
-            var filename = $(this).val();
-            var fileText = filename.split("\\");
-            $(".filename").text(fileText[2]);
+        $(".file-input").on("change", function() {
+            $.each(this.files, function (idx, file) {
+                _this.addFile(file);
+            });
         })
+    },
+    removeFile: function (file) {
+        const filename = $(file).siblings('span').text();
+
+        delete this.filesMap[filename];
+        $(file).closest('.file_wraper').remove();
+    },
+    addFile: function (file) {
+        let filename = file.name;
+
+        if (this.filesMap[filename]) return;
+
+        this.filesMap.set(filename, file);
+        const template = `
+                    <div class="file_wraper">
+                        <button type="button" onclick="$files.removeFile(this)">제거</button>
+                        <span>${filename}</span>
+                    </div>`;
+
+        $(".filenames").append(template);
+    },
+    getFiles: function () {
+        return Array.from(this.filesMap.values());
     },
 }
 
@@ -326,6 +363,29 @@ $ajax = {
             type: 'PUT',
             data: JSON.stringify(options.data),
             contentType: options.contentType,
+        }).done(function (data) {
+            if (options.success) {
+                options.success(data);
+            } else {
+                $url.redirect();
+            }
+        }).fail(function (error) {
+            if (options.error) {
+                options.error(error.responseJSON);
+            } else {
+                $errors.valid(error.responseJSON);
+            }
+        });
+    },
+    putMultiPart: function (options) {
+        options = $.extend({}, this.defaultOption, options);
+
+        $.ajax({
+            url: options.url,
+            type: 'PUT',
+            data: options.data,
+            processData: false,
+            contentType: false,
         }).done(function (data) {
             if (options.success) {
                 options.success(data);
@@ -496,6 +556,12 @@ $valid = {
 }
 
 $checkBox = {
+    init: function () {
+        $('input:checkbox[check="all"]').on('click', function () {
+            const table = $(this).closest('table');
+            table.find('input:checkbox').prop("checked", $(this).is(":checked"));
+        });
+    },
     getAllChecked: function (target=$("table")) {
         var result = [];
         target.find('input:checkbox[check!="all"]:checked').each(function () {
@@ -508,7 +574,19 @@ $checkBox = {
 
 $form = {
     getData: function (target = $("form")) {
-        return  Object.fromEntries(new FormData(target[0]));
+        const formData = new FormData(target[0]);
+
+        if ($(".file-input")) {
+            formData.delete("files");
+
+            for (const file of $files.getFiles()) {
+                formData.append("files", file);
+            }
+
+            return formData;
+        } else {
+            return Object.fromEntries(formData);
+        }
     }
 }
 
@@ -543,13 +621,17 @@ $table = {
         }
     },
 
-    getData: function (targetId) {
+    getData: function (targetId, type="all") {
         const HEADER_IDX = 0;
         const target = $("#" +targetId);
         const result = [];
 
         $.each(target.find('tr'), function (idx, row) {
             if (idx != HEADER_IDX) {
+                if (type == "checked" && !$(row).find(">:first-child input").prop("checked")) {
+                    return;
+                }
+
                 const rowData = $(row).find('input[type!="checkbox"], textarea');
 
                 const obj = {};

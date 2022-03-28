@@ -2,7 +2,9 @@
 <html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block id="css"></th:block>
+    <th:block id="css">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/user.css}">
+    </th:block>
 
     <th:block id="script">
         <script type="text/javascript" th:src="@{/js/admin/user/employees.js}"></script>
@@ -13,18 +15,28 @@
     <div th:replace="layout/pageTitle :: pageTitle (#{menu.user})"></div>
 
     <div class="content">
-        <h2 th:text="#{menu.user.employee.new}"></h2>
+        <h2>임직원 상세</h2>
 
         <form th:action th:object="${employee}">
 
-            <span>기본정보</span>
-            <table class="table_row">
+            <span class="detail_title">기본정보</span>
+            <table class="table_row user_table">
+                <colgroup>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                </colgroup>
                 <tr>
                     <th>아이디</th>
                     <td th:text="*{user.userId}"></td>
                     <th>패스워드</th>
                     <td>
-                        <button>패스워드 초기화</button>
+                        <button class="btn_save">패스워드 초기화</button>
                     </td>
                     <th>이름</th>
                     <td th:text="*{user.userNm}"></td>
@@ -63,8 +75,18 @@
                 </tr>
             </table>
 
-            <span>근무정보</span>
-            <table class="table_row">
+            <span class="detail_title">근무정보</span>
+            <table class="table_row user_table">
+                <colgroup>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                </colgroup>
                 <tr>
                     <th>구분</th>
                     <td th:text="*{employeeType.code}"></td>
@@ -88,8 +110,14 @@
                 </tr>
             </table>
 
-            <span>학력사항</span>
-            <table class="table_row">
+            <span class="detail_title">학력사항</span>
+            <table class="user_table user_table_center">
+                <colgroup>
+                    <col width="25%"/>
+                    <col width="25%"/>
+                    <col width="25%"/>
+                    <col width="25%"/>
+                </colgroup>
                 <tr>
                     <th>출신학교</th>
                     <th>졸업년도</th>
@@ -105,8 +133,14 @@
                 </tr>
             </table>
 
-            <span>근무이력</span>
-            <table class="table_row">
+            <span class="detail_title">근무이력</span>
+            <table class="user_table user_table_center">
+                <colgroup>
+                    <col width="25%"/>
+                    <col width="25%"/>
+                    <col width="25%"/>
+                    <col width="25%"/>
+                </colgroup>
                 <tr>
                     <th>근무처</th>
                     <th>입사일</th>
@@ -123,8 +157,16 @@
             </table>
 
             <div class="btn_box">
-                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/user/employees'" class="btn_other">목록</button>
-                <button type="button" th:text="#{button.update}" th:onclick="pageObj.editView([[${employee.user.userId}]])" class="btn_new">수정</button>
+                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/user/employees'">목록
+                </button>
+                <div class="btn_box_right">
+                    <button class="btn_del">퇴사처리</button>
+                    <button class="btn_blue_line">휴직처리</button>
+                    <button class="btn_new">임명장발급</button>
+                    <button type="button" th:text="#{button.update}"
+                            th:onclick="pageObj.editView([[${employee.user.userId}]])" class="btn_edit">수정
+                    </button>
+                </div>
             </div>
         </form>
     </div>

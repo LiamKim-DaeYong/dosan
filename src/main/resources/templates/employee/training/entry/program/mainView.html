@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script"></th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.training.entry})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.training.entry.program}"></h2>
+
+        <form th:action>
+            <div class="all_search_box">
+                <div th:replace="utils/searchBar :: searchWord"></div>
+            </div>
+
+            <table>
+                <tr>
+                    <th class="table_num" th:text="#{label.no}"></th>
+                    <th>단체명</th>
+                    <th>수련일자</th>
+                    <th>일정</th>
+                    <th>강사등록부</th>
+                    <th>수련안내서</th>
+                    <th>등록일자</th>
+                    <th>등록자</th>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+</section>
+</body>
+</html>

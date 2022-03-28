@@ -120,7 +120,7 @@ public class Employee extends UserInfo {
         this.user = user;
     }
 
-    public void updateEducationalList(List<EmployeeEducational> updateDataList) {
+    private void updateEducationalList(List<EmployeeEducational> updateDataList) {
         List<EmployeeEducational> resultList = new ArrayList<>();
 
         updateDataList.stream().forEach(updateData -> {
@@ -137,7 +137,7 @@ public class Employee extends UserInfo {
         this.educationalList.addAll(resultList);
     }
 
-    public void updateEmploymentList(List<EmployeeEmployment> updateDataList) {
+    private void updateEmploymentList(List<EmployeeEmployment> updateDataList) {
         List<EmployeeEmployment> resultList = new ArrayList<>();
 
         updateDataList.stream().forEach(updateData -> {

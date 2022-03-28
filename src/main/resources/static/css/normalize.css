@@ -16,7 +16,7 @@ header, footer, section, article, aside, nav, hgroup, details, menu, figure, fig
     *font-size: 0
 }
 
-input, input::placeholder  {
+input, input::placeholder, select  {
     font-family: "Noto sans kr", sans-serif !important;
 }
 

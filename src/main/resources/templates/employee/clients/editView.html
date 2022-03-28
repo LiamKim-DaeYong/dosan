@@ -48,7 +48,7 @@
                     <th>주소</th>
                     <td>
                         <input type="text" id="zipCode" name="zipCode" th:value="*{address.zipCode}">
-                        <button type="button" onclick="$api.addressApi()">주소찾기</button>
+                        <button type="button" th:text="#{clients.find.address}" onclick="$api.addressApi()">주소찾기</button>
                         <input type="text" id="roadAddress" name="roadAddress" th:value="*{address.roadAddress}">
                         <input type="text" id="detailAddress" name="detailAddress" th:value="*{address.detailAddress}">
                     </td>
@@ -64,8 +64,8 @@
             </table>
 
             <div class="btn_box">
-                <button type="button" th:text="#{button.list}" onclick="location.href='/employee/clients'" class="btn_other"></button>
-                <button type="button" th:text="#{button.save}" onclick="pageObj.edit()" class="btn_new"></button>
+                <button type="button" th:text="#{button.list}" onclick="location.href='/employee/clients'" class="btn_other">목록</button>
+                <button type="button" th:text="#{button.save}" onclick="pageObj.edit()" class="btn_new">저장</button>
             </div>
         </form>
     </div>

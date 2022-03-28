@@ -24,18 +24,18 @@ public class BusinessTripReportApiController {
     private final UserService userService;
 
     @PostMapping("/add")
-    public ResponseEntity save(@Valid @RequestBody BusinessTripReportSave businessTripReportSave) {
+    public ResponseEntity save(@Valid @RequestBody BusinessTripReportSave saveData) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails) principal).getUsername();
-        businessTripReportSave.setUser(userService.findById(username));
+        saveData.setUser(userService.findById(username));
 
-        Long id = businessTripReportService.save(BusinessTripReport.of(businessTripReportSave));
+        Long id = businessTripReportService.save(BusinessTripReport.of(saveData));
         return ResponseEntity.ok(id);
     }
 
     @PutMapping("/{id}/edit")
-    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody BusinessTripReportSave businessTripReportSave) {
-        businessTripReportService.update(id, businessTripReportSave);
+    public ResponseEntity update(@PathVariable Long id, @Valid @RequestBody BusinessTripReportSave updateData) {
+        businessTripReportService.update(id, updateData);
         return ResponseEntity.ok(id);
     }
 

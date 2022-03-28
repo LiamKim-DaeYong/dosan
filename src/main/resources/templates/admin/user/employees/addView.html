@@ -2,7 +2,9 @@
 <html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block id="css"></th:block>
+    <th:block id="css">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/user.css}">
+    </th:block>
 
     <th:block id="script">
         <script type="text/javascript" th:src="@{/js/admin/user/employees.js}"></script>
@@ -17,23 +19,33 @@
 
         <form th:action th:object="${employee}">
 
-            <span>기본정보</span>
-            <table class="table_row">
+            <span class="detail_title">기본정보</span>
+            <table class="table_row user_table">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                </colgroup>
                 <tr>
                     <th>아이디</th>
                     <td>
                         <input type="text" th:field="*{userId}" />
-                        <span errors="userId" class="modal_error"></span>
+                        <span errors="userId"></span>
                     </td>
                     <th>패스워드</th>
                     <td>
                         <input type="password" th:field="*{password}" />
-                        <span errors="password" class="modal_error"></span>
+                        <span errors="password"></span>
                     </td>
                     <th>이름</th>
                     <td>
                         <input type="text" th:field="*{userNm}" />
-                        <span errors="userNm" class="modal_error"></span>
+                        <span errors="userNm"></span>
                     </td>
                     <th>성별</th>
                     <td>
@@ -87,17 +99,27 @@
 
                 <tr>
                     <th>주소</th>
-                    <td colspan="7">
+                    <td colspan="7" class="user_address">
                         <input type="text" id="zipCode" name="zipCode" readonly />
-                        <button type="button" onclick="$api.addressApi()">주소찾기</button>
+                        <button type="button" onclick="$api.addressApi()" class="btn_save">주소찾기</button>
                         <input type="text" id="roadAddress" name="roadAddress" />
                         <input type="text" id="detailAddress" name="detailAddress" />
                     </td>
                 </tr>
             </table>
 
-            <span>근무정보</span>
-            <table class="table_row">
+            <span class="detail_title">근무정보</span>
+            <table class="table_row user_table">
+                <colgroup>
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                    <col width="10%" />
+                    <col width="15%" />
+                </colgroup>
                 <tr>
                     <th>구분</th>
                     <td>
@@ -141,9 +163,9 @@
                         <input type="date" th:field="*{firstDayOfWork}" />
                     </td>
                     <th>주소</th>
-                    <td colspan="3">
+                    <td colspan="3" class="user_address">
                         <input type="text" id="cmpZipCode" name="cmpZipCode" readonly />
-                        <button type="button" onclick="$api.addressApi('cmpZipCode', 'cmpRoadAddress', 'cmpDetailAddress')">주소찾기</button>
+                        <button type="button" onclick="$api.addressApi('cmpZipCode', 'cmpRoadAddress', 'cmpDetailAddress')" class="btn_save">주소찾기</button>
                         <input type="text" id="cmpRoadAddress" name="cmpRoadAddress" />
                         <input type="text" id="cmpDetailAddress" name="cmpDetailAddress" />
                     </td>
@@ -151,12 +173,19 @@
             </table>
 
             <div>
-                <span>학력사항</span>
-                <button type="button" onclick="$table.addRow('educationalTable')">입력 행 추가</button>
-                <button type="button" onclick="$table.delRow('educationalTable')">선택 행 삭제</button>
+                <span class="detail_title">학력사항</span>
+                <button type="button" onclick="$table.addRow('educationalTable')" class="btn_other">입력 행 추가</button>
+                <button type="button" onclick="$table.delRow('educationalTable')" class="btn_other">선택 행 삭제</button>
             </div>
 
-            <table id="educationalTable" class="table_row">
+            <table id="educationalTable" class="user_table user_table_center">
+                <colgroup>
+                    <col width="*" />
+                    <col width="25%" />
+                    <col width="25%" />
+                    <col width="25%" />
+                    <col width="25%" />
+                </colgroup>
                 <tr>
                     <th class="table_chk">
                         <input type="checkbox" check="all"/>
@@ -186,11 +215,19 @@
             </table>
 
             <div>
-                <span>근무이력</span>
-                <button type="button" onclick="$table.addRow('employmentTable')">입력 행 추가</button>
-                <button type="button" onclick="$table.delRow('employmentTable')">선택 행 삭제</button>
+                <span class="detail_title">근무이력</span>
+                <button type="button" onclick="$table.addRow('employmentTable')" class="btn_other">입력 행 추가</button>
+                <button type="button" onclick="$table.delRow('employmentTable')" class="btn_other">선택 행 삭제</button>
             </div>
-            <table id="employmentTable" class="table_row">
+
+            <table id="employmentTable" class="user_table user_table_center">
+                <colgroup>
+                    <col width="*" />
+                    <col width="25%" />
+                    <col width="25%" />
+                    <col width="25%" />
+                    <col width="25%" />
+                </colgroup>
                 <tr>
                     <th class="table_chk">
                         <input type="checkbox" check="all"/>
@@ -220,7 +257,7 @@
             </table>
 
             <div class="btn_box">
-                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/user/employees'" class="btn_other">목록</button>
+                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/user/employees'">목록</button>
                 <button type="button" th:text="#{button.new}" onclick="pageObj.save()" class="btn_new">등록</button>
             </div>
         </form>

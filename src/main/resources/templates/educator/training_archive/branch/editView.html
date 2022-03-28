@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/educator/training_archive/branch.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.training.archive})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.training.archive.branch}"></h2>
+
+        <form th:action th:object="${branch}" method="post">
+            <input type="hidden" th:field="*{id}">
+            <table class="table_row">
+                <tr>
+                    <th th:text="#{training.archive.branch.notice.yn}"></th>
+                    <td>
+                        <span th:each="noticeYn : ${noticeYnTypes}">
+                            <input type="radio" th:value="${noticeYn.name}" th:field="*{noticeYnType}" th:id="${noticeYn.name}">
+                            <label th:for="${noticeYn.name}" th:text="${noticeYn.description}"></label>
+                        </span>
+                        <span errors="noticeYnType"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{training.archive.branch.title}"></th>
+                    <td>
+                        <input type="text" th:field="*{title}" class="table_row_long_input">
+                        <span errors="title"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{training.archive.branch.content}"></th>
+                    <td>
+                        <textarea th:field="*{content}"></textarea>
+                        <span errors="content"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{training.archive.branch.file}"></th>
+                    <td>
+                        <label for="file_input" class="file_btn">
+                            <input type="file" id="file_input" name="file" class="file-input"/>
+                        </label>
+                        <span class="filename"></span>
+                        <span errors="file"></span>
+                        <span class="comment">※ 최소 500 x 600, 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div class="btn_box">
+            <button type="button" th:text="#{button.list}" th:onclick="|location.href='@{/educator/training-archive/branch/{type}(type=${branchType.nameToUrl()})}'|" class="btn-default"></button>
+            <button type="button" th:text="#{button.new}" th:onclick="pageObj.edit([[${branchType.nameToUrl()}]])" class="btn_new">등록</button>
+        </div>
+    </div>
+</section>
+</body>
+</html>

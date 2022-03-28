@@ -31,7 +31,7 @@ public class ClientsController {
                            Model model) {
 
         Page<Clients> result = clientsService.findAll(searchParam, pageable);
-        model.addAttribute("clientsList", result);
+        model.addAttribute("result", result);
 
         return "employee/clients/mainView";
     }

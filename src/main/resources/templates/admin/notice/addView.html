@@ -4,37 +4,49 @@
 <head>
     <th:block id="css"></th:block>
 
-    <th:block id="script"></th:block>
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/admin/notice.js}"></script>
+    </th:block>
 </head>
 <body>
-    <section>
-        <div th:replace="layout/pageTitle :: pageTitle ('공지사항')"></div>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.notice})"></div>
 
+    <div class="content">
         <form th:action method="post" th:object="${notice}">
-            <table>
+            <table class="table_row">
                 <tr>
                     <th>제목</th>
                     <td>
-                        <input type="text" th:field="*{title}">
-                        <span th:errors="*{title}"></span>
+                        <input type="text" th:field="*{title}" class="table_row_long_input" />
+                        <span errors="title" class="modal_error"></span>
                     </td>
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td>
-                        <textarea th:field="*{content}"></textarea>
-                        <span th:field="*{content}"></span>
+                    <td class="table_row_textarea">
+                        <textarea th:field="*{content}" style="display: none"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
-                    <td></td>
+                    <td>
+                        <label for="file_input" class="file_btn">
+                            <input type="file" id="file_input" class="file-input" multiple="multiple" />
+                        </label>
+                        <div class="filenames"></div>
+                    </td>
                 </tr>
             </table>
 
-            <button type="button" onclick="location.href='/notice'">목록</button>
-            <button type="submit">등록</button>
+            <div class="btn_box">
+                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/notice'" class="btn_other">
+                    목록
+                </button>
+                <button type="button" th:text="#{button.new}" onclick="pageObj.save()" class="btn_new">등록</button>
+            </div>
         </form>
-    </section>
+    </div>
+</section>
 </body>
 </html>

@@ -12,36 +12,44 @@
 
     <div class="content">
         <form th:action>
-            <input type="text" name="searchWorld" th:value="${searchParam.searchWorld}">
-            <button>검색</button>
+            <div class="only_search_box">
+                <div th:replace="utils/searchBar :: searchWord"></div>
+            </div>
+
+
+            <table>
+                <tr>
+                    <th class="table_chk">
+                        <input type="checkbox" check="all"/>
+                    </th>
+                    <th class="table_num" th:text="#{label.no}">No</th>
+                    <th>제목</th>
+                    <th>첨부파일</th>
+                    <th>작성자</th>
+                    <th>작성일자</th>
+                </tr>
+                <tr th:each="notice : ${result.content}">
+                    <td>
+                        <input type="checkbox">
+                    </td>
+                    <td th:text="${noticeStat.count}"></td>
+                    <td>
+                        <a th:href="@{/admin/notice/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
+                    </td>
+                    <td>
+                        <img th:if="${notice.files.size != 0}"
+                             th:src="@{/images/common/training.svg}">
+                    </td>
+                    <td th:text="${notice.writer}"></td>
+                    <td th:text="${notice.createdAt.toLocalDate()}"></td>
+                </tr>
+            </table>
+
+            <div class="btn_box">
+                <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del"></button>
+                <button type="button" th:text="#{button.new}" onclick="location.href='/admin/notice/add'" class="btn_new"></button>
+            </div>
         </form>
-
-        <table>
-            <tr>
-                <th><input type="checkbox"></th>
-                <th>No</th>
-                <th>제목</th>
-                <th>첨부파일</th>
-                <th>작성자</th>
-                <th>작성일자</th>
-            </tr>
-            <tr th:each="notice : ${noticeList}">
-                <td>
-                    <input type="checkbox">
-                </td>
-                <td th:text="${noticeStat.index}"></td>
-                <td>
-                    <a th:href="@{/templates/admin/notice/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
-                </td>
-                <td th:text="${notice.writer}"></td>
-                <td th:text="${notice.commentCnt}"></td>
-                <td th:text="${notice.registDt}"></td>
-            </tr>
-        </table>
-
-        <div class="btn_box">
-            <button type="button" onclick="location.href='/notice/add'" class="btn_new">등록</button>
-        </div>
     </div>
 </section>
 </body>

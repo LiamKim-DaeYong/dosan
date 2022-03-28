@@ -1,7 +1,6 @@
 var pageObj = {
     save: function () {
         var dataArr = $("form").serializeArray();
-        dataArr.push({name : 'approvalType', value : 'SAVE'});
 
         if (dataArr.length > 0) {
             var data = {};
@@ -10,7 +9,7 @@ var pageObj = {
             });
 
             $ajax.post({data: data, success: function (id) {
-                    location.href = `/educator/training_archive/consultation/${id}/detail`;
+                    location.href = `/educator/training-archive/consultation/${id}/detail`;
                 }
             })
         }
@@ -18,7 +17,6 @@ var pageObj = {
 
     edit: function () {
         var dataArr = $("form").serializeArray();
-        dataArr.push({name : 'approvalType', value : 'SAVE'});
 
         if (dataArr.length > 0) {
             var data = {};
@@ -27,7 +25,7 @@ var pageObj = {
             });
 
             $ajax.put({data: data, success: function (id) {
-                    location.href = `/educator/business-trip-report/${id}/detail`;
+                    location.href = `/educator/training-archive/consultation/${id}/detail`;
                 }
             })
         }

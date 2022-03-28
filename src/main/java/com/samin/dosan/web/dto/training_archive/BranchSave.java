@@ -1,0 +1,28 @@
+package com.samin.dosan.web.dto.training_archive;
+
+import com.samin.dosan.domain.training_archive.branch.NoticeYnType;
+import com.samin.dosan.domain.user.entity.User;
+import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+
+@Data
+public class BranchSave {
+
+    private Long id;
+
+    private User user;
+
+    private String branchType;
+
+    @NotBlank
+    private String noticeYnType;
+
+    @NotBlank
+    private String title;
+
+    @NotBlank
+    private String content;
+
+//    private List<MultipartFile> multipartFiles;
+}
