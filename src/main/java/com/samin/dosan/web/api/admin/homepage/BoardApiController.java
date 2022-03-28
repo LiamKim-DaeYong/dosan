@@ -1,8 +1,8 @@
 package com.samin.dosan.web.api.admin.homepage;
 
-import com.samin.dosan.domain.homepage.type.BoardType;
 import com.samin.dosan.domain.homepage.board.HomepageBoard;
 import com.samin.dosan.domain.homepage.board.HomepageBoardService;
+import com.samin.dosan.domain.homepage.type.BoardType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
