@@ -33,6 +33,6 @@ logging.level:
 
 # File Path
 file:
-  dir: D:/작업/daeyong/upload/file/
+  dir: C:/upload/file/
   temp: C:/upload/temp/
   signature: C:/upload/signature/

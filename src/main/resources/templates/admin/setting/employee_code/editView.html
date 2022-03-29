@@ -5,7 +5,6 @@
     <input type="hidden" th:field="*{id}"/>
     <div>
         <input type="text" th:field="*{code}" class="modal_long_input"/>
-        <span errors="code" class="modal_error"></span>
     </div>
     <div class="modal_btn_box">
         <button type="button" onclick="pageObj.update()" th:text="#{button.update}" class="btn_new">수정</button>

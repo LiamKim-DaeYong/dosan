@@ -7,5 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface OperationalRepositoryQueryDsl {
 
-    Page<Operational> findAll(SearchParam searchParam, Pageable pageable);
+    Page<Operational> findAll(SearchParam searchParam, Pageable pageable, String type);
 }

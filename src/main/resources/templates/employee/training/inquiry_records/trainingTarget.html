@@ -1,0 +1,97 @@
+<!DOCTYPE>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+    <!--/* 검색어 */-->
+    <table th:fragment="student">
+        <tr>
+            <th>성별</th>
+            <th>남자</th>
+            <td>
+                <input type="number" />
+            </td>
+            <th>여자</th>
+            <td>
+                <input type="number" />
+            </td>
+        </tr>
+
+        <tr>
+            <th>초등학생</th>
+            <th>1학년</th>
+            <td>인원</td>
+            <td>
+                <input type="number" />
+            </td>
+            <td>학급</td>
+            <td>
+                <input type="number" />
+            </td>
+            <th>2학년</th>
+            <td>인원</td>
+            <td>
+                <input type="number" />
+            </td>
+            <td>학급</td>
+            <td>
+                <input type="number" />
+            </td>
+            <th>3학년</th>
+            <td>인원</td>
+            <td>
+                <input type="number" />
+            </td>
+            <td>학급</td>
+            <td>
+                <input type="number" />
+            </td>
+        </tr>
+        <tr>
+            <th>4학년</th>
+            <td>인원</td>
+            <td>
+                <input type="number" />
+            </td>
+            <td>학급</td>
+            <td>
+                <input type="number" />
+            </td>
+            <th>5학년</th>
+            <td>인원</td>
+            <td>
+                <input type="number" />
+            </td>
+            <td>학급</td>
+            <td>
+                <input type="number" />
+            </td>
+            <th>6학년</th>
+            <td>인원</td>
+            <td>
+                <input type="number" />
+            </td>
+            <td>학급</td>
+            <td>
+                <input type="number" />
+            </td>
+        </tr>
+
+        <div th:replace="utils/searchBlock :: wordSearchBar"></div>
+    </table>
+
+    <!--/* 날짜, 검색어 */-->
+    <div th:fragment="adult" >
+        <div th:replace="utils/searchBlock :: dateSearchBar"></div>
+        <div th:replace="utils/searchBlock :: wordSearchBar"></div>
+    </div>
+
+    <!--/* 날짜, Select, 검색어 */-->
+    <div th:fragment="worker">
+        <div th:replace="utils/searchBlock :: dateSearchBar"></div>
+        <div th:replace="utils/searchBlock :: wordSelectSearchBar"></div>
+    </div>
+
+</body>
+</html>

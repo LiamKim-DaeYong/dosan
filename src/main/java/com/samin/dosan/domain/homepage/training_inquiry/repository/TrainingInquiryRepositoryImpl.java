@@ -4,10 +4,10 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.core.parameter.SearchParam;
-import com.samin.dosan.domain.homepage.training_inquiry.TrainingInquiry;
 import com.samin.dosan.domain.homepage.type.CheckType;
 import com.samin.dosan.domain.homepage.type.TrainingType;
+import com.samin.dosan.core.parameter.SearchParam;
+import com.samin.dosan.domain.homepage.training_inquiry.TrainingInquiry;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -82,5 +82,17 @@ public class TrainingInquiryRepositoryImpl implements TrainingInquiryRepositoryQ
                 .where(builder);
 
         return PageableExecutionUtils.getPage(content, pageable, countQuery.fetch()::size);
+    }
+
+    @Override
+    public List<TrainingInquiry> findAll(String trainingType) {
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(trainingInquiry.used.eq(Used.Y)
+                .and(trainingInquiry.trainingInquiryType.eq(TrainingType.valueOf(trainingType))));
+
+        return queryFactory
+                .selectFrom(trainingInquiry)
+                .where(builder)
+                .fetch();
     }
 }

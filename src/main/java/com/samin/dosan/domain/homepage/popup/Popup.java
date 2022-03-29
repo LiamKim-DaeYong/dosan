@@ -1,12 +1,17 @@
 package com.samin.dosan.domain.homepage.popup;
 
 import com.samin.dosan.core.code.Used;
+import com.samin.dosan.core.utils.file.FileUtils;
+import com.samin.dosan.core.utils.file.UploadFile;
+import com.samin.dosan.domain.homepage.common.SingleFile;
 import com.samin.dosan.domain.homepage.type.DateSetType;
 import com.samin.dosan.domain.homepage.type.PostType;
 import com.samin.dosan.web.dto.homepage.popup.PopupSave;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -16,7 +21,7 @@ import java.util.UUID;
 @Table(name = "homepage_popup")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Popup {
+public class Popup extends SingleFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,12 +48,6 @@ public class Popup {
     private String link;
 
     @Column(nullable = false)
-    private String originFilename;
-
-    @Column(nullable = false)
-    private String storeFileName;
-
-    @Column(nullable = false)
     private LocalDate regDt;
 
     @Enumerated(EnumType.STRING)
@@ -68,10 +67,15 @@ public class Popup {
         popup.postStart = saveData.getPostStart();
         popup.postEnd = saveData.getPostEnd();
 
-        popup.originFilename = saveData.getFile().getOriginalFilename();
-        popup.storeFileName = UUID.randomUUID()+"_"+popup.originFilename;
-
         return popup;
+    }
+
+    public void addFile(UploadFile file) {
+        this.originFileName = file.getOriginalFilename();
+        this.storeFileName = file.getStoreFileName();
+        this.contentType = file.getContentType();
+        this.extension = file.getExtension();
+        this.fileSize = file.getFileSize();
     }
 
     public void update(PopupSave updateData) {
@@ -82,8 +86,18 @@ public class Popup {
         this.postStart = updateData.getPostStart();
         this.postEnd = updateData.getPostEnd();
 
-        this.originFilename = updateData.getFile().getOriginalFilename();
-        this.storeFileName = UUID.randomUUID()+"_"+this.originFilename;
+        updateFile(updateData.getFiles());
+    }
+
+    private void updateFile(MultipartFile file) {
+        try {
+            FileUtils.deleteFile(this.storeFileName);
+
+            UploadFile uploadFile = FileUtils.fileUpload(file);
+            addFile(uploadFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void delete() {

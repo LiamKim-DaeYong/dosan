@@ -1,13 +1,13 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
-import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
+import com.samin.dosan.core.utils.file.FileUtils;
 import com.samin.dosan.domain.homepage.main_image.MainImage;
 import com.samin.dosan.domain.homepage.main_image.MainImageService;
-import com.samin.dosan.domain.homepage.type.PostType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.PostConstruct;
-import java.time.LocalDate;
+import java.net.MalformedURLException;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,20 +51,13 @@ public class MainImageController {
         return "admin/homepage/main_image/editView";
     }
 
-    @PostConstruct
-    public void init() {
-        for (int i = 1; i < 1001; i++) {
-            MainImage mainImage = MainImage.builder()
-                    .title("제목"+i)
-                    .postYn(PostType.N)
-                    .sort(1)
-                    .originFilename("파일")
-                    .storeFileName("파일")
-                    .regDt(LocalDate.now())
-                    .used(Used.Y)
-                    .build();
+    @GetMapping("/attach/{id}")
+    public ResponseEntity download(@PathVariable Long id) throws MalformedURLException {
+        MainImage mainImage = mainImageService.findById(id);
 
-            mainImageService.save(mainImage);
-        }
+        String originFilename = mainImage.getOriginFileName();
+        String storedFilename = mainImage.getStoreFileName();
+
+        return FileUtils.downloadFile(originFilename, storedFilename);
     }
 }

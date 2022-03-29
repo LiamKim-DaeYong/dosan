@@ -29,6 +29,7 @@ public class EducatorUpdate {
 
     private Long formerJobCodeId;
 
+    @NotBlank
     private String phoneNum;
 
     private String officeNum;
@@ -38,6 +39,7 @@ public class EducatorUpdate {
     private LocalDate birthDate;
 
     @Email
+    @NotBlank
     private String email;
 
     private String bank;

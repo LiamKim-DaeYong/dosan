@@ -2,9 +2,13 @@
 <html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block id="css"></th:block>
+    <th:block id="css">
+        <link rel="stylesheet" type="text/css" th:href="@{/css/user.css}">
+    </th:block>
 
-    <th:block id="script"></th:block>
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/employee/training/school/program.js}"></script>
+    </th:block>
 </head>
 <body>
 <section>
@@ -14,7 +18,121 @@
         <h2 th:text="#{menu.training.school.program}"></h2>
 
         <form th:action>
+            <span class="detail_title">기본정보</span>
+            <table class="table_row">
+                <colgroup>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                </colgroup>
+                <tr>
+                    <th>지역</th>
+                    <td th:text="대구광역시"></td>
+                    <th>수련기관명</th>
+                    <td th:text="장기초등학교"></td>
+                    <th>수련일자</th>
+                    <td th:text="2022.04.01"></td>
+                    <th>과정담당자</th>
+                    <td><input type="text" placeholder="이 과정을 담당하는 임직원 이름" class="table_row_full_input"></td>
+                </tr>
+                <tr>
+                    <th>총 학급</th>
+                    <td><input type="text" placeholder="문의일지에서 불러옴, 수정가능"><em>명</em></td>
+                    <th>총 인원</th>
+                    <td><input type="text" placeholder="문의일지에서 불러옴, 수정가능"><em>명</em></td>
+                    <th>인솔담당자</th>
+                    <td colspan="3"><input type="text" placeholder="수련하는 학교 측 담당선생님, 문의일지에서 불러옴, 수정 및 삭제, 추가가능"
+                                           class="table_row_full_input"></td>
+                </tr>
+            </table>
+
+            <div>
+                <span class="detail_title">담당 지도위원</span>
+                <button type="button" onclick="pageObj.addRow('educatorsTable')" class="btn_other">입력 행 추가</button>
+            </div>
+
+            <table id="educatorsTable" class="table_row border_none_table">
+                <tr>
+                    <td>
+                        <input type="text" id="test" placeholder="이름" auto-search>
+                        <input type="text" placeholder="시간" auto-search-target="test"/>
+                        <i>,</i>
+                        <input type="text" placeholder="이름" auto-search>
+                        <input type="text" placeholder="시간" />
+                        <i>,</i>
+                        <input type="text" placeholder="이름" auto-search>
+                        <input type="text" placeholder="시간" />
+                        <i>,</i>
+                        <input type="text" placeholder="이름" auto-search>
+                        <input type="text" placeholder="시간" />
+                        <i>,</i>
+                        <input type="text" placeholder="이름" auto-search>
+                        <input type="text" placeholder="시간" />
+                        <i>,</i>
+                        <input type="text" placeholder="이름" auto-search>
+                        <input type="text" placeholder="시간" />
+                    </td>
+                </tr>
+            </table>
+
+            <span class="detail_title">교재·교구 운송 계획</span>
+            <table class="table_row user_table">
+                <colgroup>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                    <col width="10%"/>
+                    <col width="15%"/>
+                </colgroup>
+                <tr>
+                    <th>비치날짜</th>
+                    <td><input type="text" placeholder="날짜를 선택해 주세요"></td>
+                    <th>담당 지도위원</th>
+                    <td><input type="text"></td>
+                    <th>회수날짜</th>
+                    <td><input type="text" placeholder="날짜를 선택해 주세요"></td>
+                    <th>담당 지도위원</th>
+                    <td><input type="text"></td>
+                </tr>
+            </table>
+
+            <span class="detail_title">지도위원 배정표</span>
+            <div class="file_upload_box">
+                <label for="file_input" class="file_btn">
+                    <input type="file" id="file_input" class="file-input"/>
+                </label>
+                <div class="filenames">
+<!--                    <div class="file_wraper" th:each="file : ${board.files}">-->
+<!--                        <input type="hidden" name="savedFileIds" th:value="${file.id}" />-->
+<!--                        <button type="button" onclick="$files.removeFile(this)">제거</button>-->
+<!--                        <span th:text="${file.originFilename}"></span>-->
+<!--                    </div>-->
+                </div>
+            </div>
+
+            <span class="detail_title">프로그램 및 강사등록부</span>
+            <div class="file_upload_box">
+                <label for="file_input01" class="file_btn">
+                    <input type="file" id="file_input01" name="file" class="file-input"/>
+                </label>
+            </div>
+
+            <span class="detail_title">비고</span>
+            <textarea class="textarea_height"></textarea>
         </form>
+
+        <div class="btn_box btn_box_margin">
+            <button type="button" th:text="#{button.list}" onclick="location.href='/employee/training/school/program'"></button>
+            <button type="button" th:text="#{button.save}" onclick="pageObj.save()" class="btn_save"></button>
+        </div>
     </div>
 </section>
 </body>

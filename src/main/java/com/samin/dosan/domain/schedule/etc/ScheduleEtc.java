@@ -2,10 +2,7 @@ package com.samin.dosan.domain.schedule.etc;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.samin.dosan.core.domain.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

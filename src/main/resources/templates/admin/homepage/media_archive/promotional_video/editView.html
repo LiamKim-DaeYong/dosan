@@ -22,21 +22,19 @@
                     <th th:text="#{homepage.promotional-video.title}"></th>
                     <td>
                         <input type="text" th:field="*{title}" class="table_row_long_input">
-                        <span errors="title"></span>
                     </td>
                 </tr>
                 <tr>
                     <th th:text="#{homepage.promotional-video.code}"></th>
                     <td>
-                        <textarea cols="30" rows="10">https://www.youtube.com/watch?v=[[*{code}]]</textarea>
+                        <textarea cols="30">https://www.youtube.com/watch?v=[[*{code}]]</textarea>
                         <input type="hidden" th:field="*{code}">
-                        <span errors="code"></span>
                         <button type="button" onclick="pageObj.preview()">미리보기</button>
                     </td>
                 </tr>
                 <tr>
                     <th th:text="#{homepage.promotional-video.preview}"></th>
-                    <td>
+                    <td class="detail_content_td">
                         <div id="player">
                             <iframe id="playerVideo" type="text/html" width="640" height="360"frameBorder="0" allowfullscreen
                                     th:src="@{'http://www.youtube.com/embed/'+*{code}}"

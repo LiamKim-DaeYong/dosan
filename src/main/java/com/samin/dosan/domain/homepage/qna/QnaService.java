@@ -18,6 +18,10 @@ public class QnaService {
 
     private final QnaRepository qnaRepository;
 
+    public List<Qna> findAll() {
+        return qnaRepository.findAll();
+    }
+
     public Page<Qna> findAll(SearchParam searchParam, Pageable pageable) {
         return qnaRepository.findAll(searchParam, pageable);
     }

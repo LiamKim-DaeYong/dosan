@@ -3,11 +3,17 @@ package com.samin.dosan.domain.training.inquiry_records;
 import com.samin.dosan.core.domain.BaseEntity;
 import com.samin.dosan.core.utils.StrUtils;
 import com.samin.dosan.domain.clients.Clients;
+import com.samin.dosan.domain.training.training_target.TrainingTarget;
+import com.samin.dosan.domain.user.entity.User;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Entity
@@ -21,7 +27,10 @@ public class TrainingInquiryRecords extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
-    protected Clients clients;
+    protected Clients clients = new Clients();
+
+    @OneToMany(mappedBy = "trainingInquiryRecords", cascade = CascadeType.ALL)
+    private List<TrainingTarget> trainingTargetList = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
@@ -66,10 +75,15 @@ public class TrainingInquiryRecords extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String note;
 
-    @Column(length = 20)
-    private String register;
+    @Column(length = 10, nullable = false)
+    private InquiryRecordsStatus status;
 
     /*================== Business Logic ==================*/
+
+    public void setTrainingInquiryType(TrainingInquiryType trainingInquiryType) {
+        this.trainingInquiryType = trainingInquiryType;
+    }
+
     public static TrainingInquiryRecords of(TrainingInquiryRecords saveData, String type) {
         TrainingInquiryRecords trainingInquiryRecords = new TrainingInquiryRecords();
         trainingInquiryRecords.clients = saveData.clients;
@@ -88,6 +102,41 @@ public class TrainingInquiryRecords extends BaseEntity {
         trainingInquiryRecords.trainingAfter = saveData.trainingAfter;
         trainingInquiryRecords.note = saveData.note;
 
+        trainingInquiryRecords.status = InquiryRecordsStatus.SAVE;
+
         return trainingInquiryRecords;
+    }
+
+    @Builder(builderMethodName = "test")
+    public TrainingInquiryRecords(Long id, Clients clients, TrainingInquiryType trainingInquiryType, String contactNm,
+                                  String contactPhoneNum, String contactOfficeNum, String contactGender, String contactEmail,
+                                  String trainingStartDate, String trainingEndDate, String motivation, String purpose,
+                                  String request, String trainingBefore, String trainingAfter, String note, InquiryRecordsStatus status) {
+        this.id = id;
+        this.clients = clients;
+        this.trainingInquiryType = trainingInquiryType;
+        this.contactNm = contactNm;
+        this.contactPhoneNum = contactPhoneNum;
+        this.contactOfficeNum = contactOfficeNum;
+        this.contactGender = contactGender;
+        this.contactEmail = contactEmail;
+        this.trainingStartDate = trainingStartDate;
+        this.trainingEndDate = trainingEndDate;
+        this.motivation = motivation;
+        this.purpose = purpose;
+        this.request = request;
+        this.trainingBefore = trainingBefore;
+        this.trainingAfter = trainingAfter;
+        this.note = note;
+        this.status = status;
+    }
+
+    public void update(TrainingInquiryRecords updateData) {
+        this.trainingStartDate = updateData.trainingStartDate;
+        this.trainingEndDate = updateData.trainingEndDate;
+    }
+
+    public void delete() {
+        this.status = InquiryRecordsStatus.CANCEL;
     }
 }

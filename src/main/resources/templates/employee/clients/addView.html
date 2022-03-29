@@ -5,7 +5,7 @@
     <th:block id="css"></th:block>
 
     <th:block id="script">
-        <script type="text/javascript" th:src="@{/js/clients/clients.js}"></script>
+        <script type="text/javascript" th:src="@{/js/employee/clients/clients.js}"></script>
     </th:block>
 </head>
 <body>
@@ -21,12 +21,10 @@
                     <th>단체명</th>
                     <td>
                         <input type="text" th:field="*{clientNm}">
-                        <span errors="clientNm" class="modal_error"></span>
                     </td>
                     <th>담당자</th>
                     <td>
                         <input type="text" th:field="*{manager}">
-                        <span errors="manager" class="modal_error"></span>
                     </td>
                 </tr>
                 <tr>
@@ -42,7 +40,6 @@
                     <th>연락처1</th>
                     <td>
                         <input type="text" th:field="*{phoneNum}">
-                        <span errors="phoneNum" class="modal_error"></span>
                     </td>
                     <th>연락처2</th>
                     <td><input type="text" th:field="*{officeNum}"></td>

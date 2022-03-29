@@ -21,12 +21,11 @@
                     <th th:text="#{homepage.board.title}"></th>
                     <td>
                         <input type="text" th:field="*{title}" class="table_row_long_input">
-                        <span errors="title"></span>
                     </td>
                 </tr>
                 <tr>
                     <th th:text="#{homepage.board.content}"></th>
-                    <td>
+                    <td class="table_row_textarea">
                         <textarea th:field="*{content}"></textarea>
                     </td>
                 </tr>
@@ -34,10 +33,9 @@
                     <th th:text="#{homepage.board.file}"></th>
                     <td>
                         <label for="file_input" class="file_btn">
-                            <input type="file" id="file_input" name="file" class="file-input"/>
+                            <input type="file" id="file_input" class="file-input" multiple="multiple"/>
                         </label>
-                        <span class="filename"></span>
-                        <span errors="file"></span>
+                        <div class="filenames"></div>
                         <span class="comment">※ 최소 500 x 600, 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
                     </td>
                 </tr>
@@ -45,8 +43,12 @@
         </form>
 
         <div class="btn_box">
-            <button type="button" th:text="#{button.list}" th:onclick="|location.href='@{/admin/homepage/board/{type}(type=${boardType.nameToUrl()})}'|" class="btn-default"></button>
-            <button type="button" th:text="#{button.new}" th:onclick="pageObj.save([[${boardType.nameToUrl()}]])" class="btn_new">등록</button>
+            <button type="button" th:text="#{button.list}"
+                    th:onclick="|location.href='@{/admin/homepage/board/{type}(type=${boardType.nameToUrl()})}'|"
+                    class="btn-default"></button>
+            <button type="button" th:text="#{button.new}" th:onclick="pageObj.save([[${boardType.nameToUrl()}]])"
+                    class="btn_new">등록
+            </button>
         </div>
     </div>
 </section>

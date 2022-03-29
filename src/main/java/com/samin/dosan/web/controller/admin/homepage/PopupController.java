@@ -1,14 +1,14 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
-import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
+import com.samin.dosan.core.utils.file.FileUtils;
 import com.samin.dosan.domain.homepage.popup.Popup;
 import com.samin.dosan.domain.homepage.popup.PopupService;
-import com.samin.dosan.domain.homepage.type.DateSetType;
 import com.samin.dosan.domain.homepage.type.PostType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.PostConstruct;
-import java.time.LocalDate;
+import java.net.MalformedURLException;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,8 +26,7 @@ public class PopupController {
     private final PopupService popupService;
 
     @GetMapping
-    public String mainView(@ModelAttribute SearchParam searchParam,
-                        Pageable pageable, Model model) {
+    public String mainView(@ModelAttribute SearchParam searchParam, Pageable pageable, Model model) {
         Page<Popup> result = popupService.findAll(searchParam, pageable);
         model.addAttribute("result", result);
 
@@ -57,23 +55,13 @@ public class PopupController {
         return "admin/homepage/popup/editView";
     }
 
-    @PostConstruct
-    public void init() {
-        for (int i = 1; i < 1001; i++) {
-            Popup popup = Popup.builder()
-                    .postYn(PostType.Y)
-                    .dateSet(DateSetType.Y)
-                    .postStart("2022-03-20")
-                    .postEnd("2022-03-22")
-                    .title("제목"+i)
-                    .link(null)
-                    .originFilename("12312231.jpg")
-                    .storeFileName("23241142.jpg")
-                    .regDt(LocalDate.now())
-                    .used(Used.Y)
-                    .build();
+    @GetMapping("/attach/{id}")
+    public ResponseEntity download(@PathVariable Long id) throws MalformedURLException {
+        Popup popup = popupService.findById(id);
 
-            popupService.save(popup);
-        }
+        String originFilename = popup.getOriginFileName();
+        String storedFilename = popup.getStoreFileName();
+
+        return FileUtils.downloadFile(originFilename, storedFilename);
     }
 }

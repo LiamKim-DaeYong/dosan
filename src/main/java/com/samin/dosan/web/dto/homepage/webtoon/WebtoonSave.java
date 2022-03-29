@@ -1,12 +1,13 @@
 package com.samin.dosan.web.dto.homepage.webtoon;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter @Setter
 public class WebtoonSave {
 
     private Long id;
@@ -17,6 +18,5 @@ public class WebtoonSave {
     @NotNull
     private MultipartFile pdf;
 
-    @NotNull
     private MultipartFile img;
 }

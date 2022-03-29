@@ -26,29 +26,22 @@
                 <tr>
                     <th th:text="#{homepage.webtoon.pdf}"></th>
                     <td>
-                        <label th:for="*{pdf}" class="file_btn">
-                            <input type="file" th:field="*{pdf}" class="file-input"/>
+                        <label for="pdf_input" class="file_btn">
+                            <input type="file" id="pdf_input" name="pdf" class="only-input"
+                                   onchange="$files.onlyInit(this, $('.pdfnames'))"/>
                         </label>
-                        <span class="filename"></span>
-                        <span errors="pdf"></span>
-                        <span class="comment">※ 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
+                        <div class="pdfnames"></div>
                     </td>
                 </tr>
                 <tr>
                     <th th:text="#{homepage.webtoon.img}"></th>
                     <td class="text-left">
-                        <label th:for="*{img}" class="file_btn">
-                            <input type="file" th:field="*{img}" class="file-input"/>
+                        <label for="img_input" class="file_btn">
+                            <input type="file" id="img_input" name="img" class="only-input"
+                                   onchange="$files.onlyInit(this, $('.filenames'))"/>
                         </label>
-                        <span class="filename"></span>
-                        <span errors="file"></span>
+                        <div class="filenames"></div>
                         <span class="comment">※이미지 업로드를 하지 않으면 PDF 첫페이지가 썸네일 이미지로 등록됩니다.*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <th th:text="#{homepage.webtoon.preview}"></th>
-                    <td>
-
                     </td>
                 </tr>
             </table>

@@ -14,21 +14,15 @@
         </li>
 
         <li>
-            <a id="menu_inquiry_report" th:href="@{/}"><img th:src="@{/images/common/training.svg}">수련문의일지 관리</a>
+            <a id="menu_inquiry_report" th:href="@{/employee/training/inquiry_records}"><img th:src="@{/images/common/training.svg}">수련문의일지 관리</a>
         </li>
 
-        <li><span class="nav_list_title"><img th:src="@{/images/common/training.svg}">입교 수련업무</span>
+        <li><span class="nav_list_title"><img th:src="@{/images/common/training.svg}">수련업무</span>
             <ul>
-                <li><a id="menu_entry_program" th:href="@{/employee/training/entry/program}">수련프로그램 관리</a></li>
+                <li><a id="menu_entry_program" th:href="@{/employee/training/entry/program}">입교 수련프로그램</a></li>
+                <li><a id="menu_school_program" th:href="@{/employee/training/school/program}">학교 수련프로그램</a></li>
                 <li><a id="menu_entry_list" th:href="@{/employee/training/entry/list}">수련명부 관리</a></li>
                 <li><a id="menu_entry_print" th:href="@{/employee/training/entry/print}">출력물 관리</a></li>
-            </ul>
-        </li>
-
-        <li><span class="nav_list_title"><img th:src="@{/images/common/training.svg}">학교 수련업무</span>
-            <ul>
-                <li><a id="menu_assignment_table" th:href="@{/employee/training/school/assignment-table}">지도위원 배정표</a></li>
-                <li><a id="menu_school_program" th:href="@{/employee/training/school/program}">수련프로그램 등록</a></li>
             </ul>
         </li>
 
@@ -154,7 +148,7 @@
                     <a th:href="@{/educator/training-archive/consultation}">수련 협의자료</a>
                 </li>
                 <li>
-                    <a th:href="@{/educator/training-archive/operational}">수련 운영자료</a>
+                    <a th:href="@{/educator/training-archive/operational/school}">수련 운영자료</a>
                 </li>
                 <li>
                     <a th:href="@{/educator/training-archive/branch/daegu}">지부 자료실</a>

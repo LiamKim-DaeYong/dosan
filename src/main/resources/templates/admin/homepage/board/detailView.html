@@ -15,18 +15,26 @@
     <div class="content">
         <h2 th:text="|${boardType.description} 상세|"></h2>
 
-        <form th:action th:object="${board}" method="post">
             <table class="table_row">
                 <tr>
                     <th th:text="#{homepage.board.title}"></th>
-                    <td th:text="*{title}"></td>
+                    <td th:text="${board.title}"></td>
                 </tr>
                 <tr>
                     <th th:text="#{homepage.board.content}"></th>
-                    <td th:utext="*{content}"></td>
+                    <td th:utext="${board.content}" class="detail_content_td"></td>
+                </tr>
+                <tr>
+                    <th>첨부파일</th>
+                    <td>
+                        <ul>
+                            <li th:each="file : ${board.files}">
+                                <a th:href="@{|/admin/homepage/board/${board.boardType.nameToUrl()}/attach/${board.id}/${file.id}|}" th:text="${file.originFilename}"></a>
+                            </li>
+                        </ul>
+                    </td>
                 </tr>
             </table>
-        </form>
 
         <div class="btn_box">
             <button type="button" th:text="#{button.list}"

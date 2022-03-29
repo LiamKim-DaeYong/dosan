@@ -27,22 +27,31 @@
                 <tr>
                     <th th:text="#{homepage.webtoon.pdf}"></th>
                     <td>
-                        <label for="pdf" class="file_btn">
-                            <input type="file" name="pdf" id="pdf" class="file-input"/>
+                        <label for="pdf_input" class="file_btn">
+                            <input type="file" id="pdf_input" name="pdf" class="only-input"
+                                   onchange="$files.onlyInit(this, $('.pdfnames'))"/>
                         </label>
-                        <span class="filename"></span>
-                        <span errors="pdf"></span>
-                        <span class="comment">※ 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
+                        <div class="pdfnames">
+                            <div class="file_wraper">
+                                <button type="button" onclick="$files.removeFile(this)">제거</button>
+                                <span th:text="*{originPdfName}"></span>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <th th:text="#{homepage.webtoon.img}"></th>
                     <td class="text-left">
-                        <label for="img" class="file_btn">
-                            <input type="file" name="img" id="img" class="file-input"/>
+                        <label for="img_input" class="file_btn">
+                            <input type="file" id="img_input" name="img" class="only-input"
+                                   onchange="$files.onlyInit(this, $('.filenames'))"/>
                         </label>
-                        <span class="filename"></span>
-                        <span errors="file"></span>
+                        <div class="filenames">
+                            <div class="file_wraper">
+                                <button type="button" onclick="$files.removeFile(this)">제거</button>
+                                <span th:text="*{originFileName}"></span>
+                            </div>
+                        </div>
                         <span class="comment">※이미지 업로드를 하지 않으면 PDF 첫페이지가 썸네일 이미지로 등록됩니다.*</span>
                     </td>
                 </tr>
@@ -55,7 +64,7 @@
 
         <div class="btn_box">
             <button type="button" th:text="#{button.list}" onclick="location.href='/admin/homepage/media-archive/webtoon'"></button>
-            <button type="button" th:text="#{button.save}" onclick="pageObj.edit()" class="btn_save"></button>
+            <button type="button" th:text="#{button.save}" onclick="pageObj.update()" class="btn_save"></button>
         </div>
     </div>
 </section>

@@ -1,6 +1,5 @@
 package com.samin.dosan.web.api.admin.homepage;
 
-import com.samin.dosan.domain.homepage.main_image.MainImage;
 import com.samin.dosan.domain.homepage.main_image.MainImageService;
 import com.samin.dosan.web.dto.homepage.mainImage.MainImageSave;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +17,12 @@ public class MainImageApiController {
     private final MainImageService mainImageService;
 
     @PostMapping("/add")
-    public ResponseEntity save(@Valid MainImageSave mainImageSave) {
-        Long id = mainImageService.save(MainImage.of(mainImageSave));
+    public ResponseEntity save(@Valid MainImageSave saveData) {
+        Long id = mainImageService.save(saveData);
         return ResponseEntity.ok(id);
     }
 
-    @PostMapping("{id}/edit")
+    @PutMapping("{id}/edit")
     public ResponseEntity edit(@PathVariable Long id, @Valid MainImageSave mainImageSave) {
         mainImageService.update(id, mainImageSave);
         return ResponseEntity.ok(id);

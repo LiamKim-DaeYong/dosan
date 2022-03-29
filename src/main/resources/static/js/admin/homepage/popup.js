@@ -1,34 +1,20 @@
 var pageObj = {
     save: function () {
-        var form = $("form")[0];
-        var formData = new FormData(form);
-
         $ajax.postMultiPart({
-            data: formData,
-            enctype: 'multipart/form-data',
-            cache : false,
-            processData: false,
-            contentType: 'multipart/form-data',
+            data: $form.getData(),
             success: function (id) {
-                location.href = `/admin/homepage/popup/${id}/detail`;
+                $url.redirect(`/admin/homepage/popup/${id}/detail`)
             }
-        })
+        });
     },
 
     update: function () {
-        var form = $("form")[0];
-        var formData = new FormData(form);
-
-        $ajax.postMultiPart({
-            data: formData,
-            enctype: 'multipart/form-data',
-            cache : false,
-            processData: false,
-            contentType: 'multipart/form-data',
+        $ajax.putMultiPart({
+            data: $form.getData(),
             success: function (id) {
-                location.href = `/admin/homepage/popup/${id}/detail`;
+                $url.redirect(`/admin/homepage/popup/${id}/detail`)
             }
-        })
+        });
     },
 
     delete: function () {

@@ -1,34 +1,24 @@
 var pageObj = {
+    init: function () {
+        $editor.init("content");
+    },
+
     save: function (type) {
-        var dataArr = $("form").serializeArray();
-
-        if (dataArr.length > 0) {
-            var data = {};
-            $.each(dataArr, function () {
-                data[this.name] = this.value;
-            });
-
-            $ajax.post({data: data, success: function (id) {
-                    location.href = `/admin/homepage/board/${type}/${id}/detail`;
-                }
-            })
-        }
+        $ajax.postMultiPart({
+            data: $form.getData(),
+            success: function (id) {
+                $url.redirect(`/admin/homepage/board/${type}/${id}/detail`);
+            }
+        })
     },
 
     update: function (type) {
-        var dataArr = $("form").serializeArray();
-
-        if (dataArr.length > 0) {
-            var data = {};
-            $.each(dataArr, function () {
-                data[this.name] = this.value;
-            });
-
-            $ajax.put({data: data, success: function (id) {
-                    location.href = `/admin/homepage/board/${type}/${id}/detail`;
-                }
-            })
-        }
+        $ajax.putMultiPart({
+            data: $form.getData(),
+            success: function (id) {
+                $url.redirect(`/admin/homepage/board/${type}/${id}/detail`);
+            }
+        });
     },
 
     delete: function () {
@@ -41,4 +31,5 @@ var pageObj = {
 }
 
 pageObj.pageStart = function () {
+    pageObj.init();
 };

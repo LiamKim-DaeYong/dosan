@@ -21,7 +21,6 @@
                     <th th:text="#{homepage.popup.title}"></th>
                     <td>
                         <input type="text" th:field="*{title}" class="table_row_long_input">
-                        <span errors="title"></span>
                     </td>
                 </tr>
                 <tr>
@@ -57,10 +56,10 @@
                     <th th:text="#{homepage.popup.image}"></th>
                     <td>
                         <label for="file_input" class="file_btn">
-                            <input type="file" id="file_input" name="file" class="file-input"/>
+                            <input type="file" id="file_input" name="file" class="only-input"
+                                   onchange="$files.onlyInit(this, $('.filenames'))"/>
                         </label>
-                        <span class="filename"></span>
-                        <span errors="file"></span>
+                        <div class="filenames"></div>
                         <span class="comment">※ 최소 500 x 600, 최대 3Mb 이하의 이미지 파일만 가능합니다.</span>
                     </td>
                 </tr>

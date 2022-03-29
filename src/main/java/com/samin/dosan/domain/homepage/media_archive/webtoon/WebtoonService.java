@@ -1,6 +1,8 @@
 package com.samin.dosan.domain.homepage.media_archive.webtoon;
 
 import com.samin.dosan.core.parameter.SearchParam;
+import com.samin.dosan.core.utils.file.FileUtils;
+import com.samin.dosan.core.utils.file.UploadFile;
 import com.samin.dosan.domain.homepage.media_archive.webtoon.repository.WebtoonRepository;
 import com.samin.dosan.web.dto.homepage.webtoon.WebtoonSave;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -29,8 +33,29 @@ public class WebtoonService {
     }
 
     @Transactional
-    public Long save(Webtoon saveData) {
-        return webtoonRepository.save(saveData).getId();
+    public Long save(WebtoonSave saveData) {
+        Webtoon webtoon = Webtoon.of(saveData);
+
+        try {
+            UploadFile uploadPdf = FileUtils.fileUpload(saveData.getPdf());
+            webtoon.addPdf(uploadPdf);
+
+            String imgName = saveData.getImg().getOriginalFilename();
+            UploadFile uploadImg;
+            if (imgName.isBlank()) {
+                uploadImg = FileUtils.getPdfFirstPage(webtoon.getOriginPdfName(), webtoon.getStorePdfName());
+            } else {
+                uploadImg = FileUtils.fileUpload(saveData.getImg());
+            }
+
+            webtoon.addImg(uploadImg);
+
+            webtoonRepository.save(webtoon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return webtoon.getId();
     }
 
     @Transactional

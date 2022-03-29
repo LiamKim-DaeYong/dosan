@@ -20,6 +20,10 @@ input, input::placeholder, select  {
     font-family: "Noto sans kr", sans-serif !important;
 }
 
+input::placeholder {
+    color:#a3a3a3;
+}
+
 input:focus, textarea:focus, select:focus {
     outline:none;
     border:1px solid #8fb5f3;

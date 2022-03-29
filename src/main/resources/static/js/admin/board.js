@@ -9,7 +9,7 @@ var pageObj = {
             success: function (id) {
                 $url.redirect(`/admin/board/${id}`);
             }
-        })
+        });
     },
 
     update: function () {

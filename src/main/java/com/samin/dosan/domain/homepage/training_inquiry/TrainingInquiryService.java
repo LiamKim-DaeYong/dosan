@@ -18,6 +18,14 @@ public class TrainingInquiryService {
 
     private final TrainingInquiryRepository trainingInquiryRepository;
 
+    public List<TrainingInquiry> findAll() {
+        return trainingInquiryRepository.findAll();
+    }
+
+    public List<TrainingInquiry> get(String trainingType) {
+        return trainingInquiryRepository.findAll(trainingType);
+    }
+
     public Page<TrainingInquiry> findAll(SearchParam searchParam, Pageable pageable) {
         return trainingInquiryRepository.findAll(searchParam, pageable);
     }

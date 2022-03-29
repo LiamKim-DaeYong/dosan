@@ -15,26 +15,43 @@
 
         <form th:action>
             <div class="all_search_box">
-                <div th:replace="utils/searchBar :: searchWord"></div>
+                <div th:replace="utils/searchBar :: searchDateWord"></div>
             </div>
 
             <table>
+                <colgroup>
+                    <col width="6%" />
+                    <col width="34%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                </colgroup>
                 <tr>
                     <th class="table_num" th:text="#{label.no}"></th>
-                    <th>단체명</th>
-                    <th>수련일자</th>
-                    <th>일정</th>
-                    <th>강사등록부</th>
-                    <th>수련안내서</th>
-                    <th>등록일자</th>
-                    <th>등록자</th>
+                    <th th:text="단체명">단체명</th>
+                    <th th:text="수련일자">수련일자</th>
+                    <th th:text="총학급">총 학급</th>
+                    <th th:text="지도위원배정표">지도위원배정표</th>
+                    <th th:text="프로그램및강사등록부">프로그램및강사등록부</th>
+                    <th th:text="등록일자">등록일자</th>
+                    <th th:text="등록자">등록자</th>
+                </tr>
+                <tr>
+                    <td class="table_num" th:text="1"></td>
+                    <td>
+                        <a th:href="@{/employee/training/school/program/add}" th:text="장기초등학교"></a>
+                    </td>
+                    <td th:text="2022-03-29">수련일자</td>
+                    <td th:text="12">총 학급</td>
+                    <td th:text="미등록">지도위원배정표</td> <!-- 미등록 말고 등록 안됐으면 - 로 해주세용 -->
+                    <td th:text="등록">프로그램시간표</td>
+                    <td th:text="2022-03-28">등록일자</td>
+                    <td th:text="홍길동">등록자</td>
                 </tr>
             </table>
-
-            <div class="btn_box">
-                <button type="button" th:text="#{button.select.delete}"></button>
-                <button type="button" th:text="#{button.new}" onclick="location.href='/employee/training/school/program/add'" class="btn_new"></button>
-            </div>
         </form>
     </div>
 </section>

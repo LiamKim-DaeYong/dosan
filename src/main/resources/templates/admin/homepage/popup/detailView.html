@@ -35,7 +35,16 @@
                 </tr>
                 <tr>
                     <th th:text="#{homepage.popup.image}"></th>
-                    <td th:text="*{originFilename}"></td>
+                    <td class="detail_content_td">
+                        미리보기
+                    </td>
+                </tr>
+                <tr>
+                    <th>첨부파일</th>
+                    <td>
+                        <a th:href="@{/admin/homepage/popup/attach/{id}(id=${popup.id})}"
+                           th:text="${popup.originFileName}"></a>
+                    </td>
                 </tr>
             </table>
         </form>

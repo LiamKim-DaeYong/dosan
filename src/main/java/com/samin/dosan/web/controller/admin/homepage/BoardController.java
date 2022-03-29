@@ -1,13 +1,17 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
-import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.parameter.SearchParam;
+import com.samin.dosan.core.utils.StrUtils;
+import com.samin.dosan.core.utils.file.FileUtils;
+import com.samin.dosan.domain.board.BoardFile;
 import com.samin.dosan.domain.homepage.board.HomepageBoard;
+import com.samin.dosan.domain.homepage.board.HomepageBoardFile;
 import com.samin.dosan.domain.homepage.board.HomepageBoardService;
 import com.samin.dosan.domain.homepage.type.BoardType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.PostConstruct;
-import java.time.LocalDate;
+import java.net.MalformedURLException;
 
 @Controller("homepageBoard")
 @RequiredArgsConstructor
@@ -32,14 +35,14 @@ public class BoardController {
 
     @ModelAttribute("boardType")
     public BoardType boardType(@PathVariable String type) {
-        return BoardType.valueOf(type.toUpperCase().replace("-", "_"));
+        return BoardType.valueOf(StrUtils.urlToEnumName(type));
     }
 
     @GetMapping
     public String mainView(@ModelAttribute SearchParam searchParam,
                            @PathVariable String type,
                            Pageable pageable, Model model) {
-        BoardType boardType = BoardType.valueOf(type.toUpperCase().replace("-", "_"));
+        BoardType boardType = BoardType.valueOf(StrUtils.urlToEnumName(type));
         Page<HomepageBoard> result = homepageBoardService.findAll(searchParam, pageable, boardType);
         model.addAttribute("result", result);
 
@@ -52,57 +55,29 @@ public class BoardController {
     }
 
     @GetMapping("/{id}/detail")
-    public String detailView(@PathVariable("id") Long id, @PathVariable("type") String type,
-                             Model model) {
+    public String detailView(@PathVariable("id") Long id, Model model) {
         model.addAttribute("board", homepageBoardService.findById(id));
 
         return "admin/homepage/board/detailView";
     }
 
     @GetMapping("/{id}/edit")
-    public String editView(@PathVariable("id") Long id, @PathVariable("type") String type,
-                           Model model) {
+    public String editView(@PathVariable("id") Long id, Model model) {
         model.addAttribute("board", homepageBoardService.findById(id));
 
         return "admin/homepage/board/editView";
     }
 
-    @PostConstruct
-    public void init() {
-        for (int i = 1; i < 1001; i++) {
-            HomepageBoard board1 = HomepageBoard.builder()
-                    .boardType(BoardType.NOTICE)
-                    .hit(0)
-                    .author("작성자"+i)
-                    .title(BoardType.NOTICE.getDescription() + i)
-                    .content(String.valueOf(i))
-                    .regDt(LocalDate.now())
-                    .used(Used.Y)
-                    .build();
+    @GetMapping("/attach/{boardId}/{fileId}")
+    public ResponseEntity download(@PathVariable Long boardId, @PathVariable Long fileId) throws MalformedURLException {
+        HomepageBoard board = homepageBoardService.findById(boardId);
 
-            HomepageBoard board2 = HomepageBoard.builder()
-                    .boardType(BoardType.REPORTED_NEWS)
-                    .hit(0)
-                    .author("작성자"+i)
-                    .title(BoardType.REPORTED_NEWS.getDescription() + i)
-                    .content(String.valueOf(i))
-                    .regDt(LocalDate.now())
-                    .used(Used.Y)
-                    .build();
+        HomepageBoardFile boardFile = board.getFiles().stream()
+                .filter(file -> file.getId().equals(fileId)).findFirst().get();
 
-            HomepageBoard board3 = HomepageBoard.builder()
-                    .boardType(BoardType.PHOTO_GALLERY)
-                    .hit(0)
-                    .author("작성자"+i)
-                    .title(BoardType.PHOTO_GALLERY.getDescription() + i)
-                    .content(String.valueOf(i))
-                    .regDt(LocalDate.now())
-                    .used(Used.Y)
-                    .build();
+        String originFilename = boardFile.getOriginFilename();
+        String storedFilename = boardFile.getStoreFileName();
 
-            homepageBoardService.save(board1);
-            homepageBoardService.save(board2);
-            homepageBoardService.save(board3);
-        }
+        return FileUtils.downloadFile(originFilename, storedFilename);
     }
 }

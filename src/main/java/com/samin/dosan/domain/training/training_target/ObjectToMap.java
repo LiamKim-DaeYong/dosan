@@ -1,7 +1,5 @@
 package com.samin.dosan.domain.training.training_target;
 
-import com.samin.dosan.domain.file.Files;
-
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;

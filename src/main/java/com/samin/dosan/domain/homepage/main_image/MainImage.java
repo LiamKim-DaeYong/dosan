@@ -1,14 +1,17 @@
 package com.samin.dosan.domain.homepage.main_image;
 
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.core.domain.BaseEntity;
+import com.samin.dosan.core.utils.file.FileUtils;
+import com.samin.dosan.core.utils.file.UploadFile;
+import com.samin.dosan.domain.homepage.common.SingleFile;
 import com.samin.dosan.domain.homepage.type.PostType;
 import com.samin.dosan.web.dto.homepage.mainImage.MainImageSave;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -16,7 +19,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MainImage extends BaseEntity {
+public class MainImage extends SingleFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,12 +34,6 @@ public class MainImage extends BaseEntity {
 
     @Column(nullable = false)
     private Integer sort;
-
-    @Column(nullable = false)
-    private String originFilename;
-
-    @Column(nullable = false)
-    private String storeFileName;
 
     @Column(nullable = false)
     private LocalDate regDt;
@@ -54,18 +51,35 @@ public class MainImage extends BaseEntity {
         mainImage.title = saveData.getTitle();
         mainImage.postYn = saveData.getPostYn();
         mainImage.sort = saveData.getSort();
-        mainImage.originFilename = saveData.getFile().getOriginalFilename();
-        mainImage.storeFileName = UUID.randomUUID()+"_"+mainImage.originFilename;
 
         return mainImage;
+    }
+
+    public void addFile(UploadFile file) {
+        this.originFileName = file.getOriginalFilename();
+        this.storeFileName = file.getStoreFileName();
+        this.contentType = file.getContentType();
+        this.extension = file.getExtension();
+        this.fileSize = file.getFileSize();
     }
 
     public void update(MainImageSave updateData) {
         this.title = updateData.getTitle();
         this.postYn = updateData.getPostYn();
         this.sort = updateData.getSort();
-        this.originFilename = updateData.getFile().getOriginalFilename();
-        this.storeFileName = UUID.randomUUID()+"_"+this.originFilename;
+
+        updateFile(updateData.getFiles());
+    }
+
+    private void updateFile(MultipartFile file) {
+        try {
+            FileUtils.deleteFile(this.storeFileName);
+
+            UploadFile uploadFile = FileUtils.fileUpload(file);
+            addFile(uploadFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void delete() {

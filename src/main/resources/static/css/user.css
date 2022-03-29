@@ -63,3 +63,14 @@
     border-radius: 50%;
     background:#223351;
 }
+
+.border_none_table td {
+    padding:0;
+    border:0;
+}
+
+.border_none_table td input {
+    text-align:center;
+    width:90px;
+    padding:0.4em;
+}

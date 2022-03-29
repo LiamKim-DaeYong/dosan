@@ -24,6 +24,7 @@ public class EmployeeUpdate {
 
     private Long formerJobCodeId;
 
+    @NotBlank
     private String phoneNum;
 
     private String officeNum;
@@ -33,6 +34,7 @@ public class EmployeeUpdate {
     private LocalDate birthDate;
 
     @Email
+    @NotBlank
     private String email;
 
     private String bank;

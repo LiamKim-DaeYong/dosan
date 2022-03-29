@@ -1,10 +1,10 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
 import com.samin.dosan.core.code.Used;
+import com.samin.dosan.domain.homepage.type.SecretType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.qna.Qna;
 import com.samin.dosan.domain.homepage.qna.QnaService;
-import com.samin.dosan.domain.homepage.type.SecretType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,23 +39,5 @@ public class QnAController {
         model.addAttribute("qna", qnaService.findById(id));
 
         return "admin/homepage/qna/detailView";
-    }
-
-    @PostConstruct
-    public void init() {
-        for (int i = 1; i < 1001; i++) {
-            Qna qna = Qna.builder()
-                    .hit(0)
-                    .secret(SecretType.N)
-                    .author("작성자"+i)
-                    .title("제목"+i)
-                    .content("내용"+i)
-                    .comment("안녕하세요!!!!!!!!!!!!!!!!!!!!!")
-                    .regDt(LocalDate.now())
-                    .used(Used.Y)
-                    .build();
-
-            qnaService.save(qna);
-        }
     }
 }

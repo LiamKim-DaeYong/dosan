@@ -30,7 +30,16 @@
                 </tr>
                 <tr>
                     <th>이미지</th>
-                    <td></td>
+                    <td class="detail_content_td">
+                        미리보기
+                    </td>
+                </tr>
+                <tr>
+                    <th>첨부파일</th>
+                    <td>
+                        <a th:href="@{/admin/homepage/main-image/attach/{id}(id=${mainImage.id})}"
+                           th:text="${mainImage.originFileName}"></a>
+                    </td>
                 </tr>
             </table>
         </form>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+    <div id="addForm">
+        <span class="detail_title">수련 대상자 특성</span>
+        <table th:replace="trainingTarget:: trainingTarget"></table>
+
+        <span class="detail_title">업무담당자</span>
+        <table>
+            <colgroup>
+                <col width="10%">
+                <col width="15%">
+                <col width="10%">
+                <col width="15%">
+                <col width="10%">
+                <col width="15%">
+                <col width="10%">
+                <col width="15%">
+            </colgroup>
+            <tr>
+                <th>성명</th>
+                <td>
+                    <input type="text" th:field="*{contactNm}">
+                </td>
+                <th>성별</th>
+                <td>
+                    <input type="checkbox">
+                    <input type="checkbox">
+                </td>
+                <th>연락처</th>
+                <td>
+                    <span>사무실전화</span>
+                    <input type="text" th:field="*{contactOfficeNum}">
+                    <span>휴대전화</span>
+                    <input type="text" th:field="*{contactPhoneNum}">
+                </td>
+                <th>E-mail</th>
+                <td>
+                    <input type="text" th:field="*{contactEmail}">
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>

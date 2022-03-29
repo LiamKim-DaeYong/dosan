@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.training.inquiry_records.TrainingInquiryRecords;
+import com.samin.dosan.domain.user.entity.QUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import java.util.List;
 
 import static com.samin.dosan.domain.clients.QClients.clients;
 import static com.samin.dosan.domain.training.inquiry_records.QTrainingInquiryRecords.trainingInquiryRecords;
+import static com.samin.dosan.domain.user.entity.QUser.user;
 
 
 @RequiredArgsConstructor

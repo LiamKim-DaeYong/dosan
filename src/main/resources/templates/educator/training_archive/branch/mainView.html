@@ -30,6 +30,14 @@
             </div>
 
             <table>
+                <colgroup>
+                    <col width="*" />
+                    <col width="*" />
+                    <col width="60%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                    <col width="10%" />
+                </colgroup>
                 <tr>
                     <th class="table_chk">
                         <input type="checkbox" check="all"/>
@@ -41,7 +49,7 @@
                     <th th:text="#{training.archive.branch.regDt}">작성일자</th>
                 </tr>
 
-                <tr th:each="branch : ${result.content}">
+                <tr th:each="branch : ${result.content}" th:classappend="${branch.noticeYnType.name == 'Y'} ? 'notification' : ''">
                     <td class="table_chk">
                         <input type="checkbox" th:value="${branch.id}"/>
                     </td>

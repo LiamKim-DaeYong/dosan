@@ -1,16 +1,18 @@
 package com.samin.dosan.web.controller.admin.homepage;
 
 import com.samin.dosan.core.code.Used;
+import com.samin.dosan.core.utils.file.FileUtils;
+import com.samin.dosan.domain.homepage.type.MediaType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.media_archive.promotional_video.PromotionalVideo;
 import com.samin.dosan.domain.homepage.media_archive.promotional_video.PromotionalVideoService;
 import com.samin.dosan.domain.homepage.media_archive.webtoon.Webtoon;
 import com.samin.dosan.domain.homepage.media_archive.webtoon.WebtoonService;
-import com.samin.dosan.domain.homepage.type.MediaType;
 import com.samin.dosan.web.dto.homepage.webtoon.WebtoonSave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.PostConstruct;
+import java.net.MalformedURLException;
 import java.time.LocalDate;
 
 @Controller
@@ -103,30 +106,13 @@ public class MediaArchiveController {
         return "admin/homepage/media_archive/webtoon/editView";
     }
 
-    @PostConstruct
-    public void init() {
-        for (int i = 1; i < 1001; i++) {
-            PromotionalVideo video = PromotionalVideo.builder()
-                    .title("홍보동영상"+i)
-                    .code("123123")
-                    .author("작성자"+i)
-                    .regDt(LocalDate.now())
-                    .used(Used.Y)
-                    .build();
+    @GetMapping("/webtoon/attach/{id}")
+    public ResponseEntity download(@PathVariable Long id) throws MalformedURLException {
+        Webtoon webtoon = webtoonService.findById(id);
 
-            Webtoon webtoon = Webtoon.builder()
-                    .author("작성자"+i)
-                    .title("웹툰"+i)
-                    .pdfOriginFilename("12313312123")
-                    .pdfStoreFileName("34342432324324")
-                    .imgOriginFilename("23552235532325")
-                    .imgStoreFileName("315335353211")
-                    .regDt(LocalDate.now())
-                    .used(Used.Y)
-                    .build();
+        String originalFileName = webtoon.getOriginPdfName();
+        String storedFileName = webtoon.getStorePdfName();
 
-            promotionService.save(video);
-            webtoonService.save(webtoon);
-        }
+        return FileUtils.downloadFile(originalFileName, storedFileName);
     }
 }

@@ -1,6 +1,8 @@
 package com.samin.dosan.domain.homepage.popup;
 
 import com.samin.dosan.core.parameter.SearchParam;
+import com.samin.dosan.core.utils.file.FileUtils;
+import com.samin.dosan.core.utils.file.UploadFile;
 import com.samin.dosan.domain.homepage.popup.repository.PopupRepository;
 import com.samin.dosan.web.dto.homepage.popup.PopupSave;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -29,8 +32,19 @@ public class PopupService {
     }
 
     @Transactional
-    public Long save(Popup saveData) {
-        return popupRepository.save(saveData).getId();
+    public Long save(PopupSave saveData) {
+        Popup popup = Popup.of(saveData);
+
+        try {
+            UploadFile uploadFile = FileUtils.fileUpload(saveData.getFiles());
+            popup.addFile(uploadFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        popupRepository.save(popup);
+
+        return popup.getId();
     }
 
     @Transactional

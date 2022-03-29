@@ -18,6 +18,13 @@
 
         <form th:action>
             <div class="all_search_box">
+                <ul class="toggle_list">
+                    <li th:each="type : ${operationalTypes}"
+                        th:classappend="${operationalType eq type}?'toggle_on'">
+                        <a th:href="@{|/educator/training-archive/operational/${type.nameToUrl()}|}"
+                           th:text="${type.description}"></a>
+                    </li>
+                </ul>
                 <div th:replace="utils/searchBar :: searchWord"></div>
             </div>
 
@@ -40,7 +47,7 @@
                     <td class="table_num"
                         th:text="${result.totalElements - (result.pageable.offset + operationalStat.index)}"></td>
                     <td>
-                        <a th:href="@{|/educator/training-archive/operational/${operational.id}/detail|}"
+                        <a th:href="@{|/educator/training-archive/operational/${operational.operationalType.nameToUrl()}/${operational.id}/detail|}"
                            th:text="${operational.title}"></a>
                     </td>
                     <td th:text="O"></td>
@@ -54,15 +61,6 @@
             </table>
 
             <div th:replace="utils/pagination :: pagination(${result})"></div>
-
-            <div class="btn_box">
-                <button type="button" th:text="#{button.select.delete}" onclick="pageObj.delete()" class="btn_del">
-                    선택삭제
-                </button>
-                <button type="button" th:text="#{button.new}"
-                        onclick="location.href='/educator/training-archive/operational/add'" class="btn_new">등록
-                </button>
-            </div>
         </form>
     </div>
 </section>

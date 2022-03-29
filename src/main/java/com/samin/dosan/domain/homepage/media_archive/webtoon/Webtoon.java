@@ -2,12 +2,15 @@ package com.samin.dosan.domain.homepage.media_archive.webtoon;
 
 import com.samin.dosan.core.code.Used;
 import com.samin.dosan.core.domain.BaseEntity;
+import com.samin.dosan.core.utils.file.FileUtils;
+import com.samin.dosan.core.utils.file.UploadFile;
 import com.samin.dosan.web.dto.homepage.webtoon.WebtoonSave;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -15,7 +18,7 @@ import java.util.UUID;
 @Table(name = "homepage_webtoon")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Webtoon extends BaseEntity {
+public class Webtoon extends WebtoonPdf {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,18 +30,6 @@ public class Webtoon extends BaseEntity {
 
     @Column(nullable = false)
     private String title;
-
-    @Column(nullable = false)
-    private String pdfOriginFilename;
-
-    @Column(nullable = false)
-    private String pdfStoreFileName;
-
-    @Column(nullable = false)
-    private String imgOriginFilename;
-
-    @Column(nullable = false)
-    private String imgStoreFileName;
 
     @Column(nullable = false)
     private LocalDate regDt;
@@ -56,21 +47,49 @@ public class Webtoon extends BaseEntity {
 
         webtoon.title = saveData.getTitle();
 
-        webtoon.pdfOriginFilename = saveData.getPdf().getOriginalFilename();
-        webtoon.pdfStoreFileName = UUID.randomUUID()+"_"+webtoon.pdfOriginFilename;
-        webtoon.imgOriginFilename = saveData.getImg().getOriginalFilename();
-        webtoon.imgStoreFileName = UUID.randomUUID()+"_"+webtoon.imgOriginFilename;
-
         return webtoon;
+    }
+
+    public void addPdf(UploadFile file) {
+        this.originPdfName = file.getOriginalFilename();
+        this.storePdfName = file.getStoreFileName();
+        this.pdfContentType = file.getContentType();
+        this.pdfExtension = file.getExtension();
+        this.pdfSize = file.getFileSize();
+    }
+
+    public void addImg(UploadFile file) {
+        this.originFileName = file.getOriginalFilename();
+        this.storeFileName = file.getStoreFileName();
+        this.contentType = file.getContentType();
+        this.extension = file.getExtension();
+        this.fileSize = file.getFileSize();
     }
 
     public void update(WebtoonSave updateData) {
         this.title = updateData.getTitle();
 
-        this.pdfOriginFilename = updateData.getPdf().getOriginalFilename();
-        this.pdfStoreFileName = UUID.randomUUID()+"_"+this.pdfOriginFilename;
-        this.imgOriginFilename = updateData.getImg().getOriginalFilename();
-        this.imgStoreFileName = UUID.randomUUID()+"_"+this.imgStoreFileName;
+        updateFile(updateData.getPdf(), "pdf");
+        updateFile(updateData.getImg(), "img");
+
+    }
+
+    private void updateFile(MultipartFile file, String type) {
+        if (!file.getOriginalFilename().isBlank()) {
+            try {
+                FileUtils.deleteFile(this.storePdfName);
+
+                UploadFile uploadPdf = FileUtils.fileUpload(file);
+
+                if (type.equals("pdf")) {
+                    addPdf(uploadPdf);
+                } else {
+                    addImg(uploadPdf);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void delete() {

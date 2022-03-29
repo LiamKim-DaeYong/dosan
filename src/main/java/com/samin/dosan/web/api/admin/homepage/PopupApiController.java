@@ -1,6 +1,5 @@
 package com.samin.dosan.web.api.admin.homepage;
 
-import com.samin.dosan.domain.homepage.popup.Popup;
 import com.samin.dosan.domain.homepage.popup.PopupService;
 import com.samin.dosan.web.dto.homepage.popup.PopupSave;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +18,11 @@ public class PopupApiController {
 
     @PostMapping("/add")
     public ResponseEntity save(@Valid PopupSave saveData) {
-        Long id = popupService.save(Popup.of(saveData));
+        Long id = popupService.save(saveData);
         return ResponseEntity.ok(id);
     }
 
-    @PostMapping("/{id}/edit")
+    @PutMapping("/{id}/edit")
     public ResponseEntity edit(@PathVariable Long id, @Valid PopupSave updateData) {
         popupService.update(id, updateData);
         return ResponseEntity.ok(id);

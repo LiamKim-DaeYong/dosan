@@ -30,8 +30,8 @@
             </tr>
             <tr>
                 <th th:text="#{homepage.promotional-video.content}"></th>
-                <td>
-                    <iframe id="player" type="text/html" width="640" height="360"frameBorder="0" allowfullscreen
+                <td class="detail_content_td">
+                    <iframe id="player" type="text/html" width="640" frameBorder="0" allowfullscreen
                             th:src="@{'http://www.youtube.com/embed/'+*{code}}"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
                 </td>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html th:replace="~{layout/base :: layout(~{::#css}, ~{::#script}, ~{::section})}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block id="css"></th:block>
+
+    <th:block id="script">
+        <script type="text/javascript" th:src="@{/js/employee/training/inquiryRecords.js}"></script>
+    </th:block>
+</head>
+<body>
+<section>
+    <div th:replace="layout/pageTitle :: pageTitle (#{menu.training.inquiry.new})"></div>
+
+    <div class="content">
+        <h2 th:text="#{menu.training.inquiry.new}"></h2>
+
+        <form th:action th:object="${trainingInquiryRecords}">
+            <span class="detail_title">기본정보</span>
+            <table>
+                <colgroup>
+                    <col width="10%">
+                    <col width="90%">
+                </colgroup>
+                <tr>
+                    <th>수련기관명</th>
+                    <td>
+                        <input type="hidden" id="clientId" name="clientId">
+                        <input type="text" id="clientNm" name="clientNm" disabled>
+                        <button type="button" onclick="pageObj.findView()">고객정보 불러오기</button>
+                        <button type="button" th:text="#{menu.clients.new}" onclick="">신규고객등록</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>수련구분</th>
+                    <td>
+                        <li th:each="type : ${trainingInquiryType}">
+                            <input type="radio" th:field="*{trainingInquiryType}" th:value="${type.name()}">
+                            <label th:for="${#ids.prev('trainingInquiryType')}" th:text="${type.description}"></label>
+                        </li>
+                    </td>
+                </tr>
+            </table>
+
+            <div id="addForm"></div>
+        </form>
+    </div>
+
+    <!-- Modal -->
+    <div th:replace="utils/modal :: modal('modal')"></div>
+</section>
+</body>
+</html>

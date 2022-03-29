@@ -20,8 +20,8 @@ public class OperationalService {
 
     private final OperationalRepository operationalRepository;
 
-    public Page<Operational> findAll(SearchParam searchParam, Pageable pageable) {
-        return operationalRepository.findAll(searchParam, pageable);
+    public Page<Operational> findAll(SearchParam searchParam, Pageable pageable, String type) {
+        return operationalRepository.findAll(searchParam, pageable, type);
     }
 
     public Operational findById(Long id) {
@@ -32,16 +32,5 @@ public class OperationalService {
     @Transactional
     public Long save(Operational saveData) {
         return operationalRepository.save(saveData).getId();
-    }
-
-    @Transactional
-    public Long update(Long id, OperationalSave updateData) {
-        findById(id).update(updateData);
-        return id;
-    }
-
-    @Transactional
-    public void delete(List<Long> ids) {
-        ids.forEach(id -> findById(id).delete());
     }
 }

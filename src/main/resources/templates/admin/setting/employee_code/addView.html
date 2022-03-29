@@ -4,7 +4,6 @@
 <div id="form" th:object="${employeeCode}">
     <div>
         <input type="text" th:field="*{code}" class="modal_long_input"/>
-        <span errors="code" class="modal_error"></span>
     </div>
     <div class="modal_btn_box">
         <button type="button" onclick="pageObj.save()" th:text="#{button.new}" class="btn_new">등록</button>

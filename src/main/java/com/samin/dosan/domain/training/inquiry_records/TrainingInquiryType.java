@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public enum TrainingInquiryType implements EnumNameParser {
 
-    ENTRY("입교"), SCHOOL("학교");
+    ENTRY("입교 수련"), SCHOOL("학교 수련");
 
     private final String description;
 

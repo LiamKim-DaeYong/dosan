@@ -51,8 +51,8 @@
 }
 
 .checking_list02 {
-    width: calc(100% / 3 - 20px);
-}
+     width: calc(100% / 3 - 20px);
+ }
 
 .checking_box h2 {
     position: relative;
@@ -114,6 +114,35 @@
     max-height: 268px;
 }
 
+.dashboard_calender {
+    width: calc(100% / 4 * 3 - 10px);
+    min-height: calc(100vh - 6.5rem);
+    background: #fff;
+    padding: 1.5em;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(11, 11, 11, .1);
+}
+
+.dashboard_all {
+    display: flex;
+    width: calc(100% / 4 - 20px);
+    min-height: calc(100vh - 6.5rem);
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.dashboard_notice, .dashboard_free {
+    width: 100%;
+    background:#fff;
+    padding: 1.5em;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(11, 11, 11, .1);
+}
+
+.dashboard_notice dl dd, .dashboard_free dl dd {
+    padding: 0.8em 0;
+}
+
 @media screen and (max-width: 1290px) {
     .checking_box {
         flex-wrap: wrap;
@@ -148,5 +177,20 @@
 
     .media_margin {
         margin-right: 0 !important;
+    }
+
+    .dashboard_calender {
+        width:100%;
+        margin-top:1.5em;
+    }
+    .dashboard_all {
+        width: 100%;
+        margin: 1.5em 0;
+        display: flex;
+        flex-direction: row;
+        min-height: auto;
+    }
+    .dashboard_notice, .dashboard_free {
+        width:calc(100% / 2 - 10px)
     }
 }

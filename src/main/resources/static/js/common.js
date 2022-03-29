@@ -1,19 +1,25 @@
 $errors = {
     valid: function (errors) {
-        var fieldErrors = errors["fieldErrors"];
+        const fieldErrors = errors["fieldErrors"];
 
         if (fieldErrors) {
-            $("[errors]").text("");
+            $("[errors]").remove();
             $("[errorclass]").each(function () {
                 $(this).removeClass($(this).attr("errorclass"));
             });
 
             fieldErrors.forEach(error => {
-                var errorField = $("#" + error.field);
+                const errorField = $("#" + error.field);
                 errorField.addClass(errorField.attr("errorclass"));
 
-                var errorMsgField = $('[errors="' + error.field + '"]')
-                errorMsgField.text(error.message);
+                let errorMsgField
+                if (errorField.attr("editor")) {
+                    errorMsgField = $('[placeholder="' + error.field + '"]')
+                    errorMsgField.text(error.message);
+                } else {
+                    errorMsgField = `<span errors="${error.field}" class="modal_error">${error.message}</span>`
+                    errorField.after(errorMsgField);
+                }
             });
         }
     }
@@ -97,45 +103,16 @@ $modal = function () {
     }
 }
 
-/**
- * 에디터 뷰
- */
-// $editor = {
-//     /**
-//      * 뷰 초기화
-//      * @param targetId Html 요소 ID
-//      */
-//     init: function (targetId) {
-//         this.targetId = targetId;
-//         this.target = [];
-//         nhn.husky.EZCreator.createInIFrame({
-//             oAppRef: this.target,
-//             elPlaceHolder: targetId,
-//             sSkinURI: "/lib/smarteditor/SmartEditor2Skin.html",
-//             fCreator: "createSEditor2"
-//         });
-//     },
-//     /**
-//      * 에디터 내용 조회
-//      * @returns Html 문자열
-//      */
-//     getData: function() {
-//         pageObj.editor.target.getById[this.targetId].exec("UPDATE_CONTENTS_FIELD");
-//         return $('#' + this.targetId).val();
-//     }
-// }
-
 $editor = {
     init: function (targetId) {
         const target = $("#" + targetId);
         target.summernote({
             height: 500,
-            placeholder: '<span errors="content" className="modal_error"></span>',
+            placeholder: `<span placeholder="${targetId}" className="modal_error"></span>`,
             callbacks: {
                 onImageUpload : function(file) {
                     const img = new FormData();
                     img.append("file", file[0]);
-                    console.log(file)
 
                     $ajax.postMultiPart({
                         url: "/files/edit/upload",
@@ -147,99 +124,6 @@ $editor = {
                 },
             }
         });
-    },
-}
-
-/**
- * 첨부 파일
- */
-$multifile = {
-    init: function(targetId, targetListId) {
-        let _this = this;
-        this.targetId = targetId;
-        this.target = $('#' + targetId);
-        this.targetListId = targetListId;
-        this.targetList = $('#' + targetListId);
-
-        this.serverFiles = [];
-        this.newFiles = [];
-        this.target = $('#' + targetId).MultiFile({
-            list: `#` + targetListId,
-            STRING: {
-                file: '<span class="filename" onclick="$(this).parent().prev().click()">$file</span>',
-                remove: '<img src="/lib/multifile/img/delete.png" height="16" width="16" alt="x"/>',
-                duplicate: '$file은 이미 존재합니다.',
-            },
-            onFileAppend: _this.onFileAppend.bind(_this),
-        })
-    },
-    onFileAppend: function(element, value, master_element) {
-        this.newFiles = master_element.files
-    },
-    getData: function(type) {
-        if(type == "new") {
-            return this.newFiles;
-        } else if (type == "notDeleted") {
-            return this.serverFiles.filter(f => Boolean(f.__delete__));
-        } else if (type == "deleted") {
-            return this.serverFiles.filter(f => !Boolean(f.__delete__));
-        } else if (type == "server") {
-            return this.serverFiles;
-        }
-    },
-    deleteServerFile: function(target, fileObject) {
-        fileObject.__delete__ = true;
-        console.log('서버 파일 삭제 > ', fileObject);
-        target.remove();
-    },
-    downloadFile: function(target, fileObject) {
-        console.log('서버 파일 다운로드 > ', fileObject);
-    },
-    setData: function(dataList) {
-        this.serverFiles = dataList;
-        dataList.forEach(row => {
-            let fileEl = this.createFileRow(row.filename, row);
-            this.targetList.append(fileEl);
-        })
-    },
-    createFileRow: function(filename, fileObject) {
-        // `<div class="MultiFile-label">
-        //     <a class="MultiFile-remove" href="#attachment" onclick="console.log('on delete')"><img src="/lib/multifile/img/delete.png" height="16" width="16" alt="x"></a>
-        //     <span>
-        //         <span class="MultiFile-label" title="File selected: 다운로드.jpg">
-        //             <span class="MultiFile-title">
-        //                 <em title="Click to remove" onclick="console.log('download')">사전 다운로드.jpg</em>
-        //             </span>
-        //         </span>
-        //     </span>
-        // </div>`
-        let rootEL = document.createElement('div');
-        rootEL.classList.add('MultiFile-label');
-        let deleteEl = document.createElement('a');
-        deleteEl.classList.add('MultiFile-remove');
-        deleteEl.href = '#attachment';
-        deleteEl.addEventListener('click', () => this.deleteServerFile(rootEL, fileObject));
-        rootEL.appendChild(deleteEl);
-        let deleteIconEl = document.createElement('img');
-        deleteIconEl.src = '/lib/multifile/img/delete.png';
-        deleteIconEl.height = 16;
-        deleteIconEl.width = 16;
-        deleteIconEl.alt = 'x';
-        deleteEl.appendChild(deleteIconEl);
-        let fileEl = document.createElement('span');
-        rootEL.appendChild(fileEl);
-        let fileLabelEl = document.createElement('span');
-        fileLabelEl.classList.add('MultiFile-label')
-        fileEl.appendChild(fileLabelEl);
-        let fileTitleEl = document.createElement('span')
-        fileTitleEl.classList.add('MultiFile-title')
-        fileLabelEl.appendChild(fileTitleEl);
-        let filenameEl = document.createElement('em');
-        filenameEl.appendChild(document.createTextNode(filename));
-        filenameEl.addEventListener('click', () => this.downloadFile(rootEL, fileObject));
-        fileLabelEl.appendChild(filenameEl);
-        console.log('rootEl', rootEL)
-        return rootEL;
     }
 }
 
@@ -268,8 +152,7 @@ $files = {
     },
     removeFile: function (file) {
         const filename = $(file).siblings('span').text();
-
-        delete this.filesMap[filename];
+        this.filesMap.delete(filename);
         $(file).closest('.file_wraper').remove();
     },
     addFile: function (file) {
@@ -286,6 +169,30 @@ $files = {
 
         $(".filenames").append(template);
     },
+
+    onlyInit: function (node, inputClass) {
+        var _this = this;
+
+        inputClass.children().remove();
+        for (const file of node.files) {
+            _this.onlyAddFile(file, inputClass)
+        }
+    },
+    onlyAddFile: function (file, inputClass) {
+        let filename = file.name;
+
+        if (this.filesMap[filename]) return;
+
+        this.filesMap.set(filename, file);
+        const template = `
+                    <div class="file_wraper">
+                        <button type="button" onclick="$files.removeFile(this)">제거</button>
+                        <span>${filename}</span>
+                    </div>`;
+
+        inputClass.append(template);
+    },
+
     getFiles: function () {
         return Array.from(this.filesMap.values());
     },
@@ -386,6 +293,28 @@ $ajax = {
             data: options.data,
             processData: false,
             contentType: false,
+        }).done(function (data) {
+            if (options.success) {
+                options.success(data);
+            } else {
+                $url.redirect();
+            }
+        }).fail(function (error) {
+            if (options.error) {
+                options.error(error.responseJSON);
+            } else {
+                $errors.valid(error.responseJSON);
+            }
+        });
+    },
+    get: function (options) {
+        options = $.extend({}, this.defaultOption, options);
+
+        $.ajax({
+            url: options.url,
+            type: 'GET',
+            data: JSON.stringify(options.data),
+            contentType: options.contentType,
         }).done(function (data) {
             if (options.success) {
                 options.success(data);
@@ -576,7 +505,7 @@ $form = {
     getData: function (target = $("form")) {
         const formData = new FormData(target[0]);
 
-        if ($(".file-input")) {
+        if ($("input[type='file']").length) {
             formData.delete("files");
 
             for (const file of $files.getFiles()) {
@@ -603,6 +532,17 @@ $table = {
                 this.value = idx;
             } else {
                 this.value = "";
+            }
+
+            if (this.id) {
+                const newId = this.id.split("_")[0] + "_" + idx;
+
+                if ($(this).is("[auto-search]")) {
+                    const autoSearchTarget = lastRow.find("[auto-search-target='" + this.id + "']");
+                    $(autoSearchTarget).attr("auto-search-target", newId);
+                }
+
+                this.id = newId;
             }
         });
 
@@ -651,6 +591,66 @@ $table = {
         });
 
         return result;
+    },
+}
+
+$autoSearch = {
+    dataList: [],
+    target: '',
+    init: function (dataList) {
+        this.dataList = dataList;
+
+        const _this = this;
+        $("[auto-search]").keyup(function () {
+            const x = $(this).offset().left;
+            const y = $(this).offset().top;
+            _this.show($(this), x, y);
+
+            if (!$(this).val().length) {
+                _this.close();
+            }
+
+            $(this).focusout(function () {
+                $('html').click(function (e) {
+                    if (!($(e.target).parent('div').attr("id") == "autoSearch")) {
+                        _this.close();
+                    }
+                });
+            });
+
+        });
+
+        if (!$("#autoSearch").length) {
+            $("body").append(`<div id="autoSearch" class="autoSearch" style="position: absolute; z-index: 1000; display: none"></div>`);
+        }
+    },
+    show: function (target, x, y) {
+        this.target = target;
+        $("#autoSearch").html("");
+        $.each(this.dataList, function () {
+            if (this.key.includes(target.val())) {
+                $("#autoSearch").append(`
+                    <div onclick="$autoSearch.item_click('${this.key}', '${this.value}')">${this.key} | ${this.value}</div>
+                `)
+            }
+        });
+
+        $("#autoSearch").css("height", "100");
+        $("#autoSearch").css("width", "100");
+        $("#autoSearch").css("left", x);
+        $("#autoSearch").css("top", parseInt(target.css("height")) + y);
+        $("#autoSearch").css("display", "block");
+    },
+    item_click: function(key, value) {
+        this.target.val(key);
+        $('[auto-search-target="' + this.target.attr("id") + '"]').val(value);
+        this.close();
+    },
+    close: function () {
+        $("#autoSearch").css("display", "none");
+    },
+    setData: function (list) {
+        this.dataList = list;
     },
 }
 

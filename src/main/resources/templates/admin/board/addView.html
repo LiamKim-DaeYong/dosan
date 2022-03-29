@@ -19,13 +19,12 @@
                     <th>제목</th>
                     <td>
                         <input type="text" th:field="*{title}" class="table_row_long_input" />
-                        <span errors="title" class="modal_error"></span>
                     </td>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td class="table_row_textarea">
-                        <textarea th:field="*{content}" style="display: none"></textarea>
+                        <textarea th:field="*{content}" editor="editor"></textarea>
                     </td>
                 </tr>
                 <tr>
@@ -40,7 +39,7 @@
             </table>
 
             <div class="btn_box">
-                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/board'" class="btn_other">
+                <button type="button" th:text="#{button.list}" onclick="location.href='/admin/board'">
                     목록
                 </button>
                 <button type="button" th:text="#{button.new}" onclick="pageObj.save()" class="btn_new">등록</button>

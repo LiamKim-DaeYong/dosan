@@ -34,7 +34,7 @@ public class MediaArchiveApiController {
 
     @PostMapping("/webtoon/add")
     public ResponseEntity save(@Valid WebtoonSave saveData) {
-        Long id = webtoonService.save(Webtoon.of(saveData));
+        Long id = webtoonService.save(saveData);
         return ResponseEntity.ok(id);
     }
 
