@@ -1,13 +1,13 @@
 $errors = {
     valid: function (errors) {
+        const globalErrorsTarget = $("[globalErrors]");
+        $(".modal_error").remove();
+        $("[errorclass]").each(function () {
+            $(this).removeClass($(this).attr("errorclass"));
+        });
+
         const fieldErrors = errors["fieldErrors"];
-
         if (fieldErrors) {
-            $("[errors]").remove();
-            $("[errorclass]").each(function () {
-                $(this).removeClass($(this).attr("errorclass"));
-            });
-
             fieldErrors.forEach(error => {
                 const errorField = $("#" + error.field);
                 errorField.addClass(errorField.attr("errorclass"));
@@ -21,6 +21,19 @@ $errors = {
                     errorField.after(errorMsgField);
                 }
             });
+        }
+
+        const globalErrors = errors["globalErrors"];
+        if (globalErrors) {
+            if (globalErrorsTarget.length) {
+                globalErrors.forEach(error => {
+                    globalErrorsTarget.append(`<span class="modal_error">${error.message}</span>`)
+                });
+            } else {
+                globalErrors.forEach(error => {
+                    alert(error.message);
+                });
+            }
         }
     }
 }
@@ -110,7 +123,7 @@ $editor = {
             height: 500,
             placeholder: `<span placeholder="${targetId}" className="modal_error"></span>`,
             callbacks: {
-                onImageUpload : function(file) {
+                onImageUpload: function (file) {
                     const img = new FormData();
                     img.append("file", file[0]);
 
@@ -130,13 +143,31 @@ $editor = {
 $event = {
     init: function () {
         this.inputAutocompleteOff();
+        this.dateInputChangeEvent();
         $checkBox.init();
         $files.init();
+        $formatter.init();
     },
-
     inputAutocompleteOff: function () {
         $('input').prop("autocomplete", "off");
-    }
+    },
+    dateInputChangeEvent: function () {
+        $('input[type="date"]').change(function () {
+            if ($(this).attr("to")) {
+                let target = $("#" + $(this).attr("to"));
+
+                if (target.val() && $(this).val() > target.val()) {
+                    target.val($(this).val())
+                }
+            } else if ($(this).attr("from")) {
+                let target = $("#" + $(this).attr("from"));
+
+                if (target.val() && $(this).val() < target.val()) {
+                    target.val($(this).val())
+                }
+            }
+        });
+    },
 }
 
 $files = {
@@ -144,7 +175,7 @@ $files = {
     init: function () {
         var _this = this;
 
-        $(".file-input").on("change", function() {
+        $(".file-input").on("change", function () {
             $.each(this.files, function (idx, file) {
                 _this.addFile(file);
             });
@@ -163,8 +194,8 @@ $files = {
         this.filesMap.set(filename, file);
         const template = `
                     <div class="file_wraper">
-                        <button type="button" onclick="$files.removeFile(this)">제거</button>
                         <span>${filename}</span>
+                        <button type="button" onclick="$files.removeFile(this)"><img src="${$url.getHostUrl()}/images/common/close.svg"></button>
                     </div>`;
 
         $(".filenames").append(template);
@@ -185,9 +216,9 @@ $files = {
 
         this.filesMap.set(filename, file);
         const template = `
-                    <div class="file_wraper">
-                        <button type="button" onclick="$files.removeFile(this)">제거</button>
+                    <div class="file_wraper">                      
                         <span>${filename}</span>
+                        <button type="button" onclick="$files.removeFile(this)"><img src="${$url.getHostUrl()}/images/common/close.svg"></button>
                     </div>`;
 
         inputClass.append(template);
@@ -200,15 +231,22 @@ $files = {
 
 $url = {
     getPath: function (extPath) {
-        if(extPath && extPath[0] != '/') extPath = '/' + extPath;
-        return location.pathname + (extPath? extPath : '');
+        if (extPath && extPath[0] != '/') extPath = '/' + extPath;
+        return location.pathname + (extPath ? extPath : '');
+    },
+    getHostUrl: function () {
+        return location.protocol + "//" + this.getHost();
     },
     getHost: function () {
-        return location.hostname;
+        return location.host;
     },
     redirect: function (path) {
-        location.href = path?path:this.getPath();
+        location.href = path ? path : this.getPath();
     },
+    gotoUrl: function (id, url) {
+        localStorage["clickMenus"] = id;
+        location.href = url;
+    }
 }
 
 $ajax = {
@@ -313,7 +351,6 @@ $ajax = {
         $.ajax({
             url: options.url,
             type: 'GET',
-            data: JSON.stringify(options.data),
             contentType: options.contentType,
         }).done(function (data) {
             if (options.success) {
@@ -339,6 +376,8 @@ $ajax = {
             data: JSON.stringify(options.data),
             contentType: options.contentType,
         }).done(function (data) {
+            alert("삭제 되었습니다.");
+
             if (options.success) {
                 options.success(data);
             } else {
@@ -356,7 +395,7 @@ $ajax = {
 }
 
 $api = {
-    addressApi: function (zipCodeId='zipCode', addressId='roadAddress', detailId='detailAddress') {
+    addressApi: function (zipCodeId = 'zipCode', addressId = 'roadAddress', detailId = 'detailAddress') {
         new daum.Postcode({
             oncomplete: function (data) { //선택시 입력값 세팅
                 document.getElementById(zipCodeId).value = data.zonecode; // 주소 넣기
@@ -403,7 +442,11 @@ $search = {
         })
 
         if (this.dateValidation(dateObj)) {
-            $("form").submit();
+            if ($("form").length > 1) {
+                $("form")[0].submit();
+            } else {
+                $("form").submit();
+            }
         }
     },
 
@@ -447,7 +490,8 @@ $search = {
                     childList.forEach(child => searchList.push(child));
                     break;
 
-                case "input" : case "select" :
+                case "input" :
+                case "select" :
                     searchList.push(this);
                     break;
             }
@@ -491,7 +535,7 @@ $checkBox = {
             table.find('input:checkbox').prop("checked", $(this).is(":checked"));
         });
     },
-    getAllChecked: function (target=$("table")) {
+    getAllChecked: function (target = $("table")) {
         var result = [];
         target.find('input:checkbox[check!="all"]:checked').each(function () {
             result.push($(this).val());
@@ -521,11 +565,17 @@ $form = {
 
 $table = {
     addRow: function (targetId) {
-        const target = $("#" +targetId);
+        const target = $("#" + targetId);
         const lastRow = target.find('tr').last().clone();
         const idx = target.find('tr').length;
 
-        $.each(lastRow.find('input, textarea'), function () {
+        $(lastRow).find(".input-mast-btn").remove();
+        $(lastRow).find("input[input-mast-id]").remove();
+
+        $.each(lastRow.find('input, textarea, select'), function () {
+            $(this).removeAttr("style");
+            $(this).removeAttr("readonly")
+            $(this).removeAttr("disabled")
             if (this.type == 'checkbox') {
                 $(this).prop("checked", false);
                 this.name = idx;
@@ -535,35 +585,37 @@ $table = {
             }
 
             if (this.id) {
-                const newId = this.id.split("_")[0] + "_" + idx;
+                this.id = this.id.split("_")[0] + "_" + idx;
+            }
 
-                if ($(this).is("[auto-search]")) {
-                    const autoSearchTarget = lastRow.find("[auto-search-target='" + this.id + "']");
-                    $(autoSearchTarget).attr("auto-search-target", newId);
-                }
-
-                this.id = newId;
+            if ($(this).prop('tagName') == 'SELECT') {
+                $(this).find("option").removeAttr("selected");
+                $(this).find("option:eq(0)").prop("selected", true);
             }
         });
 
         target.append(lastRow);
+        $event.init();
+
+        return lastRow;
     },
 
     delRow: function (targetId) {
-        const target = $("#" +targetId);
+        const target = $("#" + targetId);
         const checkedList = $checkBox.getAllChecked(target);
 
         if ($valid.deletes(checkedList.length)) {
             $.each(checkedList, function (idx, value) {
                 const row = target.find("input[name='" + value + "']").closest('tr');
+                // row.closest('table')
                 row.remove();
             });
         }
     },
 
-    getData: function (targetId, type="all") {
+    getData: function (targetId, type = "all") {
         const HEADER_IDX = 0;
-        const target = $("#" +targetId);
+        const target = $("#" + targetId);
         const result = [];
 
         $.each(target.find('tr'), function (idx, row) {
@@ -572,7 +624,7 @@ $table = {
                     return;
                 }
 
-                const rowData = $(row).find('input[type!="checkbox"], textarea');
+                const rowData = $(row).find('input[type!="checkbox"], textarea, select');
 
                 const obj = {};
                 let noValueCnt = 0;
@@ -594,71 +646,250 @@ $table = {
     },
 }
 
-$autoSearch = {
-    dataList: [],
-    target: '',
-    init: function (dataList) {
-        this.dataList = dataList;
+$autoSearch = (function () {
+    const template = `
+            <div id="autoSearch" 
+                class="autoSearch fade" 
+                style="position: absolute; 
+                z-index: 1000;">                
+            </div>`;
 
-        const _this = this;
-        $("[auto-search]").keyup(function () {
-            const x = $(this).offset().left;
-            const y = $(this).offset().top;
-            _this.show($(this), x, y);
+    const init = function (config) {
+        this.target = '';
+        this.targetKey = config.targetKey;
+        this.dataList = config.dataList;
+        this.itemMap = config.itemMap;
+        this.callback = config.callback;
+        this.maskKey = config.maskKey;
 
-            if (!$(this).val().length) {
-                _this.close();
+        this.initEvent = function () {
+            if (!$("#autoSearch").length) {
+                $("body").append(template);
             }
 
-            $(this).focusout(function () {
-                $('html').click(function (e) {
-                    if (!($(e.target).parent('div').attr("id") == "autoSearch")) {
-                        _this.close();
-                    }
-                });
+
+            let inputTarget = $("[auto-search='" + this.targetKey + "']");
+            inputTarget.blur(function () {
+                if (!$("#autoSearch").is(":hover")) {
+                    close();
+                }
             });
 
-        });
+            const _this = this;
+            inputTarget.keyup(function () {
+                setTarget(this);
 
-        if (!$("#autoSearch").length) {
-            $("body").append(`<div id="autoSearch" class="autoSearch" style="position: absolute; z-index: 1000; display: none"></div>`);
-        }
-    },
-    show: function (target, x, y) {
-        this.target = target;
+                if (!this.disabled) {
+                    addItem(_this, this.value);
+                }
+
+                if (!$("#autoSearch").children().length) {
+                    close();
+                }
+
+                if (!$(this).val().length) {
+                    close();
+                }
+            });
+        };
+    };
+
+    const setTarget = function (target) {
+        this.target = $(target);
+    };
+
+    const getTarget = function () {
+        return this.target;
+    };
+
+    const addItem = function (config, value) {
         $("#autoSearch").html("");
-        $.each(this.dataList, function () {
-            if (this.key.includes(target.val())) {
-                $("#autoSearch").append(`
-                    <div onclick="$autoSearch.item_click('${this.key}', '${this.value}')">${this.key} | ${this.value}</div>
-                `)
+        const itemMap = config.itemMap
+        $.each(config.dataList, function () {
+            if (this[itemMap.searchKey].includes(value)) {
+                let itemGroup = "<div class=\"search-item\">";
+                for (const key of Object.keys(itemMap)) {
+                    if (key == "id") {
+                        itemGroup += `<input name="${itemMap[key]}" type="hidden" value="${this[itemMap.id]}" />`;
+                    } else {
+                        let value = this[itemMap[key]];
+
+                        if (!value) {
+                            value = "";
+                        }
+
+                        itemGroup += `<div style="display: table-cell"><span name="${itemMap[key]}">${value.replace(/(\n|\r\n)/g, '<br>')}</span></div>`
+                    }
+                }
+
+                itemGroup += "</div>";
+                $("#autoSearch").append(itemGroup);
             }
         });
 
-        $("#autoSearch").css("height", "100");
-        $("#autoSearch").css("width", "100");
+        $(".search-item").click(function () {
+            close();
+            itemClick(config, this);
+        });
+
+        const target = getTarget();
+        show(target.offset().left, parseInt(target.css("height")) + target.offset().top);
+    };
+
+    const show = function (x, y) {
         $("#autoSearch").css("left", x);
-        $("#autoSearch").css("top", parseInt(target.css("height")) + y);
-        $("#autoSearch").css("display", "block");
+        $("#autoSearch").css("top", y);
+        $("#autoSearch").addClass("open");
+        $("#autoSearch").removeClass("fade");
+    };
+
+    const close = function () {
+        $("#autoSearch").addClass("fade");
+        $("#autoSearch").removeClass("open");
+        $("#autoSearch.fade").click(function (e) {
+            e.preventDefault();
+        })
+    };
+
+    const itemClick = function (config, item) {
+        const itemMap = config.itemMap;
+        const dataList = config.dataList;
+        let result = {};
+
+        let data = dataList.find(data => {
+            return data[itemMap.id] == $(item).children(`input[name='${itemMap.id}']`).val();
+        });
+
+        if (config.maskKey) {
+            getTarget().before(`<input type="hidden" name="${itemMap.id}" value="${data[itemMap.id]}" input-mast-id />`)
+        }
+
+        result.target = getTarget();
+        result.values = data;
+
+        if (config.callback) {
+            config.callback(result);
+
+            if (config.maskKey) {
+                inputMask(config.maskKey);
+            }
+        }
+    };
+
+    const inputMask = function (maskKey) {
+        for (const key of maskKey) {
+            let maskTarget = {};
+
+            if (key == $(getTarget()).attr("name")) {
+                maskTarget = $(getTarget());
+                maskTarget.after(`<img class="input-mast-btn" style="width: 10px" 
+                                        src="${$url.getHostUrl()}/images/common/close.svg" 
+                                        input-mask-remove />`)
+            } else {
+                maskTarget = $(getTarget()).siblings(`[name='${key}']`);
+            }
+
+            maskTarget.attr("disabled", true);
+            maskTarget.addClass("input-mask")
+        }
+
+        $("img[input-mask-remove]").click(function () {
+            $(this).siblings("input[type='hidden']").remove();
+
+            $(this).siblings("input[disabled]").each(function () {
+                $(this).val("");
+                $(this).removeClass("input-mask");
+                $(this).attr("disabled", false);
+            });
+
+            this.remove();
+        });
+    };
+
+    return function (_config) {
+        const builder = $.extend(true, {}, _config);
+        return new init(builder);
+    };
+})();
+
+$formatter = {
+    init: function () {
+        this.userIdFormatter();
+        this.yearFormatter();
+        this.phoneNumFormatter();
     },
-    item_click: function(key, value) {
-        this.target.val(key);
-        $('[auto-search-target="' + this.target.attr("id") + '"]').val(value);
-        this.close();
+
+    userIdFormatter: function () {
+        $("input[formatter='userId']").keyup(function () {
+            this.value = parse(this.value);
+        });
+
+        const parse = function (value) {
+            if (!value) {
+                return "";
+            }
+
+            return value.replace(/[^a-z0-9]/g, "");
+        }
     },
-    close: function () {
-        $("#autoSearch").css("display", "none");
+
+    yearFormatter: function () {
+        $("input[formatter='year']").keyup(function () {
+            $(this).attr("maxlength", 4);
+            this.value = parse(this.value);
+        });
+
+        const parse = function (value) {
+            if (!value) {
+                return "";
+            }
+            return value.replace(/[^0-9]/g, "");
+        }
     },
-    setData: function (list) {
-        this.dataList = list;
+
+    phoneNumFormatter: function () {
+        $("input[formatter='phoneNum']").keyup(function () {
+            $(this).attr("maxlength", 13);
+            this.value = parse(this.value);
+        });
+
+        const parse = function (value) {
+            if (!value) {
+                return "";
+            }
+
+            value = value.replace(/[^0-9]/g, "");
+
+            let result = [];
+            let restNumber = "";
+
+            if (value.startsWith("02")) {
+                result.push(value.substring(0, 2));
+                restNumber = value.substring(2);
+            } else if (value.startsWith("1")) {
+                restNumber = value;
+            } else {
+                result.push(value.substring(0, 3));
+                restNumber = value.substring(3);
+            }
+
+            if (restNumber.length === 7) {
+                result.push(restNumber.substring(0, 3));
+                result.push(restNumber.substring(3));
+            } else {
+                result.push(restNumber.substring(0, 4));
+                result.push(restNumber.substring(4));
+            }
+
+            return result.filter((val) => val).join("-");
+        };
     },
-}
+};
 
 $(document).ready(function () {
     $event.init();
 
     var pageFunctionName = "pageObj";
-
     if (window[pageFunctionName] && window[pageFunctionName].pageStart) {
         window[pageFunctionName].pageStart();
     }
