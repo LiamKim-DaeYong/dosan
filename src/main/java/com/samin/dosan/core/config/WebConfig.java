@@ -1,10 +1,12 @@
 package com.samin.dosan.core.config;
 
+import com.samin.dosan.core.formatter.address.AddressFormatterFactory;
 import com.samin.dosan.core.interceptor.LogInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -27,6 +29,11 @@ public class WebConfig implements WebMvcConfigurer {
             "/favicon.ico",
             "/se2/**"
     };
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatterForFieldAnnotation(new AddressFormatterFactory());
+    }
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

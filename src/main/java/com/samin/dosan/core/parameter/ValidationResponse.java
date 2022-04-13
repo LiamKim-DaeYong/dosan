@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.MessageSource;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 
 import java.util.List;
 import java.util.Locale;
@@ -13,15 +12,30 @@ import java.util.stream.Collectors;
 
 @Getter @Setter
 public class ValidationResponse {
-    private List<ValidError> fieldErrors;
+    private List<GlobalError> globalErrors;
+    private List<FieldError> fieldErrors;
 
     public ValidationResponse(BindingResult bindingResult, MessageSource messageSource, Locale locale) {
-        this.fieldErrors = bindingResult.getFieldErrors().stream().map(error -> new ValidError(error, messageSource, locale))
+        this.globalErrors = bindingResult.getGlobalErrors().stream().map(error -> new GlobalError(error, messageSource, locale))
+                .collect(Collectors.toList());
+
+        this.fieldErrors = bindingResult.getFieldErrors().stream().map(error -> new FieldError(error, messageSource, locale))
                 .collect(Collectors.toList());
     }
 
     @Getter @Setter
-    static class ValidError {
+    static class GlobalError {
+        private String code;
+        private String message;
+
+        public GlobalError(ObjectError objectError, MessageSource messageSource, Locale locale) {
+            this.code = objectError.getCode();
+            this.message = messageSource.getMessage(objectError, locale);
+        }
+    }
+
+    @Getter @Setter
+    static class FieldError {
         private String field;
 
         private String code;
@@ -30,7 +44,7 @@ public class ValidationResponse {
 
         private String message;
 
-        public ValidError(FieldError fieldError, MessageSource messageSource, Locale locale) {
+        public FieldError(org.springframework.validation.FieldError fieldError, MessageSource messageSource, Locale locale) {
             this.field = fieldError.getField();
             this.code = fieldError.getCode();
             this.rejectedValue = fieldError.getRejectedValue();
@@ -38,4 +52,3 @@ public class ValidationResponse {
         }
     }
 }
-

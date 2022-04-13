@@ -21,6 +21,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsServiceImpl;
 
+    private final String[] permitAllList = {
+            "/admin/init",
+            "/api/v1/**",
+    };
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/lib/**");
@@ -35,8 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/admin/init").permitAll()
-                .antMatchers("/api").permitAll()
+                .antMatchers(permitAllList).permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/employee/**").hasRole("EMPLOYEE")
+                .antMatchers("/educator/**").hasRole("EDUCATOR")
                 .anyRequest().authenticated()
                 .and()
 
