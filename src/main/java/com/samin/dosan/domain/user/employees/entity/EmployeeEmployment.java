@@ -31,15 +31,21 @@ public class EmployeeEmployment extends BaseEntity {
     @Column(length = 20, nullable = false)
     private String position;
 
-    /*================== Business Logic ==================*/
+    //================== 연관 관계 메서드 ==================//
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
+    //==================   생성 메서드   ==================//
+
+    //==================  비즈니스 로직  ==================//
     public void update(EmployeeEmployment updateData) {
         this.cmpNm = updateData.getCmpNm();
         this.firstDayOfWork = updateData.getFirstDayOfWork();
         this.lastDayOfWork = updateData.getLastDayOfWork();
         this.position = updateData.getPosition();
     }
+
+    //==================   조회 메서드   ==================//
+
 }

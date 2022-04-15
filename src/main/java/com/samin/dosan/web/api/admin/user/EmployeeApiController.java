@@ -1,10 +1,6 @@
 package com.samin.dosan.web.api.admin.user;
 
-import com.samin.dosan.domain.user.Role;
-import com.samin.dosan.domain.user.UserService;
 import com.samin.dosan.domain.user.employees.EmployeeService;
-import com.samin.dosan.domain.user.employees.entity.Employee;
-import com.samin.dosan.domain.user.entity.User;
 import com.samin.dosan.web.api.admin.user.validator.EmployeeUserIdValidator;
 import com.samin.dosan.web.dto.user.employee.EmployeeSave;
 import com.samin.dosan.web.dto.user.employee.EmployeeUpdate;
@@ -17,10 +13,9 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin/user/employees")
+@RequestMapping({"/admin/user/employees", "/api/v1/employees"})
 public class EmployeeApiController {
 
-    private final UserService userService;
     private final EmployeeService employeeService;
     private final EmployeeUserIdValidator employeeUserIdValidator;
 
@@ -29,21 +24,27 @@ public class EmployeeApiController {
         webDataBinder.addValidators(employeeUserIdValidator);
     }
 
+    @GetMapping("/list")
+    public ResponseEntity findAll() {
+        return ResponseEntity.ok(employeeService.findAllList());
+    }
+
+
     @PostMapping("/add")
     public ResponseEntity save(@Valid @RequestBody EmployeeSave saveData) {
-        User user = User.of(saveData.getUserId(), saveData.getPassword(), saveData.getUserNm(), Role.ROLE_EMPLOYEE);
-        userService.save(user);
-
-        Employee employee = Employee.of(saveData, user);
-        employeeService.save(employee);
-
-        return ResponseEntity.ok(user.getUserId());
+        String userId = employeeService.save(saveData);
+        return ResponseEntity.ok(userId);
     }
 
     @PutMapping("/{userId}/edit")
     public ResponseEntity update(@PathVariable String userId, @Valid @RequestBody EmployeeUpdate updateData) {
-        userService.update(userId, updateData.getUserNm());
         employeeService.update(userId, updateData);
+        return ResponseEntity.ok(userId);
+    }
+
+    @PutMapping("/{userId}/{leaveType}")
+    public ResponseEntity leave(@PathVariable String userId, @PathVariable String leaveType) {
+        employeeService.leave(userId, leaveType);
         return ResponseEntity.ok(userId);
     }
 }

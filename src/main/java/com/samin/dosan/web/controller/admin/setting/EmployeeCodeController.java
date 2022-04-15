@@ -56,13 +56,13 @@ public class EmployeeCodeController {
         return "admin/setting/employee_code/editView::#form";
     }
 
-    @PostConstruct
-    public void init() {
-        employeeCodeService.save(EmployeeCode.of("임원", EmployeeCodeType.TYPE));
-        employeeCodeService.save(EmployeeCode.of("직원", EmployeeCodeType.TYPE));
-        employeeCodeService.save(EmployeeCode.of("원장", EmployeeCodeType.POSITION));
-        employeeCodeService.save(EmployeeCode.of("4급", EmployeeCodeType.RANK));
-        employeeCodeService.save(EmployeeCode.of("4호봉", EmployeeCodeType.STEP));
-        employeeCodeService.save(EmployeeCode.of("수련기획실", EmployeeCodeType.DEPARTMENT));
-    }
+//    @PostConstruct
+//    public void init() {
+//        employeeCodeService.save(EmployeeCode.of("임원", EmployeeCodeType.TYPE));
+//        employeeCodeService.save(EmployeeCode.of("직원", EmployeeCodeType.TYPE));
+//        employeeCodeService.save(EmployeeCode.of("원장", EmployeeCodeType.POSITION));
+//        employeeCodeService.save(EmployeeCode.of("4급", EmployeeCodeType.RANK));
+//        employeeCodeService.save(EmployeeCode.of("4호봉", EmployeeCodeType.STEP));
+//        employeeCodeService.save(EmployeeCode.of("수련기획실", EmployeeCodeType.DEPARTMENT));
+//    }
 }

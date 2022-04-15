@@ -1,6 +1,7 @@
 package com.samin.dosan.domain.homepage.board;
 
 import com.samin.dosan.core.code.Used;
+import com.samin.dosan.core.domain.BaseEntity;
 import com.samin.dosan.core.utils.file.FileUtils;
 import com.samin.dosan.core.utils.file.UploadFile;
 import com.samin.dosan.domain.homepage.type.BoardType;
@@ -19,14 +20,13 @@ import java.util.Optional;
 
 @Getter
 @Entity
-@Builder
 @Table(name = "homepage_board")
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class HomepageBoard {
+public class HomepageBoard extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "board_id")
     private Long id;
 
@@ -48,9 +48,6 @@ public class HomepageBoard {
     @Column(columnDefinition="TEXT", nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private LocalDate regDt;
-
     @Enumerated(EnumType.STRING)
     @Column(length = 1, nullable = false)
     private Used used;
@@ -58,12 +55,19 @@ public class HomepageBoard {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HomepageBoardFile> files = new ArrayList<>();
 
-    /*================== Business Logic ==================*/
+    //================== 연관 관계 메서드 ==================//
+    public void addFile(UploadFile file) {
+        HomepageBoardFile boardFile = HomepageBoardFile.of(file);
+
+        boardFile.setBoard(this);
+        this.files.add(boardFile);
+    }
+
+    //==================   생성 메서드   ==================//
     public static HomepageBoard of(HomepageBoardSave saveData, BoardType boardType) {
         HomepageBoard board = new HomepageBoard();
         board.hit = 0;
         board.author = "도산서원 선비문화수련원";
-        board.regDt = LocalDate.now();
         board.used = Used.Y;
 
         board.title = saveData.getTitle();
@@ -73,13 +77,7 @@ public class HomepageBoard {
         return board;
     }
 
-    public void addFile(UploadFile file) {
-        HomepageBoardFile boardFile = HomepageBoardFile.of(file);
-
-        boardFile.setBoard(this);
-        this.files.add(boardFile);
-    }
-
+    //==================  비즈니스 로직  ==================//
     public void update(HomepageBoardUpdate updateData) {
         this.title = updateData.getTitle();
         this.content = updateData.getContent();
@@ -120,4 +118,6 @@ public class HomepageBoard {
     public void delete() {
         this.used = Used.N;
     }
+
+    //==================   조회 메서드   ==================//
 }

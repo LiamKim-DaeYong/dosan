@@ -33,7 +33,9 @@ public class EmployeeCode extends BaseEntity {
     @Column(length = 1, nullable = false)
     private Used used;
 
-    /*================== Business Logic ==================*/
+    //================== 연관 관계 메서드 ==================//
+
+    //==================   생성 메서드   ==================//
     public static EmployeeCode of(Long employeeCodeId) {
         EmployeeCode employeeCode = new EmployeeCode();
         employeeCode.id = employeeCodeId;
@@ -67,6 +69,7 @@ public class EmployeeCode extends BaseEntity {
         this.used = used;
     }
 
+    //==================  비즈니스 로직  ==================//
     public void update(EmployeeCode updateData) {
         this.code = updateData.getCode();
     }
@@ -74,4 +77,7 @@ public class EmployeeCode extends BaseEntity {
     public void delete() {
         this.used = Used.N;
     }
+
+    //==================   조회 메서드   ==================//
+
 }

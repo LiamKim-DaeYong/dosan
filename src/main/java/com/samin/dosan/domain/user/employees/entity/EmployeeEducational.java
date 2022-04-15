@@ -32,15 +32,21 @@ public class EmployeeEducational extends BaseEntity {
     @Column(length = 10)
     private String degree;
 
-    /*================== Business Logic ==================*/
+    //================== 연관 관계 메서드 ==================//
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
+    //==================   생성 메서드   ==================//
+
+    //==================  비즈니스 로직  ==================//
     public void update(EmployeeEducational updateData) {
         this.schoolNm = updateData.getSchoolNm();
         this.graduationYear = updateData.getGraduationYear();
         this.major = updateData.getMajor();
         this.degree = updateData.getDegree();
     }
+
+    //==================   조회 메서드   ==================//
+
 }

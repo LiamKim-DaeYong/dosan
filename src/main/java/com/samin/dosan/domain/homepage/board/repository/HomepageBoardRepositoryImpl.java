@@ -4,15 +4,17 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.samin.dosan.core.code.Used;
-import com.samin.dosan.domain.homepage.type.BoardType;
 import com.samin.dosan.core.parameter.SearchParam;
 import com.samin.dosan.domain.homepage.board.HomepageBoard;
+import com.samin.dosan.domain.homepage.type.BoardType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import static com.samin.dosan.domain.homepage.board.QHomepageBoard.homepageBoard;
@@ -33,11 +35,11 @@ public class HomepageBoardRepositoryImpl implements HomepageBoardRepositoryQuery
         String searchWorld = searchParam.getSearchWorld();
 
         if (startDate != null) {
-            builder.and(homepageBoard.regDt.goe(startDate));
+            builder.and(homepageBoard.createdAt.goe(LocalDateTime.of(startDate, LocalTime.of(0, 0, 0))));
         }
 
         if (endDate != null) {
-            builder.and(homepageBoard.regDt.loe(endDate));
+            builder.and(homepageBoard.createdAt.loe(LocalDateTime.of(endDate, LocalTime.of(23, 59, 59))));
         }
 
         if (searchWorld != null) {

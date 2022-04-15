@@ -47,8 +47,8 @@ public class FormerJobCodeController {
         return "admin/setting/former_job_code/editView::#form";
     }
 
-    @PostConstruct
-    public void init() {
-        formerJobCodeService.save(FormerJobCode.of("초등교원"));
-    }
+//    @PostConstruct
+//    public void init() {
+//        formerJobCodeService.save(FormerJobCode.of("초등교원"));
+//    }
 }

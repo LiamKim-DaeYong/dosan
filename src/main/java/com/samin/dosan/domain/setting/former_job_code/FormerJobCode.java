@@ -28,7 +28,9 @@ public class FormerJobCode extends BaseEntity {
     @Column(length = 1, nullable = false)
     private Used used;
 
-    /*================== Business Logic ==================*/
+    //================== 연관 관계 메서드 ==================//
+
+    //==================   생성 메서드   ==================//
     public static FormerJobCode of(Long formerJobCodeId) {
         FormerJobCode formerJobCode = new FormerJobCode();
         formerJobCode.id = formerJobCodeId;
@@ -60,6 +62,7 @@ public class FormerJobCode extends BaseEntity {
         this.used = used;
     }
 
+    //==================  비즈니스 로직  ==================//
     public void update(FormerJobCode updateData) {
         this.formerNm = updateData.getFormerNm();
     }
@@ -67,4 +70,7 @@ public class FormerJobCode extends BaseEntity {
     public void delete() {
         this.used = Used.N;
     }
+
+    //==================   조회 메서드   ==================//
+
 }

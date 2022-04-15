@@ -5,6 +5,7 @@ import com.samin.dosan.domain.user.employees.entity.EmployeeEducational;
 import com.samin.dosan.domain.user.employees.entity.EmployeeEmployment;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.NumberFormat;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -18,8 +19,7 @@ public class EmployeeSave {
     @NotBlank
     private String userId;
 
-    @NotBlank
-    private String password;
+    private String password = "0000";
 
     @NotBlank
     private String userNm;
@@ -76,7 +76,7 @@ public class EmployeeSave {
     private String etc;
 
     /*================== Business Logic ==================*/
-    protected EmployeeSave() {
+    public EmployeeSave() {
         educationalList.add(new EmployeeEducational());
         employmentList.add(new EmployeeEmployment());
     }

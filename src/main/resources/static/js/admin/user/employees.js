@@ -7,6 +7,7 @@ var pageObj = {
         $ajax.post({
             data: saveData,
             success: function (userId) {
+                alert("초기 패스워드는 0000 입니다.\n마이 페이지에서 패스워드 변경 후 사용해 주세요.")
                 $url.redirect(`/admin/user/employees/${userId}`);
             }
         });
@@ -27,8 +28,32 @@ var pageObj = {
                 $url.redirect(`/admin/user/employees/${userId}`);
             }
         });
-    }
+    },
+
+    leave: function (id, leaveType) {
+        var message = leaveType == 'retired' ? '퇴사' : '휴직';
+
+        $ajax.put({
+            url: $url.getPath() + "/" + leaveType,
+            success: function (userId) {
+                alert(message + '처리 되었습니다.')
+                $url.redirect(`/admin/user/employees/${userId}`);
+            }
+        })
+    },
+
+    changePassword: function (userId) {
+        modal.open({
+            path: `/password/${userId}/change`,
+            title: '비밀번호 재설정'
+        });
+    },
 }
 
+var modal = $modal();
 pageObj.pageStart = function () {
+    modal.init($("#modal"), {
+        width: 400,
+        height: 300
+    });
 };

@@ -5,12 +5,10 @@ import com.samin.dosan.domain.file.Files;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "homepage_board_file")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class HomepageBoardFile extends Files {
 
@@ -18,10 +16,15 @@ public class HomepageBoardFile extends Files {
     @JoinColumn(name = "board_id")
     private HomepageBoard board;
 
-    /*================== Business Logic ==================*/
+    //================== 연관 관계 메서드 ==================//
+    public void setBoard(HomepageBoard board) {
+        this.board = board;
+    }
+
+    //==================   생성 메서드   ==================//
     public static HomepageBoardFile of(UploadFile uploadFile) {
         HomepageBoardFile boardFile = new HomepageBoardFile();
-        boardFile.originFilename = uploadFile.getOriginalFilename();
+        boardFile.originFileName = uploadFile.getOriginalFileName();
         boardFile.storeFileName = uploadFile.getStoreFileName();
         boardFile.contentType = uploadFile.getContentType();
         boardFile.extension = uploadFile.getExtension();
@@ -29,8 +32,8 @@ public class HomepageBoardFile extends Files {
 
         return boardFile;
     }
+    //==================  비즈니스 로직  ==================//
 
-    public void setBoard(HomepageBoard board) {
-        this.board = board;
-    }
+    //==================   조회 메서드   ==================//
+
 }
