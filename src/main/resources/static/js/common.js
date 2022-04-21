@@ -1,7 +1,14 @@
 $errors = {
     valid: function (errors) {
         const globalErrorsTarget = $("[globalErrors]");
-        $(".modal_error").remove();
+        $(".modal_error").each(function () {
+            if ($(this).attr("override")) {
+                $(this).text("");
+            } else {
+                $(this).remove();
+            }
+        });
+
         $("[errorclass]").each(function () {
             $(this).removeClass($(this).attr("errorclass"));
         });
@@ -17,8 +24,12 @@ $errors = {
                     errorMsgField = $('[placeholder="' + error.field + '"]')
                     errorMsgField.text(error.message);
                 } else {
-                    errorMsgField = `<span errors="${error.field}" class="modal_error">${error.message}</span>`
-                    errorField.after(errorMsgField);
+                    if ($(`span[errors='${error.field}']`).length) {
+                        $(`span[errors='${error.field}']`).text(error.message);
+                    } else {
+                        errorMsgField = `<span errors="${error.field}" class="modal_error">${error.message}</span>`
+                        errorField.after(errorMsgField);
+                    }
                 }
             });
         }
@@ -63,7 +74,6 @@ $modal = function () {
 
         this.setTitle(this.defaultOption.title);
         this.setContent(this.defaultOption.path);
-
         $(this.target).removeClass('fade');
     };
 
@@ -88,6 +98,8 @@ $modal = function () {
             $.get(path, function (data) {
                 $(_this.$body).html(data);
                 $event.init();
+            }).fail(function (error) {
+                $url.redirect("/login");
             });
         } else {
             $(this.$body).html('<div>Modal Body</div>');
@@ -144,6 +156,7 @@ $event = {
     init: function () {
         this.inputAutocompleteOff();
         this.dateInputChangeEvent();
+        this.searchWorldEnterEvent();
         $checkBox.init();
         $files.init();
         $formatter.init();
@@ -165,6 +178,14 @@ $event = {
                 if (target.val() && $(this).val() < target.val()) {
                     target.val($(this).val())
                 }
+            }
+        });
+    },
+    searchWorldEnterEvent() {
+        $("#searchWorld").keyup(function (e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                $(".search_btn").click();
             }
         });
     },
@@ -600,14 +621,30 @@ $table = {
         return lastRow;
     },
 
-    delRow: function (targetId) {
+    delRow: function (targetId, firstRowDel=true) {
         const target = $("#" + targetId);
         const checkedList = $checkBox.getAllChecked(target);
 
         if ($valid.deletes(checkedList.length)) {
+            let rowCnt = $(target).find('tr:not(:first)').length;
+
+
+            if (firstRowDel) {
+                deletRows();
+            } else {
+                if (rowCnt === checkedList.length) {
+                    $(target).find('tr:not(:lt(2))').each(function () {
+                        $(this).remove();
+                    });
+                } else {
+                    deletRows();
+                }
+            }
+        }
+
+        function deletRows() {
             $.each(checkedList, function (idx, value) {
                 const row = target.find("input[name='" + value + "']").closest('tr');
-                // row.closest('table')
                 row.remove();
             });
         }
@@ -816,6 +853,7 @@ $formatter = {
     init: function () {
         this.userIdFormatter();
         this.yearFormatter();
+        this.emailFormatter();
         this.phoneNumFormatter();
     },
 
@@ -830,6 +868,20 @@ $formatter = {
             }
 
             return value.replace(/[^a-z0-9]/g, "");
+        }
+    },
+
+    emailFormatter: function () {
+        $("input[formatter='email']").keyup(function () {
+            this.value = parse(this.value);
+        });
+
+        const parse = function (value) {
+            if (!value) {
+                return "";
+            }
+
+            return value.replace(/[^a-z0-9@._-]/g, "");
         }
     },
 
